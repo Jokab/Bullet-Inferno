@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.units.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemy {
@@ -8,7 +7,7 @@ public class Enemy {
 	private int hitPoints;
 	private Vector2 velocity;
 	private Vector2 position;
-	
+
 	public void update(float delta) {
 		position.add(velocity.cpy().scl(delta));
 	}
@@ -24,7 +23,7 @@ public class Enemy {
 	public Vector2 getPosition() {
 		return position;
 	}
-
+	
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}

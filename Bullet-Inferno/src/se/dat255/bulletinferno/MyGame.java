@@ -1,5 +1,8 @@
 package se.dat255.bulletinferno;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.dat255.bulletinferno.units.enemy.Enemy;
 import se.dat255.bulletinferno.units.enemy.EnemyView;
 
@@ -43,8 +46,9 @@ import com.badlogic.gdx.math.Vector2;
 public class MyGame implements ApplicationListener {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Enemy enemy;
-	private EnemyView enemyView;
+	private int numEnemies = 10;
+	private List<Enemy> enemyList = new ArrayList<Enemy>();
+	private List<EnemyView> enemyViews = new ArrayList<EnemyView>();
 
 	@Override
 	public void create() {
@@ -54,14 +58,17 @@ public class MyGame implements ApplicationListener {
 		camera = new OrthographicCamera(w, h);
 		camera.update();
 
-
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
 
-		enemy = new Enemy();
-		enemy.setPosition(new Vector2(10,10));
-		enemy.setVelocity(new Vector2(100,20));
-		enemyView = new EnemyView(enemy);
+		for (int i = 1; i < numEnemies+1; i++) {
+			float yPos = -(h / numEnemies) * i;
+			Enemy enemy = new Enemy();
+			enemy.setPosition(new Vector2((w / 2), yPos));
+			enemy.setVelocity(new Vector2(-100, 0));
+			enemyList.add(enemy);
+			enemyViews.add(new EnemyView(enemy));
+		}
 	}
 
 	@Override
@@ -73,11 +80,14 @@ public class MyGame implements ApplicationListener {
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		enemy.update(Gdx.graphics.getDeltaTime());
-
+		for (Enemy enemy : enemyList) {
+			enemy.update(Gdx.graphics.getDeltaTime());
+		}
 
 		batch.begin();
-		enemyView.render(batch);
+		for (EnemyView enemyView : enemyViews) {
+			enemyView.render(batch);
+		}
 		batch.end();
 	}
 

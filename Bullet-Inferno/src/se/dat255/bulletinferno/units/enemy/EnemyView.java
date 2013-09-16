@@ -26,15 +26,19 @@ public class EnemyView {
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setSize(sprite.getWidth(), sprite.getHeight());
 		
-		sprite.setRotation(-180f);
+		sprite.setRotation(180);
 	}
 	
 	public void render(SpriteBatch batch) {
-		if(enemy.getPosition().x > Gdx.graphics.getWidth() / 2) {
-			enemy.getPosition().x = -Gdx.graphics.getWidth()/2 - sprite.getWidth();
-		}
+		mirrorPosIfOutsideView();
 		
 		sprite.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 		sprite.draw(batch);
+	}
+
+	private void mirrorPosIfOutsideView() {
+		if(enemy.getPosition().x > Gdx.graphics.getWidth() / 2) {
+			enemy.getPosition().x = -Gdx.graphics.getWidth()/2 - sprite.getWidth();
+		}
 	}
 }
