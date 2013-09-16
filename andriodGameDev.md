@@ -72,3 +72,4 @@ Common errors:
   Make sure it's in the Android project under the assets folder
   
   Try restarting eclipse (or manually refreshing the projects with F5)
+
