@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.units.weapon;
 
+import se.dat255.bulletinferno.units.particles.Projectile;
+
 import com.badlogic.gdx.math.Vector2;
 
 public interface Weapon {
@@ -35,6 +37,10 @@ public interface Weapon {
 	 */
 	public void fire(Vector2 origin);
 	
-	
-	
+	/**
+	 * Returns the projectile to be fired
+	 * @param origin
+	 * @return projectile
+	 */
+	public Projectile getProjectile(Vector2 origin);
 }
