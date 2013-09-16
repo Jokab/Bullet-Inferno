@@ -3,6 +3,7 @@ package se.dat255.bulletinferno;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.dat255.bulletinferno.units.enemy.DefaultEnemyImpl;
 import se.dat255.bulletinferno.units.enemy.Enemy;
 import se.dat255.bulletinferno.units.enemy.EnemyView;
 
@@ -63,9 +64,7 @@ public class MyGame implements ApplicationListener {
 
 		for (int i = 1; i < numEnemies+1; i++) {
 			float yPos = -(h / numEnemies) * i;
-			Enemy enemy = new Enemy();
-			enemy.setPosition(new Vector2((w / 2), yPos));
-			enemy.setVelocity(new Vector2(-100, 0));
+			Enemy enemy = new DefaultEnemyImpl(new Vector2((w / 2), yPos), new Vector2(-100, 0), 100);
 			enemyList.add(enemy);
 			enemyViews.add(new EnemyView(enemy));
 		}
