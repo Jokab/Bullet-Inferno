@@ -3,10 +3,13 @@ package se.dat255.bulletinferno;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.dat255.bulletinferno.controller.Touch;
+import se.dat255.bulletinferno.units.ship.Ship;
 import se.dat255.bulletinferno.units.ship.ShipView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -53,9 +56,11 @@ public class MyGame implements ApplicationListener {
 		camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		batch = new SpriteBatch();
 
-		for (int i = 0; i < 3; i++) {
-			shipViews.add(new ShipView(camera, 2-i));
-		}
+		Ship ship = new Ship(-(MyGame.VIRTUAL_WIDTH / 2), 0);
+		shipViews.add(new ShipView(ship));
+
+		InputProcessor inputProcessor = new Touch(camera, ship);
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
 	@Override
