@@ -9,11 +9,9 @@ import se.dat255.bulletinferno.units.enemy.EnemyView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -45,6 +43,10 @@ import com.badlogic.gdx.math.Vector2;
  * @since 2013-09-12
  */
 public class MyGame implements ApplicationListener {
+
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 320;
+
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private int numEnemies = 10;
@@ -91,14 +93,16 @@ public class MyGame implements ApplicationListener {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
 	public void pause() {
 	}
 
 	@Override
 	public void resume() {
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
 	}
 }
