@@ -1,6 +1,5 @@
-package se.dat255.bulletinferno.units.weapon;
+package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.units.particles.Projectile;
 
 import com.badlogic.gdx.math.Vector2;
 

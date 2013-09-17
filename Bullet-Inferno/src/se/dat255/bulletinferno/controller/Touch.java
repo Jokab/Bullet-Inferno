@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.units.ship.Ship;
+import se.dat255.bulletinferno.model.Ship;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;

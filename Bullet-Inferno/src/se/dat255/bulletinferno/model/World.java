@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.world;
+package se.dat255.bulletinferno.model;
 
 /**
  * Basic empty class for git (can't upload empty folders)

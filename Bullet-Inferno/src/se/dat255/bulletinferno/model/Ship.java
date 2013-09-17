@@ -1,12 +1,11 @@
-package se.dat255.bulletinferno.units.ship;
+package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.MyGame;
-import se.dat255.bulletinferno.units.BaseUnit;
 
 /**
  * Basic empty class for git (can't upload empty folders)
  */
-public class Ship extends BaseUnit {
+public class Ship {
 
 	private float y;
 	private float x;
@@ -16,9 +15,6 @@ public class Ship extends BaseUnit {
 		this.y = y;
 	}
 
-	@Override
-	public void update(float delta) {
-	}
 
 	public float getY() {
 		return y;

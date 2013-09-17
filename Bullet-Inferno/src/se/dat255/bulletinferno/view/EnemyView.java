@@ -1,4 +1,6 @@
-package se.dat255.bulletinferno.units.enemy;
+package se.dat255.bulletinferno.view;
+
+import se.dat255.bulletinferno.model.Enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

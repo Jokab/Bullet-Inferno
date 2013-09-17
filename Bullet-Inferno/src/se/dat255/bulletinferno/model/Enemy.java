@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.units.enemy;
+package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
 

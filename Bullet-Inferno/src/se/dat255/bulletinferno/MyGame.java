@@ -3,9 +3,9 @@ package se.dat255.bulletinferno;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.units.enemy.DefaultEnemyImpl;
-import se.dat255.bulletinferno.units.enemy.Enemy;
-import se.dat255.bulletinferno.units.enemy.EnemyView;
+import se.dat255.bulletinferno.model.DefaultEnemyImpl;
+import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.view.EnemyView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
