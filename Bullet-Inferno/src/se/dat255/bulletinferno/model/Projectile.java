@@ -7,8 +7,6 @@ public interface Projectile extends Collidable, VelocityEntity {
 	 * @return damage
 	 */
 	public int damage();
-	
-	//Test
 
 	/**
 	 * To be run on impact with hit target
