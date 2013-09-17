@@ -50,7 +50,7 @@ public class WeaponImpl implements Weapon {
 
 	@Override
 	public Projectile getProjectile(Vector2 origin) {
-		return new ProjectileImpl(origin);
+		return new ProjectileImpl(origin, new Vector2(1,0));
 	}
 
 	// TODO Override gameobject interface
