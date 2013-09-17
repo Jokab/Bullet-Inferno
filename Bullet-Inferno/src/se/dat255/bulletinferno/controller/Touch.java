@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.Ship;
+import se.dat255.bulletinferno.model.PlayerShipImpl;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
@@ -26,14 +26,14 @@ public class Touch implements InputProcessor {
 	 * Hard reference to the ship model. TODO: Probably shouldn't be directly
 	 * accessed?
 	 */
-	private Ship ship;
+	private PlayerShipImpl ship;
 
 	/**
 	 * The finger index controlling the position of the ship.
 	 */
 	private int steeringFinger = -1;
 
-	public Touch(final Camera camera, final Ship ship) {
+	public Touch(final Camera camera, final PlayerShipImpl ship) {
 		this.camera = camera;
 		this.ship = ship;
 	}

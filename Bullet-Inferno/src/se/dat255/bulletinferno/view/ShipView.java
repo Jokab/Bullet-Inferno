@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.view;
 
-import se.dat255.bulletinferno.model.Ship;
+import se.dat255.bulletinferno.model.PlayerShipImpl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,9 +12,9 @@ public class ShipView {
 	private Texture texture;
 	private Sprite sprite;
 
-	private Ship ship;
+	private PlayerShipImpl ship;
 
-	public ShipView(final Ship ship) {		
+	public ShipView(final PlayerShipImpl ship) {		
 		this.ship = ship;
 
 		texture = new Texture(Gdx.files.internal("data/ship.png"));

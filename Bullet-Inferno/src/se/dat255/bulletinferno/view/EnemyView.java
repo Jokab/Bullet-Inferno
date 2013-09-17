@@ -34,13 +34,13 @@ public class EnemyView {
 	public void render(SpriteBatch batch) {
 		mirrorPosIfOutsideView();
 		
-		sprite.setPosition(enemy.getPosition().x, enemy.getPosition().y);
+		//sprite.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 		sprite.draw(batch);
 	}
 
 	private void mirrorPosIfOutsideView() {
-		if(enemy.getPosition().x > Gdx.graphics.getWidth() / 2) {
-			enemy.getPosition().x = -Gdx.graphics.getWidth()/2 - sprite.getWidth();
-		}
+//		if(enemy.getPosition().x > Gdx.graphics.getWidth() / 2) {
+//			enemy.getPosition().x = -Gdx.graphics.getWidth()/2 - sprite.getWidth();
+//		}
 	}
 }

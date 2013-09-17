@@ -81,9 +81,9 @@ public class MyGame implements ApplicationListener {
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		for (Enemy enemy : enemyList) {
-			enemy.update(Gdx.graphics.getDeltaTime());
-		}
+//		for (Enemy enemy : enemyList) {
+//			enemy.update(Gdx.graphics.getDeltaTime());
+//		}
 
 		batch.begin();
 		for (EnemyView enemyView : enemyViews) {

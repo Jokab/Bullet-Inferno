@@ -18,4 +18,40 @@ public class BasicProjectileImpl implements Projectile {
 	public void onImpact(Object target) {
 		
 	}
+
+	@Override
+	public boolean intersects(Vector2 point) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void collided(Collidable with) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Vector2 getVelocity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setVelocity(Vector2 velocity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPosition(Vector2 point) {
+		// TODO Auto-generated method stub
+		
+	}
 }
