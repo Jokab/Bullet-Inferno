@@ -9,12 +9,9 @@ import se.dat255.bulletinferno.view.EnemyView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -49,9 +46,9 @@ public class MyGame implements ApplicationListener {
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private int numEnemies = 10;
-	private List<Enemy> enemyList = new ArrayList<Enemy>();
-	private List<EnemyView> enemyViews = new ArrayList<EnemyView>();
+	private final int numEnemies = 10;
+	private final List<Enemy> enemyList = new ArrayList<Enemy>();
+	private final List<EnemyView> enemyViews = new ArrayList<EnemyView>();
 
 	@Override
 	public void create() {
@@ -64,9 +61,10 @@ public class MyGame implements ApplicationListener {
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
 
-		for (int i = 1; i < numEnemies+1; i++) {
+		for (int i = 1; i < numEnemies + 1; i++) {
 			float yPos = -(h / numEnemies) * i;
-			Enemy enemy = new DefaultEnemyImpl(new Vector2((w / 2), yPos), new Vector2(-100, 0), 100);
+			Enemy enemy = new DefaultEnemyImpl(new Vector2(w / 2, yPos),
+					new Vector2(-100, 0), 100);
 			enemyList.add(enemy);
 			enemyViews.add(new EnemyView(enemy));
 		}
@@ -81,9 +79,9 @@ public class MyGame implements ApplicationListener {
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-//		for (Enemy enemy : enemyList) {
-//			enemy.update(Gdx.graphics.getDeltaTime());
-//		}
+		// for (Enemy enemy : enemyList) {
+		// enemy.update(Gdx.graphics.getDeltaTime());
+		// }
 
 		batch.begin();
 		for (EnemyView enemyView : enemyViews) {
@@ -103,6 +101,6 @@ public class MyGame implements ApplicationListener {
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

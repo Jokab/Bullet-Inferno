@@ -20,13 +20,13 @@ public class Touch implements InputProcessor {
 	 * The game camera. This is needed to unproject x/y values to the virtual
 	 * screen size.
 	 */
-	private Camera camera;
+	private final Camera camera;
 
 	/**
 	 * Hard reference to the ship model. TODO: Probably shouldn't be directly
 	 * accessed?
 	 */
-	private PlayerShipImpl ship;
+	private final PlayerShipImpl ship;
 
 	/**
 	 * The finger index controlling the position of the ship.
@@ -60,7 +60,7 @@ public class Touch implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// Unproject the touch location to the virtual screen.
 		Vector3 touchVector = new Vector3(screenX, screenY, 0f);
-		this.camera.unproject(touchVector);
+		camera.unproject(touchVector);
 
 		if (touchVector.x <= 0) {
 			// Left half of the screen
@@ -87,11 +87,11 @@ public class Touch implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// Unproject the touch location to the virtual screen.
 		Vector3 touchVector = new Vector3(screenX, screenY, 0f);
-		this.camera.unproject(touchVector);
+		camera.unproject(touchVector);
 
 		if (pointer == steeringFinger) {
 			// Move ship
-			this.ship.setY(touchVector.y);
+			ship.setY(touchVector.y);
 		}
 
 		// TODO Auto-generated method stub
