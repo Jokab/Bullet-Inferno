@@ -4,12 +4,15 @@ import com.badlogic.gdx.math.Vector2;
 
 public class EnemyShipImpl implements EnemyShip {
 	
-	private int hitPoints;
+	private int health;
+	private int initialHealth;
+	private int score;
+	private int credits; 
 	private Vector2 velocity;
 	private Vector2 position;
 	
-	public EnemyShipImpl(Vector2 position, Vector2 velocity, int hitPoints) {
-		this.hitPoints = hitPoints;
+	public EnemyShipImpl(Vector2 position, Vector2 velocity, int initialHealth) {
+		this.initialHealth = initialHealth;
 		this.velocity = velocity;
 		this.position = position;
 	}
@@ -34,24 +37,14 @@ public class EnemyShipImpl implements EnemyShip {
 		this.position = position;
 	}
 	
-	public void setHitPoints(int hitPoints) {
-		this.hitPoints = hitPoints;
-	}
-	
-	public int getHitPoints() {
-		return this.hitPoints;
-	}
-
 	@Override
 	public int getScore() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.score;
 	}
 
 	@Override
 	public int getCredits() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.credits;
 	}
 
 	@Override
@@ -68,19 +61,16 @@ public class EnemyShipImpl implements EnemyShip {
 
 	@Override
 	public void takeDamage(int damage) {
-		// TODO Auto-generated method stub
-		
+		this.health -= damage;
 	}
 
 	@Override
 	public int getHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.health;
 	}
 
 	@Override
 	public int getInitialHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.initialHealth;
 	}
 }
