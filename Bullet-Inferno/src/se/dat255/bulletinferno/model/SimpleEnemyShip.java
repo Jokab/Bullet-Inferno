@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class EnemyShipImpl implements EnemyShip {
+public abstract class SimpleEnemyShip implements EnemyShip {
 	
 	private int health;
 	private int initialHealth;
@@ -11,16 +11,12 @@ public class EnemyShipImpl implements EnemyShip {
 	private Vector2 velocity;
 	private Vector2 position;
 	
-	public EnemyShipImpl(Vector2 position, Vector2 velocity, int initialHealth) {
-		this.initialHealth = initialHealth;
-		this.velocity = velocity;
+	public SimpleEnemyShip(Vector2 position, Vector2 velocity, int initialHealth) {
 		this.position = position;
+		this.velocity = velocity;
+		this.initialHealth = initialHealth;
 	}
 
-	public void update(float delta) {
-		position.add(velocity.cpy().scl(delta));
-	}
-	
 	public void setVelocity(Vector2 velocity) {
 		this.velocity = velocity;
 	}
