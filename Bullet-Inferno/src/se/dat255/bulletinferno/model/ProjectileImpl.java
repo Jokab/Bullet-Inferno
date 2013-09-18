@@ -2,10 +2,10 @@ package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class ProjectileImpl extends SimpleVelocity implements Projectile {
+public class ProjectileImpl implements Projectile {
 
 	public ProjectileImpl(Vector2 origin, Vector2 velocity) {
-		super(origin, velocity);
+		
 	}
 
 	@Override

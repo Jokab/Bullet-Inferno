@@ -2,11 +2,10 @@ package se.dat255.bulletinferno.model.enemy;
 
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Enemy;
-import se.dat255.bulletinferno.model.SimpleVelocityEntity;
 
 import com.badlogic.gdx.math.Vector2;
 
-abstract class EnemyImpl extends SimpleVelocityEntity implements Enemy {
+abstract class EnemyImpl implements Enemy, Collidable {
 
 	private int health;
 	private final int initialHealth;
@@ -14,7 +13,6 @@ abstract class EnemyImpl extends SimpleVelocityEntity implements Enemy {
 	private int credits;
 
 	public EnemyImpl(Vector2 position, Vector2 velocity, int initialHealth) {
-		super(position, velocity);
 		this.initialHealth = initialHealth;
 	}
 
@@ -39,19 +37,5 @@ abstract class EnemyImpl extends SimpleVelocityEntity implements Enemy {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void takeDamage(int damage) {
-		this.health -= damage;
-	}
-
-	@Override
-	public int getHealth() {
-		return this.health;
-	}
-
-	@Override
-	public int getInitialHealth() {
-		return this.initialHealth;
-	}
+	
 }

@@ -13,13 +13,6 @@ public class GameImpl implements Game {
 
 	/** A list of Collidable objects in the world (cache). */
 	private final List<Collidable> collidables = new ArrayList<Collidable>();
-	
-	/** A list of VelocityEntity objects in the world (cache). */
-	private final List<VelocityEntity> velocityEntities = new ArrayList<VelocityEntity>();
-	
-	/** A list of AccelerationEntity objects in the world (cache). */
-	private final List<AccelerationEntity> accelerationEntities =
-	        new ArrayList<AccelerationEntity>();
 
 	/**
 	 * {@inheritDoc}
@@ -27,22 +20,6 @@ public class GameImpl implements Game {
 	@Override
 	public List<? extends Collidable> getCollidables() {
 		return collidables;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends VelocityEntity> getVelocityEntities() {
-		return velocityEntities;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends AccelerationEntity> getAccelerationEntities() {
-		return accelerationEntities;
 	}
 
 	/**

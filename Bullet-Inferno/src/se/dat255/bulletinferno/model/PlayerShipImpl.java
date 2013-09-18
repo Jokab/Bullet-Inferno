@@ -33,30 +33,6 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 
 	@Override
-	public Vector2 getVelocity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setVelocity(Vector2 velocity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Vector2 getPosition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setPosition(Vector2 point) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public boolean intersects(Vector2 point) {
 		// TODO Auto-generated method stub
 		return false;

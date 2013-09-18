@@ -5,10 +5,6 @@ import java.util.List;
 public interface Game {
 	public List<? extends Collidable> getCollidables();
 
-	public List<? extends VelocityEntity> getVelocityEntities();
-
-	public List<? extends AccelerationEntity> getAccelerationEntities();
-
 	public List<? extends Projectile> getProjectiles();
 
 	public PlayerShip getPlayerShip();
