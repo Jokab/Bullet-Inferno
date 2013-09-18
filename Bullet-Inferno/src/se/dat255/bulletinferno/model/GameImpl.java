@@ -12,24 +12,9 @@ import java.util.List;
 public class GameImpl implements Game {
 
 	/** A list of Collidable objects in the world (cache). */
-	private final List<Collidable> collidables = new ArrayList<Collidable>();
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends Collidable> getCollidables() {
-		return collidables;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends Projectile> getProjectiles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private final List<Projectile> projectiles = new ArrayList<Projectile>();
+	private final List<Enemy> enemies = new ArrayList<Enemy>();
+	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 
 	/**
 	 * {@inheritDoc}
@@ -45,8 +30,7 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public List<? extends Obstacle> getObstacles() {
-		// TODO Auto-generated method stub
-		return null;
+		return obstacles;
 	}
 
 	/**
@@ -54,8 +38,22 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public List<? extends Enemy> getEnemies() {
-		// TODO Auto-generated method stub
-		return null;
+		return enemies;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<? extends Projectile> getProjectiles() {
+		return projectiles;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addProjectile(Projectile entity) {
+		projectiles.add(entity);
+	}
 }
