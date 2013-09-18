@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model;
 
-public interface Enemy{
+public interface Enemy extends PositionEntity{
 	
 	/**
 	 * Returns the score that you get from destroying this enemy.
