@@ -2,29 +2,29 @@ package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class SimpleVelocity implements VelocityEntity {
+public abstract class SimpleVelocityEntity implements VelocityEntity {
 
-	private Vector2 point;
+	private Vector2 position;
 	private Vector2 velocity;
 
-	public SimpleVelocity(Vector2 point, Vector2 velocity) {
-		this.point = point;
+	public SimpleVelocityEntity(Vector2 position, Vector2 velocity) {
+		this.position = position;
 		this.velocity = velocity;
 	}
 
-	public SimpleVelocity() {
-		point = new Vector2();
+	public SimpleVelocityEntity() {
+		position = new Vector2();
 		velocity = new Vector2();
 	}
 
 	@Override
 	public Vector2 getPosition() {
-		return point;
+		return position;
 	}
 
 	@Override
 	public void setPosition(Vector2 point) {
-		this.point = point;
+		this.position = point;
 	}
 
 	@Override
