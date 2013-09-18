@@ -3,8 +3,8 @@ package se.dat255.bulletinferno;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.DefaultEnemyImpl;
 import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.view.EnemyView;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -63,7 +63,7 @@ public class MyGame implements ApplicationListener {
 
 		for (int i = 1; i < numEnemies + 1; i++) {
 			float yPos = -(h / numEnemies) * i;
-			Enemy enemy = new DefaultEnemyImpl(new Vector2(w / 2, yPos),
+			Enemy enemy = new DefaultEnemyShipImpl(new Vector2(w / 2, yPos),
 					new Vector2(-100, 0), 100);
 			enemyList.add(enemy);
 			enemyViews.add(new EnemyView(enemy));

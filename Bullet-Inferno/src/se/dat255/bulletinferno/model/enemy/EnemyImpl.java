@@ -1,15 +1,19 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.enemy;
+
+import se.dat255.bulletinferno.model.Collidable;
+import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.SimpleVelocityEntity;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class EnemyShipImpl extends SimpleVelocityEntity implements EnemyShip {
+abstract class EnemyImpl extends SimpleVelocityEntity implements Enemy {
 
 	private int health;
 	private final int initialHealth;
 	private int score;
 	private int credits;
 
-	public EnemyShipImpl(Vector2 position, Vector2 velocity, int initialHealth) {
+	public EnemyImpl(Vector2 position, Vector2 velocity, int initialHealth) {
 		super(position, velocity);
 		this.initialHealth = initialHealth;
 	}
