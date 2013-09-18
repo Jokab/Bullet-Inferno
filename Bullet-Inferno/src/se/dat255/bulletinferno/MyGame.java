@@ -3,15 +3,10 @@ package se.dat255.bulletinferno;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.DefaultEnemyImpl;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.view.EnemyView;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -66,6 +61,10 @@ public class MyGame implements ApplicationListener {
 			@Override
 			public int getCredits() {
 				return 0;
+			}
+			@Override
+			public Vector2 getPosition() {
+				return null;
 			}
 		});
 		graphics.addRenderable(eV);
