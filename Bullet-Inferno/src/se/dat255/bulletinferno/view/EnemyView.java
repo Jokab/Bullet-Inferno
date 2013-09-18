@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.Renderable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class EnemyView {
+public class EnemyView implements Renderable {
 
 	private final Enemy enemy;
 	private final Texture texture;
@@ -21,20 +22,15 @@ public class EnemyView {
 		texture = new Texture(Gdx.files.internal("data/enemyShip.png"));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		TextureRegion region = new TextureRegion(texture, 0, 0,
-				texture.getWidth(), texture.getHeight());
-
-		sprite = new Sprite(region);
-		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setSize(sprite.getWidth(), sprite.getHeight());
-
-		sprite.setRotation(180);
+		sprite = new Sprite(texture);
+		sprite.setSize(2, 2);
+		sprite.setOrigin(0, 0);
+		sprite.setPosition(0, 0);
 	}
 
+	@Override
 	public void render(SpriteBatch batch) {
 		mirrorPosIfOutsideView();
-
-		// sprite.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 		sprite.draw(batch);
 	}
 

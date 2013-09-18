@@ -40,54 +40,53 @@ import com.badlogic.gdx.math.Vector2;
  * @since 2013-09-12
  */
 public class MyGame implements ApplicationListener {
+	
+	/** 
+	 * Handles all the graphics with the game.<br>
+	 * Also handles converting between <b>world</b> and 
+	 * <b>local</b> positions.
+	 */
+	private final Graphics graphics = new Graphics();
 
-	public static final int VIRTUAL_WIDTH = 480;
-	public static final int VIRTUAL_HEIGHT = 320;
-
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
 	private final int numEnemies = 10;
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
 	private final List<EnemyView> enemyViews = new ArrayList<EnemyView>();
 
 	@Override
 	public void create() {
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
-
-		camera = new OrthographicCamera(w, h);
-		camera.update();
-
-		batch = new SpriteBatch();
-		batch.setProjectionMatrix(camera.combined);
-
-		for (int i = 1; i < numEnemies + 1; i++) {
-			float yPos = -(h / numEnemies) * i;
-			Enemy enemy = new DefaultEnemyImpl(new Vector2(w / 2, yPos),
-					new Vector2(-100, 0), 100);
-			enemyList.add(enemy);
-			enemyViews.add(new EnemyView(enemy));
-		}
+		// TODO: Initialize the game
+		graphics.create();
+		
+		// TODO: Debug test spawn enemy to draw in world coord
+		EnemyView eV = new EnemyView(new Enemy() {
+			@Override
+			public int getScore() {
+				return 0;
+			}
+			@Override
+			public int getCredits() {
+				return 0;
+			}
+		});
+		graphics.addRenderable(eV);
 	}
 
 	@Override
 	public void dispose() {
-		batch.dispose();
+		graphics.dispose();
 	}
 
+	/**
+	 * Main game entry loop.
+	 * Called every frame and should update
+	 * logic etc.
+	 */
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		// for (Enemy enemy : enemyList) {
-		// enemy.update(Gdx.graphics.getDeltaTime());
-		// }
-
-		batch.begin();
-		for (EnemyView enemyView : enemyViews) {
-			enemyView.render(batch);
-		}
-		batch.end();
+		// Update game logics
+		
+		// Render the game
+		graphics.render();
 	}
 
 	@Override
@@ -100,7 +99,6 @@ public class MyGame implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
+		graphics.resize(width, height);
 	}
 }
