@@ -2,6 +2,7 @@ package se.dat255.bulletinferno;
 
 import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.ProjectileImpl;
@@ -60,8 +61,8 @@ public class MyGame implements ApplicationListener {
 
 		// TODO: should probably not be created here
 		// Set up the player ship, view and add it to gfx.
-		// TODO: Don't send null here
-		PlayerShip ship = new PlayerShipImpl(0, 0, null);
+		
+		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), new GameImpl());
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 

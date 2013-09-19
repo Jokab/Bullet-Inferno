@@ -1,11 +1,11 @@
 package se.dat255.bulletinferno.model;
 
+import com.badlogic.gdx.math.Vector2;
+
 public interface PlayerShip extends Ship {
-
-	void setY(float y);
-
-	float getY();
-
-	float getX();
+	
+	Weapon getWeapon();
+	
+	void setPosition(Vector2 position);
 
 }
