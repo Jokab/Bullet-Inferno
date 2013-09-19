@@ -23,5 +23,11 @@ public interface PhysicsWorld {
      * @param deltaTime the time in seconds since last call.
      */
     public void update(float deltaTime);
+
+    /**
+     * Get a physics shape factory that can help in Box2D Shape creation.
+     * @return a shape factory.
+     */
+    PhysicsShapeFactory getShapeFactory();
     
 }
