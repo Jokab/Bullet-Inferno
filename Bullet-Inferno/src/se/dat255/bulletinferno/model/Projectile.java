@@ -4,7 +4,7 @@ public interface Projectile extends Collidable {
 	/**
 	 * Returns the damage of the Projectile.
 	 * 
-	 * @return damage
+	 * @return damage The damage that this Projectile deals.
 	 */
 	public int getDamage();
 
