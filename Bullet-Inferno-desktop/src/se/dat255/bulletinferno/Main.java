@@ -17,7 +17,7 @@ public class Main {
 		cfg.title = "Bullet-Inferno";
 		cfg.useGL20 = false;
 		cfg.width = 800;
-		cfg.height = 600;
+		cfg.height = 450;
 		
 		new LwjglApplication(new MyGame(), cfg);
 	}

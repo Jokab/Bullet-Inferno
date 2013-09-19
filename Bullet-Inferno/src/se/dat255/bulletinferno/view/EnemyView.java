@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class EnemyView implements Renderable {
 
@@ -23,21 +22,16 @@ public class EnemyView implements Renderable {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		sprite = new Sprite(texture);
-		sprite.setSize(2, 2);
+		sprite.setSize(1,1);
 		sprite.setOrigin(0, 0);
-		sprite.setPosition(0, 0);
+		sprite.setPosition(enemy.getPosition().x,enemy.getPosition().y);
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		mirrorPosIfOutsideView();
+		float x = enemy.getPosition().x;
+		float y = enemy.getPosition().y;
+		sprite.setPosition(x, y);
 		sprite.draw(batch);
-	}
-
-	private void mirrorPosIfOutsideView() {
-		// if(enemy.getPosition().x > Gdx.graphics.getWidth() / 2) {
-		// enemy.getPosition().x = -Gdx.graphics.getWidth()/2 -
-		// sprite.getWidth();
-		// }
 	}
 }
