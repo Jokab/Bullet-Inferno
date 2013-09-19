@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model;
-
 import com.badlogic.gdx.math.Vector2;
+
 
 public class PlayerShipImpl implements PlayerShip {
 	private final Vector2 position = new Vector2();

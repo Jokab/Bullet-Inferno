@@ -38,4 +38,16 @@ public interface Game {
 	 * @return enemies
 	 */
 	public List<? extends Enemy> getEnemies();
+	
+	/**
+	 * Returns a new timer
+	 * @return timer
+	 */
+	public Timer getTimer();
+	
+	/**
+	 * Updates the game
+	 * @param delta
+	 */
+	public void update(float delta);
 }
