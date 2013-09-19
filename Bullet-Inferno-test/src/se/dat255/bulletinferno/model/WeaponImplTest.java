@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +25,8 @@ public class WeaponImplTest {
 		// Tests that the reloading time is set in the constructor
 
 		WeaponImpl weapon = new WeaponImpl(20, mockGame);
-		assertEquals("The reloadingTime should be set in the constructor",
-				weapon.getReloadingTime(), 20);
+		assertTrue("The reloadingTime should be set in the constructor",
+				weapon.getReloadingTime() == 20);
 	}
 
 	@Test
@@ -45,7 +44,7 @@ public class WeaponImplTest {
 		// Essentially the same test as above
 
 		WeaponImpl weapon = new WeaponImpl(20, mockGame);
-		assertTrue("A newly created weapon should be loeaded",
+		assertTrue("A newly created weapon should be loaded",
 				weapon.isLoaded());
 	}
 
@@ -69,7 +68,8 @@ public class WeaponImplTest {
 		// at the provided origin position "+" the offset,
 		// and that it triggers a cool-down on the weapon.
 
-		WeaponImpl weapon = new WeaponImpl(20, mockGame, new Vector2(1, 1));
+		WeaponImpl weapon = new WeaponImpl(0, mockGame, new Vector2(1, 1));
+        mockGame.getTimer().stop();
 
 		Vector2 origin = new Vector2(1, 1);
 		weapon.fire(origin);
@@ -83,15 +83,17 @@ public class WeaponImplTest {
 	}
 
 	@Test
-	public void testUpdate() {
-		fail("Not Yet Implemented.");
-		// Tests that the update function updates the
-		// cool-down of the weapon
+	public void testWeaponReloads() {
+		// Tests that the weapon reloads
 
-		WeaponImpl weapon = new WeaponImpl(20, mockGame, new Vector2(1, 1));
+		WeaponImpl weapon = new WeaponImpl(1, mockGame, new Vector2(1, 1));
+        mockGame.getTimer().stop();
 		weapon.fire(new Vector2());
 
-		int preUpdateTime = weapon.getReloadingTimeLeft();
+		float preUpdateTime = weapon.getReloadingTimeLeft();
+
+        mockGame.getTimer().update(mockGame.getTimer().getInitialValue());
+
 		assertTrue(preUpdateTime > weapon.getReloadingTimeLeft());
 
 	}
