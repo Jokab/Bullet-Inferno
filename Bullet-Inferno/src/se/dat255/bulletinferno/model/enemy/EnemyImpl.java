@@ -30,12 +30,6 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	}
 
 	@Override
-	public boolean intersects(Vector2 point) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void collided(Collidable with) {
 		// TODO Auto-generated method stub
 	}

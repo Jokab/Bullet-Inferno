@@ -58,7 +58,8 @@ public class MyGame implements ApplicationListener {
 
 		// TODO: should probably not be created here
 		// Set up the player ship, view and add it to gfx.
-		PlayerShip ship = new PlayerShipImpl(0, 0);
+		// TODO: Don't send null here
+		PlayerShip ship = new PlayerShipImpl(0, 0, null);
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
