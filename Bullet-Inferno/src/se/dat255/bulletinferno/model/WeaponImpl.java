@@ -4,17 +4,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
-	private final int reloadingTime;
+	private final float reloadingTime;
 	private final Game world;
 	
-	private int countdown;
-
+	private final Timer timer;
+	
 	/**
 	 * Constructs a new weapon with the 0-vector
 	 * @param reloadingTime
 	 * @param world
 	 */
-	public WeaponImpl(int reloadingTime, Game world) {
+	public WeaponImpl(float reloadingTime, Game world) {
 		this(reloadingTime, world, new Vector2());
 	}
 
@@ -24,17 +24,18 @@ public class WeaponImpl implements Weapon {
 	 * @param world
 	 * @param offset
 	 */
-	public WeaponImpl(int reloadingTime, Game world, Vector2 offset) {
+	public WeaponImpl(float reloadingTime, Game world, Vector2 offset) {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
 		this.world = world;
+		this.timer = world.getTimer();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getReloadingTime() {
+	public float getReloadingTime() {
 		return reloadingTime;
 	}
 
@@ -42,8 +43,8 @@ public class WeaponImpl implements Weapon {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getReloadingTimeLeft() {
-		return countdown;
+	public float getReloadingTimeLeft() {
+		return timer.getTimeLeft();
 	}
 
 	/**
@@ -51,7 +52,7 @@ public class WeaponImpl implements Weapon {
 	 */
 	@Override
 	public boolean isLoaded() {
-		return countdown <= 0;
+		return timer.isFinished();
 	}
 
 	/**
@@ -73,15 +74,14 @@ public class WeaponImpl implements Weapon {
 			p.setPosition(origin.add(getOffset()));
 			p.setVelocity(new Vector2(1,0));
 			// Start count down
-			countdown = getReloadingTime();
+			timer.restart();
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public Projectile getProjectile() {
+	protected Projectile getProjectile() {
 		// Retrieve a projectile from the world
 		return world.retrieveProjectile(ProjectileImpl.class);
 	}
