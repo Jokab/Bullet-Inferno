@@ -20,9 +20,7 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 
 	public void setY(float y) {
-		if (y > -(Graphics.GAME_HEIGHT / 2) && y < Graphics.GAME_HEIGHT / 2) {
-			this.y = y;
-		}
+		this.y = y;
 	}
 
 	public float getX() {

@@ -1,9 +1,10 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.model.PlayerShip;
 
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -20,21 +21,21 @@ public class Touch implements InputProcessor {
 	 * The game camera. This is needed to unproject x/y values to the virtual
 	 * screen size.
 	 */
-	private final Camera camera;
+	private final Graphics graphics;
 
 	/**
 	 * Hard reference to the ship model. TODO: Probably shouldn't be directly
 	 * accessed?
 	 */
-	private final PlayerShipImpl ship;
+	private final PlayerShip ship;
 
 	/**
 	 * The finger index controlling the position of the ship.
 	 */
 	private int steeringFinger = -1;
 
-	public Touch(final Camera camera, final PlayerShipImpl ship) {
-		this.camera = camera;
+	public Touch(final Graphics graphics, final PlayerShip ship) {
+		this.graphics = graphics;
 		this.ship = ship;
 	}
 
@@ -59,8 +60,8 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// Unproject the touch location to the virtual screen.
-		Vector3 touchVector = new Vector3(screenX, screenY, 0f);
-		camera.unproject(touchVector);
+		Vector2 touchVector = new Vector2(screenX, screenY);
+		Graphics.worldToScreen(touchVector);
 
 		if (touchVector.x <= 0) {
 			// Left half of the screen
@@ -86,8 +87,8 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// Unproject the touch location to the virtual screen.
-		Vector3 touchVector = new Vector3(screenX, screenY, 0f);
-		camera.unproject(touchVector);
+		Vector2 touchVector = new Vector2(screenX, screenY);
+		Graphics.worldToScreen(touchVector);
 
 		if (pointer == steeringFinger) {
 			// Move ship

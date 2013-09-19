@@ -3,10 +3,16 @@ package se.dat255.bulletinferno;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.view.EnemyView;
+import se.dat255.bulletinferno.view.ShipView;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -42,6 +48,8 @@ public class MyGame implements ApplicationListener {
 	 * <b>local</b> positions.
 	 */
 	private final Graphics graphics = new Graphics();
+	
+	private InputProcessor processor;
 
 	private final int numEnemies = 10;
 	private final List<Enemy> enemyList = new ArrayList<Enemy>();
@@ -67,7 +75,17 @@ public class MyGame implements ApplicationListener {
 				return null;
 			}
 		});
-		graphics.addRenderable(eV);
+		//graphics.addRenderable(eV);
+		
+		// Set up the player ship, view and
+		PlayerShip ship = new PlayerShipImpl(0, 0);
+		ShipView shipView = new ShipView(ship);
+		graphics.addRenderable(shipView);
+		
+		
+		// Set up input handler
+		processor = new Touch(graphics, ship);
+		Gdx.input.setInputProcessor(processor);
 	}
 
 	@Override
