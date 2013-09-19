@@ -25,7 +25,7 @@ public class ProjectileView implements Renderable {
 	@Override
 	public void render(SpriteBatch batch) {
 		for(Projectile projectile : game.getProjectiles()) {
-			sprite.setPosition(projectile.getPosition().x, projectile.getPosition().y);
+			sprite.setPosition(projectile.getPosition().x, projectile.getPosition().y - sprite.getHeight()/2);
 			sprite.draw(batch);
 		}
 	}

@@ -29,9 +29,7 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		float x = enemy.getPosition().x;
-		float y = enemy.getPosition().y;
-		sprite.setPosition(x, y);
+		sprite.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 		sprite.draw(batch);
 	}
 
