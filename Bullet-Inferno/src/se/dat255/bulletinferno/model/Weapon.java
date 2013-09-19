@@ -46,5 +46,5 @@ public interface Weapon {
 	 * @param origin
 	 * @return projectile
 	 */
-	public Projectile getProjectile(Vector2 origin);
+	public Projectile getProjectile();
 }

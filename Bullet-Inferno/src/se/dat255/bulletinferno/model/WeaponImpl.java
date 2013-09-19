@@ -30,48 +30,59 @@ public class WeaponImpl implements Weapon {
 		this.world = world;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getReloadingTime() {
 		return reloadingTime;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getReloadingTimeLeft() {
 		return countdown;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isLoaded() {
 		return countdown <= 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Vector2 getOffset() {
 		return offset;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void fire(Vector2 origin) {
 		if (isLoaded()) {
-			//world.addProjectile(getProjectile(origin.add(getOffset())));
-
+			// Get projectile and set properties accordingly
+			Projectile p = getProjectile();
+			p.setPosition(origin.add(getOffset()));
+			p.setVelocity(new Vector2(1,0));
 			// Start count down
 			countdown = getReloadingTime();
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Projectile getProjectile(Vector2 origin) {
-		return null;
-		//return new ProjectileImpl(origin, new Vector2(1,0));
-		// TODO Could be replace by Projectile.class and dynamically init
-	}
-
-	// TODO Override gameobject interface
-	public void update(int delta) {
-		if (countdown > 0) {
-			// Removed delta(time passed)
-			countdown -= delta;
-		}
+	public Projectile getProjectile() {
+		// Retrieve a projectile from the world
+		return world.retrieveProjectile(ProjectileImpl.class);
 	}
 }
