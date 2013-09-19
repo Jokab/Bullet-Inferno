@@ -22,8 +22,8 @@ public class EnemyView implements Renderable {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		sprite = new Sprite(texture);
-		sprite.setSize(1,1);
 		sprite.setOrigin(0, 0);
+		sprite.setSize(1,1);
 		sprite.setPosition(enemy.getPosition().x,enemy.getPosition().y);
 	}
 
@@ -33,5 +33,10 @@ public class EnemyView implements Renderable {
 		float y = enemy.getPosition().y;
 		sprite.setPosition(x, y);
 		sprite.draw(batch);
+	}
+
+	@Override
+	public void dispose() {
+		texture.dispose();
 	}
 }

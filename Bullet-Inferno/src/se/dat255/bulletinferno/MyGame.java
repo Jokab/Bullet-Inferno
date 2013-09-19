@@ -4,8 +4,10 @@ import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.model.ProjectileImpl;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.view.EnemyView;
+import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.ShipView;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -69,6 +71,12 @@ public class MyGame implements ApplicationListener {
 
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
+		
+		// TODO: Debug test add bullet
+		ProjectileImpl projectile = new ProjectileImpl(null);
+		projectile.setPosition(new Vector2(5, 7));
+		ProjectileView projectileView = new ProjectileView(projectile);
+		graphics.addRenderable(projectileView);
 	}
 
 	private void setupHardcodedEnemies() {

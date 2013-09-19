@@ -18,6 +18,11 @@ public interface Projectile extends Collidable, Poolable{
 	public void setVelocity(Vector2 velocity);
 	
 	/**
+	 * Gets the position of the projectile
+	 */
+	public Vector2 getPosition();
+	
+	/**
 	 * Sets the position of the projectile
 	 * @param position
 	 */

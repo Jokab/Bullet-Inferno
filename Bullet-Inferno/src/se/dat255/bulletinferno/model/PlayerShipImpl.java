@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.Graphics;
-
 public class PlayerShipImpl implements PlayerShip {
 	private float y;
 	private float x;
