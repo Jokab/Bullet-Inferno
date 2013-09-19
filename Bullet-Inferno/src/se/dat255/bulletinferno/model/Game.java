@@ -4,23 +4,25 @@ import java.util.List;
 
 public interface Game {
 	/**
-	 * Returns a list of all Collidable objects.
-	 * 
-	 * @return A list with Collidable objects.
-	 */
-	public List<? extends Collidable> getCollidables();
-
-	/**
-	 * Returns a list of all the Projectiles.
-	 * 
-	 * @return A list of all the Projectiles.
+	 * Returns a list of all projectiles in the game
+	 * @return
 	 */
 	public List<? extends Projectile> getProjectiles();
 
 	/**
-	 * Returns the PlayerShip that is currently in play.
-	 * 
-	 * @return The PlayerShip currently in play.
+	 * Retrieve a projectile
+	 */
+	public Projectile retrieveProjectile(Class<? extends Projectile> type);
+	
+	/**
+	 * Disposes of the specified projectile
+	 * @param projectile
+	 */
+	public void disposeProjectile(Projectile projectile);
+	
+	/**
+	 * Returns the player's ship
+	 * @return
 	 */
 	public PlayerShip getPlayerShip();
 
@@ -32,9 +34,8 @@ public interface Game {
 	public List<? extends Obstacle> getObstacles();
 
 	/**
-	 * Returns a list of all the Enemies.
-	 * 
-	 * @return A list of all the Enemies.
+	 * Returns a list of all enemies in the game
+	 * @return enemies
 	 */
 	public List<? extends Enemy> getEnemies();
 }

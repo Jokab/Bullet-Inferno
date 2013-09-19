@@ -1,6 +1,9 @@
 package se.dat255.bulletinferno.model;
 
-public interface Projectile extends Collidable {
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool.Poolable;
+
+public interface Projectile extends Collidable, Poolable{
 	/**
 	 * Returns the damage of the Projectile.
 	 * 
@@ -8,4 +11,16 @@ public interface Projectile extends Collidable {
 	 */
 	public int getDamage();
 
+	/**
+	 * Sets the velocity of the projectile
+	 * @param velocity
+	 */
+	public void setVelocity(Vector2 velocity);
+	
+	/**
+	 * Sets the position of the projectile
+	 * @param position
+	 */
+	public void setPosition(Vector2 position);
+	
 }

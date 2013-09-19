@@ -5,59 +5,84 @@ import com.badlogic.gdx.math.Vector2;
 public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final int reloadingTime;
-
+	private final Game world;
+	
 	private int countdown;
 
-	public WeaponImpl(int reloadingTime) {
-		this(reloadingTime, new Vector2());
+	/**
+	 * Constructs a new weapon with the 0-vector
+	 * @param reloadingTime
+	 * @param world
+	 */
+	public WeaponImpl(int reloadingTime, Game world) {
+		this(reloadingTime, world, new Vector2());
 	}
 
-	public WeaponImpl(int reloadingTime, Vector2 offset) {
+	/**
+	 * Constructs a new weapon
+	 * @param reloadingTime
+	 * @param world
+	 * @param offset
+	 */
+	public WeaponImpl(int reloadingTime, Game world, Vector2 offset) {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
+		this.world = world;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getReloadingTime() {
 		return reloadingTime;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getReloadingTimeLeft() {
 		return countdown;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isLoaded() {
 		return countdown <= 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Vector2 getOffset() {
 		return offset;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void fire(Vector2 origin) {
 		if (isLoaded()) {
-			// TODO Add retrieved projectile to world
-			getProjectile(origin.add(getOffset()));
-
+			// Get projectile and set properties accordingly
+			Projectile p = getProjectile();
+			p.setPosition(origin.add(getOffset()));
+			p.setVelocity(new Vector2(1,0));
 			// Start count down
 			countdown = getReloadingTime();
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Projectile getProjectile(Vector2 origin) {
-		return new ProjectileImpl(origin, new Vector2(1,0));
-	}
-
-	// TODO Override gameobject interface
-	public void update(int delta) {
-		if (countdown > 0) {
-			// Removed delta(time passed)
-			countdown -= delta;
-		}
+	public Projectile getProjectile() {
+		// Retrieve a projectile from the world
+		return world.retrieveProjectile(ProjectileImpl.class);
 	}
 }

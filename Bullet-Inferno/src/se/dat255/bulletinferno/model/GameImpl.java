@@ -1,7 +1,11 @@
 package se.dat255.bulletinferno.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * Default implementation of Game, the central type in Bullet Inferno.
@@ -11,26 +15,16 @@ import java.util.List;
  */
 public class GameImpl implements Game {
 
-	/** A list of Collidable objects in the world (cache). */
-	private final List<Collidable> collidables = new ArrayList<Collidable>();
+	private final List<Projectile> projectiles = new ArrayList<Projectile>();
+	private final List<Enemy> enemies = new ArrayList<Enemy>();
+	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends Collidable> getCollidables() {
-		return collidables;
+	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
+	
+	public GameImpl() {
+		projectilePools = new HashMap<Class<?extends Projectile>, Pool<Projectile>>();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends Projectile> getProjectiles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -45,8 +39,7 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public List<? extends Obstacle> getObstacles() {
-		// TODO Auto-generated method stub
-		return null;
+		return obstacles;
 	}
 
 	/**
@@ -54,8 +47,58 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public List<? extends Enemy> getEnemies() {
-		// TODO Auto-generated method stub
-		return null;
+		return enemies;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<? extends Projectile> getProjectiles() {
+		return projectiles;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Projectile retrieveProjectile(Class<? extends Projectile> type) {
+		// If pool for specified type of projectile doesn't exist
+		// create a new pool and but it in the map 
+		if(!projectilePools.containsKey(type)) {
+			projectilePools.put(type, createNewPool(type));
+		}
+		
+		// Get a projectile from the pool
+		Projectile p = projectilePools.get(type).obtain();
+		projectiles.add(p);
+		return p;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @param projectile
+	 */
+	@Override
+	public void disposeProjectile(Projectile projectile) {
+		if(projectilePools.containsKey(projectile.getClass())) {
+			projectilePools.get(projectile.getClass()).free(projectile);
+		}
+	}
+	
+	private Pool<Projectile> createNewPool(final Class<? extends Projectile> type) {
+		return new Pool<Projectile>() {
+	        @Override
+	        protected Projectile newObject() {
+	                try {
+	                	// Create an instance of the specified type
+						return type.newInstance();
+					} catch (InstantiationException e) {
+						throw new RuntimeException(e);
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					}
+	        }
+	    };
+	}
 }
