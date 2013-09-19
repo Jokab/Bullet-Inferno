@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 public class ProjectileImpl implements Projectile {
 	private int damage;
 	private final Game world;
-
+	private final Vector2 veolcity = new Vector2();
+	private final Vector2 position = new Vector2();
+	
 	/**
 	 * Constructs a new projectile
 	 * @param world
@@ -38,6 +40,32 @@ public class ProjectileImpl implements Projectile {
 	@Override
 	public void collided(Collidable entity) {
 		// Code for special behavior here
-		// TODO Call for removing bullet
+		
+		world.disposeProjectile(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void reset() {
+		// TODO Reset projectile
+		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setVelocity(Vector2 velocity) {
+		velocity.set(velocity);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setPosition(Vector2 position) {
+		position.set(position);
 	}
 }
