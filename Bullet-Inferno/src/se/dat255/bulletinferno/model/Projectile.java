@@ -1,16 +1,11 @@
 package se.dat255.bulletinferno.model;
 
-public interface Projectile extends Collidable, VelocityEntity {
+public interface Projectile extends Collidable {
 	/**
-	 * Returns the damage of the projectile
-	 * @return damage
+	 * Returns the damage of the Projectile.
+	 * 
+	 * @return damage The damage that this Projectile deals.
 	 */
-	public int damage();
-	
-	/**
-	 * To be run on impact with hit target
-	 * @param target
-	 */
-	public void onImpact(Object target);
-	
+	public int getDamage();
+
 }

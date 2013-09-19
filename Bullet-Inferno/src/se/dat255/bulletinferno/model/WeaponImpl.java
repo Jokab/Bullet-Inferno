@@ -1,23 +1,22 @@
 package se.dat255.bulletinferno.model;
 
-
 import com.badlogic.gdx.math.Vector2;
 
-public class BasicWeaponImpl implements Weapon {
+public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final int reloadingTime;
-	
+
 	private int countdown;
-	
-	public BasicWeaponImpl(int reloadingTime) {
+
+	public WeaponImpl(int reloadingTime) {
 		this(reloadingTime, new Vector2());
 	}
-	
-	public BasicWeaponImpl(int reloadingTime, Vector2 offset) {
+
+	public WeaponImpl(int reloadingTime, Vector2 offset) {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
 	}
-	
+
 	@Override
 	public int getReloadingTime() {
 		return reloadingTime;
@@ -40,10 +39,10 @@ public class BasicWeaponImpl implements Weapon {
 
 	@Override
 	public void fire(Vector2 origin) {
-		if(isLoaded()) {
+		if (isLoaded()) {
 			// TODO Add retrieved projectile to world
 			getProjectile(origin.add(getOffset()));
-			
+
 			// Start count down
 			countdown = getReloadingTime();
 		}
@@ -51,12 +50,12 @@ public class BasicWeaponImpl implements Weapon {
 
 	@Override
 	public Projectile getProjectile(Vector2 origin) {
-		return new BasicProjectileImpl(origin);
+		return new ProjectileImpl(origin, new Vector2(1,0));
 	}
-	
+
 	// TODO Override gameobject interface
 	public void update(int delta) {
-		if(countdown > 0) {
+		if (countdown > 0) {
 			// Removed delta(time passed)
 			countdown -= delta;
 		}

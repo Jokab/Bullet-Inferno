@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ShipView {
-	private Texture texture;
-	private Sprite sprite;
+	private final Texture texture;
+	private final Sprite sprite;
 
-	private PlayerShipImpl ship;
+	private final PlayerShipImpl ship;
 
-	public ShipView(final PlayerShipImpl ship) {		
+	public ShipView(final PlayerShipImpl ship) {
 		this.ship = ship;
 
 		texture = new Texture(Gdx.files.internal("data/ship.png"));
