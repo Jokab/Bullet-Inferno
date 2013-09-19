@@ -2,9 +2,6 @@ package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.Graphics;
-import se.dat255.bulletinferno.MyGame;
-
 public class PlayerShipImpl implements PlayerShip {
 
 	private float y;

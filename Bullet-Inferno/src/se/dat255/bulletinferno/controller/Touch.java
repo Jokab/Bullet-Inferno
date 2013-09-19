@@ -3,9 +3,9 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.PlayerShip;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * The main touch controller More info:
@@ -61,11 +61,14 @@ public class Touch implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
-		Graphics.worldToScreen(touchVector);
+		Graphics.screenToWorld(touchVector);
 
-		if (touchVector.x <= 0) {
+		Gdx.app.log("Touch", "Down id = " + pointer);
+
+		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
 			// Left half of the screen
 			if (steeringFinger == -1) {
+				Gdx.app.log("Touch", "Steering set to " + pointer);
 				steeringFinger = pointer;
 			}
 		} else {
@@ -78,6 +81,7 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (pointer == steeringFinger) {
+			Gdx.app.log("Touch", "Steering finger unset " + pointer);
 			steeringFinger = -1;
 		}
 
@@ -88,7 +92,7 @@ public class Touch implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
-		Graphics.worldToScreen(touchVector);
+		Graphics.screenToWorld(touchVector);
 
 		if (pointer == steeringFinger) {
 			// Move ship

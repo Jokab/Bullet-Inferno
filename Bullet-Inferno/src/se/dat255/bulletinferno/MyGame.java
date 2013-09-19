@@ -49,39 +49,21 @@ public class MyGame implements ApplicationListener {
 	 */
 	private final Graphics graphics = new Graphics();
 	
+	/**
+	 * The touch input handler
+	 */
 	private InputProcessor processor;
-
-	private final int numEnemies = 10;
-	private final List<Enemy> enemyList = new ArrayList<Enemy>();
-	private final List<EnemyView> enemyViews = new ArrayList<EnemyView>();
 
 	@Override
 	public void create() {
 		// TODO: Initialize the game
 		graphics.create();
 		
-		// TODO: Debug test spawn enemy to draw in world coord
-		EnemyView eV = new EnemyView(new Enemy() {
-			@Override
-			public int getScore() {
-				return 0;
-			}
-			@Override
-			public int getCredits() {
-				return 0;
-			}
-			@Override
-			public Vector2 getPosition() {
-				return null;
-			}
-		});
-		//graphics.addRenderable(eV);
-		
-		// Set up the player ship, view and
+		// TODO: should probably not be created here
+		// Set up the player ship, view and add it to gfx.
 		PlayerShip ship = new PlayerShipImpl(0, 0);
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
-		
 		
 		// Set up input handler
 		processor = new Touch(graphics, ship);
