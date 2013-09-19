@@ -26,14 +26,14 @@ public class PlayerShipImplTest {
 		Vector2 position = new Vector2(0, 0);
 		PlayerShipImpl playerShip = new PlayerShipImpl(position, mockGame);
 
-		assertEquals("The position should be set in the constructor",
-                position, playerShip.getPosition());
+		assertEquals("The position should be set in the constructor", position,
+				playerShip.getPosition());
 
 		Vector2 position2 = new Vector2(1, 1);
 		playerShip.setPosition(position2);
 
-		assertEquals("The setPosition should set the position",
-                position2, playerShip.getPosition());
+		assertEquals("The setPosition should set the position", position2,
+				playerShip.getPosition());
 	}
 
 	@Test
@@ -49,9 +49,9 @@ public class PlayerShipImplTest {
 		playerShip.takeDamage(1);
 
 		assertTrue("After taking 1 damage, health should be 1 less.",
-                (health - 1) == playerShip.getHealth());
+				(health - 1) == playerShip.getHealth());
 		assertTrue("Taking damage should not affect the initial health",
-                initialHealth == playerShip.getInitialHealth());
+				initialHealth == playerShip.getInitialHealth());
 	}
 
 	@Test
@@ -64,16 +64,18 @@ public class PlayerShipImplTest {
 		PlayerShipImpl playerShip = new PlayerShipImpl(position, mockGame);
 		position.x = 20;
 
-		assertTrue("Changing the vector outside the object should not affect the object",
-                playerShip.getPosition().x != position.x);
+		assertTrue(
+				"Changing the vector outside the object should not affect the object",
+				playerShip.getPosition().x != position.x);
 
 		// Test the setPosition method.
 		Vector2 position2 = new Vector2(0, 0);
 		playerShip.setPosition(position2);
 		position2.x = 20;
 
-		assertTrue("Changing the vector outside the object should not affect the object",
-                playerShip.getPosition().x != position2.x);
+		assertTrue(
+				"Changing the vector outside the object should not affect the object",
+				playerShip.getPosition().x != position2.x);
 	}
 
 }

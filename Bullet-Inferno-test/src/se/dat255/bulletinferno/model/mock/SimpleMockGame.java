@@ -8,7 +8,7 @@ import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
 
-public class SimpleMockGame implements Game{
+public class SimpleMockGame implements Game {
 	public final Projectile mockProjectile = new SimpleMockProjectile();
 	public int numProjectilesSpawned = 0;
 
