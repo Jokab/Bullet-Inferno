@@ -29,6 +29,7 @@ public class WeaponImpl implements Weapon {
 		this.reloadingTime = reloadingTime;
 		this.world = world;
 		this.timer = world.getTimer();
+		timer.setTime(reloadingTime);
 	}
 
 	/**
@@ -68,6 +69,7 @@ public class WeaponImpl implements Weapon {
 	 */
 	@Override
 	public void fire(Vector2 origin) {
+		System.out.println("IS LOADED: " + timer.getTimeLeft());
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile p = getProjectile();

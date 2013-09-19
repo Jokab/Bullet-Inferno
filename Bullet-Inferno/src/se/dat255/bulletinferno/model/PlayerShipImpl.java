@@ -10,7 +10,7 @@ public class PlayerShipImpl implements PlayerShip {
 	public PlayerShipImpl(final Vector2 position, Game world) {
 		this.position.set(position);
 		this.world = world;
-		weapon = new WeaponImpl(5, world);
+		weapon = new WeaponImpl(0, world);
 	}
 
 	@Override
@@ -37,9 +37,6 @@ public class PlayerShipImpl implements PlayerShip {
 		return 0;
 	}
 	
-	public Weapon getWeapon() {
-		return weapon;
-	}
 
 	@Override
 	public Vector2 getPosition() {
@@ -49,6 +46,11 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void setPosition(Vector2 position) {
 		this.position.set(position);
+	}
+
+	@Override
+	public void fireWeapon() {
+		weapon.fire(position);
 	}
 
 }
