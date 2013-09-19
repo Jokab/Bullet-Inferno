@@ -74,7 +74,7 @@ public class Touch implements InputProcessor {
 			}
 		} else {
 			// Right half of the screen
-			ship.getWeapon().fire(new Vector2());
+			ship.getWeapon().fire(ship.getPosition());
 		}
 		
 		return false;
