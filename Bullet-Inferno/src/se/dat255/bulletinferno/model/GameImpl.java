@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class GameImpl implements Game {
 
+    private PhysicsWorld world = new PhysicsWorldImpl();
+    
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
@@ -119,11 +121,24 @@ public class GameImpl implements Game {
 		return t;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void update(float delta) {
+	public void update(float deltaTime) {
 		// Update timers
 		for(Timer t: timers) {
-			t.update(delta);
+			t.update(deltaTime);
 		}
+		
+		world.update(deltaTime);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PhysicsWorld getPhysicsWorld() {
+	    return world;
 	}
 }

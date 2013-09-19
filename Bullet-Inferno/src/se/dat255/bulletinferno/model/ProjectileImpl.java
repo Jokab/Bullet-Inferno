@@ -1,12 +1,16 @@
 package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Shape;
 
 public class ProjectileImpl implements Projectile {
+    
+    private static PhysicsBodyDefinition bodyDefinition = null;
+    
+    private PhysicsBody body = null;
+    
 	private int damage;
 	private final Game world;
-	private final Vector2 velocity = new Vector2();
-	private final Vector2 position = new Vector2();
 	
 	/**
 	 * Constructs a new projectile
@@ -14,6 +18,11 @@ public class ProjectileImpl implements Projectile {
 	 */
 	public ProjectileImpl(Game world) {
 		this.world = world;
+		
+		if(bodyDefinition == null) {
+		    Shape shape = world.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
+		    bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+		}
 	}
 	
 	/**
@@ -24,6 +33,9 @@ public class ProjectileImpl implements Projectile {
 	 */
 	public void init(Vector2 origin, Vector2 velocity, int damage) {
 		this.damage = damage;
+		
+		this.setPosition(origin);
+		this.setVelocity(velocity);
 	}
 	
 	/**
@@ -58,7 +70,7 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public void setVelocity(Vector2 velocity) {
-		velocity.set(velocity);
+		body.setVelocity(velocity);
 	}
 	
 	/**
@@ -66,7 +78,7 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public Vector2 getPosition() {
-		return position;
+		return body.getPosition();
 	}
 
 	/**
@@ -74,6 +86,10 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public void setPosition(Vector2 position) {
-		this.position.set(position);
+	    // @todo fix init method for this.
+	    if(body != null) {
+	        throw new RuntimeException("Operation not supported yet.");
+	    }
+	    body = world.getPhysicsWorld().createBody(bodyDefinition, position);
 	}
 }
