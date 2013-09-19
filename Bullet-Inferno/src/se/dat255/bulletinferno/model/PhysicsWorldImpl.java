@@ -27,6 +27,9 @@ public class PhysicsWorldImpl implements PhysicsWorld {
     /** Holds the Box2D world. */
     private World world;
     
+    /** Holds a shape factory instance. Creates Box2D shape objects in various ways. */
+    private PhysicsShapeFactory shapeFactory = new PhysicsShapeFactoryImpl();
+    
     /**
      * Start the simulation.
      */
@@ -63,4 +66,11 @@ public class PhysicsWorldImpl implements PhysicsWorld {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PhysicsShapeFactory getShapeFactory() {
+        return shapeFactory;
+    }
 }
