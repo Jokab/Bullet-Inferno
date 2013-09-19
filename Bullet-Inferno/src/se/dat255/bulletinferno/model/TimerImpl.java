@@ -9,11 +9,16 @@ import java.util.List;
  *
  */
 public class TimerImpl implements Timer {
-	private float initialTime;
+	private float initialTime = 0;
 	private float timeLeft = 0;
 	private boolean isRunning = false;
 	private boolean isContinuous = false;
 	private final List<Timerable> timerables = new LinkedList<Timerable>();
+	
+	/**
+	 * Constructs a new timer
+	 */
+	public TimerImpl() {}
 	
 	/**
 	 * Constructs a new Timer with specified time to 
@@ -21,7 +26,7 @@ public class TimerImpl implements Timer {
 	 * @param time
 	 */
 	public TimerImpl(float time) {
-		this.timeLeft = time;
+		timeLeft = initialTime = time;
 	}
 	
 	/**
