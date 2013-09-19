@@ -1,34 +1,18 @@
 package se.dat255.bulletinferno.model;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.Graphics;
 
 public class PlayerShipImpl implements PlayerShip {
-	private float y;
-	private float x;
+	private final Vector2 position = new Vector2();
 	private Game world;
 	private Weapon weapon;
 
-	public PlayerShipImpl(final float x, final float y, Game world) {
-		this.x = x;
-		this.y = y;
+	public PlayerShipImpl(final Vector2 position, Game world) {
+		this.position.set(position);
 		this.world = world;
 		weapon = new WeaponImpl(5, world);
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
 	}
 
 	@Override
@@ -57,6 +41,16 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	public Weapon getWeapon() {
 		return weapon;
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return position;
+	}
+
+	@Override
+	public void setPosition(Vector2 position) {
+		this.position.set(position);
 	}
 
 }
