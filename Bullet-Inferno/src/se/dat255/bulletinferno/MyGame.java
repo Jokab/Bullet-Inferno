@@ -55,6 +55,9 @@ public class MyGame implements ApplicationListener {
 	 */
 	private InputProcessor processor;
 
+	/** The current session instance of the game model. */
+	private Game game = null;
+	
 	@Override
 	public void create() {
 		// TODO: Initialize the game
@@ -63,7 +66,7 @@ public class MyGame implements ApplicationListener {
 		// TODO: should probably not be created here
 		// Set up the player ship, view and add it to gfx.
 		
-		Game game = new GameImpl();
+		this.game = new GameImpl();
 		
 		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game);
 		ShipView shipView = new ShipView(ship);
@@ -77,8 +80,8 @@ public class MyGame implements ApplicationListener {
 		setupHardcodedEnemies();
 	
 		// TODO: Debug test add bullet
-		ProjectileImpl projectile = new ProjectileImpl(null);
-		projectile.setPosition(new Vector2(5, 7));
+		//ProjectileImpl projectile = new ProjectileImpl(null);
+		//projectile.setPosition(new Vector2(5, 7));
 		ProjectileView projectileView = new ProjectileView(game);
 		graphics.addRenderable(projectileView);
 	}
@@ -113,8 +116,15 @@ public class MyGame implements ApplicationListener {
 	 */
 	@Override
 	public void render() {
+	    // The time since the last frame in seconds.
+	    float deltaTime = Gdx.graphics.getDeltaTime();
+	    
 		// Render the game
 		graphics.render();
+		
+		// Update models. This should be done after graphics rendering, so that graphics commands
+		// can be buffered up for being sent to the graphics pipeline. Meanwhile, we run the models.
+		game.update(deltaTime);
 	}
 
 	@Override
