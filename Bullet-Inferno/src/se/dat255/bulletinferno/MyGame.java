@@ -1,19 +1,13 @@
 package se.dat255.bulletinferno;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import se.dat255.bulletinferno.controller.Touch;
-import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
-import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ShipView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * The main class that follows with LibGDX, shows a simple way of rendering an

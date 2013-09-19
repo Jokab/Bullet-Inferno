@@ -92,7 +92,7 @@ public class Touch implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
-		Graphics.screenToWorld(touchVector);
+		graphics.screenToWorld(touchVector);
 
 		if (pointer == steeringFinger) {
 			// Move ship
