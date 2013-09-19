@@ -93,7 +93,7 @@ public class GameImpl implements Game {
 	        protected Projectile newObject() {
 	                try {
 	                	// Create an instance of the specified type
-						return type.getConstructor(Game.class).newInstance();
+						return type.getConstructor(Game.class).newInstance(GameImpl.this);
 					} catch (InstantiationException e) {
 						throw new RuntimeException(e);
 					} catch (IllegalAccessException e) {
