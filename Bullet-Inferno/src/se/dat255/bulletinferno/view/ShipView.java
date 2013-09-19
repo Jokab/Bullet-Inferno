@@ -32,6 +32,7 @@ public class ShipView implements Renderable {
 
 	}
 
+	@Override
 	public void render(SpriteBatch batch) {
 		float x = ship.getX();
 		float y = ship.getY() - sprite.getHeight() / 2;
@@ -40,6 +41,7 @@ public class ShipView implements Renderable {
 		sprite.draw(batch);
 	}
 
+	@Override
 	public void dispose() {
 		texture.dispose();
 	}
