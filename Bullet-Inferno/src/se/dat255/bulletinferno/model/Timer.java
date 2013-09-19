@@ -43,12 +43,32 @@ public interface Timer {
 	public void pause();
 	
 	/**
-	 * Resets the timer to it's initial value
+	 * <strong>Stops</strong> the timer and 
+	 * resets it to it's initial value
 	 */
 	public void reset();
 	
 	/**
-	 * Registers specified listener to the timer
+	 * Resets the timer and <strong>starts</strong> it.
+	 */
+	public void restart();
+	
+	/**
+	 * Returns whether the timer is continuous
+	 * @return is continuous
+	 */
+	public boolean isContinuous();
+	
+	/**
+	 * Set if the timer should be continuous (loop).
+	 * Affect goes in place on timeout 
+	 * @param continuous
+	 */
+	public void setContinuous(boolean continuous);
+	
+	/**
+	 * Registers specified listener to the timer, 
+	 * if it isn't already registered
 	 * @param listener
 	 */
 	public void registerListener(Timerable listener);
@@ -58,4 +78,10 @@ public interface Timer {
 	 * @param listener
 	 */
 	public void deregisterListeneR(Timerable listener);
+	
+	/**
+	 * Updates the time
+	 * @param delta time passed since last call in seconds
+	 */
+	public void update(float delta);
 }
