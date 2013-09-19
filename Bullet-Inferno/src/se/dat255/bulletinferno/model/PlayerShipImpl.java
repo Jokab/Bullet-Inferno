@@ -2,9 +2,6 @@ package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.Graphics;
-import se.dat255.bulletinferno.MyGame;
-
 public class PlayerShipImpl implements PlayerShip {
 
 	private float y;
@@ -20,9 +17,7 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 
 	public void setY(float y) {
-		if (y > -(Graphics.GAME_HEIGHT / 2) && y < Graphics.GAME_HEIGHT / 2) {
-			this.y = y;
-		}
+		this.y = y;
 	}
 
 	public float getX() {

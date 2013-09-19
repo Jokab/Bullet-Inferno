@@ -1,10 +1,16 @@
 package se.dat255.bulletinferno;
 
+import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.view.EnemyView;
+import se.dat255.bulletinferno.view.ShipView;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -33,33 +39,47 @@ import com.badlogic.gdx.math.Vector2;
  * @since 2013-09-12
  */
 public class MyGame implements ApplicationListener {
-	
-	/** 
+
+	/**
 	 * Handles all the graphics with the game.<br>
-	 * Also handles converting between <b>world</b> and 
-	 * <b>local</b> positions.
+	 * Also handles converting between <b>world</b> and <b>local</b> positions.
 	 */
 	private final Graphics graphics = new Graphics();
+
+	/**
+	 * The touch input handler
+	 */
+	private InputProcessor processor;
 
 	@Override
 	public void create() {
 		// TODO: Initialize the game
 		graphics.create();
-		
+
+		// TODO: should probably not be created here
+		// Set up the player ship, view and add it to gfx.
+		PlayerShip ship = new PlayerShipImpl(0, 0);
+		ShipView shipView = new ShipView(ship);
+		graphics.addRenderable(shipView);
+
+		// Set up input handler
+		processor = new Touch(graphics, ship);
+		Gdx.input.setInputProcessor(processor);
+
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
 	}
 
 	private void setupHardcodedEnemies() {
-		Vector2 position = new Vector2(16-1, (9/3f) * 1 - 2);
-		Vector2 position2 = new Vector2(16-1, (9/3f) * 2 - 2);
-		Vector2 position3 = new Vector2(16-1, (9/3f) * 3 - 2);
-		
-		Vector2 velocity = new Vector2(0,2);
+		Vector2 position = new Vector2(16 - 1, (9 / 3f) * 1 - 2);
+		Vector2 position2 = new Vector2(16 - 1, (9 / 3f) * 2 - 2);
+		Vector2 position3 = new Vector2(16 - 1, (9 / 3f) * 3 - 2);
+
+		Vector2 velocity = new Vector2(0, 2);
 		Enemy enemy = new DefaultEnemyShipImpl(position, velocity, 100);
 		Enemy enemy2 = new DefaultEnemyShipImpl(position2, velocity, 100);
 		Enemy enemy3 = new DefaultEnemyShipImpl(position3, velocity, 100);
-		
+
 		EnemyView eV = new EnemyView(enemy);
 		EnemyView eV2 = new EnemyView(enemy2);
 		EnemyView eV3 = new EnemyView(enemy3);
@@ -67,6 +87,7 @@ public class MyGame implements ApplicationListener {
 		graphics.addRenderable(eV);
 		graphics.addRenderable(eV2);
 		graphics.addRenderable(eV3);
+
 	}
 
 	@Override
@@ -75,9 +96,7 @@ public class MyGame implements ApplicationListener {
 	}
 
 	/**
-	 * Main game entry loop.
-	 * Called every frame and should update
-	 * logic etc.
+	 * Main game entry loop. Called every frame and should update logic etc.
 	 */
 	@Override
 	public void render() {
