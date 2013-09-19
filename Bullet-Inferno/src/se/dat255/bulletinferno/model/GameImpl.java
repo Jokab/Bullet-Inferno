@@ -1,7 +1,9 @@
 package se.dat255.bulletinferno.model;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +22,11 @@ public class GameImpl implements Game {
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
+	private final List<Timer> timers;
 	
 	public GameImpl() {
 		projectilePools = new HashMap<Class<?extends Projectile>, Pool<Projectile>>();
+		timers = new LinkedList<Timer>();
 	}
 	
 	/**
@@ -75,10 +79,7 @@ public class GameImpl implements Game {
 		return p;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * @param projectile
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public void disposeProjectile(Projectile projectile) {
 		if(projectilePools.containsKey(projectile.getClass())) {
@@ -92,13 +93,37 @@ public class GameImpl implements Game {
 	        protected Projectile newObject() {
 	                try {
 	                	// Create an instance of the specified type
-						return type.newInstance();
+						return type.getConstructor(Game.class).newInstance(GameImpl.this);
 					} catch (InstantiationException e) {
 						throw new RuntimeException(e);
 					} catch (IllegalAccessException e) {
 						throw new RuntimeException(e);
+					} catch (NoSuchMethodException e) {
+						throw new RuntimeException(e);
+					} catch (SecurityException e) {
+						throw new RuntimeException(e);
+					} catch (IllegalArgumentException e) {
+						throw new RuntimeException(e);
+					} catch (InvocationTargetException e) {
+						throw new RuntimeException(e);
 					}
 	        }
 	    };
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public Timer getTimer() {
+		Timer t = new TimerImpl();
+		timers.add(t);
+		return t;
+	}
+	
+	@Override
+	public void update(float delta) {
+		// Update timers
+		for(Timer t: timers) {
+			t.update(delta);
+		}
 	}
 }

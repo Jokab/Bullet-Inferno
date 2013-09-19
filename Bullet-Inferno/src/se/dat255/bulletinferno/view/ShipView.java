@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class ShipView implements Renderable {
 	private final Texture texture;
@@ -34,8 +35,9 @@ public class ShipView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		float x = ship.getX();
-		float y = ship.getY() - sprite.getHeight() / 2;
+		Vector2 pos = ship.getPosition();
+		float x = pos.x;
+		float y = pos.y - sprite.getHeight() / 2;
 
 		sprite.setPosition(x, y);
 		sprite.draw(batch);

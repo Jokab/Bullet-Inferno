@@ -59,6 +59,7 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
@@ -73,8 +74,9 @@ public class Touch implements InputProcessor {
 			}
 		} else {
 			// Right half of the screen
+			ship.getWeapon().fire(ship.getPosition());
 		}
-
+		
 		return false;
 	}
 
@@ -96,7 +98,7 @@ public class Touch implements InputProcessor {
 
 		if (pointer == steeringFinger) {
 			// Move ship
-			ship.setY(touchVector.y);
+			ship.setPosition(new Vector2(0, touchVector.y));
 		}
 
 		// TODO Auto-generated method stub

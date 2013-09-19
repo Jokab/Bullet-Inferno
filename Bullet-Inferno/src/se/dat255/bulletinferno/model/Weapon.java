@@ -6,9 +6,9 @@ public interface Weapon {
 	/**
 	 * Returns the <strong>constant</strong> reloading time in milliseconds
 	 * 
-	 * @return time in milliseconds
+	 * @return time in seconds
 	 */
-	public int getReloadingTime();
+	public float getReloadingTime();
 
 	/**
 	 * Returns the current time in milliseconds until the weapon is ready to
@@ -16,7 +16,7 @@ public interface Weapon {
 	 * 
 	 * @return time in milliseconds
 	 */
-	public int getReloadingTimeLeft();
+	public float getReloadingTimeLeft();
 
 	/**
 	 * Returns whether the weapon is loaded/ready to fire
@@ -39,12 +39,4 @@ public interface Weapon {
 	 * @param origin
 	 */
 	public void fire(Vector2 origin);
-
-	/**
-	 * Returns the projectile to be fired
-	 * 
-	 * @param origin
-	 * @return projectile
-	 */
-	public Projectile getProjectile();
 }
