@@ -28,18 +28,18 @@ class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition, Disposable {
      *              engine from now on.
      */
     public PhysicsBodyDefinitionImpl(Shape shape) {
-        this(false, shape);
+        this(shape, false);
     }
     
     /**
      * Construct a new body definition, optionally defined as a bullet, meaning it moves very fast
      * (true means higher precision at the expense of worse performance).
      * 
-     * @param isBullet whether to apply high precision to the bodies of this type.
      * @param shape the shape of the physics body. Will be managed and disposed of by the physics
      *              engine from now on.
+     * @param isBullet whether to apply high precision to the bodies of this type.
      */
-    public PhysicsBodyDefinitionImpl(boolean isBullet, Shape shape) {
+    public PhysicsBodyDefinitionImpl(Shape shape, boolean isBullet) {
         definition.type = BodyDef.BodyType.DynamicBody;
         definition.gravityScale = 0; // No gravity.
         definition.bullet = isBullet;
