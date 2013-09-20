@@ -26,9 +26,14 @@ public class GameImpl implements Game {
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	private final List<Timer> timers;
 	
-	public GameImpl() {
+	public GameImpl(PhysicsWorld world) {
+		this.world = world;
 		projectilePools = new HashMap<Class<?extends Projectile>, Pool<Projectile>>();
 		timers = new LinkedList<Timer>();
+	}
+	
+	public GameImpl() {
+		this(new PhysicsWorldImpl());
 	}
 	
 	/**

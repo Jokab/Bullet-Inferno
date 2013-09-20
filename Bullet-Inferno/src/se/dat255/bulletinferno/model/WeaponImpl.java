@@ -30,7 +30,8 @@ public class WeaponImpl implements Weapon {
 		this.world = world;
 		this.timer = world.getTimer();
 		timer.setTime(reloadingTime);
-		weaponSpeed = 3;
+		this.weaponSpeed = 3;
+		timer.stop();
 	}
 
 	/**
