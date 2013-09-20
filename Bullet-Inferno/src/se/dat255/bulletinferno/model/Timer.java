@@ -77,7 +77,7 @@ public interface Timer {
 	 * Deregisters specified listener to the timer
 	 * @param listener
 	 */
-	public void deregisterListeneR(Timerable listener);
+	public void unregisterListener(Timerable listener);
 	
 	/**
 	 * Updates the time

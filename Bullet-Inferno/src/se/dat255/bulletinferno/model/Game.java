@@ -50,4 +50,10 @@ public interface Game {
 	 * @param delta
 	 */
 	public void update(float delta);
+	
+	/**
+	 * @return the physics world (simulation object) used for the current physics game models.
+	 */
+	public PhysicsWorld getPhysicsWorld();
+	
 }

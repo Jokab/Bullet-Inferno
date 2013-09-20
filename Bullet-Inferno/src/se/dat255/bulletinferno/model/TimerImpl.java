@@ -145,7 +145,7 @@ public class TimerImpl implements Timer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deregisterListeneR(Timerable listener) {
+	public void unregisterListener(Timerable listener) {
 		timerables.remove(listener);
 	}
 	
