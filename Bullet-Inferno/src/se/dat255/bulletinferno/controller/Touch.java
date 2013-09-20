@@ -69,6 +69,8 @@ public class Touch implements InputProcessor {
 		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
 			// Left half of the screen
 			if (steeringFinger == -1) {
+				// Move ship by simple touch, avoiding touchDragged 
+				ship.setPosition(new Vector2(0, touchVector.y));
 				Gdx.app.log("Touch", "Steering set to " + pointer);
 				steeringFinger = pointer;
 			}
