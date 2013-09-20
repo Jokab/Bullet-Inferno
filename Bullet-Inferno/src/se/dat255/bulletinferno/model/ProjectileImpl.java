@@ -10,17 +10,17 @@ public class ProjectileImpl implements Projectile {
     private PhysicsBody body = null;
     
 	private int damage;
-	private final Game world;
+	private final Game game;
 	
 	/**
 	 * Constructs a new projectile
 	 * @param world
 	 */
-	public ProjectileImpl(Game world) {
-		this.world = world;
+	public ProjectileImpl(Game game) {
+		this.game = game;
 		
 		if(bodyDefinition == null) {
-		    Shape shape = world.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
+		    Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
 		    bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
 		}
 	}
@@ -53,7 +53,7 @@ public class ProjectileImpl implements Projectile {
 	public void collided(Collidable entity) {
 		// Code for special behavior here
 		
-		world.disposeProjectile(this);
+		game.disposeProjectile(this);
 	}
 
 	/**
@@ -90,6 +90,6 @@ public class ProjectileImpl implements Projectile {
 	    if(body != null) {
 	        throw new RuntimeException("Operation not supported yet.");
 	    }
-	    body = world.getPhysicsWorld().createBody(bodyDefinition, position);
+	    body = game.getPhysicsWorld().createBody(bodyDefinition, position);
 	}
 }

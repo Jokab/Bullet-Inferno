@@ -6,7 +6,5 @@ public interface PlayerShip extends Ship {
 	
 	public void fireWeapon();
 	
-	
 	void setPosition(Vector2 position);
-
 }

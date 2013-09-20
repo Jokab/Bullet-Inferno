@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Disposable;
  * 
  * <p>For Box2D hackers: the PhysicsBodyDefinition contains a BodyDef and one or more Fixture
  */
-class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition, Disposable {
+public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition, Disposable {
     
     /** The internal Box2D definition we're wrapping. */
     private final BodyDef definition = new BodyDef();
@@ -49,7 +49,7 @@ class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition, Disposable {
         fixtureDefinition.shape = this.shape;
         fixtureDefinition.density = 0f;
         fixtureDefinition.friction = 0f;
-        fixtureDefinition.isSensor = true; // Sensors does not have collision response.
+        fixtureDefinition.isSensor = true; // Sensors do not have collision response.
     }
     
     /**

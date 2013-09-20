@@ -3,8 +3,13 @@ package se.dat255.bulletinferno.model.enemy;
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Destructible;
 import se.dat255.bulletinferno.model.Enemy;
+import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.PhysicsBody;
+import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Shape;
 
 abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 
@@ -12,11 +17,21 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	private final int initialHealth;
 	private int score;
 	private int credits;
-	private Vector2 position;
+	
+    private static PhysicsBodyDefinition bodyDefinition = null;
+    private PhysicsBody body = null;
+    private Game game;
 
-	public EnemyImpl(Vector2 position, Vector2 velocity, int initialHealth) {
-		this.position = position;
+	public EnemyImpl(Game game, Vector2 position, Vector2 velocity, int initialHealth) {
 		this.initialHealth = initialHealth;
+		
+		if(bodyDefinition == null) {
+		    Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
+		    bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+		}
+		
+	    body = game.getPhysicsWorld().createBody(bodyDefinition, position);
+	    body.setVelocity(velocity);
 	}
 
 	@Override
@@ -51,6 +66,6 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	
 	@Override
 	public Vector2 getPosition() {
-		return this.position;
+		return this.body.getPosition();
 	}
 }
