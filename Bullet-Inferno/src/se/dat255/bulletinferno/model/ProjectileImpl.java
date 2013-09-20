@@ -21,7 +21,7 @@ public class ProjectileImpl implements Projectile {
 		
 		if(bodyDefinition == null) {
 		    Shape shape = world.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
-		    bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+		    bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
 		}
 	}
 	

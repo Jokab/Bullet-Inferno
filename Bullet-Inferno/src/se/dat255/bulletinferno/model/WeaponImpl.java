@@ -74,7 +74,7 @@ public class WeaponImpl implements Weapon {
 			// Get projectile and set properties accordingly
 			Projectile p = getProjectile();
 			p.setPosition(origin.add(getOffset()));
-			p.setVelocity(new Vector2(1,0));
+			p.setVelocity(new Vector2(10,0));
 			// Start count down
 			timer.restart();
 		}
