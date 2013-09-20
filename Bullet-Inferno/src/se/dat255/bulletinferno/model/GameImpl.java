@@ -89,6 +89,7 @@ public class GameImpl implements Game {
 	/** {@inheritDoc} */
 	@Override
 	public void disposeProjectile(Projectile projectile) {
+		projectiles.remove(projectile);
 		if(projectilePools.containsKey(projectile.getClass())) {
 			projectilePools.get(projectile.getClass()).free(projectile);
 		}
