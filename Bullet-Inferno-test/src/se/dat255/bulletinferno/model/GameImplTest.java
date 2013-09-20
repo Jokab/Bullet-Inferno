@@ -22,7 +22,7 @@ public class GameImplTest {
 				.retrieveProjectile(SimpleMockProjectile.class);
 		assertTrue(
 				"retrieveProjectile should return a Projectile of the wanted class-type",
-				projectile instanceof SimpleMockProjectile);
+				projectile.getClass() == SimpleMockProjectile.class);
 
 		assertTrue("The projectile should be added to the list of projectiles",
 				game.getProjectiles().contains(projectile));
