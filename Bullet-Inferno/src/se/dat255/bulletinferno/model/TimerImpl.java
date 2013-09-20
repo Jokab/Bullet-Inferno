@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin.TintedDrawable;
+
 /**
  * A timer class adapted to a game engine
  * @author sebastian
@@ -16,7 +18,7 @@ public class TimerImpl implements Timer {
 	private final List<Timerable> timerables = new LinkedList<Timerable>();
 	
 	/**
-	 * Constructs a new timer
+	 * Constructs a new timer with time to count down = 0
 	 */
 	public TimerImpl() {}
 	
@@ -26,6 +28,9 @@ public class TimerImpl implements Timer {
 	 * @param time
 	 */
 	public TimerImpl(float time) {
+		if(time < 0 ) {
+			time = 0;
+		}
 		timeLeft = initialTime = time;
 	}
 	
@@ -69,7 +74,12 @@ public class TimerImpl implements Timer {
 	 */
 	@Override
 	public void setTime(float time) {
+		if(time < 0 ) {
+			time = 0;
+		}
 		initialTime = time;
+		stop();
+		timeLeft = initialTime;
 	}
 
 	/**
@@ -163,6 +173,7 @@ public class TimerImpl implements Timer {
 		if(isRunning && timeLeft > 0) {
 			timeLeft -= delta;
 			if(timeLeft <= 0) {
+				timeLeft = 0;
 				notifyAllListeners();
 				if(isContinuous()) {
 					restart();
