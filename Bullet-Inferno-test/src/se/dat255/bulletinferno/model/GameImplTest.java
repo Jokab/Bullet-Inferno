@@ -14,7 +14,7 @@ public class GameImplTest {
 		// type of projectile and that the projectile is added
 		// to the current projectiles.
 
-		GameImpl game = new GameImpl();
+		GameImpl game = new GameImpl(null);
 		assertTrue("The list of projectiles of a new game should be empty",
 				game.getProjectiles().isEmpty());
 

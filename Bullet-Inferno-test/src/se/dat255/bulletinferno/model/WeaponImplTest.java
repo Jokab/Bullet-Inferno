@@ -8,16 +8,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
+import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class WeaponImplTest {
 
 	SimpleMockGame mockGame;
+	WeaponImplMockTimer mockTimer;
+	
 
 	@Before
 	public void initialize() {
-		mockGame = new SimpleMockGame();
+		mockTimer = new WeaponImplMockTimer();
+		mockGame = new SimpleMockGame(mockTimer);
 	}
 
 	@Test
@@ -69,7 +73,7 @@ public class WeaponImplTest {
 		// and that it triggers a cool-down on the weapon.
 
 		WeaponImpl weapon = new WeaponImpl(0, mockGame, new Vector2(1, 1));
-        mockGame.getTimer().stop();
+        
 
 		Vector2 origin = new Vector2(1, 1);
 		weapon.fire(origin);
@@ -87,14 +91,16 @@ public class WeaponImplTest {
 		// Tests that the weapon reloads
 
 		WeaponImpl weapon = new WeaponImpl(1, mockGame, new Vector2(1, 1));
-        mockGame.getTimer().stop();
 		weapon.fire(new Vector2());
 
 		float preUpdateTime = weapon.getReloadingTimeLeft();
 
-        mockGame.getTimer().update(mockGame.getTimer().getInitialValue());
+        mockTimer.timeLeft -= 1;
 
 		assertTrue(preUpdateTime > weapon.getReloadingTimeLeft());
 
+	}
+	
+	class WeaponImplMockTimer extends SimpleMockTimer {	
 	}
 }
