@@ -6,10 +6,13 @@ public class PlayerShipImpl implements PlayerShip {
 	private final Vector2 position = new Vector2();
 	private Game world;
 	private Weapon weapon;
+	private final int initialHealth;
+	private int health;
 
-	public PlayerShipImpl(final Vector2 position, Game world) {
+	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth) {
 		this.position.set(position);
 		this.world = world;
+		this.initialHealth = initialHealth;
 		weapon = new WeaponImpl(0, world);
 	}
 
@@ -21,20 +24,17 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void takeDamage(int damage) {
-		// TODO Auto-generated method stub
-
+		this.health -= damage;
 	}
 
 	@Override
 	public int getHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.health;
 	}
 
 	@Override
 	public int getInitialHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.initialHealth;
 	}
 	
 

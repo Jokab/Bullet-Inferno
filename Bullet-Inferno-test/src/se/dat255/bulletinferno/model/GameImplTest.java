@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 public class GameImplTest {
 
 	@Test
-	public void retrieveProjectile() {
+	public void testRetrieveProjectile() {
 		// Tests that retrieving a projectile returns the correct
 		// type of projectile and that the projectile is added
 		// to the current projectiles.
@@ -27,6 +27,26 @@ public class GameImplTest {
 		assertTrue("The projectile should be added to the list of projectiles",
 				game.getProjectiles().contains(projectile));
 
+	}
+
+	@Test
+	public void testDisposeProjectile() {
+		GameImpl game = new GameImpl(null);
+		Projectile projectile = game
+				.retrieveProjectile(SimpleMockProjectile.class);
+		assertTrue("The projectile should be added to the list of projectiles",
+				game.getProjectiles().contains(projectile));
+
+		game.disposeProjectile(projectile);
+		assertTrue("The list of projectiles of a new game should be empty",
+				game.getProjectiles().isEmpty());
+	}
+
+	@Test
+	public void testGetTimer() {
+		GameImpl game = new GameImpl(null);
+		assertNotNull("A timer should be returned from the getTimer method",
+				game.getTimer());
 	}
 
 }
