@@ -23,8 +23,8 @@ public class EnemyView implements Renderable {
 
 		sprite = new Sprite(texture);
 		sprite.setOrigin(0, 0);
-		sprite.setSize(1,1);
-		sprite.setPosition(enemy.getPosition().x,enemy.getPosition().y);
+		sprite.setSize(1, 1);
+		sprite.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 	}
 
 	@Override

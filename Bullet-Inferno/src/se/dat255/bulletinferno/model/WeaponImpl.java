@@ -6,11 +6,12 @@ public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float reloadingTime;
 	private final Game world;
-	private int weaponSpeed;
+	private final int weaponSpeed;
 	private final Timer timer;
-	
+
 	/**
 	 * Constructs a new weapon with the 0-vector
+	 * 
 	 * @param reloadingTime
 	 * @param world
 	 */
@@ -20,6 +21,7 @@ public class WeaponImpl implements Weapon {
 
 	/**
 	 * Constructs a new weapon
+	 * 
 	 * @param reloadingTime
 	 * @param world
 	 * @param offset
@@ -28,9 +30,9 @@ public class WeaponImpl implements Weapon {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
 		this.world = world;
-		this.timer = world.getTimer();
+		timer = world.getTimer();
 		timer.setTime(reloadingTime);
-		this.weaponSpeed = 3;
+		weaponSpeed = 3;
 		timer.stop();
 	}
 
@@ -76,7 +78,7 @@ public class WeaponImpl implements Weapon {
 			// Get projectile and set properties accordingly
 			Projectile p = getProjectile();
 			p.setPosition(origin.add(getOffset()));
-			p.setVelocity(new Vector2(weaponSpeed,0));
+			p.setVelocity(new Vector2(weaponSpeed, 0));
 			// Start count down
 			timer.restart();
 		}

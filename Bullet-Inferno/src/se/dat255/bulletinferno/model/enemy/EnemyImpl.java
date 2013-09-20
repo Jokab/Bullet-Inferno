@@ -17,55 +17,57 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	private final int initialHealth;
 	private int score;
 	private int credits;
-	
-    private static PhysicsBodyDefinition bodyDefinition = null;
-    private PhysicsBody body = null;
-    private Game game;
 
-	public EnemyImpl(Game game, Vector2 position, Vector2 velocity, int initialHealth) {
+	private static PhysicsBodyDefinition bodyDefinition = null;
+	private PhysicsBody body = null;
+	private Game game;
+
+	public EnemyImpl(Game game, Vector2 position, Vector2 velocity,
+			int initialHealth) {
 		this.initialHealth = initialHealth;
-		
-		if(bodyDefinition == null) {
-		    Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
-		    bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+
+		if (bodyDefinition == null) {
+			Shape shape = game.getPhysicsWorld().getShapeFactory()
+					.getRectangularShape(1f, 2f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
-		
-	    body = game.getPhysicsWorld().createBody(bodyDefinition, position);
-	    body.setVelocity(velocity);
+
+		body = game.getPhysicsWorld().createBody(bodyDefinition, position);
+		body.setVelocity(velocity);
 	}
 
 	@Override
 	public int getScore() {
-		return this.score;
+		return score;
 	}
 
 	@Override
 	public int getCredits() {
-		return this.credits;
+		return credits;
 	}
 
 	@Override
 	public void collided(Collidable with) {
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public int getHealth() {
-		return this.health;
+		return health;
 	}
-	
+
 	@Override
 	public void takeDamage(int damage) {
-		this.health -= damage;
+		health -= damage;
 	}
 
 	@Override
 	public int getInitialHealth() {
-		return this.initialHealth;
+		return initialHealth;
 	}
-	
+
 	@Override
 	public Vector2 getPosition() {
-		return this.body.getPosition();
+		return body.getPosition();
 	}
 }

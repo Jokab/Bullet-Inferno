@@ -3,12 +3,11 @@ package se.dat255.bulletinferno.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin.TintedDrawable;
-
 /**
  * A timer class adapted to a game engine
+ * 
  * @author sebastian
- *
+ * 
  */
 public class TimerImpl implements Timer {
 	private float initialTime = 0;
@@ -16,27 +15,29 @@ public class TimerImpl implements Timer {
 	private boolean isRunning = false;
 	private boolean isContinuous = false;
 	private final List<Timerable> timerables = new LinkedList<Timerable>();
-	
+
 	/**
 	 * Constructs a new timer with time to count down = 0
 	 */
-	public TimerImpl() {}
-	
+	public TimerImpl() {
+	}
+
 	/**
-	 * Constructs a new Timer with specified time to 
-	 * count down, that is not continuous.
+	 * Constructs a new Timer with specified time to count down, that is not
+	 * continuous.
+	 * 
 	 * @param time
 	 */
 	public TimerImpl(float time) {
-		if(time < 0 ) {
+		if (time < 0) {
 			time = 0;
 		}
 		timeLeft = initialTime = time;
 	}
-	
+
 	/**
-	 * Constructs a new Timer with specified time
-	 * and specified continuity
+	 * Constructs a new Timer with specified time and specified continuity
+	 * 
 	 * @param time
 	 * @param continuous
 	 */
@@ -44,7 +45,7 @@ public class TimerImpl implements Timer {
 		this(time);
 		isContinuous = continuous;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -74,7 +75,7 @@ public class TimerImpl implements Timer {
 	 */
 	@Override
 	public void setTime(float time) {
-		if(time < 0 ) {
+		if (time < 0) {
 			time = 0;
 		}
 		initialTime = time;
@@ -124,7 +125,7 @@ public class TimerImpl implements Timer {
 		timeLeft = initialTime;
 		start();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -146,7 +147,7 @@ public class TimerImpl implements Timer {
 	 */
 	@Override
 	public void registerListener(Timerable listener) {
-		if(!timerables.contains(listener)) {
+		if (!timerables.contains(listener)) {
 			timerables.add(listener);
 		}
 	}
@@ -158,24 +159,24 @@ public class TimerImpl implements Timer {
 	public void unregisterListener(Timerable listener) {
 		timerables.remove(listener);
 	}
-	
+
 	private void notifyAllListeners() {
-		for(Timerable listener : timerables) {
+		for (Timerable listener : timerables) {
 			listener.onTimeout(this);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void update(float delta) {
-		if(isRunning && timeLeft > 0) {
+		if (isRunning && timeLeft > 0) {
 			timeLeft -= delta;
-			if(timeLeft <= 0) {
+			if (timeLeft <= 0) {
 				timeLeft = 0;
 				notifyAllListeners();
-				if(isContinuous()) {
+				if (isContinuous()) {
 					restart();
 				} else {
 					isRunning = false;

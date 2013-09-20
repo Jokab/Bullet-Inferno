@@ -1,11 +1,11 @@
 package se.dat255.bulletinferno.model;
-import com.badlogic.gdx.math.Vector2;
 
+import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipImpl implements PlayerShip {
 	private final Vector2 position = new Vector2();
-	private Game world;
-	private Weapon weapon;
+	private final Game world;
+	private final Weapon weapon;
 	private final int initialHealth;
 	private int health;
 
@@ -24,19 +24,18 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void takeDamage(int damage) {
-		this.health -= damage;
+		health -= damage;
 	}
 
 	@Override
 	public int getHealth() {
-		return this.health;
+		return health;
 	}
 
 	@Override
 	public int getInitialHealth() {
-		return this.initialHealth;
+		return initialHealth;
 	}
-	
 
 	@Override
 	public Vector2 getPosition() {

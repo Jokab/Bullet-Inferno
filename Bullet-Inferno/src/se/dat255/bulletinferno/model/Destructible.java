@@ -4,7 +4,8 @@ public interface Destructible {
 	/**
 	 * Subtracts the object's health with the taken damage.
 	 * 
-	 * @param damage The damage to be dealt.
+	 * @param damage
+	 *            The damage to be dealt.
 	 */
 	public void takeDamage(int damage);
 
