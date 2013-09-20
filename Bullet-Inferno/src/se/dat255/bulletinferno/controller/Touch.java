@@ -107,7 +107,11 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
+		// Unproject the touch location to the virtual screen.
+		Vector2 touchVector = new Vector2(screenX, screenY);
+		graphics.screenToWorld(touchVector);
+		// Move ship
+		ship.setPosition(new Vector2(0, touchVector.y));
 		return false;
 	}
 
