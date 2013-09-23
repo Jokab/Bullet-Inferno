@@ -17,10 +17,20 @@ public class WeaponImpl implements Weapon {
 	private final Class<? extends Projectile> projectile;
 
 	/**
+	 * Constructs a new weapon using data from a WeaponDescription.
+	 * 
+	 * @param game 
+	 * @param weaponDescription Object that holds the data or "settings" for weapon.
+	 */
+	public WeaponImpl(Game game, WeaponDescription weaponDescription) {
+		this(game, weaponDescription.getReloadTime(), weaponDescription.getProjectile(), weaponDescription.getOffset());
+	}
+	
+	/**
 	 * Constructs a new weapon with the 0-vector
 	 * 
-	 * @param reloadingTime
 	 * @param world
+	 * @param reloadingTime
 	 */
 	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile) {
 		this(game, reloadingTime, projectile, new Vector2());
@@ -40,13 +50,11 @@ public class WeaponImpl implements Weapon {
 		this.game = game;
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
+		System.out.println("Reloading time left "+ this.getReloadingTimeLeft());
 		weaponSpeed = 3;
 		timer.stop();
 	}
 	
-	public WeaponImpl(Game game, WeaponDescription weaponDescription) {
-		this(game, weaponDescription.getReloadTime(), weaponDescription.getProjectile(), weaponDescription.getOffset());
-	}
 
 	/**
 	 * {@inheritDoc}
