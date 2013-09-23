@@ -22,7 +22,7 @@ public class ProjectileImpl implements Projectile {
 
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
 		}
 	}
 
