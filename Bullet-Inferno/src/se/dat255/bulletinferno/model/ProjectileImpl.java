@@ -61,11 +61,15 @@ public class ProjectileImpl implements Projectile {
 	public void postCollided(Collidable other) {
 		// Decrease the damage after hits, since we must let the other object that collided with us
 		// decide if they want to take our current damage (etc.) before we zero it.
-		if(damage > 0) {
+		if(damage > 0 && !(other instanceof Projectile)) {
 			damage -= 1;
 			
-			// We won't need this projectile anymore, since it is useless and can't hurt anyone.
-			game.disposeProjectile(this);
+			// Note: Do not move this out of here - this must be called only once, and that is when
+			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
+			if(damage <= 0) {
+				// We won't need this projectile anymore, since it is useless and can't hurt anyone.
+				game.disposeProjectile(this);
+			}
 		}
 	}
 
@@ -74,8 +78,7 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public void reset() {
-		// TODO Reset projectile
-
+		game.getPhysicsWorld().removeBody(body);
 	}
 
 	/**
