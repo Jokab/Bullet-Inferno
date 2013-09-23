@@ -51,9 +51,15 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void collided(Collidable entity) {
-		// Code for special behavior here
-
+	public void preCollided(Collidable other) {
+		// NOP
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
 		game.disposeProjectile(this);
 	}
 

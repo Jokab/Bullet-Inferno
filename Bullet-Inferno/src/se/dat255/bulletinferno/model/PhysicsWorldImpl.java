@@ -92,8 +92,10 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 			Collidable collidableA = collision.getCollidableA();
 			Collidable collidableB = collision.getCollidableB();
 
-			collidableA.collided(collidableB);
-			collidableB.collided(collidableA);
+			collidableA.preCollided(collidableB);
+			collidableB.preCollided(collidableA);
+			collidableA.postCollided(collidableB);
+			collidableB.postCollided(collidableA);
 		}
 		collisionQueue.removeAll();
 	}

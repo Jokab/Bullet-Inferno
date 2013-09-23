@@ -46,8 +46,19 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 		return credits;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void collided(Collidable with) {
+	public void preCollided(Collidable other) {
+		// TODO Auto-generated method stub
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
 		// TODO Auto-generated method stub
 	}
 
