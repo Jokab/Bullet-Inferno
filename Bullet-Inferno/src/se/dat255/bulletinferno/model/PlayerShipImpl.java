@@ -1,11 +1,11 @@
 package se.dat255.bulletinferno.model;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponData;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-
 public class PlayerShipImpl implements PlayerShip {
+	
 	private final Vector2 position = new Vector2();
 	private Game world;
 	private Weapon weapon;
@@ -14,11 +14,11 @@ public class PlayerShipImpl implements PlayerShip {
 	private float moveToPos; 
 	private float moveSpeed = 0.1f;
 
-	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth) {
+	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth, WeaponData weaponData) {
 		this.position.set(position);
 		this.world = world;
 		this.initialHealth = initialHealth;
-		weapon = new WeaponImpl(0, world);
+		weapon = new WeaponImpl(world, weaponData);
 		world.setPlayerShip(this);
 	}
 

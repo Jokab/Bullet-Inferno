@@ -8,12 +8,13 @@ import se.dat255.bulletinferno.model.Weapon;
 
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class WeaponImpl implements Weapon {
+public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float reloadingTime;
 	private final Game game;
 	private final int weaponSpeed;
 	private final Timer timer;
+	private final Class<? extends Projectile> projectile;
 
 	/**
 	 * Constructs a new weapon with the 0-vector
@@ -21,8 +22,8 @@ public abstract class WeaponImpl implements Weapon {
 	 * @param reloadingTime
 	 * @param world
 	 */
-	public WeaponImpl(Game game, float reloadingTime) {
-		this(game, reloadingTime, new Vector2());
+	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile) {
+		this(game, reloadingTime, projectile, new Vector2());
 	}
 
 	/**
@@ -32,14 +33,19 @@ public abstract class WeaponImpl implements Weapon {
 	 * @param world
 	 * @param offset
 	 */
-	public WeaponImpl(Game game, float reloadingTime, Vector2 offset) {
+	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile, Vector2 offset) {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
+		this.projectile = projectile;
 		this.game = game;
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
 		weaponSpeed = 3;
 		timer.stop();
+	}
+	
+	public WeaponImpl(Game game, WeaponDescription weaponDescription) {
+		this(game, weaponDescription.getReloadTime(), weaponDescription.getProjectile(), weaponDescription.getOffset());
 	}
 
 	/**
@@ -95,6 +101,6 @@ public abstract class WeaponImpl implements Weapon {
 	 */
 	protected Projectile getProjectile() {
 		// Retrieve a projectile from the world
-		return game.retrieveProjectile(ProjectileImpl.class);
+		return game.retrieveProjectile(projectile);
 	}
 }

@@ -7,6 +7,7 @@ import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.ShipView;
@@ -67,7 +68,7 @@ public class MyGame implements ApplicationListener {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game, 100);
+		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game, 100, WeaponData.STANDARD);
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
