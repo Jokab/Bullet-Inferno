@@ -22,7 +22,7 @@ public class GameImpl implements Game {
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
-
+	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	private final List<Timer> timers;
 	
@@ -37,13 +37,23 @@ public class GameImpl implements Game {
 	}
 	
 	/**
+	 *  {@inheritDoc}
+	 */
+	@Override
+	public void setPlayerShip(PlayerShip ship){
+		this.playerShip = ship;
+	}
+		
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public PlayerShip getPlayerShip() {
 		// TODO Auto-generated method stub
-		return null;
+		return playerShip;
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -138,6 +148,7 @@ public class GameImpl implements Game {
 		}
 		
 		world.update(deltaTime);
+		playerShip.update(deltaTime);
 	}
 	
 	/**

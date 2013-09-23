@@ -21,6 +21,13 @@ public interface Game {
 	public void disposeProjectile(Projectile projectile);
 	
 	/**
+	 * Sets a reference to the player's ship, for use in update methods.
+	 * @return
+	 */
+	public void setPlayerShip(PlayerShip ship);
+	
+	
+	/**
 	 * Returns the player's ship
 	 * @return
 	 */

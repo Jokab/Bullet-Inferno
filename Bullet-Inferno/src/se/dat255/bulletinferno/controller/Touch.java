@@ -4,6 +4,7 @@ import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.PlayerShip;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
@@ -17,6 +18,10 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Touch implements InputProcessor {
 
+	private int UPKEY = 51;
+	private int DOWNKEY = 47; 
+	private int FIREKEY = 62;
+	
 	/**
 	 * The game camera. This is needed to unproject x/y values to the virtual
 	 * screen size.
@@ -41,12 +46,29 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if(keycode==UPKEY){
+			ship.moveUp();
+		}
+		if(keycode==DOWNKEY){
+			ship.moveDown();
+		}
+		if(keycode==FIREKEY){
+			ship.fireWeapon();
+		}
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
+	public boolean keyUp(int keycode) {	
+		if(keycode==UPKEY){
+			ship.stopMoveUp();
+		}
+		if(keycode==DOWNKEY){
+			ship.stopMoveDown();
+		}
+		
+		
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -68,15 +90,22 @@ public class Touch implements InputProcessor {
 
 		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
 			// Left half of the screen
-			if (steeringFinger == -1) {
-				// Move ship by simple touch, avoiding touchDragged 
-				ship.setPosition(new Vector2(0, touchVector.y));
+			//if (steeringFinger == -1) {
+				// Move ship by simple touch, avoiding touchDragged
+				ship.stopMovement();
+				if(touchVector.y > ship.getPosition().y + 0.1f){
+					ship.moveUp();
+				}else if(touchVector.y < ship.getPosition().y - 0.1f){
+					ship.moveDown();
+				}else{
+					
+				}
 				Gdx.app.log("Touch", "Steering set to " + pointer);
 				steeringFinger = pointer;
-			}
+			//}
 		} else {
 			// Right half of the screen
-			ship.fireWeapon();
+			//ship.fireWeapon();
 		}
 		
 		return false;
@@ -84,36 +113,33 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (pointer == steeringFinger) {
+		//if (pointer == steeringFinger) {
 			Gdx.app.log("Touch", "Steering finger unset " + pointer);
 			steeringFinger = -1;
-		}
+			ship.stopMovement();
+		//}
 
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// Unproject the touch location to the virtual screen.
-		Vector2 touchVector = new Vector2(screenX, screenY);
-		graphics.screenToWorld(touchVector);
-
-		if (pointer == steeringFinger) {
-			// Move ship
-			ship.setPosition(new Vector2(0, touchVector.y));
-		}
-
+			touchDown(screenX, screenY, pointer, Input.Buttons.LEFT);
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// Unproject the touch location to the virtual screen.
+		/*// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		graphics.screenToWorld(touchVector);
 		// Move ship
 		ship.setPosition(new Vector2(0, touchVector.y));
+		
+		*/
+		touchDown(screenX, screenY, 0, Input.Buttons.LEFT);
+		
 		return false;
 	}
 
