@@ -11,7 +11,8 @@ public class PlayerShipImpl implements PlayerShip {
 	private final int initialHealth;
 	private int health;
 	private enum MoveDirection { UP, NONE, DOWN };
-	public EnumSet<MoveDirection> DIRECTION = EnumSet.noneOf(MoveDirection.class);
+	private EnumSet<MoveDirection> DIRECTION = EnumSet.noneOf(MoveDirection.class);
+	private float moveToPos; 
 
 	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth) {
 		this.position.set(position);
@@ -66,6 +67,11 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 	
 	@Override
+	
+	public void moveTo(float yPos){
+		moveToPos = yPos;
+	}
+	
 	public void moveUp(){
 		DIRECTION.add(MoveDirection.UP);
 	}
