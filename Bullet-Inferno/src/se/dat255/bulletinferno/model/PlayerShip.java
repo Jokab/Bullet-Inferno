@@ -14,11 +14,6 @@ public interface PlayerShip extends Ship {
 	void setPosition(Vector2 position);
 
 	public void moveTo(float yPos);
-	
-	public void moveUp();
-	public void moveDown();
-	public void stopMoveUp();
-	public void stopMoveDown();
 	public void stopMovement();
 	
 

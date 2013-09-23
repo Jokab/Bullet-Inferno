@@ -47,10 +47,10 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode==UPKEY){
-			ship.moveUp();
+			ship.moveTo(Graphics.GAME_HEIGHT);
 		}
 		if(keycode==DOWNKEY){
-			ship.moveDown();
+			ship.moveTo(0f);
 		}
 		if(keycode==FIREKEY){
 			ship.fireWeapon();
@@ -62,10 +62,10 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {	
 		if(keycode==UPKEY){
-			ship.stopMoveUp();
+			ship.stopMovement();
 		}
 		if(keycode==DOWNKEY){
-			ship.stopMoveDown();
+			ship.stopMovement();
 		}
 		
 		
@@ -90,21 +90,20 @@ public class Touch implements InputProcessor {
 
 		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
 			// Left half of the screen
-			//if (steeringFinger == -1) {
-				// Move ship by simple touch, avoiding touchDragged
+				//Move ship by giving the touch coordinate to the moveTo-method
 				ship.stopMovement();
 				if(touchVector.y > ship.getPosition().y + 0.1f){
-					ship.moveUp();
+					ship.moveTo(touchVector.y);
 				}else if(touchVector.y < ship.getPosition().y - 0.1f){
-					ship.moveDown();
+					ship.moveTo(touchVector.y);
 				}else{
-					
+				;	
 				}
-				Gdx.app.log("Touch", "Steering set to " + pointer);
-				steeringFinger = pointer;
 			//}
 		} else {
 			// Right half of the screen
+			// Currently bugged. Needs a load timer for weapon.
+			// Dragging causes MANY projectiles
 			//ship.fireWeapon();
 		}
 		
@@ -113,31 +112,20 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		//if (pointer == steeringFinger) {
-			Gdx.app.log("Touch", "Steering finger unset " + pointer);
-			steeringFinger = -1;
 			ship.stopMovement();
-		//}
-
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-			touchDown(screenX, screenY, pointer, Input.Buttons.LEFT);
-		// TODO Auto-generated method stub
+		//Calls touchDown with default (left) button.
+		touchDown(screenX, screenY, pointer, Input.Buttons.LEFT);
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		/*// Unproject the touch location to the virtual screen.
-		Vector2 touchVector = new Vector2(screenX, screenY);
-		graphics.screenToWorld(touchVector);
-		// Move ship
-		ship.setPosition(new Vector2(0, touchVector.y));
-		
-		*/
+		//Same as touchDragged but for desktop
 		touchDown(screenX, screenY, 0, Input.Buttons.LEFT);
 		
 		return false;

@@ -10,9 +10,8 @@ public class PlayerShipImpl implements PlayerShip {
 	private Weapon weapon;
 	private final int initialHealth;
 	private int health;
-	private enum MoveDirection { UP, NONE, DOWN };
-	private EnumSet<MoveDirection> DIRECTION = EnumSet.noneOf(MoveDirection.class);
 	private float moveToPos; 
+	private float moveSpeed = 0.1f;
 
 	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth) {
 		this.position.set(position);
@@ -56,14 +55,14 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	@Override
 	public void update(float deltaTime){
-		if(DIRECTION.contains(MoveDirection.UP)){
-			//setPosition(new Vector2(0, position.y+(float)0.1));
-			this.position.add(0, 0.1f);
+				
+		if(position.y > moveToPos + 0.1f){
+			this.position.add(0, -moveSpeed);
+		}else if(position.y < moveToPos - 0.1f){
+			this.position.add(0, moveSpeed);
 		}
-		if(DIRECTION.contains(MoveDirection.DOWN)){
-			//setPosition(new Vector2(0, position.y-(float)0.1));
-			this.position.add(0, -0.1f);
-		}
+		
+
 	}
 	
 	@Override
@@ -71,28 +70,10 @@ public class PlayerShipImpl implements PlayerShip {
 	public void moveTo(float yPos){
 		moveToPos = yPos;
 	}
-	
-	public void moveUp(){
-		DIRECTION.add(MoveDirection.UP);
-	}
-	
-	public void moveDown(){
-		DIRECTION.add(MoveDirection.DOWN);
-	}
-	
-	@Override
-	public void stopMoveUp(){
-		DIRECTION.remove(MoveDirection.UP);
-	}
-	
-	@Override
-	public void stopMoveDown(){
-		DIRECTION.remove(MoveDirection.DOWN);
-	}
-	
+		
 	@Override
 	public void stopMovement(){
-		DIRECTION.clear();
+		moveToPos = position.y;
 	}
 	
 	@Override
