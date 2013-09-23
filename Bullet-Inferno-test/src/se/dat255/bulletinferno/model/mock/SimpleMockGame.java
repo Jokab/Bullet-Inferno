@@ -84,4 +84,8 @@ public class SimpleMockGame implements Game {
 		return physicsWorld;
 	}
 
+	@Override
+	public void setPlayerShip(PlayerShip ship) {
+	}
+
 }
