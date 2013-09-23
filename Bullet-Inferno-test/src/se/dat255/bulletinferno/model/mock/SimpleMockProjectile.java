@@ -35,12 +35,13 @@ public class SimpleMockProjectile implements Projectile {
 	}
 
 	@Override
-	public void setPosition(Vector2 position) {
+	public Vector2 getPosition() {
+		return null;
 	}
 
 	@Override
-	public Vector2 getPosition() {
-		return null;
+	public void init(Vector2 position, Vector2 velocity, int damage) {
+
 	}
 
 }
