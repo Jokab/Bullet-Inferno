@@ -1,19 +1,23 @@
 package se.dat255.bulletinferno.model;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
 
 public class PlayerShipImpl implements PlayerShip {
 	private final Vector2 position = new Vector2();
-	private final Game world;
-	private final Weapon weapon;
+	private Game world;
+	private Weapon weapon;
 	private final int initialHealth;
 	private int health;
+	private float moveToPos; 
+	private float moveSpeed = 0.1f;
 
 	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth) {
 		this.position.set(position);
 		this.world = world;
 		this.initialHealth = initialHealth;
 		weapon = new WeaponImpl(0, world);
+		world.setPlayerShip(this);
 	}
 
 	@Override
@@ -24,18 +28,19 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void takeDamage(int damage) {
-		health -= damage;
+		this.health -= damage;
 	}
 
 	@Override
 	public int getHealth() {
-		return health;
+		return this.health;
 	}
 
 	@Override
 	public int getInitialHealth() {
-		return initialHealth;
+		return this.initialHealth;
 	}
+	
 
 	@Override
 	public Vector2 getPosition() {
@@ -46,7 +51,29 @@ public class PlayerShipImpl implements PlayerShip {
 	public void setPosition(Vector2 position) {
 		this.position.set(position);
 	}
+	
+	@Override
+	public void update(float deltaTime){
+				
+		if(position.y > moveToPos + 0.1f){
+			this.position.add(0, -moveSpeed);
+		}else if(position.y < moveToPos - 0.1f){
+			this.position.add(0, moveSpeed);
+		}
+		
 
+	}
+	
+	@Override
+	public void moveTo(float yPos){
+		moveToPos = yPos;
+	}
+		
+	@Override
+	public void stopMovement(){
+		moveToPos = position.y;
+	}
+	
 	@Override
 	public void fireWeapon() {
 		weapon.fire(position);
