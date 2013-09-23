@@ -14,7 +14,7 @@ public class PlayerShipImpl implements PlayerShip {
 	private float moveToPos; 
 	private float moveSpeed = 0.1f;
 
-	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth, WeaponData weaponData) {
+	public PlayerShipImpl(Game world, final Vector2 position,int initialHealth, WeaponData weaponData) {
 		this.position.set(position);
 		this.world = world;
 		this.initialHealth = initialHealth;

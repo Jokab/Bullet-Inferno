@@ -68,7 +68,7 @@ public class MyGame implements ApplicationListener {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game, 100, WeaponData.STANDARD);
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.STANDARD);
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
