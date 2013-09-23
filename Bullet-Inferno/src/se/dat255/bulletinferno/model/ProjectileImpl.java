@@ -59,7 +59,14 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public void postCollided(Collidable other) {
-		game.disposeProjectile(this);
+		// Decrease the damage after hits, since we must let the other object that collided with us
+		// decide if they want to take our current damage (etc.) before we zero it.
+		if(damage > 0) {
+			damage -= 1;
+			
+			// We won't need this projectile anymore, since it is useless and can't hurt anyone.
+			game.disposeProjectile(this);
+		}
 	}
 
 	/**
