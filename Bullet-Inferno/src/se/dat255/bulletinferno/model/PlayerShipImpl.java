@@ -68,6 +68,11 @@ public class PlayerShipImpl implements PlayerShip {
 	public void moveTo(float yPos){
 		moveToPos = yPos;
 	}
+	
+	@Override
+	public float getMovePos(){
+		return moveToPos;
+	}
 		
 	@Override
 	public void stopMovement(){
