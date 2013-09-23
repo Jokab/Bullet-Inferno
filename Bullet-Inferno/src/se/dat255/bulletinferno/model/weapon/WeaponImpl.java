@@ -50,7 +50,6 @@ public class WeaponImpl implements Weapon {
 		this.game = game;
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
-		System.out.println("Reloading time left "+ this.getReloadingTimeLeft());
 		weaponSpeed = 3;
 		timer.stop();
 	}
