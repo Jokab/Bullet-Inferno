@@ -6,16 +6,20 @@ public interface PhysicsWorld {
 
 	/**
 	 * Creates a PhysicsBody from the body definition, placing it at the
-	 * specified position. Do not place objects at the same place (e.g. origin)
-	 * and move them later, as bad performance will follow.
+	 * specified position. <strong>Do not place objects at the same place (e.g. origin)
+	 * and move them later, as bad performance will follow.</strong>
 	 * 
 	 * <p>
 	 * The body definitions position will be set to the position. Note that
 	 * while the object is manipulated, its other properties can be re-used for
 	 * performance reasons. The position is explicitly set here to make sure
 	 * unexpected behavior will not follow from this issue.
+	 * 
+	 * @param definition the body mold to use for creating the body.
+	 * @param collidable the element that will be called when collision detection occurs.
+	 * @param position the initial position of the body in world coordinates. See notice above!
 	 */
-	public PhysicsBody createBody(PhysicsBodyDefinition definition,
+	public PhysicsBody createBody(PhysicsBodyDefinition definition, Collidable collidable,
 			Vector2 position);
 
 	/**
