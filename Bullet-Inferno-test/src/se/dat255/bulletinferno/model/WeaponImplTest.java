@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
+import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -28,7 +29,7 @@ public class WeaponImplTest {
 	public void testGetReloadingTime() {
 		// Tests that the reloading time is set in the constructor
 
-		WeaponImpl weapon = new WeaponImpl(20, mockGame);
+		WeaponImpl weapon = new WeaponImpl(mockGame, 20, ProjectileImpl.class);
 		assertTrue("The reloadingTime should be set in the constructor",
 				weapon.getReloadingTime() == 20);
 	}
@@ -37,7 +38,7 @@ public class WeaponImplTest {
 	public void testGetReloadingTimeLeft() {
 		// Tests that a newly created weapon is not reloading
 
-		WeaponImpl weapon = new WeaponImpl(20, mockGame);
+		WeaponImpl weapon = new WeaponImpl(mockGame, 20, ProjectileImpl.class);
 		assertTrue("A newly created weapon should not be reloading",
 				weapon.getReloadingTimeLeft() <= 0);
 	}
@@ -47,7 +48,7 @@ public class WeaponImplTest {
 		// Tests that a newly created weapon is loaded
 		// Essentially the same test as above
 
-		WeaponImpl weapon = new WeaponImpl(20, mockGame);
+		WeaponImpl weapon = new WeaponImpl(mockGame, 20, ProjectileImpl.class);
 		assertTrue("A newly created weapon should be loaded",
 				weapon.isLoaded());
 	}
@@ -57,11 +58,11 @@ public class WeaponImplTest {
 		// Tests that the offset is always set, and if
 		// provided in the constructor is set to that value
 
-		WeaponImpl weapon = new WeaponImpl(20, mockGame);
+		WeaponImpl weapon = new WeaponImpl(mockGame, 20, ProjectileImpl.class);
 		assertNotNull("The offset should always exist", weapon.getOffset());
 
 		Vector2 offset = new Vector2();
-		WeaponImpl weapon1 = new WeaponImpl(20, mockGame, offset);
+		WeaponImpl weapon1 = new WeaponImpl(mockGame, 20, ProjectileImpl.class, offset);
 		assertEquals("The offset should be set in the constructor",
 				weapon1.getOffset(), offset);
 	}
@@ -72,8 +73,7 @@ public class WeaponImplTest {
 		// at the provided origin position "+" the offset,
 		// and that it triggers a cool-down on the weapon.
 
-		WeaponImpl weapon = new WeaponImpl(0, mockGame, new Vector2(1, 1));
-        
+		WeaponImpl weapon = new WeaponImpl(mockGame, 20, ProjectileImpl.class, new Vector2(1,1));
 
 		Vector2 origin = new Vector2(1, 1);
 		weapon.fire(origin);
@@ -90,7 +90,7 @@ public class WeaponImplTest {
 	public void testWeaponReloads() {
 		// Tests that the weapon reloads
 
-		WeaponImpl weapon = new WeaponImpl(1, mockGame, new Vector2(1, 1));
+		WeaponImpl weapon = new WeaponImpl(mockGame, 20, ProjectileImpl.class, new Vector2(1,1));
 		weapon.fire(new Vector2());
 
 		float preUpdateTime = weapon.getReloadingTimeLeft();
