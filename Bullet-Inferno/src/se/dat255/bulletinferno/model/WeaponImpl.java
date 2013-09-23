@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float reloadingTime;
-	private final Game world;
+	private final Game game;
 	private final int weaponSpeed;
 	private final Timer timer;
 
@@ -15,8 +15,8 @@ public class WeaponImpl implements Weapon {
 	 * @param reloadingTime
 	 * @param world
 	 */
-	public WeaponImpl(float reloadingTime, Game world) {
-		this(reloadingTime, world, new Vector2());
+	public WeaponImpl(Game game, float reloadingTime) {
+		this(game, reloadingTime, new Vector2());
 	}
 
 	/**
@@ -26,11 +26,11 @@ public class WeaponImpl implements Weapon {
 	 * @param world
 	 * @param offset
 	 */
-	public WeaponImpl(float reloadingTime, Game world, Vector2 offset) {
+	public WeaponImpl(Game game, float reloadingTime, Vector2 offset) {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
-		this.world = world;
-		timer = world.getTimer();
+		this.game = game;
+		timer = game.getTimer();
 		timer.setTime(reloadingTime);
 		weaponSpeed = 3;
 		timer.stop();
@@ -89,6 +89,6 @@ public class WeaponImpl implements Weapon {
 	 */
 	protected Projectile getProjectile() {
 		// Retrieve a projectile from the world
-		return world.retrieveProjectile(ProjectileImpl.class);
+		return game.retrieveProjectile(ProjectileImpl.class);
 	}
 }
