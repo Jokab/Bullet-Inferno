@@ -8,7 +8,8 @@ import se.dat255.bulletinferno.model.ProjectileImpl;
 public enum WeaponData implements WeaponDescription {
 	
 	FAST(0f, ProjectileImpl.class, new Vector2()),
-	STANDARD(1f, ProjectileImpl.class, new Vector2());
+	STANDARD(0.5f, ProjectileImpl.class, new Vector2()),
+	SLOW(1f, ProjectileImpl.class, new Vector2());
 	
 	private float reloadTime;
 	private final Class<? extends Projectile> projectile;
