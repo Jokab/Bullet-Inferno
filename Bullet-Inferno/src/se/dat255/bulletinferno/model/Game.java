@@ -60,7 +60,7 @@ public interface Game {
 	 * Dispose of the specified enemy from the game
 	 * @param enemy
 	 */
-	public void disposeEnemy(Enemy enemy);
+	public void removeEnemy(Enemy enemy);
 	
 	/**
 	 * Returns a new timer

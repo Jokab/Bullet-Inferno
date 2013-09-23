@@ -85,7 +85,7 @@ public class GameImpl implements Game {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void disposeEnemy(Enemy enemy) {
+	public void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
 	}
 	
