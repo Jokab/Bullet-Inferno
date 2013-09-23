@@ -80,5 +80,12 @@ public class PlayerShipImpl implements PlayerShip {
 	public void fireWeapon() {
 		weapon.fire(position);
 	}
-
+	
+	public void setWeapon(WeaponData weaponData) {
+		this.weapon = new WeaponImpl(this.world, weaponData);
+	}
+	
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
 }

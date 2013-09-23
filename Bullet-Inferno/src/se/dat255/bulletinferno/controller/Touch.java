@@ -2,11 +2,14 @@ package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 /**
  * The main touch controller More info:
@@ -66,6 +69,14 @@ public class Touch implements InputProcessor {
 		}
 		if(keycode==DOWNKEY){
 			ship.stopMovement();
+		}
+		if(keycode==Keys.NUM_1) {
+			ship.setWeapon(WeaponData.FAST);
+			System.out.println("Switched to fast weapon. Delay: " + WeaponData.FAST.getReloadTime());
+		}
+		if(keycode == Keys.NUM_2) {
+			ship.setWeapon(WeaponData.SLOW);
+			System.out.println("Switched to fast weapon. Delay: " + WeaponData.SLOW.getReloadTime());
 		}
 		
 		
