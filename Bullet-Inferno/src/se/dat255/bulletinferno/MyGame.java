@@ -36,7 +36,7 @@ public class MyGame extends com.badlogic.gdx.Game {
 		loadoutScreen = new LoadoutScreen(this);
 		gameScreen = new GameScreen(this);
 		
-		setScreen(gameScreen);
+		setScreen(loadoutScreen);
 	}
 
 	@Override
