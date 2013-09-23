@@ -27,8 +27,7 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 		this.initialHealth = initialHealth;
 
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory()
-					.getRectangularShape(1f, 2f);
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(1f, 2f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 

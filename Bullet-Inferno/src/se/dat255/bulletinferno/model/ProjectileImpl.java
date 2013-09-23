@@ -21,8 +21,7 @@ public class ProjectileImpl implements Projectile {
 		this.game = game;
 
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory()
-					.getRectangularShape(0.1f, 0.1f);
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
 		}
 	}
