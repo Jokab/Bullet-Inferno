@@ -23,6 +23,13 @@ public interface PhysicsWorld {
 			Vector2 position);
 
 	/**
+	 * Removes the specified body from the world.
+	 * <strong>Is only allowed to be called once on each body</strong>
+	 * @param body
+	 */
+	public void removeBody(PhysicsBody body);
+	
+	/**
 	 * Updates the physics simulation (the simulation is time-step based). This
 	 * should be called once every frame. (Callers should have to worry about
 	 * using a fixed time step, it is required to be handled internally by the
