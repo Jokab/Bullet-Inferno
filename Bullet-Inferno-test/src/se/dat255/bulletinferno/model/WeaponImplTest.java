@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
+import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 
 import com.badlogic.gdx.math.Vector2;
 

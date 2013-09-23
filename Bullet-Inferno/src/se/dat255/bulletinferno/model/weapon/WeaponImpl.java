@@ -1,8 +1,14 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.weapon;
+
+import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.ProjectileImpl;
+import se.dat255.bulletinferno.model.Timer;
+import se.dat255.bulletinferno.model.Weapon;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class WeaponImpl implements Weapon {
+public abstract class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float reloadingTime;
 	private final Game game;
