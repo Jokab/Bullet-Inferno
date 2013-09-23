@@ -16,7 +16,7 @@ public interface Game {
 	public Projectile retrieveProjectile(Class<? extends Projectile> type);
 
 	/**
-	 * Disposes of the specified projectile
+	 * Dispose of the specified projectile
 	 * 
 	 * @param projectile
 	 */
@@ -50,6 +50,18 @@ public interface Game {
 	 */
 	public List<? extends Enemy> getEnemies();
 
+	/**
+	 * Adds the specified enemy to the game
+	 * @param emeny
+	 */
+	public void addEnemy(Enemy emeny);
+	
+	/**
+	 * Dispose of the specified enemy from the game
+	 * @param enemy
+	 */
+	public void disposeEnemy(Enemy enemy);
+	
 	/**
 	 * Returns a new timer
 	 * 
