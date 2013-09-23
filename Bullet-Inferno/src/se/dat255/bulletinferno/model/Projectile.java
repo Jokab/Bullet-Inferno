@@ -12,6 +12,15 @@ public interface Projectile extends Collidable, Poolable {
 	public int getDamage();
 
 	/**
+	 * Initializes the projectile. Call upon acquiring from the Pool.
+	 * 
+	 * @param position the initial position.
+	 * @param velocity the initial velocity.
+	 * @param damage the projectile damage coefficient.
+	 */
+	public void init(Vector2 position, Vector2 velocity, int damage);
+	
+	/**
 	 * Sets the velocity of the projectile
 	 * 
 	 * @param velocity
@@ -22,12 +31,5 @@ public interface Projectile extends Collidable, Poolable {
 	 * Gets the position of the projectile
 	 */
 	public Vector2 getPosition();
-
-	/**
-	 * Sets the position of the projectile
-	 * 
-	 * @param position
-	 */
-	public void setPosition(Vector2 position);
 
 }

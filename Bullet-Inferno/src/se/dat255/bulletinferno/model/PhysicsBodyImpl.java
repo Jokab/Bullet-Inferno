@@ -48,4 +48,12 @@ public class PhysicsBodyImpl implements PhysicsBody {
 		return body.getLinearVelocity();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Body getBox2DBody() {
+		return body;
+	}
+
 }

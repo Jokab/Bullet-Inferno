@@ -64,10 +64,10 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {	
-		if(keycode==UPKEY){
+		if(keycode==UPKEY && ship.getMovePos() > ship.getPosition().y){
 			ship.stopMovement();
 		}
-		if(keycode==DOWNKEY){
+		if(keycode==DOWNKEY && ship.getMovePos() < ship.getPosition().y){
 			ship.stopMovement();
 		}
 		if(keycode==Keys.NUM_1) {
@@ -102,20 +102,11 @@ public class Touch implements InputProcessor {
 		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
 			// Left half of the screen
 				//Move ship by giving the touch coordinate to the moveTo-method
-				ship.stopMovement();
-				if(touchVector.y > ship.getPosition().y + 0.1f){
-					ship.moveTo(touchVector.y);
-				}else if(touchVector.y < ship.getPosition().y - 0.1f){
-					ship.moveTo(touchVector.y);
-				}else{
-				;	
-				}
+				touchDragged(screenX, screenY, pointer);
 			//}
 		} else {
 			// Right half of the screen
-			// Currently bugged. Needs a load timer for weapon.
-			// Dragging causes MANY projectiles
-			//ship.fireWeapon();
+			ship.fireWeapon();
 		}
 		
 		return false;
@@ -129,15 +120,41 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		//Calls touchDown with default (left) button.
-		touchDown(screenX, screenY, pointer, Input.Buttons.LEFT);
+		// Unproject the touch location to the virtual screen.
+		Vector2 touchVector = new Vector2(screenX, screenY);
+		Graphics.screenToWorld(touchVector);
+
+		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
+			// Left half of the screen
+				//Move ship by giving the touch coordinate to the moveTo-method
+				ship.stopMovement();
+				if(touchVector.y > ship.getPosition().y + 0.1f){
+					ship.moveTo(touchVector.y);
+				}else if(touchVector.y < ship.getPosition().y - 0.1f){
+					ship.moveTo(touchVector.y);
+				}else{
+					ship.stopMovement();
+				}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		//Same as touchDragged but for desktop
-		touchDown(screenX, screenY, 0, Input.Buttons.LEFT);
+		// Unproject the touch location to the virtual screen.
+		Vector2 touchVector = new Vector2(screenX, screenY);
+		Graphics.screenToWorld(touchVector);
+		
+		//Move ship by giving the touch coordinate to the moveTo-method
+		ship.stopMovement();
+		if(touchVector.y > ship.getPosition().y + 0.1f){
+			ship.moveTo(touchVector.y);
+		}else if(touchVector.y < ship.getPosition().y - 0.1f){
+			ship.moveTo(touchVector.y);
+		}else{
+			ship.stopMovement();
+		}
 		
 		return false;
 	}

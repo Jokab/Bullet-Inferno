@@ -39,7 +39,9 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	 * ways.
 	 */
 	private final PhysicsShapeFactory shapeFactory = new PhysicsShapeFactoryImpl();
-
+	
+	private final PhysicsWorldCollisionQueue collisionQueue = new PhysicsWorldCollisionQueueImpl();
+	
 	/**
 	 * Start the simulation.
 	 */
@@ -49,23 +51,34 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 		// move them manually (otherwise Box2D will make them sleep, possibly
 		// with odd behavior).
 		world = new World(new Vector2(0f, 0f), false);
+		
+		// Collision detect.
+		world.setContactListener(collisionQueue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PhysicsBody createBody(PhysicsBodyDefinition definition,
+	public PhysicsBody createBody(PhysicsBodyDefinition definition, Collidable collidable,
 			Vector2 position) {
 		BodyDef bodyDef = definition.getBox2DBodyDefinition();
 
 		bodyDef.position.set(position);
 		Body body = world.createBody(bodyDef);
 		body.createFixture(definition.getBox2DFixtureDefinition());
-
+		body.setUserData(collidable);
 		return new PhysicsBodyImpl(body);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeBody(PhysicsBody body) {
+		world.destroyBody(body.getBox2DBody());
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -78,6 +91,20 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 		for (; timeStepAccumulator > TIME_STEP; timeStepAccumulator -= TIME_STEP) {
 			world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		}
+
+		// Resolve queued up collisions.
+		// Collisions are queued to avoid the problem where the Box2D world cannot be modified
+		// within the collision handler (not allowed by Box2D).
+		for (PhysicsWorldCollisionQueue.Entry collision : collisionQueue) {
+			Collidable collidableA = collision.getCollidableA();
+			Collidable collidableB = collision.getCollidableB();
+
+			collidableA.preCollided(collidableB);
+			collidableB.preCollided(collidableA);
+			collidableA.postCollided(collidableB);
+			collidableB.postCollided(collidableA);
+		}
+		collisionQueue.removeAll();
 	}
 
 	/**

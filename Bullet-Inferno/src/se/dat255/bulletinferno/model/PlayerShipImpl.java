@@ -22,10 +22,20 @@ public class PlayerShipImpl implements PlayerShip {
 		world.setPlayerShip(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void collided(Collidable with) {
+	public void preCollided(Collidable other) {
 		// TODO Auto-generated method stub
-
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -69,6 +79,11 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void moveTo(float yPos){
 		moveToPos = yPos;
+	}
+	
+	@Override
+	public float getMovePos(){
+		return moveToPos;
 	}
 		
 	@Override

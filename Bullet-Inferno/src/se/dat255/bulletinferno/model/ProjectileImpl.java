@@ -21,24 +21,20 @@ public class ProjectileImpl implements Projectile {
 		this.game = game;
 
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory()
-					.getRectangularShape(1f, 2f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
 		}
 	}
 
 	/**
-	 * Initializes the projectile
-	 * 
-	 * @param origin
-	 *            position
-	 * @param velocity
-	 * @param damage
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void init(Vector2 origin, Vector2 velocity, int damage) {
 		this.damage = damage;
 
-		this.setPosition(origin);
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
+		
 		this.setVelocity(velocity);
 	}
 
@@ -54,10 +50,27 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void collided(Collidable entity) {
-		// Code for special behavior here
-
-		game.disposeProjectile(this);
+	public void preCollided(Collidable other) {
+		// NOP
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
+		// Decrease the damage after hits, since we must let the other object that collided with us
+		// decide if they want to take our current damage (etc.) before we zero it.
+		if(damage > 0 && !(other instanceof Projectile)) {
+			damage -= 1;
+			
+			// Note: Do not move this out of here - this must be called only once, and that is when
+			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
+			if(damage <= 0) {
+				// We won't need this projectile anymore, since it is useless and can't hurt anyone.
+				game.disposeProjectile(this);
+			}
+		}
 	}
 
 	/**
@@ -65,8 +78,8 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public void reset() {
-		// TODO Reset projectile
-
+		game.getPhysicsWorld().removeBody(body);
+		body = null;
 	}
 
 	/**
@@ -84,16 +97,5 @@ public class ProjectileImpl implements Projectile {
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setPosition(Vector2 position) {
-		// @todo fix init method for this.
-		if (body != null) {
-			throw new RuntimeException("Operation not supported yet.");
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, position);
-	}
+	
 }

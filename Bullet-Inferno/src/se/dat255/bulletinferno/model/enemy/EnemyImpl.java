@@ -7,6 +7,7 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.Projectile;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -25,14 +26,14 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	public EnemyImpl(Game game, Vector2 position, Vector2 velocity,
 			int initialHealth) {
 		this.initialHealth = initialHealth;
-
+		health = initialHealth;
+		this.game = game;
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory()
-					.getRectangularShape(1f, 2f);
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 
-		body = game.getPhysicsWorld().createBody(bodyDefinition, position);
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
 	}
 
@@ -46,9 +47,22 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 		return credits;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void collided(Collidable with) {
-		// TODO Auto-generated method stub
+	public void preCollided(Collidable other) {
+		if(other instanceof Projectile) {
+			takeDamage(((Projectile)other).getDamage());
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
+		// NOP
 	}
 
 	@Override
@@ -59,6 +73,20 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	@Override
 	public void takeDamage(int damage) {
 		health -= damage;
+		// If enemy has died
+		if(health <=0) {
+			game.removeEnemy(this);
+			dispose();
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void dispose() {
+		game.getPhysicsWorld().removeBody(body);
+		body = null;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  * A PhysicsBody represents an instance of a simulated physics entity.
@@ -24,5 +25,12 @@ public interface PhysicsBody {
 	 * @return the velocity of the body.
 	 */
 	public Vector2 getVelocity();
+	
+	/**
+	 * Returns the wrapped Box2d body
+	 * @see Body
+	 * @return Box2D body
+	 */
+	public Body getBox2DBody();
 
 }

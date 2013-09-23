@@ -12,7 +12,7 @@ public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float reloadingTime;
 	private final Game game;
-	private final int weaponSpeed;
+	private final int projectileSpeed;
 	private final Timer timer;
 	private final Class<? extends Projectile> projectile;
 
@@ -50,7 +50,7 @@ public class WeaponImpl implements Weapon {
 		this.game = game;
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
-		weaponSpeed = 3;
+		projectileSpeed = 3;
 		timer.stop();
 	}
 	
@@ -92,12 +92,11 @@ public class WeaponImpl implements Weapon {
 	 */
 	@Override
 	public void fire(Vector2 origin) {
-		System.out.println("IS LOADED: " + timer.getTimeLeft());
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
-			Projectile p = getProjectile();
-			p.setPosition(origin.add(getOffset()));
-			p.setVelocity(new Vector2(weaponSpeed, 0));
+			Projectile projectile = getProjectile();
+			projectile.init(origin.cpy().add(getOffset()), new Vector2(projectileSpeed, 0), 1);
+			
 			// Start count down
 			timer.restart();
 		}
