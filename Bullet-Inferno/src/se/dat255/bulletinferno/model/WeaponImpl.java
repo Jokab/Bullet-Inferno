@@ -77,7 +77,7 @@ public class WeaponImpl implements Weapon {
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile projectile = getProjectile();
-			projectile.init(origin.add(getOffset()), new Vector2(projectileSpeed, 0), 0);
+			projectile.init(origin.add(getOffset()), new Vector2(projectileSpeed, 0), 1);
 			
 			// Start count down
 			timer.restart();
