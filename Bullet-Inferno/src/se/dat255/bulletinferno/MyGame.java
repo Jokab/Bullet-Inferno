@@ -6,7 +6,6 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
-import se.dat255.bulletinferno.model.ProjectileImpl;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
@@ -57,7 +56,7 @@ public class MyGame implements ApplicationListener {
 
 	/** The current session instance of the game model. */
 	private Game game = null;
-	
+
 	@Override
 	public void create() {
 		// TODO: Initialize the game
@@ -65,10 +64,10 @@ public class MyGame implements ApplicationListener {
 
 		// TODO: should probably not be created here
 		// Set up the player ship, view and add it to gfx.
-		
-		this.game = new GameImpl();
-		
-		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game);
+
+		game = new GameImpl();
+
+		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game, 100);
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
@@ -78,23 +77,23 @@ public class MyGame implements ApplicationListener {
 
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
-	
+
 		// TODO: Debug test add bullet
-		//ProjectileImpl projectile = new ProjectileImpl(null);
-		//projectile.setPosition(new Vector2(5, 7));
+		// ProjectileImpl projectile = new ProjectileImpl(null);
+		// projectile.setPosition(new Vector2(5, 7));
 		ProjectileView projectileView = new ProjectileView(game);
 		graphics.addRenderable(projectileView);
 	}
 
 	private void setupHardcodedEnemies() {
-		Vector2 position = new Vector2(16 - 1, (9 / 3f) * 1 - 2);
-		Vector2 position2 = new Vector2(16 - 1, (9 / 3f) * 2 - 2);
-		Vector2 position3 = new Vector2(16 - 1, (9 / 3f) * 3 - 2);
+		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
+		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
+		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
-		Vector2 velocity = new Vector2(0, 2);
-		Enemy enemy = new DefaultEnemyShipImpl(position, velocity, 100);
-		Enemy enemy2 = new DefaultEnemyShipImpl(position2, velocity, 100);
-		Enemy enemy3 = new DefaultEnemyShipImpl(position3, velocity, 100);
+		Vector2 velocity = new Vector2(-3, 0);
+		Enemy enemy = new DefaultEnemyShipImpl(game, position, velocity, 100);
+		Enemy enemy2 = new DefaultEnemyShipImpl(game, position2, velocity, 100);
+		Enemy enemy3 = new DefaultEnemyShipImpl(game, position3, velocity, 100);
 
 		EnemyView eV = new EnemyView(enemy);
 		EnemyView eV2 = new EnemyView(enemy2);
@@ -116,14 +115,16 @@ public class MyGame implements ApplicationListener {
 	 */
 	@Override
 	public void render() {
-	    // The time since the last frame in seconds.
-	    float deltaTime = Gdx.graphics.getDeltaTime();
-	    
+		// The time since the last frame in seconds.
+		float deltaTime = Gdx.graphics.getDeltaTime();
+
 		// Render the game
 		graphics.render();
-		
-		// Update models. This should be done after graphics rendering, so that graphics commands
-		// can be buffered up for being sent to the graphics pipeline. Meanwhile, we run the models.
+
+		// Update models. This should be done after graphics rendering, so that
+		// graphics commands
+		// can be buffered up for being sent to the graphics pipeline.
+		// Meanwhile, we run the models.
 		game.update(deltaTime);
 	}
 

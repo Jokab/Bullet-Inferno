@@ -1,11 +1,21 @@
 package se.dat255.bulletinferno.model.mock;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.model.Collidable;
+import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class SimpleMockProjectile implements Projectile {
+	public Game game;
+
+	public SimpleMockProjectile() {
+		this(null);
+	}
+
+	public SimpleMockProjectile(Game game) {
+		this.game = game;
+	}
 
 	@Override
 	public void collided(Collidable other) {

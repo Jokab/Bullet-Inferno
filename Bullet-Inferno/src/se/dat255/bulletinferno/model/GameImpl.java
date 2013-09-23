@@ -12,25 +12,32 @@ import com.badlogic.gdx.utils.Pool;
 /**
  * Default implementation of Game, the central type in Bullet Inferno.
  * 
- * <p>Game acts as a single point of entry for the outside environment, as well as central point of
- * lookup for the inside. It handles instance-based object creation and initialization (injection).
+ * <p>
+ * Game acts as a single point of entry for the outside environment, as well as
+ * central point of lookup for the inside. It handles instance-based object
+ * creation and initialization (injection).
  */
 public class GameImpl implements Game {
 
-    private PhysicsWorld world = new PhysicsWorldImpl();
-    
+	private PhysicsWorld world = new PhysicsWorldImpl();
+
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	private final List<Timer> timers;
-	
-	public GameImpl() {
-		projectilePools = new HashMap<Class<?extends Projectile>, Pool<Projectile>>();
+
+	public GameImpl(PhysicsWorld world) {
+		this.world = world;
+		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
 		timers = new LinkedList<Timer>();
 	}
-	
+
+	public GameImpl() {
+		this(new PhysicsWorldImpl());
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -63,54 +70,57 @@ public class GameImpl implements Game {
 	public List<? extends Projectile> getProjectiles() {
 		return projectiles;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Projectile retrieveProjectile(Class<? extends Projectile> type) {
 		// If pool for specified type of projectile doesn't exist
-		// create a new pool and but it in the map 
-		if(!projectilePools.containsKey(type)) {
+		// create a new pool and but it in the map
+		if (!projectilePools.containsKey(type)) {
 			projectilePools.put(type, createNewPool(type));
 		}
-		
+
 		// Get a projectile from the pool
 		Projectile p = projectilePools.get(type).obtain();
 		projectiles.add(p);
 		return p;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void disposeProjectile(Projectile projectile) {
-		if(projectilePools.containsKey(projectile.getClass())) {
+		projectiles.remove(projectile);
+		if (projectilePools.containsKey(projectile.getClass())) {
 			projectilePools.get(projectile.getClass()).free(projectile);
 		}
 	}
-	
-	private Pool<Projectile> createNewPool(final Class<? extends Projectile> type) {
+
+	private Pool<Projectile> createNewPool(
+			final Class<? extends Projectile> type) {
 		return new Pool<Projectile>() {
-	        @Override
-	        protected Projectile newObject() {
-	                try {
-	                	// Create an instance of the specified type
-						return type.getConstructor(Game.class).newInstance(GameImpl.this);
-					} catch (InstantiationException e) {
-						throw new RuntimeException(e);
-					} catch (IllegalAccessException e) {
-						throw new RuntimeException(e);
-					} catch (NoSuchMethodException e) {
-						throw new RuntimeException(e);
-					} catch (SecurityException e) {
-						throw new RuntimeException(e);
-					} catch (IllegalArgumentException e) {
-						throw new RuntimeException(e);
-					} catch (InvocationTargetException e) {
-						throw new RuntimeException(e);
-					}
-	        }
-	    };
+			@Override
+			protected Projectile newObject() {
+				try {
+					// Create an instance of the specified type
+					return type.getConstructor(Game.class).newInstance(
+							GameImpl.this);
+				} catch (InstantiationException e) {
+					throw new RuntimeException(e);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				} catch (NoSuchMethodException e) {
+					throw new RuntimeException(e);
+				} catch (SecurityException e) {
+					throw new RuntimeException(e);
+				} catch (IllegalArgumentException e) {
+					throw new RuntimeException(e);
+				} catch (InvocationTargetException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		};
 	}
 
 	/** {@inheritDoc} */
@@ -120,25 +130,25 @@ public class GameImpl implements Game {
 		timers.add(t);
 		return t;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void update(float deltaTime) {
 		// Update timers
-		for(Timer t: timers) {
+		for (Timer t : timers) {
 			t.update(deltaTime);
 		}
-		
+
 		world.update(deltaTime);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public PhysicsWorld getPhysicsWorld() {
-	    return world;
+		return world;
 	}
 }
