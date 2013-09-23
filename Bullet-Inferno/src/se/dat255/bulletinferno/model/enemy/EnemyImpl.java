@@ -32,7 +32,7 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 
-		body = game.getPhysicsWorld().createBody(bodyDefinition, position);
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
 	}
 

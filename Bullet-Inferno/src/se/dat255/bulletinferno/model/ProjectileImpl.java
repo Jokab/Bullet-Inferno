@@ -22,23 +22,20 @@ public class ProjectileImpl implements Projectile {
 
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory()
-					.getRectangularShape(1f, 2f);
+					.getRectangularShape(0.1f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
 		}
 	}
 
 	/**
-	 * Initializes the projectile
-	 * 
-	 * @param origin
-	 *            position
-	 * @param velocity
-	 * @param damage
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void init(Vector2 origin, Vector2 velocity, int damage) {
 		this.damage = damage;
 
-		this.setPosition(origin);
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
+		
 		this.setVelocity(velocity);
 	}
 
@@ -84,16 +81,5 @@ public class ProjectileImpl implements Projectile {
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setPosition(Vector2 position) {
-		// @todo fix init method for this.
-		if (body != null) {
-			throw new RuntimeException("Operation not supported yet.");
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, position);
-	}
+	
 }
