@@ -79,6 +79,7 @@ public class ProjectileImpl implements Projectile {
 	@Override
 	public void reset() {
 		game.getPhysicsWorld().removeBody(body);
+		body = null;
 	}
 
 	/**

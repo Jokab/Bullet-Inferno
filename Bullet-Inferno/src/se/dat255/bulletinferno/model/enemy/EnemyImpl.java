@@ -86,6 +86,7 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	@Override
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
+		body = null;
 	}
 
 	@Override
