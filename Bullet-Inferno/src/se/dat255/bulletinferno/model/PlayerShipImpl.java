@@ -20,10 +20,20 @@ public class PlayerShipImpl implements PlayerShip {
 		world.setPlayerShip(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void collided(Collidable with) {
+	public void preCollided(Collidable other) {
 		// TODO Auto-generated method stub
-
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override

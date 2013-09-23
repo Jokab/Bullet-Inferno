@@ -73,11 +73,10 @@ public class WeaponImpl implements Weapon {
 	 */
 	@Override
 	public void fire(Vector2 origin) {
-		System.out.println("IS LOADED: " + timer.getTimeLeft());
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile projectile = getProjectile();
-			projectile.init(origin.add(getOffset()), new Vector2(projectileSpeed, 0), 0);
+			projectile.init(origin.cpy().add(getOffset()), new Vector2(projectileSpeed, 0), 1);
 			
 			// Start count down
 			timer.restart();

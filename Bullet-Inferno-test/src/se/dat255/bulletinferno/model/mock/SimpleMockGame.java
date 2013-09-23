@@ -88,4 +88,16 @@ public class SimpleMockGame implements Game {
 	public void setPlayerShip(PlayerShip ship) {
 	}
 
+	@Override
+	public void addEnemy(Enemy emeny) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeEnemy(Enemy enemy) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

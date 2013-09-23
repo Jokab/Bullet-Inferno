@@ -77,6 +77,22 @@ public class GameImpl implements Game {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void addEnemy(Enemy enemy) {
+		enemies.add(enemy);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeEnemy(Enemy enemy) {
+		enemies.remove(enemy);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<? extends Projectile> getProjectiles() {
 		return projectiles;
 	}

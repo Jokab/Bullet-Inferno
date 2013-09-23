@@ -91,18 +91,13 @@ public class MyGame implements ApplicationListener {
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
 		Vector2 velocity = new Vector2(-3, 0);
-		Enemy enemy = new DefaultEnemyShipImpl(game, position, velocity, 100);
-		Enemy enemy2 = new DefaultEnemyShipImpl(game, position2, velocity, 100);
-		Enemy enemy3 = new DefaultEnemyShipImpl(game, position3, velocity, 100);
+		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10));
 
-		EnemyView eV = new EnemyView(enemy);
-		EnemyView eV2 = new EnemyView(enemy2);
-		EnemyView eV3 = new EnemyView(enemy3);
+		EnemyView enemyView = new EnemyView(game);
 
-		graphics.addRenderable(eV);
-		graphics.addRenderable(eV2);
-		graphics.addRenderable(eV3);
-
+		graphics.addRenderable(enemyView);
 	}
 
 	@Override
