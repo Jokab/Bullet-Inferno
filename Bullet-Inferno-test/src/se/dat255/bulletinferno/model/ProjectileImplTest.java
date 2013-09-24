@@ -60,7 +60,7 @@ public class ProjectileImplTest {
 		projectile.init(new Vector2(), new Vector2(), 30);
 		int initialDamage = projectile.getDamage();
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD);
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getWeaponForGame(mockGame));
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -79,7 +79,7 @@ public class ProjectileImplTest {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		projectile.init(new Vector2(), new Vector2(), 30);
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD);
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getWeaponForGame(mockGame));
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : mockGame.physicsWorld.createBodyCalls) {
