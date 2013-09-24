@@ -5,9 +5,9 @@ import se.dat255.bulletinferno.model.Game;
 
 import com.badlogic.gdx.math.Vector2;
 
-abstract class EnemyShipImpl extends EnemyImpl implements EnemyShip {
+abstract class SimpleEnemyShip extends SimpleEnemy implements EnemyShip {
 
-	public EnemyShipImpl(Game game, Vector2 position, Vector2 velocity,
+	public SimpleEnemyShip(Game game, Vector2 position, Vector2 velocity,
 			int initialHealth) {
 		super(game, position, velocity, initialHealth);
 	}

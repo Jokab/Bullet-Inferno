@@ -12,7 +12,7 @@ import se.dat255.bulletinferno.model.Projectile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-abstract class EnemyImpl implements Enemy, Collidable, Destructible {
+abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	private int health;
 	private final int initialHealth;
@@ -23,7 +23,7 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	private PhysicsBody body = null;
 	private Game game;
 
-	public EnemyImpl(Game game, Vector2 position, Vector2 velocity,
+	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
 			int initialHealth) {
 		this.initialHealth = initialHealth;
 		health = initialHealth;
