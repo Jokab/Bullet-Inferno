@@ -25,7 +25,7 @@ public class SimpleMockGame implements Game {
 	 * We are using the "real" physicsImpl here as creating our own would be
 	 * close to impossible
 	 */
-	public PhysicsWorld physicsWorld = new PhysicsWorldImplSpy();
+	public PhysicsWorldImplSpy physicsWorld = new PhysicsWorldImplSpy();
 
 	public SimpleMockGame(Timer timer) {
 		this.timer = timer;
