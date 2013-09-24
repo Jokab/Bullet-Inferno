@@ -45,6 +45,7 @@ public class MyGame extends com.badlogic.gdx.Game {
 		loadoutScreen.dispose();
 	}
 
+
 	public GameScreen getGameScreen() {
 		return gameScreen;
 	}

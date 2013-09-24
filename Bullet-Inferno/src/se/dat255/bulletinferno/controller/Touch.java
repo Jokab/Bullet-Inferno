@@ -1,15 +1,14 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 /**
  * The main touch controller More info:
@@ -41,8 +40,11 @@ public class Touch implements InputProcessor {
 	 * The finger index controlling the position of the ship.
 	 */
 	private int steeringFinger = -1;
+	
+	private Game game;
 
-	public Touch(final Graphics graphics, final PlayerShip ship) {
+	public Touch(final Game game, final Graphics graphics, final PlayerShip ship) {
+		this.game = game;
 		this.graphics = graphics;
 		this.ship = ship;
 	}
@@ -71,11 +73,11 @@ public class Touch implements InputProcessor {
 			ship.stopMovement();
 		}
 		if(keycode==Keys.NUM_1) {
-			ship.setWeapon(WeaponData.FAST);
+			ship.setWeapon(WeaponData.FAST.getWeaponForGame(game));
 			System.out.println("Switched to fast weapon. Delay: " + WeaponData.FAST.getReloadTime());
 		}
 		if(keycode == Keys.NUM_2) {
-			ship.setWeapon(WeaponData.SLOW);
+			ship.setWeapon(WeaponData.SLOW.getWeaponForGame(game));
 			System.out.println("Switched to fast weapon. Delay: " + WeaponData.SLOW.getReloadTime());
 		}
 		
@@ -93,6 +95,16 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
+		// Check if GUI input was to be handled TODO: The second division can be made in prehand
+		float guiX = (float)screenX / (Gdx.graphics.getWidth() / 16);
+		float guiY = (float)screenY / (Gdx.graphics.getHeight() / 9);
+		guiY = 9 - guiY;
+		if(graphics.guiInput(guiX, guiY)){
+			return true;
+		}
+		
+		// Otherwise it's world input
+		
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
@@ -109,7 +121,7 @@ public class Touch implements InputProcessor {
 			ship.fireWeapon();
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override

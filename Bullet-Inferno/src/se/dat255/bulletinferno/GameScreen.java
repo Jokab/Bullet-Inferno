@@ -5,11 +5,14 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.model.RenderableGUI;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.ShipView;
+import se.dat255.bulletinferno.view.gui.PauseIconView;
+import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -31,6 +34,12 @@ public class GameScreen extends AbstractScreen {
 	/** The current session instance of the game model. */
 	private Game game = null;
 
+	/** If the game is paused; Should not update the game */
+	private boolean gamePaused;
+
+	/** The views to use when going in or out pause */
+	private RenderableGUI pauseScreenView, pauseIconView;
+
 	private MyGame myGame;
 
 	public GameScreen(MyGame myGame) {
@@ -44,12 +53,16 @@ public class GameScreen extends AbstractScreen {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.STANDARD);
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100,
+				WeaponData.FAST.getWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
 		// Set up input handler
-		processor = new Touch(graphics, ship);
+		processor = new Touch(game, graphics, ship);
+
+		// TODO: Move the gui setup to when the player enters a level
+		setupGUI();
 
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
@@ -61,16 +74,25 @@ public class GameScreen extends AbstractScreen {
 		graphics.addRenderable(projectileView);
 	}
 
-	@Override
-	public void show() {
-		super.show();
-		Gdx.input.setInputProcessor(processor);
+	/** Initiates the pause components when the player starts a level */
+	private void setupGUI() {
+		pauseIconView = new PauseIconView(this);
+		pauseScreenView = new PauseScreenView(this);
+		graphics.addRenderableGUI(pauseIconView);
 	}
 
-	@Override
-	public void hide() {
-		super.hide();
-		Gdx.input.setInputProcessor(null);
+	/** Pauses the game */
+	public void pauseGame() {
+		gamePaused = true;
+		graphics.removeRenderableGUI(pauseIconView);
+		graphics.addRenderableGUI(pauseScreenView);
+	}
+
+	/** Unpauses the game */
+	public void unpauseGame() {
+		gamePaused = false;
+		graphics.removeRenderableGUI(pauseScreenView);
+		graphics.addRenderableGUI(pauseIconView);
 	}
 
 	private void setupHardcodedEnemies() {
@@ -79,13 +101,24 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
 		Vector2 velocity = new Vector2(-3, 0);
-		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10, 10, 100));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10, 10, 100));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10, 10, 100));
 
 		EnemyView enemyView = new EnemyView(game);
 
 		graphics.addRenderable(enemyView);
+	}
+
+	@Override
+	public void show() {
+		super.show();
+		Gdx.input.setInputProcessor(processor);
+	}
+
+	@Override
+	public void dispose() {
+		graphics.dispose();
 	}
 
 	/**
@@ -98,11 +131,14 @@ public class GameScreen extends AbstractScreen {
 		// Render the game
 		graphics.render();
 
-		// Update models. This should be done after graphics rendering, so that
-		// graphics commands
-		// can be buffered up for being sent to the graphics pipeline.
-		// Meanwhile, we run the models.
-		game.update(delta);
+		// Only pause logics, rendering of GUI could still be needed
+		if (!gamePaused) {
+			// Update models. This should be done after graphics rendering, so that
+			// graphics commands
+			// can be buffered up for being sent to the graphics pipeline.
+			// Meanwhile, we run the models.
+			game.update(delta);
+		}
 	}
 
 	@Override

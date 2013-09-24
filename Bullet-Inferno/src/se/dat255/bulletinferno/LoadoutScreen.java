@@ -13,8 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -37,8 +35,6 @@ public class LoadoutScreen extends AbstractScreen {
 
 		batch = new SpriteBatch();
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		Gdx.input.setInputProcessor(stage);
-
 		skin = new Skin();
 
 		// Generate a 1x1 white texture and store it in the skin named "white".
@@ -83,7 +79,7 @@ public class LoadoutScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -101,7 +97,6 @@ public class LoadoutScreen extends AbstractScreen {
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		startImgTexture.dispose();
 		stage.dispose();
 		skin.dispose();

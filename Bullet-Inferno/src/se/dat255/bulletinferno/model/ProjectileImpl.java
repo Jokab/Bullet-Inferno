@@ -62,7 +62,7 @@ public class ProjectileImpl implements Projectile {
 		// Decrease the damage after hits, since we must let the other object that collided with us
 		// decide if they want to take our current damage (etc.) before we zero it.
 		if(damage > 0 && !(other instanceof Projectile)) {
-			damage -= 1;
+			damage = 0;
 			
 			// Note: Do not move this out of here - this must be called only once, and that is when
 			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)

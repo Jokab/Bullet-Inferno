@@ -23,6 +23,7 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void hide() {
+		Gdx.input.setInputProcessor(null);
 		isHidden = true;
 	}
 
@@ -34,11 +35,6 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void resume() {
 		isPaused = false;
-	}
-
-	@Override
-	public void dispose() {
-		
 	}
 
 }
