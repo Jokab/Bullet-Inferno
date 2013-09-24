@@ -9,18 +9,18 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.MyGame;
 import se.dat255.bulletinferno.model.RenderableGUI;
 
-public class PauseIconView implements RenderableGUI {
+public class PauseScreenView implements RenderableGUI {
 	
 	private final Vector2 position, size;
 	private final Sprite sprite;
 	private final MyGame game;
 	
-	public PauseIconView(MyGame game) {
-		Texture texture = new Texture(Gdx.files.internal("images/gui/icon_pause.png"));
+	public PauseScreenView(MyGame game) {
+		Texture texture = new Texture(Gdx.files.internal("images/gui/screen_pause.png"));
 		sprite = new Sprite(texture);
-		size = new Vector2(1.0f, 1.0f);
+		size = new Vector2(16.0f, 9.0f);
 		sprite.setSize(size.x, size.y);
-		position = new Vector2(15.0f, 8.0f);
+		position = new Vector2(0.0f, 0.0f);
 		sprite.setPosition(position.x - 8.0f, position.y - 4.5f);
 		this.game = game;
 	}
@@ -37,7 +37,7 @@ public class PauseIconView implements RenderableGUI {
 
 	@Override
 	public void pressed() {
-		game.pauseGame();
+		game.unpauseGame();
 	}
 
 	@Override

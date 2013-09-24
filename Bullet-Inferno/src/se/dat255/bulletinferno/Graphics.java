@@ -3,6 +3,7 @@ package se.dat255.bulletinferno;
 import java.util.HashSet;
 
 import se.dat255.bulletinferno.model.Renderable;
+import se.dat255.bulletinferno.model.RenderableGUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -29,7 +30,7 @@ public class Graphics {
 	/** List of all objects that are to be rendered in the world */
 	private final HashSet<Renderable> renderables = new HashSet<Renderable>();
 	/** List of all objects that are to be rendered as GUI elements */
-	private final HashSet<Renderable> guiRenderables = new HashSet<Renderable>();
+	private final HashSet<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
 
 	/**
 	 * Initializes all the required assets
@@ -93,7 +94,7 @@ public class Graphics {
 
 		// TODO: Render GUI
 		guiBatch.begin();
-		for (Renderable renderable : guiRenderables) {
+		for (RenderableGUI renderable : guiRenderables) {
 			renderable.render(guiBatch);
 		}
 		guiBatch.end();
@@ -113,16 +114,36 @@ public class Graphics {
 	}
 
 	/** Adds an object to be rendered in the GUI. Uses hashcode to separate */
-	public void addRenderableGUI(Renderable renderable) {
+	public void addRenderableGUI(RenderableGUI renderable) {
 		Gdx.app.log("Graphics", "addRenderableGUI(" + renderable.toString() + ")");
 		guiRenderables.add(renderable);
 	}
 
 	/** Removes an object from being rendered in the GUI */
-	public void removeRenderableGUI(Renderable renderable) {
+	public void removeRenderableGUI(RenderableGUI renderable) {
 		Gdx.app.log("Graphics", "removeRenderableGUI(" + renderable.toString()
 				+ ")");
 		guiRenderables.remove(renderable);
+	}
+	
+	/**
+	 * Checks if a GUI element was activated, also calling that
+	 *  element.
+	 * @param x The X position of the GUI
+	 * @param y The Y position of the GUI
+	 * @return If a GUI element was activated
+	 */
+	public boolean guiInput(float x, float y){
+		Gdx.app.log("guiInput", x + ", " + y);
+		for(RenderableGUI gui : guiRenderables){
+			Vector2 position = gui.getPosition();
+			Vector2 size = gui.getSize();
+			if(x > position.x && y > position.y && x < position.x + size.x && y < position.y + size.y){
+				gui.pressed();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/** Temporary local vector to prevent re-allocation every call */
@@ -130,10 +151,8 @@ public class Graphics {
 
 	/** Changes the given vector from screen to world position */
 	public static void screenToWorld(Vector2 position) {
-		Gdx.app.log("Graphics", "screenToWorld(" + position + ")");
 		vector.set(position.x, position.y, 0);
 		worldCamera.unproject(vector);
-		Gdx.app.log("Graphics", "result: " + vector);
 		position.set(vector.x, vector.y);
 	}
 

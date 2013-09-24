@@ -6,12 +6,15 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.model.Renderable;
+import se.dat255.bulletinferno.model.RenderableGUI;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.ShipView;
 import se.dat255.bulletinferno.view.gui.PauseIconView;
+import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -58,6 +61,12 @@ public class MyGame implements ApplicationListener {
 
 	/** The current session instance of the game model. */
 	private Game game = null;
+	
+	/** If the game is paused; Should not update the game */
+	private boolean gamePaused;
+	
+	/** The views to use when going in or out pause */
+	private RenderableGUI pauseScreenView, pauseIconView;
 
 	@Override
 	public void create() {
@@ -91,7 +100,21 @@ public class MyGame implements ApplicationListener {
 	}
 	
 	private void setupGUI(){
-		PauseIconView pauseIconView = new PauseIconView();
+		pauseIconView = new PauseIconView(this);
+		pauseScreenView = new PauseScreenView(this);
+		graphics.addRenderableGUI(pauseIconView);
+	}
+	
+	
+	public void pauseGame(){
+		gamePaused = true;
+		graphics.removeRenderableGUI(pauseIconView);
+		graphics.addRenderableGUI(pauseScreenView);
+	}
+	
+	public void unpauseGame(){
+		gamePaused = false;
+		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
 	}
 
@@ -122,15 +145,18 @@ public class MyGame implements ApplicationListener {
 	public void render() {
 		// The time since the last frame in seconds.
 		float deltaTime = Gdx.graphics.getDeltaTime();
-
+		
 		// Render the game
 		graphics.render();
 
-		// Update models. This should be done after graphics rendering, so that
-		// graphics commands
-		// can be buffered up for being sent to the graphics pipeline.
-		// Meanwhile, we run the models.
-		game.update(deltaTime);
+		// Only pause logics, rendering of GUI could still be needed
+		if( ! gamePaused){
+			// Update models. This should be done after graphics rendering, so that
+			// graphics commands
+			// can be buffered up for being sent to the graphics pipeline.
+			// Meanwhile, we run the models.
+			game.update(deltaTime);
+		}
 	}
 
 	@Override
