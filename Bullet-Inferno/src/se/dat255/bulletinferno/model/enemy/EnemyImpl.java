@@ -6,8 +6,8 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;

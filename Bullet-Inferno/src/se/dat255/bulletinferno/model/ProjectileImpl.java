@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
