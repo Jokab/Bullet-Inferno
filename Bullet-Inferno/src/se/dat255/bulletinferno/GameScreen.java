@@ -107,7 +107,7 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void resize(int width, int height) {
-
+		graphics.resize(width, height);
 	}
 
 }
