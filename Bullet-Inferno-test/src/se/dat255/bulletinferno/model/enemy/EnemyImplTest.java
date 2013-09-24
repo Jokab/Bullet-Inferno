@@ -112,20 +112,25 @@ public class EnemyImplTest {
 		assertTrue(game.isEnemyRemoved());
 		assertEquals(enemy, game.getRemovedEnemy());
 		
-//		assertEquals("Enemy should do remove body once", 
-//				game.physicsWorld.removeBodyCalls.size() == 1);
+		assertEquals("Enemy should do remove body once", 
+				game.physicsWorld.removeBodyCalls.size(), 1);
 		
 		// Take some extra damage to check that it dosen't die again
 		enemy.takeDamage(90);
 		
-//		assertEquals("Enemy should only do 1 remove body call", 
-//				game.physicsWorld.removeBodyCalls.size(), 1);
+		assertEquals("Enemy should only do 1 remove body call", 
+				game.physicsWorld.removeBodyCalls.size(), 1);
 		
 	}
 
 	@Test
 	public void testDispose() {
-		fail("Not yet implemented");
+		EnemyGameMockup game = new EnemyGameMockup();
+		EnemyImpl enemy = new EnemyMockup(game, new Vector2(), new Vector2(), 
+				101, 0, 0);
+		enemy.dispose();
+		assertEquals("Enemy should do remove body once", 
+				game.physicsWorld.removeBodyCalls.size(), 1);
 	}
 
 	@Test
@@ -142,7 +147,17 @@ public class EnemyImplTest {
 
 	@Test
 	public void testGetPosition() {
-		fail("Not yet implemented");
+		Vector2 position = new Vector2(2,3);
+		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), position, new Vector2(), 
+				98, 0, 0);
+		
+		assertTrue("Check that position is equal enemy's position",  
+				position.equals(enemy.getPosition()));
+		// Set position to something else, and check for alias problems
+		position.x = 4;
+		position.y = 5;
+		assertFalse("Check for alias problems", position.equals(enemy.getPosition()));
+		assertFalse("Check for alias problems", position == enemy.getPosition());
 	}
 
 }
