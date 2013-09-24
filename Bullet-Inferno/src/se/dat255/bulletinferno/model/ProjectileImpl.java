@@ -9,7 +9,7 @@ public class ProjectileImpl implements Projectile {
 
 	private PhysicsBody body = null;
 
-	private int damage;
+	private float damage;
 	private final Game game;
 
 	/**
@@ -30,7 +30,7 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Vector2 origin, Vector2 velocity, int damage) {
+	public void init(Vector2 origin, Vector2 velocity, float damage) {
 		this.damage = damage;
 
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
@@ -42,7 +42,7 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getDamage() {
+	public float getDamage() {
 		return damage;
 	}
 

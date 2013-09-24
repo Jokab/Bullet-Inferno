@@ -41,4 +41,8 @@ public interface Weapon {
 	 * @param origin
 	 */
 	public void fire(Vector2 origin);
+
+	float getDamage();
+	
+	Vector2 getProjectileVelocity();
 }

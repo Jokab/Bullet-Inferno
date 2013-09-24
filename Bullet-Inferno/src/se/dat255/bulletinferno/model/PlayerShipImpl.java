@@ -38,7 +38,7 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 
 	@Override
-	public void takeDamage(int damage) {
+	public void takeDamage(float damage) {
 		this.health -= damage;
 	}
 

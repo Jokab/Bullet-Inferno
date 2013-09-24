@@ -9,7 +9,7 @@ public interface Projectile extends Collidable, Poolable {
 	 * 
 	 * @return damage The damage that this Projectile deals.
 	 */
-	public int getDamage();
+	public float getDamage();
 
 	/**
 	 * Initializes the projectile. Call upon acquiring from the Pool.
@@ -18,7 +18,7 @@ public interface Projectile extends Collidable, Poolable {
 	 * @param velocity the initial velocity.
 	 * @param damage the projectile damage coefficient.
 	 */
-	public void init(Vector2 position, Vector2 velocity, int damage);
+	public void init(Vector2 position, Vector2 velocity, float damage);
 	
 	/**
 	 * Sets the velocity of the projectile

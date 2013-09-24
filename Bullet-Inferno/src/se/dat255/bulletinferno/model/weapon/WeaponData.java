@@ -25,14 +25,14 @@ public enum WeaponData implements WeaponDescription {
 	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f,0), 1f),
 	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f);
 	
-	private float reloadTime;
+	private float reloadingTime;
 	private final Class<? extends Projectile> projectile;
 	private final Vector2 offset;
 	private final Vector2 projectileVelocity;
 	private final float damage;
 	
 	WeaponData(float reloadTime, Class<? extends Projectile> projectile, Vector2 offset, Vector2 projectileVelocity, float damage) {
-		this.reloadTime = reloadTime;
+		this.reloadingTime = reloadTime;
 		this.projectile = projectile;
 		this.offset = offset;
 		this.projectileVelocity = projectileVelocity;
@@ -44,7 +44,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public float getReloadTime() {
-		return this.reloadTime;
+		return this.reloadingTime;
 	}
 
 	/**
@@ -84,7 +84,6 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getWeaponForGame(Game game) {
-		return new WeaponImpl.Builder(game, projectile).reloadingTime(reloadTime).offset(offset).
-				damage(damage).projectileVelocity(projectileVelocity).build();
+		return new WeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
 	}
 }

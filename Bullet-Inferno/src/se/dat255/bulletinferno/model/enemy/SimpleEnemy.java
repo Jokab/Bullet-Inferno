@@ -10,7 +10,11 @@ import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.Projectile;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
@@ -71,7 +75,7 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	}
 
 	@Override
-	public void takeDamage(int damage) {
+	public void takeDamage(float damage) {
 		health -= damage;
 		// If enemy has died
 		if(health <=0) {
