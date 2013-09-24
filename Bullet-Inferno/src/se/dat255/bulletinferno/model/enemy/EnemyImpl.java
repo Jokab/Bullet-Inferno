@@ -16,18 +16,21 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 
 	private int health;
 	private final int initialHealth;
-	private int score;
-	private int credits;
+	private final int score;
+	private final int credits;
 
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private Game game;
 
 	public EnemyImpl(Game game, Vector2 position, Vector2 velocity,
-			int initialHealth) {
+			int initialHealth, int score, int credits) {
 		this.initialHealth = initialHealth;
 		health = initialHealth;
+		this.score = score;
+		this.credits = credits;
 		this.game = game;
+		
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
@@ -72,11 +75,16 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 
 	@Override
 	public void takeDamage(int damage) {
-		health -= damage;
-		// If enemy has died
-		if(health <=0) {
-			game.removeEnemy(this);
-			dispose();
+		// Take no damage if enemy isn't alive
+		if(health > 0) {
+			health -= damage;
+			
+			// If enemy has died
+			if(health <=0) {
+				health = 0;
+				game.removeEnemy(this);
+				dispose();
+			}
 		}
 	}
 	
