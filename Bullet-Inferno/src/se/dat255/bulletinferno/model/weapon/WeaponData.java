@@ -19,7 +19,7 @@ public enum WeaponData implements WeaponDescription {
 	
 	/** 
 	 * Order:
-	 * reloadTime, projectile, offset, projectileVeloity, damage
+	 * reloadTime, projectile, offset, projectileVelocity, damage
 	 */
 	FAST(0f, ProjectileImpl.class, new Vector2(), new Vector2(5,0), 1f),
 	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f,0), 1f),
