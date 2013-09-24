@@ -1,8 +1,6 @@
-package se.dat255.bulletinferno.model.weapon;
+package se.dat255.bulletinferno.model;
 
 import com.badlogic.gdx.math.Vector2;
-
-import se.dat255.bulletinferno.model.Projectile;
 
 public interface WeaponDescription {
 	
@@ -26,5 +24,12 @@ public interface WeaponDescription {
 	 * @return The offset.
 	 */
 	Vector2 getOffset();
+
+	/**
+	 * Returns the velocity of the projectile that is fired.
+	 * 
+	 * @return The projectile's velocity.
+	 */
+	Vector2 getProjectileVelocity();
 	
 }
