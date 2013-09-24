@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model;
 
+
 import com.badlogic.gdx.math.Vector2;
 
 public interface WeaponDescription {
@@ -31,5 +32,20 @@ public interface WeaponDescription {
 	 * @return The projectile's velocity.
 	 */
 	Vector2 getProjectileVelocity();
-	
+
+	/**
+	 * Returns the amount of damage this weapon's bullets will deal.
+	 * 
+	 * @return The damage.
+	 */
+	float getDamage();
+
+	/**
+	 * Returns a new Weapon instance by using the data in the passed enum.
+	 * 
+	 * @param game
+	 * @return A new weapon instance.
+	 */
+	Weapon getWeaponForGame(Game game);
+
 }

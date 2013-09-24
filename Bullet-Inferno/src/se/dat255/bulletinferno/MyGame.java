@@ -78,12 +78,12 @@ public class MyGame implements ApplicationListener {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.STANDARD);
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.FAST.getWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
 		// Set up input handler
-		processor = new Touch(graphics, ship);
+		processor = new Touch(game, graphics, ship);
 		Gdx.input.setInputProcessor(processor);
 		
 		// TODO: Move the gui setup to when the player enters a level
