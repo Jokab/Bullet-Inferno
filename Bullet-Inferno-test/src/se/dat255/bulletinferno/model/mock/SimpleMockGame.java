@@ -48,6 +48,7 @@ public class SimpleMockGame implements Game {
 
 	@Override
 	public void disposeProjectile(Projectile projectile) {
+		projectile.reset(); // Emulate pool.
 	}
 
 	@Override
