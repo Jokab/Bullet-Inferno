@@ -1,25 +1,24 @@
 package se.dat255.bulletinferno.model;
-import se.dat255.bulletinferno.model.weapon.WeaponImpl;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipImpl implements PlayerShip {
 	
 	private final Vector2 position = new Vector2();
-	private Game world;
+	private final Game game;
 	private Weapon weapon;
 	private final int initialHealth;
 	private int health;
 	private float moveToPos; 
 	private float moveSpeed = 6.0f;
 
-	public PlayerShipImpl(Game world, final Vector2 position,int initialHealth, WeaponData weaponData) {
+	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon) {
 		this.position.set(position);
-		this.world = world;
+		this.game = game;
 		this.initialHealth = initialHealth;
-		weapon = new WeaponImpl(world, weaponData);
-		world.setPlayerShip(this);
+		this.health = initialHealth;
+		this.weapon = weapon;
+		game.setPlayerShip(this);
 	}
 
 	/**
@@ -66,14 +65,11 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	@Override
 	public void update(float deltaTime){
-				
 		if(position.y > moveToPos + 0.1f){
 			this.position.add(0, -moveSpeed *deltaTime);
-		}else if(position.y < moveToPos - 0.1f){
+		} else if(position.y < moveToPos - 0.1f){
 			this.position.add(0, moveSpeed *deltaTime);
 		}
-		
-
 	}
 	
 	@Override
@@ -94,10 +90,6 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void fireWeapon() {
 		weapon.fire(position);
-	}
-	
-	public void setWeapon(WeaponData weaponData) {
-		this.weapon = new WeaponImpl(this.world, weaponData);
 	}
 	
 	public void setWeapon(Weapon weapon) {

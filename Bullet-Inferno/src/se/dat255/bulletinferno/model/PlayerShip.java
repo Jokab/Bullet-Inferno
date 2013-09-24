@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.model.weapon.WeaponData;
-
 import com.badlogic.gdx.math.Vector2;
 
 public interface PlayerShip extends Ship {
@@ -26,6 +24,6 @@ public interface PlayerShip extends Ship {
 	public void stopMovement();
 	public float getMovePos();
 
-	public void setWeapon(WeaponData slow);
+	public void setWeapon(Weapon weapon);
 
 }
