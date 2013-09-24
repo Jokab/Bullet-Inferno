@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 abstract class EnemyShipImpl extends EnemyImpl implements EnemyShip {
 
 	public EnemyShipImpl(Game game, Vector2 position, Vector2 velocity,
-			int initialHealth) {
-		super(game, position, velocity, initialHealth);
+			int initialHealth, int score, int credits) {
+		super(game, position, velocity, initialHealth, score, credits);
 	}
 
 }
