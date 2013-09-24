@@ -93,6 +93,16 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
+		// Check if GUI input was to be handled TODO: The second division can be made in prehand
+		float guiX = (float)screenX / (Gdx.graphics.getWidth() / 16);
+		float guiY = (float)screenY / (Gdx.graphics.getHeight() / 9);
+		guiY = 9 - guiY;
+		if(graphics.guiInput(guiX, guiY)){
+			return true;
+		}
+		
+		// Otherwise it's world input
+		
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
@@ -109,7 +119,7 @@ public class Touch implements InputProcessor {
 			ship.fireWeapon();
 		}
 		
-		return false;
+		return true;
 	}
 
 	@Override
