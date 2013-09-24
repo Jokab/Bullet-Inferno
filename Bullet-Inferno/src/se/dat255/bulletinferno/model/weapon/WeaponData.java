@@ -9,11 +9,18 @@ import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.WeaponDescription;
 
 /**
- * @author soulr_000
+ * Enum class for holding different Weapon types. The method {@link #getWeaponForGame(Game)}
+ * is used to retrieve a Weapon for the game.
+ * 
+ * @author Jakob Csörgei Gustavsson
  *
  */
 public enum WeaponData implements WeaponDescription {
 	
+	/** 
+	 * Order:
+	 * reloadTime, projectile, offset, projectileVeloity, damage
+	 */
 	FAST(0f, ProjectileImpl.class, new Vector2(), new Vector2(5,0), 1f),
 	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f,0), 1f),
 	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f);

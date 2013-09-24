@@ -38,6 +38,7 @@ public class WeaponImpl implements Weapon {
 	private static final Vector2 DEFAULT_PROJECTILE_VELOCITY = new Vector2(2,0);
 	private static final int DEFAULT_DAMAGE = 1;
 
+	/** Cannot be called. Use the Builder pattern (see class javadoc). **/
 	private WeaponImpl(Builder builder) {
 		game = builder.game;
 		projectile = builder.projectile;

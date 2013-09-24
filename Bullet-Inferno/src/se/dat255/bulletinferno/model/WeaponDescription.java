@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.model.weapon.WeaponData;
-import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
