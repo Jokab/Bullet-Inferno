@@ -12,11 +12,11 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * This class uses a Builder pattern to construct itself.
  * To construct a new weapon, you use WeaponImpl.Builder(game, <projectile here>).<parameters go here>
- * 
+ * <p>
  * For example: WeaponImpl.Builder(game, projectile).damage(10f).reloadingTime(1f).
  * This will create a Weapon with damage 10 and the offset 0-vector. The other parameters that
  * can be set are set to default values if not set through their setters.
- * 
+ * <p>
  * See: http://bit.ly/LYocLC (Joshua Bloch article)
  * Also see {@link WeaponData#getWeaponForGame(Game)} for concrete usage.
  * 
