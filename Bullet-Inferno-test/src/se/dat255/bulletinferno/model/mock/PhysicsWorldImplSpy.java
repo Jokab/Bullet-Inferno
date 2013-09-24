@@ -17,15 +17,19 @@ public class PhysicsWorldImplSpy extends PhysicsWorldImpl {
 	
 	public class CreateBodyCall {
 		public CreateBodyCall(PhysicsBodyDefinition definition,
-				Collidable collidable, Vector2 position) {
+				Collidable collidable, Vector2 position, PhysicsBody returnValue) {
 			this.definition = definition;
 			this.collidable = collidable;
 			this.position = position;
+			
+			this.returnValue = returnValue;
 		}
-
+		
 		public PhysicsBodyDefinition definition;
 		public Collidable collidable;
 		public Vector2 position;
+		
+		public PhysicsBody returnValue;
 	}
 	
 	public class RemoveBodyCall {
@@ -39,8 +43,9 @@ public class PhysicsWorldImplSpy extends PhysicsWorldImpl {
 	@Override
 	public PhysicsBody createBody(PhysicsBodyDefinition definition,
 			Collidable collidable, Vector2 position) {
-		createBodyCalls.add(new CreateBodyCall(definition, collidable, position));
-		return super.createBody(definition, collidable, position);
+		PhysicsBody returnValue = super.createBody(definition, collidable, position);
+		createBodyCalls.add(new CreateBodyCall(definition, collidable, position, returnValue));
+		return returnValue;
 	}
 
 	@Override
