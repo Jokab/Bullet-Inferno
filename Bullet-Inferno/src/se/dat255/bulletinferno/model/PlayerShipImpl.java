@@ -12,7 +12,7 @@ public class PlayerShipImpl implements PlayerShip {
 	private final int initialHealth;
 	private int health;
 	private float moveToPos; 
-	private float moveSpeed = 0.1f;
+	private float moveSpeed = 6.0f;
 
 	public PlayerShipImpl(Game world, final Vector2 position,int initialHealth, WeaponData weaponData) {
 		this.position.set(position);
@@ -68,9 +68,9 @@ public class PlayerShipImpl implements PlayerShip {
 	public void update(float deltaTime){
 				
 		if(position.y > moveToPos + 0.1f){
-			this.position.add(0, -moveSpeed);
+			this.position.add(0, -moveSpeed *deltaTime);
 		}else if(position.y < moveToPos - 0.1f){
-			this.position.add(0, moveSpeed);
+			this.position.add(0, moveSpeed *deltaTime);
 		}
 		
 
