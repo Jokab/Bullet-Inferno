@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.PhysicsWorldImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 
 public class PhysicsWorldImplSpy extends PhysicsWorldImpl {
 
