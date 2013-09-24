@@ -67,11 +67,18 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 		bodyDef.position.set(position);
 		Body body = world.createBody(bodyDef);
 		body.createFixture(definition.getBox2DFixtureDefinition());
-
 		body.setUserData(collidable);
 		return new PhysicsBodyImpl(body);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeBody(PhysicsBody body) {
+		world.destroyBody(body.getBox2DBody());
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -92,8 +99,10 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 			Collidable collidableA = collision.getCollidableA();
 			Collidable collidableB = collision.getCollidableB();
 
-			collidableA.collided(collidableB);
-			collidableB.collided(collidableA);
+			collidableA.preCollided(collidableB);
+			collidableB.preCollided(collidableA);
+			collidableA.postCollided(collidableB);
+			collidableB.postCollided(collidableA);
 		}
 		collisionQueue.removeAll();
 	}

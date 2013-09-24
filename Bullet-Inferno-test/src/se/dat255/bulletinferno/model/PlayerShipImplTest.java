@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
+import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -24,7 +25,7 @@ public class PlayerShipImplTest {
 		// Tests the set and get position methods
 
 		Vector2 position = new Vector2(0, 0);
-		PlayerShipImpl playerShip = new PlayerShipImpl(position, mockGame, 100);
+		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, WeaponData.FAST);
 
 		assertEquals("The position should be set in the constructor", position,
 				playerShip.getPosition());
@@ -42,7 +43,7 @@ public class PlayerShipImplTest {
 		// but doesn't reduce the initial health value
 
 		Vector2 position = new Vector2(0, 0);
-		PlayerShipImpl playerShip = new PlayerShipImpl(position, mockGame, 100);
+		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, WeaponData.FAST);
 
 		int health = playerShip.getHealth();
 		int initialHealth = playerShip.getInitialHealth();
@@ -61,7 +62,7 @@ public class PlayerShipImplTest {
 
 		// Test the constructor
 		Vector2 position = new Vector2(0, 0);
-		PlayerShipImpl playerShip = new PlayerShipImpl(position, mockGame, 100);
+		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, WeaponData.FAST);
 		position.x = 20;
 
 		assertTrue(

@@ -18,10 +18,6 @@ public class SimpleMockProjectile implements Projectile {
 	}
 
 	@Override
-	public void collided(Collidable other) {
-	}
-
-	@Override
 	public void reset() {
 	}
 
@@ -40,8 +36,19 @@ public class SimpleMockProjectile implements Projectile {
 	}
 
 	@Override
-	public void init(Vector2 position, Vector2 velocity, int damage) {
+	public void preCollided(Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void postCollided(Collidable other) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void init(Vector2 position, Vector2 velocity, int damage) {
+		// TODO Auto-generated method stub
 	}
 
 }

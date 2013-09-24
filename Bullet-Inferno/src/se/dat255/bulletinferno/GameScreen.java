@@ -1,18 +1,17 @@
 package se.dat255.bulletinferno;
 
 import se.dat255.bulletinferno.controller.Touch;
-import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.ShipView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
@@ -45,7 +44,7 @@ public class GameScreen extends AbstractScreen {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(new Vector2(0, 0), game, 100);
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.STANDARD);
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
@@ -80,18 +79,13 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
 		Vector2 velocity = new Vector2(-3, 0);
-		Enemy enemy = new DefaultEnemyShipImpl(game, position, velocity, 100);
-		Enemy enemy2 = new DefaultEnemyShipImpl(game, position2, velocity, 100);
-		Enemy enemy3 = new DefaultEnemyShipImpl(game, position3, velocity, 100);
+		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10));
 
-		EnemyView eV = new EnemyView(enemy);
-		EnemyView eV2 = new EnemyView(enemy2);
-		EnemyView eV3 = new EnemyView(enemy3);
+		EnemyView enemyView = new EnemyView(game);
 
-		graphics.addRenderable(eV);
-		graphics.addRenderable(eV2);
-		graphics.addRenderable(eV3);
-
+		graphics.addRenderable(enemyView);
 	}
 
 	/**

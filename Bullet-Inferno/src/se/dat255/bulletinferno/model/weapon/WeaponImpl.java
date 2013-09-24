@@ -1,22 +1,39 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.weapon;
+
+import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.ProjectileImpl;
+import se.dat255.bulletinferno.model.Timer;
+import se.dat255.bulletinferno.model.Weapon;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float reloadingTime;
-	private final Game world;
-	private int projectileSpeed;
+	private final Game game;
+	private final int projectileSpeed;
 	private final Timer timer;
+	private final Class<? extends Projectile> projectile;
 
+	/**
+	 * Constructs a new weapon using data from a WeaponDescription.
+	 * 
+	 * @param game 
+	 * @param weaponDescription Object that holds the data or "settings" for weapon.
+	 */
+	public WeaponImpl(Game game, WeaponDescription weaponDescription) {
+		this(game, weaponDescription.getReloadTime(), weaponDescription.getProjectile(), weaponDescription.getOffset());
+	}
+	
 	/**
 	 * Constructs a new weapon with the 0-vector
 	 * 
-	 * @param reloadingTime
 	 * @param world
+	 * @param reloadingTime
 	 */
-	public WeaponImpl(float reloadingTime, Game world) {
-		this(reloadingTime, world, new Vector2());
+	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile) {
+		this(game, reloadingTime, projectile, new Vector2());
 	}
 
 	/**
@@ -26,15 +43,17 @@ public class WeaponImpl implements Weapon {
 	 * @param world
 	 * @param offset
 	 */
-	public WeaponImpl(float reloadingTime, Game world, Vector2 offset) {
+	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile, Vector2 offset) {
 		this.offset = offset;
 		this.reloadingTime = reloadingTime;
-		this.world = world;
-		timer = world.getTimer();
+		this.projectile = projectile;
+		this.game = game;
+		timer = game.getTimer();
 		timer.setTime(reloadingTime);
 		projectileSpeed = 3;
 		timer.stop();
 	}
+	
 
 	/**
 	 * {@inheritDoc}
@@ -73,11 +92,10 @@ public class WeaponImpl implements Weapon {
 	 */
 	@Override
 	public void fire(Vector2 origin) {
-		System.out.println("IS LOADED: " + timer.getTimeLeft());
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile projectile = getProjectile();
-			projectile.init(origin.add(getOffset()), new Vector2(projectileSpeed, 0), 0);
+			projectile.init(origin.cpy().add(getOffset()), new Vector2(projectileSpeed, 0), 1);
 			
 			// Start count down
 			timer.restart();
@@ -89,6 +107,6 @@ public class WeaponImpl implements Weapon {
 	 */
 	protected Projectile getProjectile() {
 		// Retrieve a projectile from the world
-		return world.retrieveProjectile(ProjectileImpl.class);
+		return game.retrieveProjectile(projectile);
 	}
 }
