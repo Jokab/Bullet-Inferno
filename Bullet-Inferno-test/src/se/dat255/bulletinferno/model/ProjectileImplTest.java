@@ -23,18 +23,24 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testGetDamage() {
-		// Tests that the projectileImpl has a default damage >= 0.
+		// Tests that the projectileImpl has a default damage > 0.
 		ProjectileImpl projectile = new ProjectileImpl(mockGame);
+		projectile.init(new Vector2(), new Vector2(), 30);
+		
 		assertTrue("The default damage of a projectile should be above 0",
-				projectile.getDamage() >= 0);
+				projectile.getDamage() > 0);
+		
+		projectile.reset();
 	}
 
 	@Test
 	public void testCollidedOtherProjectileNoDamageChange() {
 		Projectile projectileA = new ProjectileImpl(mockGame);
-		Projectile projectileB = new ProjectileImpl(mockGame);
-
+		projectileA.init(new Vector2(), new Vector2(), 30);
 		int initialDamage = projectileA.getDamage();
+		
+		Projectile projectileB = new ProjectileImpl(mockGame);
+		projectileB.init(new Vector2(), new Vector2(), 30);
 
 		projectileA.preCollided(projectileB);
 		assertTrue("A projectile should not take damage upon hit by another projectile (pre)",
@@ -43,14 +49,18 @@ public class ProjectileImplTest {
 		projectileA.postCollided(projectileB);
 		assertTrue("A projectile should not take damage upon hit by another projectile (post)",
 				projectileA.getDamage() == initialDamage);
+		
+		projectileA.reset();
+		projectileB.reset();
 	}
 
 	@Test
 	public void testCollidedDamageDecreasePostCollision() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD);
-
+		projectile.init(new Vector2(), new Vector2(), 30);
 		int initialDamage = projectile.getDamage();
+		
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD);
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -60,12 +70,15 @@ public class ProjectileImplTest {
 		projectile.postCollided(ship);
 		assertTrue("A projectile should get damage 0 when hitting a ship in postCollided",
 				projectile.getDamage() == 0);
+		
+		// Called when hit: projectile.reset();
 	}
 	
 	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		projectile.init(new Vector2(), new Vector2(), 30);
+		
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD);
 		
 		PhysicsBody body = null;
@@ -98,6 +111,8 @@ public class ProjectileImplTest {
 		}
 		assertTrue("Does remove the physics body of a projectile from the world upon ship hits",
 				projectileRemovedPostCollision);
+		
+		// Called when hit: projectile.reset();
 	}
 
 }
