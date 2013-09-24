@@ -13,10 +13,12 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Graphics {
 
-	/** 2D camera */
-	private static OrthographicCamera camera;
+	/** 2D world camera */
+	private static OrthographicCamera worldCamera;
+	/** 2D GUI camera */
+	private static OrthographicCamera guiCamera;
 	/** Handles efficient drawing of several images */
-	private SpriteBatch batch;
+	private SpriteBatch worldBatch, guiBatch;
 
 	/** The size, in meters, of the visible area. */
 	public static final float GAME_WIDTH = 16f, GAME_HEIGHT = 9f;
@@ -24,31 +26,35 @@ public class Graphics {
 	public static final float GAME_WIDTH_INVERTED = 1 / GAME_WIDTH,
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
 
-	/** List of all objects that are to be rendered */
+	/** List of all objects that are to be rendered in the world */
 	private final HashSet<Renderable> renderables = new HashSet<Renderable>();
+	/** List of all objects that are to be rendered as GUI elements */
+	private final HashSet<Renderable> guiRenderables = new HashSet<Renderable>();
 
 	/**
 	 * Initializes all the required assets
 	 */
 	public void create() {
 		Gdx.app.log("Graphics", "create()");
-		camera = new OrthographicCamera();
-		batch = new SpriteBatch();
+		worldCamera = new OrthographicCamera();
+		guiCamera = new OrthographicCamera();
+		worldBatch = new SpriteBatch();
+		guiBatch = new SpriteBatch();
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	/**
 	 * Sets the new size of the view field when the screen changes size
-	 * 
-	 * @param w
-	 * @param h
 	 */
 	public void resize(float w, float h) {
 		Gdx.app.log("Graphics", "resize(" + w + ", " + h + ")");
 		float width = w / h * GAME_HEIGHT;
 		Gdx.app.log("Graphics", "camera.setToOrtho(false, " + width + ", "
 				+ GAME_HEIGHT + ")");
-		camera.setToOrtho(false, width, GAME_HEIGHT);
+		worldCamera.setToOrtho(false, width, GAME_HEIGHT);
+		guiCamera.setToOrtho(false, w, h);
+		guiCamera.update();
+		guiBatch.setProjectionMatrix(guiCamera.combined);
 	}
 
 	/**
@@ -56,7 +62,7 @@ public class Graphics {
 	 */
 	public void dispose() {
 		Gdx.app.log("Graphics", "dispose()");
-		batch.dispose();
+		worldBatch.dispose();
 	}
 
 	/**
@@ -65,25 +71,30 @@ public class Graphics {
 	public void render() {
 		// Update the camera position
 		// TODO: camera.setPosition(...)
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
+		worldCamera.update();
+		worldBatch.setProjectionMatrix(worldCamera.combined);
 
 		// Clear the screen every frame
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		// TODO: Render GUI without alpha
-		// batch.disableBlending();
-		// batch.begin();
-		// batch.end();
-		// batch.enableBlending();
+		
+		// TODO: Render world without blending
 
 		// Render units that have alpha
-		batch.begin();
+		worldBatch.begin();
 		for (Renderable renderable : renderables) {
-			renderable.render(batch);
+			renderable.render(worldBatch);
 		}
-		batch.end();
+		worldBatch.end();
+
+		// TODO: Render GUI without blending
+		guiBatch.disableBlending();
+		guiBatch.begin();
+		for (Renderable renderable : guiRenderables) {
+			renderable.render(guiBatch);
+		}
+		guiBatch.end();
+		guiBatch.enableBlending();
 	}
 
 	/** Adds an object to be rendered. Uses hashcode to separate */
@@ -106,7 +117,7 @@ public class Graphics {
 	public static void screenToWorld(Vector2 position) {
 		Gdx.app.log("Graphics", "screenToWorld(" + position + ")");
 		vector.set(position.x, position.y, 0);
-		camera.unproject(vector);
+		worldCamera.unproject(vector);
 		Gdx.app.log("Graphics", "result: " + vector);
 		position.set(vector.x, vector.y);
 	}
@@ -115,7 +126,7 @@ public class Graphics {
 	public static void worldToScreen(Vector2 position) {
 		Gdx.app.log("Graphics", "worldToScreen(" + position + ")");
 		vector.set(position.x, position.y, 0);
-		camera.project(vector);
+		worldCamera.project(vector);
 		Gdx.app.log("Graphics", "result: " + vector);
 		position.set(vector.x, vector.y);
 	}
