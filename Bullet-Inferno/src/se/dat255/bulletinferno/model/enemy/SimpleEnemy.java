@@ -39,7 +39,6 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
-		weapon.fire(new Vector2(position.x-2, position.y));
 	}
 
 	@Override
