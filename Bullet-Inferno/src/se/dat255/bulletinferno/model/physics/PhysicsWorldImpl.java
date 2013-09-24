@@ -1,4 +1,11 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.physics;
+
+import se.dat255.bulletinferno.model.Collidable;
+import se.dat255.bulletinferno.model.PhysicsBody;
+import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.PhysicsShapeFactory;
+import se.dat255.bulletinferno.model.PhysicsWorld;
+import se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,14 +27,12 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	private static int VELOCITY_ITERATIONS = 8;
 
 	/**
-	 * The number of position iterations per update (performance vs. accuracy).
-	 * See Box2D docs.
+	 * The number of position iterations per update (performance vs. accuracy). See Box2D docs.
 	 */
 	private static int POSITION_ITERATIONS = 3;
 
 	/**
-	 * Accumulates time that was not simulated the last update, since it didn't
-	 * fit into TIME_STEP.
+	 * Accumulates time that was not simulated the last update, since it didn't fit into TIME_STEP.
 	 */
 	private float timeStepAccumulator = 0f;
 
@@ -35,23 +40,20 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	private final World world;
 
 	/**
-	 * Holds a shape factory instance. Creates Box2D shape objects in various
-	 * ways.
+	 * Holds a shape factory instance. Creates Box2D shape objects in various ways.
 	 */
 	private final PhysicsShapeFactory shapeFactory = new PhysicsShapeFactoryImpl();
-	
+
 	private final PhysicsWorldCollisionQueue collisionQueue = new PhysicsWorldCollisionQueueImpl();
-	
+
 	/**
 	 * Start the simulation.
 	 */
 	public PhysicsWorldImpl() {
-		// Initialize world with 0 gravity and all objects non-sleeping. They
-		// cannot sleep as we
-		// move them manually (otherwise Box2D will make them sleep, possibly
-		// with odd behavior).
+		// Initialize world with 0 gravity and all objects non-sleeping. They cannot sleep as we
+		// move them manually (otherwise Box2D will make them sleep, possibly with odd behavior).
 		world = new World(new Vector2(0f, 0f), false);
-		
+
 		// Collision detect.
 		world.setContactListener(collisionQueue);
 	}
@@ -78,7 +80,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	public void removeBody(PhysicsBody body) {
 		world.destroyBody(body.getBox2DBody());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -86,8 +88,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	public void update(float deltaTime) {
 		timeStepAccumulator += deltaTime;
 
-		// Take discrete steps of TIME_STEP, sometimes even multiple of them (to
-		// keep up).
+		// Take discrete steps of TIME_STEP, sometimes even multiple of them (to keep up).
 		for (; timeStepAccumulator > TIME_STEP; timeStepAccumulator -= TIME_STEP) {
 			world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		}

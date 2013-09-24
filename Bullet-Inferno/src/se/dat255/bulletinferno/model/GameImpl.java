@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+
 import com.badlogic.gdx.utils.Pool;
 
 /**
