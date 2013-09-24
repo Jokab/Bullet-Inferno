@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -105,5 +106,9 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+	
+	public boolean isInMyTeam(Teamable teamMember) {
+		return teamMember instanceof Enemy;
 	}
 }

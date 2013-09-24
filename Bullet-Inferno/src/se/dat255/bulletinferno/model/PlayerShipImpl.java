@@ -26,7 +26,7 @@ public class PlayerShipImpl implements PlayerShip {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		// TODO Auto-generated method stub
+
 	}
 	
 	/**
@@ -94,5 +94,10 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+	}
+
+	@Override
+	public boolean isInMyTeam(Teamable teamMember) {
+		return teamMember instanceof PlayerShip;
 	}
 }
