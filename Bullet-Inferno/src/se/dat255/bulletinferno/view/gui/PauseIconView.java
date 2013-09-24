@@ -1,21 +1,21 @@
 package se.dat255.bulletinferno.view.gui;
 
+import se.dat255.bulletinferno.GameScreen;
+import se.dat255.bulletinferno.model.RenderableGUI;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.MyGame;
-import se.dat255.bulletinferno.model.RenderableGUI;
-
 public class PauseIconView implements RenderableGUI {
 	
 	private final Vector2 position, size;
 	private final Sprite sprite;
-	private final MyGame game;
+	private final GameScreen game;
 	
-	public PauseIconView(MyGame game) {
+	public PauseIconView(GameScreen game) {
 		Texture texture = new Texture(Gdx.files.internal("images/gui/icon_pause.png"));
 		sprite = new Sprite(texture);
 		size = new Vector2(1.0f, 1.0f);
