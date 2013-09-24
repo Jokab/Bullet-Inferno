@@ -98,4 +98,9 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
+	
+	public void setVelocity(Vector2 velocity) {
+		body.setVelocity(velocity);
+	}
+	
 }
