@@ -99,19 +99,21 @@ public class MyGame implements ApplicationListener {
 		graphics.addRenderable(projectileView);
 	}
 	
+	/** Initiates the pause components when the player starts a level */
 	private void setupGUI(){
 		pauseIconView = new PauseIconView(this);
 		pauseScreenView = new PauseScreenView(this);
 		graphics.addRenderableGUI(pauseIconView);
 	}
 	
-	
+	/** Pauses the game */
 	public void pauseGame(){
 		gamePaused = true;
 		graphics.removeRenderableGUI(pauseIconView);
 		graphics.addRenderableGUI(pauseScreenView);
 	}
 	
+	/** Unpauses the game */
 	public void unpauseGame(){
 		gamePaused = false;
 		graphics.removeRenderableGUI(pauseScreenView);
