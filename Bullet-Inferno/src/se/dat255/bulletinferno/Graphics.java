@@ -36,10 +36,14 @@ public class Graphics {
 	 */
 	public void create() {
 		Gdx.app.log("Graphics", "create()");
+		
 		worldCamera = new OrthographicCamera();
-		guiCamera = new OrthographicCamera();
 		worldBatch = new SpriteBatch();
+		
+		guiCamera = new OrthographicCamera(16, 9);
 		guiBatch = new SpriteBatch();
+		guiBatch.setProjectionMatrix(guiCamera.combined);
+		
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
@@ -52,9 +56,9 @@ public class Graphics {
 		Gdx.app.log("Graphics", "camera.setToOrtho(false, " + width + ", "
 				+ GAME_HEIGHT + ")");
 		worldCamera.setToOrtho(false, width, GAME_HEIGHT);
-		guiCamera.setToOrtho(false, w, h);
-		guiCamera.update();
-		guiBatch.setProjectionMatrix(guiCamera.combined);
+//		guiCamera.setToOrtho(false, w, h);
+//		guiCamera.update();
+//		guiBatch.setProjectionMatrix(guiCamera.combined);
 	}
 
 	/**
@@ -87,27 +91,38 @@ public class Graphics {
 		}
 		worldBatch.end();
 
-		// TODO: Render GUI without blending
-		guiBatch.disableBlending();
+		// TODO: Render GUI
 		guiBatch.begin();
 		for (Renderable renderable : guiRenderables) {
 			renderable.render(guiBatch);
 		}
 		guiBatch.end();
-		guiBatch.enableBlending();
 	}
 
-	/** Adds an object to be rendered. Uses hashcode to separate */
+	/** Adds an object to be rendered in the world. Uses hashcode to separate */
 	public void addRenderable(Renderable renderable) {
 		Gdx.app.log("Graphics", "addRenderable(" + renderable.toString() + ")");
 		renderables.add(renderable);
 	}
 
-	/** Removes an object from being rendered */
+	/** Removes an object from being rendered in the world */
 	public void removeRenderable(Renderable renderable) {
 		Gdx.app.log("Graphics", "removeRenderable(" + renderable.toString()
 				+ ")");
 		renderables.remove(renderable);
+	}
+
+	/** Adds an object to be rendered in the GUI. Uses hashcode to separate */
+	public void addRenderableGUI(Renderable renderable) {
+		Gdx.app.log("Graphics", "addRenderableGUI(" + renderable.toString() + ")");
+		guiRenderables.add(renderable);
+	}
+
+	/** Removes an object from being rendered in the GUI */
+	public void removeRenderableGUI(Renderable renderable) {
+		Gdx.app.log("Graphics", "removeRenderableGUI(" + renderable.toString()
+				+ ")");
+		guiRenderables.remove(renderable);
 	}
 
 	/** Temporary local vector to prevent re-allocation every call */
