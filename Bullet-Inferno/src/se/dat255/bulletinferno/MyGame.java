@@ -11,6 +11,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.ShipView;
+import se.dat255.bulletinferno.view.gui.PauseIconView;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -75,6 +76,9 @@ public class MyGame implements ApplicationListener {
 		// Set up input handler
 		processor = new Touch(graphics, ship);
 		Gdx.input.setInputProcessor(processor);
+		
+		// TODO: Move the gui setup to when the player enters a level
+		setupGUI();
 
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
@@ -84,6 +88,11 @@ public class MyGame implements ApplicationListener {
 		// projectile.setPosition(new Vector2(5, 7));
 		ProjectileView projectileView = new ProjectileView(game);
 		graphics.addRenderable(projectileView);
+	}
+	
+	private void setupGUI(){
+		PauseIconView pauseIconView = new PauseIconView();
+		graphics.addRenderableGUI(pauseIconView);
 	}
 
 	private void setupHardcodedEnemies() {
