@@ -9,7 +9,7 @@ import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.WeaponDescription;
 
 /**
- * Enum class for holding different Weapon types. The method {@link #getWeaponForGame(Game)}
+ * Enum class for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
  * is used to retrieve a Weapon for the game.
  * 
  * @author Jakob Csörgei Gustavsson
@@ -23,7 +23,9 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	FAST(0f, ProjectileImpl.class, new Vector2(), new Vector2(5,0), 1f),
 	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f,0), 1f),
-	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f);
+	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f),
+	
+	FASTENEMY(0f, ProjectileImpl.class, new Vector2(), new Vector2(-5,0), 1f);
 	
 	private float reloadingTime;
 	private final Class<? extends Projectile> projectile;
@@ -83,7 +85,11 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getWeaponForGame(Game game) {
+	public Weapon getPlayerWeaponForGame(Game game) {
 		return new WeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
+	}
+	
+	public Weapon getEnemyWeaponForGame(Game game) {
+		return new EnemyWeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
 	}
 }

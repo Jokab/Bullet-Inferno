@@ -34,7 +34,7 @@ public class ProjectileImpl implements Projectile {
 		this.damage = damage;
 
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
-		
+
 		this.setVelocity(velocity);
 	}
 

@@ -8,13 +8,10 @@ import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Weapon;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
-import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
@@ -26,19 +23,23 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private Game game;
+	
+	private final Weapon weapon;
 
 	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
-			int initialHealth) {
-		this.initialHealth = initialHealth;
-		health = initialHealth;
+			int initialHealth, Weapon weapon) {
 		this.game = game;
+		this.initialHealth = initialHealth;
+		this.health = initialHealth;
+		this.weapon = weapon;
+
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
-
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
+		weapon.fire(new Vector2(position.x-2, position.y));
 	}
 
 	@Override

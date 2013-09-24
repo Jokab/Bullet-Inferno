@@ -8,7 +8,9 @@ import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.Renderable;
 import se.dat255.bulletinferno.model.RenderableGUI;
+import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
+import se.dat255.bulletinferno.model.weapon.EnemyWeaponImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
@@ -78,7 +80,7 @@ public class MyGame implements ApplicationListener {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.FAST.getWeaponForGame(game));
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100, WeaponData.FAST.getPlayerWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
@@ -126,9 +128,12 @@ public class MyGame implements ApplicationListener {
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
 		Vector2 velocity = new Vector2(-3, 0);
-		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10));
+		Weapon enemyWeapon = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
+		Weapon enemyWeapon2 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
+		Weapon enemyWeapon3 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
+		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10, enemyWeapon));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10, enemyWeapon2));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10, enemyWeapon3));
 
 		EnemyView enemyView = new EnemyView(game);
 
