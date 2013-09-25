@@ -7,6 +7,7 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 
@@ -14,11 +15,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class EnemyImplTest {
 
-	private class EnemyMockup extends EnemyImpl {
+	private class EnemyMockup extends SimpleEnemy {
 
 		public EnemyMockup(Game game, Vector2 position, Vector2 velocity,
-				int initialHealth, int score, int credits) {
-			super(game, position, velocity, initialHealth, score, credits);
+				int initialHealth, Weapon weapon, int score, int credits) {
+			super(game, position, velocity, initialHealth, weapon, score, credits);
 		}
 		
 	}
@@ -42,7 +43,7 @@ public class EnemyImplTest {
 
 	private class ColidedTestMockProjectile extends SimpleMockProjectile {
 		@Override
-		public int getDamage() {
+		public float getDamage() {
 			return 19;
 		}
 	}
@@ -50,31 +51,31 @@ public class EnemyImplTest {
 	@Test
 	public void testGetScore() {
 		// Set up a new enemy with score 99
-		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
-				0, 99, 0);
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				0, null, 99, 0);
 		assertTrue("Enemy score should be = 99", enemy.getScore() == 99);
 	}
 
 	@Test
 	public void testGetCredits() {
 		// Set up a new enemy with credits of 65
-		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
-				0, 0, 65);
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				0, null, 0, 65);
 		assertTrue("Enemy credits should be = 65", enemy.getCredits() == 65);
 	}
 
 	@Test
 	public void testPreCollided() {
-		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
-				100, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				100, null, 0, 0);
 		Projectile projectile = new ColidedTestMockProjectile();
 		
 		int preCollisionHealth = enemy.getHealth();
 		
 		// Simulate colliding with a projectile
 		enemy.preCollided(projectile);
-		assertEquals("Should take specified damage from projectile", enemy.getHealth(),
-				preCollisionHealth - projectile.getDamage());
+		assertTrue("Should take specified damage from projectile", 
+				enemy.getHealth() == preCollisionHealth - projectile.getDamage());
 	}
 
 	@Test
@@ -85,8 +86,8 @@ public class EnemyImplTest {
 	@Test
 	public void testGetHealth() {
 		// Set up a new enemy with a health of 101
-		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
-				101, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				101, null, 0, 0);
 		assertTrue("Enemy health should be = 101", enemy.getHealth() == 101);
 		
 		enemy.takeDamage(10);
@@ -97,8 +98,8 @@ public class EnemyImplTest {
 	public void testTakeDamage() {		
 		// Set up a new enemy with a health of 101
 		EnemyGameMockup game = new EnemyGameMockup();
-		EnemyImpl enemy = new EnemyMockup(game, new Vector2(), new Vector2(), 
-				101, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(game, new Vector2(), new Vector2(), 
+				101, null, 0, 0);
 		
 		// Take 61 damage
 		enemy.takeDamage(61);
@@ -126,8 +127,8 @@ public class EnemyImplTest {
 	@Test
 	public void testDispose() {
 		EnemyGameMockup game = new EnemyGameMockup();
-		EnemyImpl enemy = new EnemyMockup(game, new Vector2(), new Vector2(), 
-				101, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(game, new Vector2(), new Vector2(), 
+				101, null, 0, 0);
 		enemy.dispose();
 		assertEquals("Enemy should do remove body once", 
 				game.physicsWorld.removeBodyCalls.size(), 1);
@@ -136,8 +137,8 @@ public class EnemyImplTest {
 	@Test
 	public void testGetInitialHealth() {
 		// Set up a new enemy with a health of 101
-		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
-				98, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				98, null, 0, 0);
 		assertTrue("Enemy initial health should be = 98", enemy.getInitialHealth() == 98);
 		
 		enemy.takeDamage(10);
@@ -148,8 +149,8 @@ public class EnemyImplTest {
 	@Test
 	public void testGetPosition() {
 		Vector2 position = new Vector2(2,3);
-		EnemyImpl enemy = new EnemyMockup(new SimpleMockGame(), position, new Vector2(), 
-				98, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), position, new Vector2(), 
+				98, null, 0, 0);
 		
 		assertTrue("Check that position is equal enemy's position",  
 				position.equals(enemy.getPosition()));

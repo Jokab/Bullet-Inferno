@@ -102,7 +102,9 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
-		weapon.getTimer().stop();
+		if(weapon != null) {
+			weapon.getTimer().stop();
+		}
 	}
 
 	@Override

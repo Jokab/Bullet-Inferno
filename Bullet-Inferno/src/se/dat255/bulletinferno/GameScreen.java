@@ -105,9 +105,9 @@ public class GameScreen extends AbstractScreen {
 		Weapon enemyWeapon = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
 		Weapon enemyWeapon2 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
 		Weapon enemyWeapon3 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
-		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10, enemyWeapon, 10, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10, enemyWeapon2, 10, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10, enemyWeapon3, 10, 10  ));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 5, enemyWeapon, 10, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 5, enemyWeapon2, 10, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 5, enemyWeapon3, 10, 10  ));
 
 		EnemyView enemyView = new EnemyView(game);
 

@@ -31,6 +31,7 @@ public class WeaponImpl implements Weapon {
 		
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
+		timer.stop();
 	}
 
 	/**
