@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.util.Disposable;
 
-public interface Enemy extends PositionEntity, Disposable {
+public interface Enemy extends PositionEntity, Disposable, Teamable {
 
 	/**
 	 * Returns the score that you get from destroying this enemy.

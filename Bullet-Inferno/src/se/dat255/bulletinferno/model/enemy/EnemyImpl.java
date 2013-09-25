@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -55,7 +56,8 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if(other instanceof Projectile) {
+		if(other instanceof Projectile && !isInMyTeam(((Projectile)other).getSource())) {
+			// If got hit by a projectile that wasn't fired from my team
 			takeDamage(((Projectile)other).getDamage());
 		}
 	}
@@ -105,5 +107,9 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+	
+	public boolean isInMyTeam(Teamable teamMember) {
+		return teamMember instanceof Enemy;
 	}
 }
