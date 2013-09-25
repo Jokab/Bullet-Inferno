@@ -7,7 +7,7 @@ public interface Destructible extends Teamable{
 	 * @param damage
 	 *            The damage to be dealt.
 	 */
-	public void takeDamage(int damage);
+	public void takeDamage(float damage);
 
 	/**
 	 * Returns the object's current health.

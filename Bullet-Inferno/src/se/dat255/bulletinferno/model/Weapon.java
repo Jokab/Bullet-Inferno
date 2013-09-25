@@ -43,4 +43,11 @@ public interface Weapon {
 	 * @param source
 	 */
 	public void fire(Vector2 position, Vector2 direction, Teamable source);
+
+	float getDamage();
+	
+	Vector2 getProjectileVelocity();
+
+	public Timer getTimer();
+
 }

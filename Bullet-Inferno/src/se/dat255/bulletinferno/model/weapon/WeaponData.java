@@ -9,7 +9,7 @@ import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.WeaponDescription;
 
 /**
- * Enum class for holding different Weapon types. The method {@link #getWeaponForGame(Game)}
+ * Enum class for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
  * is used to retrieve a Weapon for the game.
  * 
  * @author Jakob Csörgei Gustavsson
@@ -23,16 +23,19 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	FAST(0f, ProjectileImpl.class, new Vector2(), new Vector2(5,0), 1f),
 	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f,0), 1f),
-	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f);
+	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f),
 	
-	private float reloadTime;
+	// NOTE: ENEMY WEAPONS MUST NOT HAVE RELOADING SPEED 0, IT WON'T WORK
+	FASTENEMY(1f, ProjectileImpl.class, new Vector2(), new Vector2(-5,0), 1f);
+	
+	private float reloadingTime;
 	private final Class<? extends Projectile> projectile;
 	private final Vector2 offset;
 	private final Vector2 projectileVelocity;
 	private final float damage;
 	
 	WeaponData(float reloadTime, Class<? extends Projectile> projectile, Vector2 offset, Vector2 projectileVelocity, float damage) {
-		this.reloadTime = reloadTime;
+		this.reloadingTime = reloadTime;
 		this.projectile = projectile;
 		this.offset = offset;
 		this.projectileVelocity = projectileVelocity;
@@ -44,7 +47,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public float getReloadTime() {
-		return this.reloadTime;
+		return this.reloadingTime;
 	}
 
 	/**
@@ -83,8 +86,11 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getWeaponForGame(Game game) {
-		return new WeaponImpl.Builder(game, projectile).reloadingTime(reloadTime).offset(offset).
-				damage(damage).projectileVelocity(projectileVelocity).build();
+	public Weapon getPlayerWeaponForGame(Game game) {
+		return new WeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
+	}
+	
+	public Weapon getEnemyWeaponForGame(Game game) {
+		return new EnemyWeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
 	}
 }

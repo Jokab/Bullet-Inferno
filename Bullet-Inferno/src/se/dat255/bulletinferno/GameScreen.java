@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.RenderableGUI;
+import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -54,7 +55,7 @@ public class GameScreen extends AbstractScreen {
 		game = new GameImpl();
 
 		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100,
-				WeaponData.FAST.getWeaponForGame(game));
+				WeaponData.FAST.getPlayerWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 
@@ -97,13 +98,16 @@ public class GameScreen extends AbstractScreen {
 
 	private void setupHardcodedEnemies() {
 		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
-		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
+		Vector2 position2 = new Vector2(16 - 4, 9 / 3f * 1 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
 		Vector2 velocity = new Vector2(-3, 0);
-		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 10, 10, 100));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 10, 10, 100));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 10, 10, 100));
+		Weapon enemyWeapon = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
+		Weapon enemyWeapon2 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
+		Weapon enemyWeapon3 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
+		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 5, enemyWeapon, 10, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 5, enemyWeapon2, 10, 10));
+		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 5, enemyWeapon3, 10, 10  ));
 
 		EnemyView enemyView = new EnemyView(game);
 
