@@ -5,7 +5,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-public class ProjectileImpl implements Projectile {
+public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionListener {
 
 	private static PhysicsBodyDefinition bodyDefinition = null;
 
@@ -14,6 +14,23 @@ public class ProjectileImpl implements Projectile {
 	private float damage;
 	private Teamable source = null;
 	private final Game game;
+	
+	/** An instance of a timer to help "running things later", i.e. on the next timestep. */
+	private Timer runLater;
+	
+	/**
+	 * Schedule an instance of this class to a timer and it will remove this projectile when the
+	 * timer calls it. This class takes care of unregistering itself on the timer when run.
+	 */
+	public class RemoveThisProjectileTimerable implements Timerable {
+		@Override
+		public void onTimeout(Timer source, float timeSinceLast) {
+			game.disposeProjectile(ProjectileImpl.this);
+			
+			// @todo: Fix timer concurrent modifiation bug and uncomment.
+			//source.unregisterListener(this);
+		}
+	}
 
 	/**
 	 * Constructs a new projectile
@@ -107,6 +124,27 @@ public class ProjectileImpl implements Projectile {
 	@Override
 	public Teamable getSource() {
 		return source;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void viewportIntersectionBegin() {
+		// NOP
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void viewportIntersectionEnd() {
+		// Run later as we are not allowed to alter the world here.
+		
+		// @todo: Move to constructor once the timer bug is fixed (concurrent mod. error now).
+		runLater = game.getTimer();
+		runLater.registerListener(new RemoveThisProjectileTimerable());
+		runLater.start();
 	}
 	
 }
