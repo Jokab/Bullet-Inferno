@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.RenderableGUI;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
+import se.dat255.bulletinferno.model.enemy.EnemyTypes;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
@@ -101,13 +102,9 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position2 = new Vector2(16 - 4, 9 / 3f * 1 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
-		Vector2 velocity = new Vector2(-3, 0);
-		Weapon enemyWeapon = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
-		Weapon enemyWeapon2 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
-		Weapon enemyWeapon3 = WeaponData.FASTENEMY.getEnemyWeaponForGame(game);
-		game.addEnemy(new DefaultEnemyShipImpl(game, position, velocity, 5, enemyWeapon, 10, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position2, velocity, 5, enemyWeapon2, 10, 10));
-		game.addEnemy(new DefaultEnemyShipImpl(game, position3, velocity, 5, enemyWeapon3, 10, 10  ));
+		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position));
+		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position2));
+		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position3));
 
 		EnemyView enemyView = new EnemyView(game);
 
