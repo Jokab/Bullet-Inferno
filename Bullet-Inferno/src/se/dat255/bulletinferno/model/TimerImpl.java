@@ -159,9 +159,9 @@ public class TimerImpl implements Timer {
 		timerables.remove(listener);
 	}
 
-	private void notifyAllListeners() {
+	private void notifyAllListeners(float timeSinceLast) {
 		for (Timerable listener : timerables) {
-			listener.onTimeout(this);
+			listener.onTimeout(this, timeSinceLast);
 		}
 	}
 
@@ -175,7 +175,7 @@ public class TimerImpl implements Timer {
 			
 			if (timeLeft <= 0) {
 				timeLeft = 0;
-				notifyAllListeners();
+				notifyAllListeners(initialTime-timeLeft); // Note: timeLeft is <= 0 here
 				if (isContinuous()) {
 					restart();
 				} else {
