@@ -8,7 +8,7 @@ public class ProjectileImpl implements Projectile {
 	private static PhysicsBodyDefinition bodyDefinition = null;
 
 	private PhysicsBody body = null;
-
+	private Teamable source = null;
 	private int damage;
 	private final Game game;
 
@@ -30,9 +30,9 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Vector2 origin, Vector2 velocity, int damage) {
+	public void init(Vector2 origin, Vector2 velocity, int damage, Teamable source) {
 		this.damage = damage;
-
+		this.source = source;
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
 		
 		this.setVelocity(velocity);
@@ -80,6 +80,7 @@ public class ProjectileImpl implements Projectile {
 	public void reset() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
+		source = null;
 	}
 
 	/**
@@ -96,6 +97,11 @@ public class ProjectileImpl implements Projectile {
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+
+	@Override
+	public Teamable getSource() {
+		return source;
 	}
 	
 }

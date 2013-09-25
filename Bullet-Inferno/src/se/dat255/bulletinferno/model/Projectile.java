@@ -17,8 +17,9 @@ public interface Projectile extends Collidable, Poolable {
 	 * @param position the initial position.
 	 * @param velocity the initial velocity.
 	 * @param damage the projectile damage coefficient.
+	 * @param source the team source from which it was fired.
 	 */
-	public void init(Vector2 position, Vector2 velocity, int damage);
+	public void init(Vector2 position, Vector2 velocity, int damage, Teamable source);
 	
 	/**
 	 * Sets the velocity of the projectile
@@ -31,5 +32,11 @@ public interface Projectile extends Collidable, Poolable {
 	 * Gets the position of the projectile
 	 */
 	public Vector2 getPosition();
+	
+	/**
+	 * Returns the teamable source from which it was fired.
+	 * @return source
+	 */
+	public Teamable getSource();
 
 }
