@@ -174,8 +174,8 @@ public class TimerImpl implements Timer {
 			timeLeft -= delta;
 			
 			if (timeLeft <= 0) {
-				timeLeft = 0;
 				notifyAllListeners(initialTime-timeLeft); // Note: timeLeft is <= 0 here
+				timeLeft = 0;
 				if (isContinuous()) {
 					restart();
 				} else {
