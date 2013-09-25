@@ -99,12 +99,12 @@ public class GameScreen extends AbstractScreen {
 
 	private void setupHardcodedEnemies() {
 		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
-		Vector2 position2 = new Vector2(16 - 4, 9 / 3f * 1 - 2);
+		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 
 		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position));
-		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position2));
-		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position3));
+		game.addEnemy(EnemyTypes.SLOW_SHIP.getEnemyShip(game, position2));
+		game.addEnemy(EnemyTypes.FAST_SHIP.getEnemyShip(game, position3));
 
 		EnemyView enemyView = new EnemyView(game);
 
