@@ -45,4 +45,6 @@ public interface Weapon {
 	float getDamage();
 	
 	Vector2 getProjectileVelocity();
+
+	public Timer getTimer();
 }

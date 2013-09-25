@@ -25,7 +25,8 @@ public enum WeaponData implements WeaponDescription {
 	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f,0), 1f),
 	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2,0), 1f),
 	
-	FASTENEMY(0f, ProjectileImpl.class, new Vector2(), new Vector2(-5,0), 1f);
+	// NOTE: ENEMY WEAPONS MUST NOT HAVE RELOADING SPEED 0, IT WON'T WORK
+	FASTENEMY(1f, ProjectileImpl.class, new Vector2(), new Vector2(-5,0), 1f);
 	
 	private float reloadingTime;
 	private final Class<? extends Projectile> projectile;

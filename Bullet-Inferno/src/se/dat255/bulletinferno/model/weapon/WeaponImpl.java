@@ -30,7 +30,6 @@ public class WeaponImpl implements Weapon {
 		
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
-		timer.stop();
 	}
 
 	/**
@@ -93,7 +92,7 @@ public class WeaponImpl implements Weapon {
 	public Timer getTimer() {
 		return this.timer;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */

@@ -24,7 +24,7 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	private PhysicsBody body = null;
 	private Game game;
 	
-	private final Weapon weapon;
+	protected final Weapon weapon;
 
 	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
 			int initialHealth, Weapon weapon) {
@@ -39,6 +39,8 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
+		
+		
 	}
 
 	@Override
