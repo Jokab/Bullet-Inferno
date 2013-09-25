@@ -47,4 +47,14 @@ public interface PhysicsWorld {
 	 */
 	PhysicsShapeFactory getShapeFactory();
 
+	/**
+	 * Set the viewport for the physics world (must be set for viewport intersection detection).
+	 * 
+	 * @param viewportPosition
+	 *        the center-position i world coordinates for the viewport.
+	 * @param viewportDimension
+	 *        the dimensions of the viewport in world coordinates (width, height).
+	 */
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimension);
+
 }
