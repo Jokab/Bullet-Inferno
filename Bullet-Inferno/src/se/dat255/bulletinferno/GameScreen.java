@@ -40,6 +40,12 @@ public class GameScreen extends AbstractScreen {
 
 	/** The views to use when going in or out pause */
 	private RenderableGUI pauseScreenView, pauseIconView;
+	
+	/** The (center of the) current viewport position, in world coordinates */
+	private Vector2 viewportPosition = new Vector2();
+	
+	/** The current viewport dimensions, in world coordinates. */
+	private Vector2 viewportDimensions = new Vector2();
 
 	private MyGame myGame;
 
@@ -141,6 +147,14 @@ public class GameScreen extends AbstractScreen {
 			// graphics commands
 			// can be buffered up for being sent to the graphics pipeline.
 			// Meanwhile, we run the models.
+			
+			// Calculate the new world coordinate position (in the middle) of the viewport.
+			viewportPosition = new Vector2(0, 0);
+			graphics.screenToWorld(viewportPosition);
+			viewportPosition.add(0.5f*viewportDimensions.x, 0.5f*viewportDimensions.y);
+			
+			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+			
 			game.update(delta);
 		}
 	}
@@ -148,6 +162,20 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void resize(int width, int height) {
 		graphics.resize(width, height);
+		
+		// Get top left and bottom right corners for further calculation...
+		viewportPosition = new Vector2(0, 0);
+		graphics.screenToWorld(viewportPosition);
+		viewportDimensions = new Vector2(width, height);
+		graphics.screenToWorld(viewportDimensions);
+		
+		// ...adjust dimension to top left corner...
+		viewportDimensions.sub(viewportPosition);
+		
+		// ...adjust position to being in the middle of the viewport...
+		viewportPosition.add(0.5f*viewportDimensions.x, 0.5f*viewportDimensions.y);
+		
+		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
 	}
 
 }
