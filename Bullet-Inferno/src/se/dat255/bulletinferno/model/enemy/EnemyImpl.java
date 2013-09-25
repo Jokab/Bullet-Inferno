@@ -56,7 +56,8 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if(other instanceof Projectile) {
+		if(other instanceof Projectile && !isInMyTeam(((Projectile)other).getSource())) {
+			// If got hit by a projectile that wasn't fired from my team
 			takeDamage(((Projectile)other).getDamage());
 		}
 	}

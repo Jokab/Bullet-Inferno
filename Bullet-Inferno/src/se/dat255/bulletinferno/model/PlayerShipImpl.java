@@ -26,7 +26,12 @@ public class PlayerShipImpl implements PlayerShip {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-
+		if(other instanceof Projectile  && !isInMyTeam(((Projectile)other).getSource())) {
+			// If got hit by a projectile not fired by me
+			takeDamage(((Projectile) other).getDamage());
+		} else if (other instanceof Teamable && !isInMyTeam((Teamable)other)) {
+			// TODO game over / die
+		}
 	}
 	
 	/**
@@ -34,7 +39,7 @@ public class PlayerShipImpl implements PlayerShip {
 	 */
 	@Override
 	public void postCollided(Collidable other) {
-		// TODO Auto-generated method stub
+		// NOP
 	}
 
 	@Override
@@ -51,7 +56,6 @@ public class PlayerShipImpl implements PlayerShip {
 	public int getInitialHealth() {
 		return this.initialHealth;
 	}
-	
 
 	@Override
 	public Vector2 getPosition() {
@@ -89,7 +93,7 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	@Override
 	public void fireWeapon() {
-		weapon.fire(position);
+		weapon.fire(position, new Vector2(1,0), this);
 	}
 	
 	public void setWeapon(Weapon weapon) {

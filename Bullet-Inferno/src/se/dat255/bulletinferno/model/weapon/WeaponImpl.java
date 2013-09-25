@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model.weapon;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.ProjectileImpl;
+import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Timer;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.WeaponDescription;
@@ -88,11 +89,12 @@ public class WeaponImpl implements Weapon {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fire(Vector2 origin) {
+	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile projectile = getProjectile();
-			projectile.init(origin.cpy().add(getOffset()), this.projectileVelocity, 1);
+			projectile.init(position.cpy().add(getOffset()), direction.scl(projectileVelocity), 
+					DEFAULT_DAMAGE, source);
 			
 			// Start count down
 			timer.restart();
@@ -100,7 +102,9 @@ public class WeaponImpl implements Weapon {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Gets the projectile to be fired.
+	 * Purely for extension purposes. To be overridden when
+	 * some kind of special property is needed for the projectile.
 	 */
 	protected Projectile getProjectile() {
 		// Retrieve a projectile from the world
