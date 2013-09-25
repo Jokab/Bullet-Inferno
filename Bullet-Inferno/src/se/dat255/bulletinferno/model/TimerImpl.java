@@ -79,7 +79,6 @@ public class TimerImpl implements Timer {
 			time = 0;
 		}
 		initialTime = time;
-		stop();
 		timeLeft = initialTime;
 	}
 
@@ -171,8 +170,9 @@ public class TimerImpl implements Timer {
 	 */
 	@Override
 	public void update(float delta) {
-		if (isRunning && timeLeft > 0) {
+		if (isRunning && timeLeft >= 0) {
 			timeLeft -= delta;
+			
 			if (timeLeft <= 0) {
 				timeLeft = 0;
 				notifyAllListeners(initialTime-timeLeft); // Note: timeLeft is <= 0 here

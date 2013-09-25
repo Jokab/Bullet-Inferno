@@ -7,13 +7,14 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-abstract class EnemyImpl implements Enemy, Collidable, Destructible {
+abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	private int health;
 	private final int initialHealth;
@@ -23,22 +24,26 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private Game game;
+	
+	protected final Weapon weapon;
 
-	public EnemyImpl(Game game, Vector2 position, Vector2 velocity,
-			int initialHealth, int score, int credits) {
+	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
+			int initialHealth, Weapon weapon, int score, int credits) {
+		this.game = game;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
+		this.weapon = weapon;
 		this.score = score;
 		this.credits = credits;
-		this.game = game;
 		
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
-
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
+		
+		
 	}
 
 	@Override
@@ -76,7 +81,7 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	}
 
 	@Override
-	public void takeDamage(int damage) {
+	public void takeDamage(float damage) {
 		// Take no damage if enemy isn't alive
 		if(health > 0) {
 			health -= damage;
@@ -97,6 +102,9 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
+		if(weapon != null) {
+			weapon.getTimer().stop();
+		}
 	}
 
 	@Override
@@ -107,6 +115,10 @@ abstract class EnemyImpl implements Enemy, Collidable, Destructible {
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+	
+	public void setVelocity(Vector2 velocity) {
+		body.setVelocity(velocity);
 	}
 	
 	public boolean isInMyTeam(Teamable teamMember) {

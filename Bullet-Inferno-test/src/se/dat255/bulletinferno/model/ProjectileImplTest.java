@@ -25,7 +25,7 @@ public class ProjectileImplTest {
 	public void testGetDamage() {
 		// Tests that the projectileImpl has a default damage > 0.
 		ProjectileImpl projectile = new ProjectileImpl(mockGame);
-		projectile.init(new Vector2(), new Vector2(), 30);
+		projectile.init(new Vector2(), new Vector2(), 30, null);
 
 		assertTrue("The default damage of a projectile should be above 0",
 				projectile.getDamage() > 0);
@@ -36,11 +36,11 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedOtherProjectileNoDamageChange() {
 		Projectile projectileA = new ProjectileImpl(mockGame);
-		projectileA.init(new Vector2(), new Vector2(), 30);
-		int initialDamage = projectileA.getDamage();
+		projectileA.init(new Vector2(), new Vector2(), 30, null);
+		float initialDamage = projectileA.getDamage();
 
 		Projectile projectileB = new ProjectileImpl(mockGame);
-		projectileB.init(new Vector2(), new Vector2(), 30);
+		projectileB.init(new Vector2(), new Vector2(), 30, null);
 
 		projectileA.preCollided(projectileB);
 		assertTrue("A projectile should not take damage upon hit by another projectile (pre)",
@@ -57,10 +57,17 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedDamageDecreasePostCollision() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		projectile.init(new Vector2(), new Vector2(), 30);
-		int initialDamage = projectile.getDamage();
+		projectile.init(new Vector2(), new Vector2(), 30, new Teamable() {
+			
+			@Override
+			public boolean isInMyTeam(Teamable teamMember) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+		float initialDamage = projectile.getDamage();
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getWeaponForGame(mockGame));
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -77,9 +84,16 @@ public class ProjectileImplTest {
 	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		projectile.init(new Vector2(), new Vector2(), 30);
+		projectile.init(new Vector2(), new Vector2(), 30, new Teamable() {
+			
+			@Override
+			public boolean isInMyTeam(Teamable teamMember) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getWeaponForGame(mockGame));
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : mockGame.physicsWorld.createBodyCalls) {
