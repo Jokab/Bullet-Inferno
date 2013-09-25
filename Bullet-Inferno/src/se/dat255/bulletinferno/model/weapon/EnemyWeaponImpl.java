@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.model.weapon;
 
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Timer;
 import se.dat255.bulletinferno.model.Timerable;
 
@@ -21,11 +22,11 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fire(Vector2 origin) {
+	public void fire(Vector2 origin, Vector2 velocity, Teamable source) {
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile projectile = getProjectile();
-			projectile.init(origin.cpy().add(getOffset()), getProjectileVelocity(), getDamage());
+			projectile.init(origin.cpy().add(getOffset()), getProjectileVelocity(), getDamage(), source);
 			
 			// Start count down
 			getTimer().restart();

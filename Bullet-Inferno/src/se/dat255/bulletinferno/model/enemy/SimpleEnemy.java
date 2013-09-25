@@ -6,9 +6,10 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -17,8 +18,8 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	private int health;
 	private final int initialHealth;
-	private int score;
-	private int credits;
+	private final int score;
+	private final int credits;
 
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
@@ -27,12 +28,14 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	protected final Weapon weapon;
 
 	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon weapon) {
+			int initialHealth, Weapon weapon, int score, int credits) {
 		this.game = game;
 		this.initialHealth = initialHealth;
-		this.health = initialHealth;
+		health = initialHealth;
 		this.weapon = weapon;
-
+		this.score = score;
+		this.credits = credits;
+		
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
@@ -58,7 +61,8 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if(other instanceof Projectile) {
+		if(other instanceof Projectile && !isInMyTeam(((Projectile)other).getSource())) {
+			// If got hit by a projectile that wasn't fired from my team
 			takeDamage(((Projectile)other).getDamage());
 		}
 	}
@@ -78,11 +82,16 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	@Override
 	public void takeDamage(float damage) {
-		health -= damage;
-		// If enemy has died
-		if(health <=0) {
-			game.removeEnemy(this);
-			dispose();
+		// Take no damage if enemy isn't alive
+		if(health > 0) {
+			health -= damage;
+			
+			// If enemy has died
+			if(health <=0) {
+				health = 0;
+				game.removeEnemy(this);
+				dispose();
+			}
 		}
 	}
 	
@@ -93,6 +102,7 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
+		weapon.getTimer().stop();
 	}
 
 	@Override
@@ -109,4 +119,7 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		body.setVelocity(velocity);
 	}
 	
+	public boolean isInMyTeam(Teamable teamMember) {
+		return teamMember instanceof Enemy;
+	}
 }

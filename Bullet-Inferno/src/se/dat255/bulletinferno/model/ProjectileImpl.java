@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
@@ -10,6 +12,7 @@ public class ProjectileImpl implements Projectile {
 	private PhysicsBody body = null;
 
 	private float damage;
+	private Teamable source = null;
 	private final Game game;
 
 	/**
@@ -30,9 +33,9 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Vector2 origin, Vector2 velocity, float damage) {
+	public void init(Vector2 origin, Vector2 velocity, float damage, Teamable source) {
 		this.damage = damage;
-
+		this.source = source;
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
 
 		this.setVelocity(velocity);
@@ -61,14 +64,16 @@ public class ProjectileImpl implements Projectile {
 	public void postCollided(Collidable other) {
 		// Decrease the damage after hits, since we must let the other object that collided with us
 		// decide if they want to take our current damage (etc.) before we zero it.
-		if(damage > 0 && !(other instanceof Projectile)) {
-			damage -= 1;
-			
-			// Note: Do not move this out of here - this must be called only once, and that is when
-			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
-			if(damage <= 0) {
-				// We won't need this projectile anymore, since it is useless and can't hurt anyone.
-				game.disposeProjectile(this);
+		if(damage > 0 && !(other instanceof Projectile) && other != getSource()) {
+			if(!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)) {
+				damage = 0;
+				
+				// Note: Do not move this out of here - this must be called only once, and that is when
+				// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
+				if(damage <= 0) {
+					// We won't need this projectile anymore, since it is useless and can't hurt anyone.
+					game.disposeProjectile(this);
+				}
 			}
 		}
 	}
@@ -80,6 +85,7 @@ public class ProjectileImpl implements Projectile {
 	public void reset() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
+		source = null;
 	}
 
 	/**
@@ -96,6 +102,11 @@ public class ProjectileImpl implements Projectile {
 	@Override
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+
+	@Override
+	public Teamable getSource() {
+		return source;
 	}
 	
 }
