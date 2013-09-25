@@ -37,7 +37,7 @@ abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		this.credits = credits;
 		
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
