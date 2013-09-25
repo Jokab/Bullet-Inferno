@@ -11,7 +11,7 @@ public class TimerImplTest {
 		private boolean gotACall = false;
 		private Timer source = null;
 		@Override
-		public void onTimeout(Timer source) {
+		public void onTimeout(Timer source, float timeSinceLast) {
 			gotACall = true;
 			this.source = source;
 		}
