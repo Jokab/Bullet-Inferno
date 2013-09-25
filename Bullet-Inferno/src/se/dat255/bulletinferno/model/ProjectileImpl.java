@@ -27,7 +27,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		public void onTimeout(Timer source, float timeSinceLast) {
 			game.disposeProjectile(ProjectileImpl.this);
 			
-			// @todo: Fix timer concurrent modifiation bug and uncomment.
+			//TODO: Fix timer concurrent modifiation bug and uncomment.
 			//source.unregisterListener(this);
 		}
 	}
@@ -141,7 +141,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public void viewportIntersectionEnd() {
 		// Run later as we are not allowed to alter the world here.
 		
-		// @todo: Move to constructor once the timer bug is fixed (concurrent mod. error now).
+		// TODO: Move to constructor once the timer bug is fixed (concurrent mod. error now).
 		runLater = game.getTimer();
 		runLater.registerListener(new RemoveThisProjectileTimerable());
 		runLater.start();
