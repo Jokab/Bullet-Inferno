@@ -8,12 +8,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 
-public class SinusMovementPattern implements PhysicsMovementPattern {
+public class SineMovementPattern implements PhysicsMovementPattern {
 	private float time = 0; 
 	private final float frequency;
 	private final float maxForce;
 	
-	public SinusMovementPattern(float frequency, float maxForce) {
+	public SineMovementPattern(float frequency, float maxForce) {
 		this.frequency = frequency;
 		this.maxForce = maxForce;
 	}
