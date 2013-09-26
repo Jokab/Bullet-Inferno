@@ -2,8 +2,8 @@ package se.dat255.bulletinferno;
 
 import java.util.HashSet;
 
-import se.dat255.bulletinferno.model.Renderable;
-import se.dat255.bulletinferno.model.RenderableGUI;
+import se.dat255.bulletinferno.view.Renderable;
+import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;

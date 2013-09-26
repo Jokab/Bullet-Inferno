@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.Renderable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

@@ -1,7 +1,7 @@
 package se.dat255.bulletinferno.view.gui;
 
 import se.dat255.bulletinferno.GameScreen;
-import se.dat255.bulletinferno.model.RenderableGUI;
+import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
