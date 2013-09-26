@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
@@ -37,6 +36,19 @@ public class PlayerShipImplTest {
 		@Override
 		public float getDamage() {
 			return 19;
+		}
+	}
+	
+	// A class that is definitely not a team member of the ship
+	private class NonTeamMember implements Teamable, Collidable {
+		@Override
+		public void preCollided(Collidable other) {}
+		@Override
+		public void postCollided(Collidable other) {}
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return false;
 		}
 	}
 	
@@ -131,13 +143,12 @@ public class PlayerShipImplTest {
 		PlayerShip playerShip2 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
 		
-		Enemy enemy = new DefaultEnemyShipImpl(mockGame, new Vector2(), new Vector2(), 0, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame), 0, 0);
+		NonTeamMember enemy = new NonTeamMember();
 		
 		assertTrue("Check so that two player ships is in the same team", 
 				playerShip1.isInMyTeam(playerShip2));
 		
-		assertFalse("Check so that an enemy and a pleyer is not in the same team",
+		assertFalse("Check so that a me and a pleyer is not in the same team",
 				playerShip2.isInMyTeam(enemy));
 	}
 	
@@ -151,10 +162,8 @@ public class PlayerShipImplTest {
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
 		
-		// Create an enemy as the source of the projectile, i.e. somebody who's
-		// not on the same team
-		Enemy enemy = new DefaultEnemyShipImpl(mockGame, new Vector2(), new Vector2(), 
-				0, WeaponData.FAST.getPlayerWeaponForGame(mockGame), 0, 0);
+		// Create an entity that's not on the ships team
+		NonTeamMember enemy = new NonTeamMember();
 		
 		// Create a projectile and add the enemy as the source
 		ColidedTestMockProjectile projectile = new ColidedTestMockProjectile();
@@ -170,9 +179,11 @@ public class PlayerShipImplTest {
 		// Create another player, i.e. somebody who's in the same team
 		PlayerShipImpl playerShip2 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+		projectile = new ColidedTestMockProjectile();
 		projectile.setSource(playerShip2);
-		
 		preCollisionHealth = playerShip.getHealth();
+		
+		playerShip.preCollided(playerShip2);
 		assertTrue("Should take no damage from projectile, since it's hit by a team member", 
 				playerShip.getHealth() == preCollisionHealth);
 		
