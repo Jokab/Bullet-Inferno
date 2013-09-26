@@ -90,6 +90,9 @@ public enum WeaponData implements WeaponDescription {
 		return new WeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Weapon getEnemyWeaponForGame(Game game) {
 		return new EnemyWeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
 	}
