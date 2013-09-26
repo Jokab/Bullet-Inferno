@@ -17,6 +17,7 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 
 		Timer timer = weapon.getTimer();
 		timer.registerListener(this);
+		
 	}
 
 	@Override
