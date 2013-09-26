@@ -7,9 +7,6 @@ import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
-import se.dat255.bulletinferno.model.enemy.EnemyImplTest;
-import se.dat255.bulletinferno.model.enemy.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
@@ -101,33 +98,48 @@ public class ProjectileImplTest {
 				projectile.getDamage() == initialDamage);
 	}
 	
-	
+	private class TeamA implements Teamable, Collidable {
+		@Override
+		public void preCollided(Collidable other) {}
+		@Override
+		public void postCollided(Collidable other) {}
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return teamMember instanceof TeamA;
+		}
+	}
+	private class TeamB implements Teamable, Collidable {
+		@Override
+		public void preCollided(Collidable other) {}
+		@Override
+		public void postCollided(Collidable other) {}
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return teamMember instanceof TeamB;
+		}
+	}
 	@Test
 	public void testSameTeamSource() {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		
-		SimpleEnemy enemy1 = new DefaultEnemyShipImpl(mockGame, new Vector2(), new Vector2(), 10, 
-				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), 0, 0);
-		
-		SimpleEnemy enemy2 = new DefaultEnemyShipImpl(mockGame, new Vector2(), new Vector2(), 20, 
-				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), 0, 0);
-		
-		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, 
-				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
-		
-		// Set the ship as the source
-		projectile.init(new Vector2(), new Vector2(), 30, enemy1);
+		TeamA teamA1 = new TeamA();
+		TeamA teamA2 = new TeamA();
+		TeamB teamB = new TeamB();
+		// Set team A as the source
+		projectile.init(new Vector2(), new Vector2(), 30, teamA1);
 		
 		float initialDamage = projectile.getDamage();
-		projectile.postCollided(enemy2);
-		
+		projectile.postCollided(teamA2);
 		// Should not be affected on impact, i.e. damage should be unchanged
-		assertTrue("A projectile should not be able to hit it's own team mate",
+		assertTrue("A projectile should not be able to hit it's source's own team mate",
 				projectile.getDamage() == initialDamage);
 		
+		
 		// While it should be hit by a non member of team, i.e. damage = 0
-		projectile.postCollided(sourceShip);
-		assertTrue("A projectile should not be able to hit it's own team mate",
+		projectile.postCollided(teamB);
+		assertTrue("A projectile should be able to hit a non team mate of it's source",
 				projectile.getDamage() == 0);
 	}
 	
