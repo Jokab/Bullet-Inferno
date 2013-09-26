@@ -14,8 +14,18 @@ public class TimerImpl implements Timer {
 	private float timeLeft = 0;
 	private boolean isRunning = false;
 	private boolean isContinuous = false;
-	private final List<Timerable> timerables = new LinkedList<Timerable>();
-
+	
+	/** Holding a list of all timerable listeners */
+	private final List<Timerable> listeners = new LinkedList<Timerable>();
+	
+	/** A queue for holding the items to be removed after iteration */
+	private final List<Timerable> addQueue = new LinkedList<Timerable>();
+	
+	/** A queue for holding the items to be removed after iteration */
+	private final List<Timerable> removeQueue = new LinkedList<Timerable>();
+	
+	private boolean isIterating = false;
+	
 	/**
 	 * Constructs a new timer with time to count down = 0
 	 */
@@ -146,8 +156,12 @@ public class TimerImpl implements Timer {
 	 */
 	@Override
 	public void registerListener(Timerable listener) {
-		if (!timerables.contains(listener)) {
-			timerables.add(listener);
+		if (!listeners.contains(listener)) {
+			if(isIterating) {
+				addQueue.add(listener);
+			} else {
+				listeners.add(listener);
+			}
 		}
 	}
 
@@ -156,13 +170,32 @@ public class TimerImpl implements Timer {
 	 */
 	@Override
 	public void unregisterListener(Timerable listener) {
-		timerables.remove(listener);
+		if(isIterating) {
+			removeQueue.add(listener);
+		} else { 
+			listeners.remove(listener);
+		}
 	}
 
 	private void notifyAllListeners(float timeSinceLast) {
-		for (Timerable listener : timerables) {
+		// Set flag for iteration, i.e. no one touches the list
+		isIterating = true;
+		
+		for (Timerable listener : listeners) {
 			listener.onTimeout(this, timeSinceLast);
 		}
+		
+		// Remove and add all items in queue
+		if(!removeQueue.isEmpty()) {
+			listeners.removeAll(removeQueue);
+			removeQueue.clear();
+		}
+		if(!addQueue.isEmpty()) {
+			listeners.addAll(addQueue);
+			addQueue.clear();
+		}
+		
+		isIterating = false;
 	}
 
 	/**

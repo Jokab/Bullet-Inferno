@@ -28,8 +28,13 @@ public class GameImpl implements Game {
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
+	
+	/** List of all timers */
 	private final List<Timer> timers;
-
+	/** List of all queued timers to be added */
+	private final List<Timer> timersAddQueue = new LinkedList<Timer>(); 
+	private boolean isIteratingOverTimers = false;
+	
 	public GameImpl(PhysicsWorld world) {
 		this.world = world;
 		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
@@ -155,7 +160,13 @@ public class GameImpl implements Game {
 	@Override
 	public Timer getTimer() {
 		Timer t = new TimerImpl();
-		timers.add(t);
+		
+		if(isIteratingOverTimers) {
+			timersAddQueue.add(t);
+		} else {
+			timers.add(t);
+		}
+	
 		return t;
 	}
 
@@ -164,11 +175,20 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public void update(float deltaTime) {
-		// Update timers
+		// Update timers, set iterator flag
+		// to indicate that no one is allowed to modify list
+		isIteratingOverTimers = true;
 		for (Timer t : timers) {
 			t.update(deltaTime);
 		}
-
+		// If timers are waiting to be added, add them 
+		if(!timersAddQueue.isEmpty()) {
+			timers.addAll(timersAddQueue);
+			timersAddQueue.clear();
+		}
+		isIteratingOverTimers = false;
+		
+		System.out.println(timers.size());
 		world.update(deltaTime);
 		playerShip.update(deltaTime);
 	}

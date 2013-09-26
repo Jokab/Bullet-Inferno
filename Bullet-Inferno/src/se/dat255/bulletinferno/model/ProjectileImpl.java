@@ -27,8 +27,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		public void onTimeout(Timer source, float timeSinceLast) {
 			game.disposeProjectile(ProjectileImpl.this);
 			
-			//TODO: Fix timer concurrent modifiation bug and uncomment.
-			//source.unregisterListener(this);
+			source.unregisterListener(this);
 		}
 	}
 
@@ -39,7 +38,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	public ProjectileImpl(Game game) {
 		this.game = game;
-
+		runLater = game.getTimer();
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
@@ -139,10 +138,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	@Override
 	public void viewportIntersectionEnd() {
-		// Run later as we are not allowed to alter the world here.
-		
-		// TODO: Move to constructor once the timer bug is fixed (concurrent mod. error now).
-		runLater = game.getTimer();
+		// Run later as we are not allowed to alter the world here.		
 		runLater.registerListener(new RemoveThisProjectileTimerable());
 		runLater.start();
 	}
