@@ -162,7 +162,8 @@ public class GameScreen extends AbstractScreen {
 			// Calculate the new world coordinate position (in the middle) of the viewport.
 			viewportPosition = new Vector2(0, 0);
 			graphics.screenToWorld(viewportPosition);
-			viewportPosition.add(0.5f*viewportDimensions.x, 0.5f*viewportDimensions.y);
+			viewportPosition.add(0.5f*viewportDimensions.x, 0);
+			viewportPosition.sub(0, 0.5f*viewportDimensions.y);
 			
 			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
 			
@@ -173,19 +174,19 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void resize(int width, int height) {
 		graphics.resize(width, height);
-		
-		// Get top left and bottom right corners for further calculation...
-		viewportPosition = new Vector2(0, 0);
+
+		// Get bottom left (at zero, world origo) and top right corners for further calculation...
+		viewportPosition = new Vector2(0, height);
 		graphics.screenToWorld(viewportPosition);
-		viewportDimensions = new Vector2(width, height);
+		viewportDimensions = new Vector2(width, 0);
 		graphics.screenToWorld(viewportDimensions);
-		
-		// ...adjust dimension to top left corner...
+
+		// ...adjust dimensions to bottom left corner...
 		viewportDimensions.sub(viewportPosition);
-		
+
 		// ...adjust position to being in the middle of the viewport...
-		viewportPosition.add(0.5f*viewportDimensions.x, 0.5f*viewportDimensions.y);
-		
+		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
+
 		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
 	}
 
