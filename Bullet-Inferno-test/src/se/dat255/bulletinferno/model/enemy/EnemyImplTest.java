@@ -4,9 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
@@ -159,6 +163,36 @@ public class EnemyImplTest {
 		position.y = 5;
 		assertFalse("Check for alias problems", position.equals(enemy.getPosition()));
 		assertFalse("Check for alias problems", position == enemy.getPosition());
+	}
+	
+	@Test
+	public void testIsInMyTeam() {
+		SimpleEnemy enemy1 = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				98, null, 0, 0);
+		
+		Enemy enemy2 = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				98, null, 0, 0);
+		
+		class AnotherEnemy extends SimpleEnemy {
+			public AnotherEnemy(Game game, Vector2 position, Vector2 velocity, int initialHealth,
+					Weapon weapon, int score, int credits) {
+				super(game, position, velocity, initialHealth, weapon, score, credits);
+			}
+		};
+		
+		PlayerShip player = new PlayerShipImpl(new SimpleMockGame(), new Vector2(), 0, null);
+		
+		Enemy otherEnemy = new AnotherEnemy(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				98, null, 0, 0);
+	
+		assertTrue("Check if two enemies of the same class is in the same team",
+					enemy1.isInMyTeam(enemy2));
+		
+		assertTrue("Check if two enemies of a different class is in the same team",
+				otherEnemy.isInMyTeam(enemy2));	
+		
+		assertFalse("Check that en enemy and a player isn't the same team",
+				player.isInMyTeam(enemy2));	
 	}
 
 }
