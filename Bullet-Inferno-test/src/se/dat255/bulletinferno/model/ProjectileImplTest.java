@@ -7,6 +7,9 @@ import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
 
+import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
+import se.dat255.bulletinferno.model.enemy.EnemyImplTest;
+import se.dat255.bulletinferno.model.enemy.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
@@ -67,7 +70,8 @@ public class ProjectileImplTest {
 		});
 		float initialDamage = projectile.getDamage();
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -82,6 +86,52 @@ public class ProjectileImplTest {
 	}
 
 	@Test
+	public void testCollidedWithSource() {
+		Projectile projectile = new ProjectileImpl(mockGame);
+		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		
+		// Set the ship as the source
+		projectile.init(new Vector2(), new Vector2(), 30, sourceShip);
+		
+		float initialDamage = projectile.getDamage();
+		projectile.postCollided(sourceShip);
+		// Should not be affected on impact, i.e. damage should be unchanged
+		assertTrue("A projectile should not be able to hit it's own source",
+				projectile.getDamage() == initialDamage);
+	}
+	
+	
+	@Test
+	public void testSameTeamSource() {
+		Projectile projectile = new ProjectileImpl(mockGame);
+		
+		SimpleEnemy enemy1 = new DefaultEnemyShipImpl(mockGame, new Vector2(), new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), 0, 0);
+		
+		SimpleEnemy enemy2 = new DefaultEnemyShipImpl(mockGame, new Vector2(), new Vector2(), 20, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), 0, 0);
+		
+		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		
+		// Set the ship as the source
+		projectile.init(new Vector2(), new Vector2(), 30, enemy1);
+		
+		float initialDamage = projectile.getDamage();
+		projectile.postCollided(enemy2);
+		
+		// Should not be affected on impact, i.e. damage should be unchanged
+		assertTrue("A projectile should not be able to hit it's own team mate",
+				projectile.getDamage() == initialDamage);
+		
+		// While it should be hit by a non member of team, i.e. damage = 0
+		projectile.postCollided(sourceShip);
+		assertTrue("A projectile should not be able to hit it's own team mate",
+				projectile.getDamage() == 0);
+	}
+	
+	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		projectile.init(new Vector2(), new Vector2(), 30, new Teamable() {
@@ -93,7 +143,8 @@ public class ProjectileImplTest {
 			}
 		});
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : mockGame.physicsWorld.createBodyCalls) {
