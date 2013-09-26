@@ -140,6 +140,10 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		graphics.dispose();
+		
+		if(game != null) {
+			game.dispose();
+		}
 	}
 
 	/**

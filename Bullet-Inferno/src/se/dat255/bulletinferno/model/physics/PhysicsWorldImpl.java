@@ -7,6 +7,7 @@ import se.dat255.bulletinferno.model.PhysicsShapeFactory;
 import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue;
+import se.dat255.bulletinferno.util.Disposable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -54,7 +55,8 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	 * <p>
 	 * Public for testing purposes only.
 	 */
-	public class FilteredCollisionQueue extends PhysicsWorldCollisionQueueImpl {
+	public class FilteredCollisionQueue extends PhysicsWorldCollisionQueueImpl implements
+			Disposable {
 
 		/** A body positioned right in the viewport used for viewport intersection events. */
 		private Body viewportIntersectionBody = null;
@@ -163,6 +165,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 			} else {
 				// Resize the fixture def and body if its size changed.
 				if (!viewportDimensions.equals(lastViewportDimensions)) {
+					viewportIntersectionFixtureDef.shape.dispose();
 					viewportIntersectionFixtureDef.shape = shapeFactory.getRectangularShape(
 							viewportDimensions.x, viewportDimensions.y);
 
@@ -178,6 +181,13 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 			}
 
 			lastViewportDimensions = viewportDimensions;
+		}
+
+		@Override
+		public void dispose() {
+			if (viewportIntersectionFixtureDef.shape != null) {
+				viewportIntersectionFixtureDef.shape.dispose();
+			}
 		}
 	}
 
@@ -258,6 +268,11 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	@Override
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
 		collisionQueue.setViewport(viewportPosition, viewportDimensions);
+	}
+
+	@Override
+	public void dispose() {
+		collisionQueue.dispose();
 	}
 
 }

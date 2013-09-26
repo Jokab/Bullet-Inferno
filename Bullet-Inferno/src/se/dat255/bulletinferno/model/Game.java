@@ -2,7 +2,9 @@ package se.dat255.bulletinferno.model;
 
 import java.util.List;
 
-public interface Game {
+import se.dat255.bulletinferno.util.Disposable;
+
+public interface Game extends Disposable {
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
