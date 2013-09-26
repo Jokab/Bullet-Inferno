@@ -67,7 +67,8 @@ public class ProjectileImplTest {
 		});
 		float initialDamage = projectile.getDamage();
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -82,6 +83,67 @@ public class ProjectileImplTest {
 	}
 
 	@Test
+	public void testCollidedWithSource() {
+		Projectile projectile = new ProjectileImpl(mockGame);
+		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		
+		// Set the ship as the source
+		projectile.init(new Vector2(), new Vector2(), 30, sourceShip);
+		
+		float initialDamage = projectile.getDamage();
+		projectile.postCollided(sourceShip);
+		// Should not be affected on impact, i.e. damage should be unchanged
+		assertTrue("A projectile should not be able to hit it's own source",
+				projectile.getDamage() == initialDamage);
+	}
+	
+	private class TeamA implements Teamable, Collidable {
+		@Override
+		public void preCollided(Collidable other) {}
+		@Override
+		public void postCollided(Collidable other) {}
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return teamMember instanceof TeamA;
+		}
+	}
+	private class TeamB implements Teamable, Collidable {
+		@Override
+		public void preCollided(Collidable other) {}
+		@Override
+		public void postCollided(Collidable other) {}
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return teamMember instanceof TeamB;
+		}
+	}
+	@Test
+	public void testSameTeamSource() {
+		Projectile projectile = new ProjectileImpl(mockGame);
+		
+		TeamA teamA1 = new TeamA();
+		TeamA teamA2 = new TeamA();
+		TeamB teamB = new TeamB();
+		// Set team A as the source
+		projectile.init(new Vector2(), new Vector2(), 30, teamA1);
+		
+		float initialDamage = projectile.getDamage();
+		projectile.postCollided(teamA2);
+		// Should not be affected on impact, i.e. damage should be unchanged
+		assertTrue("A projectile should not be able to hit it's source's own team mate",
+				projectile.getDamage() == initialDamage);
+		
+		
+		// While it should be hit by a non member of team, i.e. damage = 0
+		projectile.postCollided(teamB);
+		assertTrue("A projectile should be able to hit a non team mate of it's source",
+				projectile.getDamage() == 0);
+	}
+	
+	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		projectile.init(new Vector2(), new Vector2(), 30, new Teamable() {
@@ -93,7 +155,8 @@ public class ProjectileImplTest {
 			}
 		});
 
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : mockGame.physicsWorld.createBodyCalls) {
