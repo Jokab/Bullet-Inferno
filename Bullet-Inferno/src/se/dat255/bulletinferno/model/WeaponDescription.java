@@ -55,4 +55,5 @@ public interface WeaponDescription {
 	 * @return A new weapon instance.
 	 */
 	Weapon getEnemyWeaponForGame(Game game);
+
 }

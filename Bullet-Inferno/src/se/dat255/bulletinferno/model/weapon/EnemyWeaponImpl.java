@@ -16,7 +16,6 @@ public class EnemyWeaponImpl extends WeaponImpl {
 		}
 		getTimer().setContinuous(true);
 		getTimer().start();
-		System.out.println(getTimer().getTimeLeft());
 	}
 
 	/**
