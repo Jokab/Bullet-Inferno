@@ -7,9 +7,6 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.PlayerShipImpl;
-import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
@@ -27,7 +24,19 @@ public class EnemyImplTest {
 		}
 		
 	}
-	
+	// A class that is definitely not a team member of the enemy
+	private class NonTeamMember implements Teamable, Collidable {
+		@Override
+		public void preCollided(Collidable other) {}
+		@Override
+		public void postCollided(Collidable other) {}
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return false;
+		}
+	}
+		
 	private class EnemyGameMockup extends SimpleMockGame {
 		private Enemy enemy = null;
 		
@@ -72,11 +81,26 @@ public class EnemyImplTest {
 	public void testPreCollided() {
 		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
 				100, null, 0, 0);
-		Projectile projectile = new ColidedTestMockProjectile();
+		SimpleEnemy enemy2 = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
+				100, null, 0, 0);
+		SimpleMockProjectile projectile = new ColidedTestMockProjectile();
 		
+		// Set another enemy as source and check that friendly fire is't enabled
+		projectile.setSource(enemy2);
 		int preCollisionHealth = enemy.getHealth();
 		
 		// Simulate colliding with a projectile
+		enemy.preCollided(projectile);
+		assertTrue("Should not take damage from projectile, since it's hit by it's own" +
+				" team mate", 
+				enemy.getHealth() == preCollisionHealth);
+		
+		// Reset and go again with a non team member
+		NonTeamMember nonTeam = new NonTeamMember();
+		projectile = new ColidedTestMockProjectile();
+		projectile.setSource(nonTeam);
+		preCollisionHealth = enemy.getHealth();
+		
 		enemy.preCollided(projectile);
 		assertTrue("Should take specified damage from projectile", 
 				enemy.getHealth() == preCollisionHealth - projectile.getDamage());
@@ -171,7 +195,7 @@ public class EnemyImplTest {
 				98, null, 0, 0);
 		
 		Enemy enemy2 = new EnemyMockup(new SimpleMockGame(), new Vector2(), new Vector2(), 
-				98, null, 0, 0);
+				87, null, 0, 0);
 		
 		class AnotherEnemy extends SimpleEnemy {
 			public AnotherEnemy(Game game, Vector2 position, Vector2 velocity, int initialHealth,
@@ -180,7 +204,7 @@ public class EnemyImplTest {
 			}
 		};
 		
-		PlayerShip player = new PlayerShipImpl(new SimpleMockGame(), new Vector2(), 0, null);
+		NonTeamMember nonTeamMember = new NonTeamMember();
 		
 		Enemy otherEnemy = new AnotherEnemy(new SimpleMockGame(), new Vector2(), new Vector2(), 
 				98, null, 0, 0);
@@ -189,10 +213,10 @@ public class EnemyImplTest {
 					enemy1.isInMyTeam(enemy2));
 		
 		assertTrue("Check if two enemies of a different class is in the same team",
-				otherEnemy.isInMyTeam(enemy2));	
+				otherEnemy.isInMyTeam(enemy1));	
 		
-		assertFalse("Check that en enemy and a player isn't the same team",
-				player.isInMyTeam(enemy2));	
+		assertFalse("Check that en enemy and a non team member isn't the same team",
+				enemy2.isInMyTeam(nonTeamMember));	
 	}
 
 }
