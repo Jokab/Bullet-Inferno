@@ -58,5 +58,19 @@ public interface PhysicsWorld extends Disposable {
 	 *        the dimensions of the viewport in world coordinates (width, height).
 	 */
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimension);
+	
+	/** Attaches a movement pattern to the specified body.
+	 * <em>NOTE</em> <strong>only one</strong> movement pattern can be attached to a body
+	 * at a time. I.E. this removes any existing movement patterns attached to the specified body. 
+	 * @param pattern the attach
+	 * @param body to attach to
+	 */
+	public void attachMovementPattern(PhysicsMovementPattern pattern, PhysicsBody body);
+
+	/**
+	 * Detaches the movement pattern from the specified body.
+	 * @param body
+	 */
+	public void detachMovementPattern(PhysicsBody body);
 
 }

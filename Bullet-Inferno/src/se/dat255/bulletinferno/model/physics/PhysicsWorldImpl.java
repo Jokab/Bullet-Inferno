@@ -1,8 +1,14 @@
 package se.dat255.bulletinferno.model.physics;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.PhysicsShapeFactory;
 import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.model.PhysicsWorld;
@@ -194,6 +200,9 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	/** A collision detection queue (filtered by implementation). */
 	private final FilteredCollisionQueue collisionQueue = new FilteredCollisionQueue();
 
+	private final Map<PhysicsBody, PhysicsMovementPattern> movementPatterns 
+					= new HashMap<PhysicsBody, PhysicsMovementPattern>();
+	
 	/**
 	 * Start the simulation.
 	 */
@@ -218,7 +227,23 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 		body.setUserData(collidable);
 		return new PhysicsBodyImpl(body);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void attachMovementPattern(PhysicsMovementPattern pattern, PhysicsBody body) {
+		movementPatterns.put(body, pattern);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void detachMovementPattern(PhysicsBody body) {
+		movementPatterns.remove(body);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -236,6 +261,9 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 
 		// Take discrete steps of TIME_STEP, sometimes even multiple of them (to keep up).
 		for (; timeStepAccumulator > TIME_STEP; timeStepAccumulator -= TIME_STEP) {
+			for(Entry<PhysicsBody, PhysicsMovementPattern> set : movementPatterns.entrySet()) {
+				set.getValue().update(TIME_STEP, set.getKey());
+			}
 			world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		}
 

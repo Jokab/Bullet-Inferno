@@ -9,6 +9,7 @@ import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.SineMovementPattern;
 import se.dat255.bulletinferno.model.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
@@ -42,6 +43,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
+		game.getPhysicsWorld().attachMovementPattern(new SineMovementPattern(4,6f), body);
 		
 		
 	}
