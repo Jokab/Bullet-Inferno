@@ -6,8 +6,6 @@ import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.RenderableGUI;
-import se.dat255.bulletinferno.model.Weapon;
-import se.dat255.bulletinferno.model.enemy.DefaultEnemyShipImpl;
 import se.dat255.bulletinferno.model.enemy.EnemyTypes;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -26,7 +24,7 @@ public class GameScreen extends AbstractScreen {
 	 * Handles all the graphics with the game.<br>
 	 * Also handles converting between <b>world</b> and <b>local</b> positions.
 	 */
-	private final Graphics graphics = new Graphics();
+	private Graphics graphics;
 
 	/**
 	 * The touch input handler
@@ -52,8 +50,24 @@ public class GameScreen extends AbstractScreen {
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
+	}
 
+	/**
+	 * Creates or recreates a game "state". This method should be called before switching to the
+	 * GameScreen.
+	 * 
+	 */
+	public void createNewGame(WeaponData weaponType) {
+		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
+		
+		
+		if(graphics != null ) {
+			graphics.dispose();
+			graphics = null;
+		}
+		
 		// TODO: Initialize the game
+		graphics = new Graphics();
 		graphics.create();
 
 		// TODO: should probably not be created here
@@ -62,7 +76,7 @@ public class GameScreen extends AbstractScreen {
 		game = new GameImpl();
 
 		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100,
-				WeaponData.FAST.getPlayerWeaponForGame(game));
+				weaponType.getPlayerWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
 

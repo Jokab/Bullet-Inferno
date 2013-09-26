@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyTypes {
 	
+	// ORDER:
+	// velocity, health, weapon, score, credits
 	DEFAULT_SHIP(new Vector2(-3, 0), 5, WeaponData.FASTENEMY, 10, 10),
 	FAST_SHIP(new Vector2(-6, 0), 5, WeaponData.FASTENEMY, 10, 10),
 	SLOW_SHIP(new Vector2(-1.5f, 0), 5, WeaponData.FASTENEMY, 10, 10);
@@ -28,8 +30,26 @@ public enum EnemyTypes {
 	}
 	
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
-		Weapon weapon = new EnemyWeaponImpl(game, weaponData.getReloadTime(), weaponData.getProjectile(), weaponData.getOffset(), weaponData.getProjectileVelocity(), weaponData.getDamage());
-		return new DefaultEnemyShipImpl(game, position, velocity, initialHealth, weapon, score, credits);
+		return new DefaultEnemyShipImpl(game, position, velocity, initialHealth, weaponData.getEnemyWeaponForGame(game), score, credits);
 	}
-	
+
+	public Vector2 getVelocity() {
+		return velocity;
+	}
+
+	public int getInitialHealth() {
+		return initialHealth;
+	}
+
+	public WeaponData getWeaponData() {
+		return weaponData;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public int getCredits() {
+		return credits;
+	}
 }
