@@ -9,7 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class SimpleMockProjectile implements Projectile {
 	public Game game;
-
+	private Teamable source;
+	
 	public SimpleMockProjectile() {
 		this(null);
 	}
@@ -55,8 +56,11 @@ public class SimpleMockProjectile implements Projectile {
 
 	@Override
 	public Teamable getSource() {
-		// TODO Auto-generated method stub
-		return null;
+		return source;
+	}
+	
+	public void setSource(Teamable source) {
+		this.source = source;
 	}
 
 }
