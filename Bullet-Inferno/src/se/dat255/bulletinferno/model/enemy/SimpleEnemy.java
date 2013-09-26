@@ -14,7 +14,7 @@ import se.dat255.bulletinferno.model.Teamable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
+public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	private int health;
 	private final int initialHealth;

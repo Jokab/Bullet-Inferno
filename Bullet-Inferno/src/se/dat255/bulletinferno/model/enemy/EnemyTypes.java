@@ -31,5 +31,24 @@ public enum EnemyTypes {
 		Weapon weapon = new EnemyWeaponImpl(game, weaponData.getReloadTime(), weaponData.getProjectile(), weaponData.getOffset(), weaponData.getProjectileVelocity(), weaponData.getDamage());
 		return new DefaultEnemyShipImpl(game, position, velocity, initialHealth, weapon, score, credits);
 	}
-	
+
+	public Vector2 getVelocity() {
+		return velocity;
+	}
+
+	public int getInitialHealth() {
+		return initialHealth;
+	}
+
+	public WeaponData getWeaponData() {
+		return weaponData;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public int getCredits() {
+		return credits;
+	}
 }
