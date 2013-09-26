@@ -1,8 +1,10 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.util.Disposable;
+
 import com.badlogic.gdx.math.Vector2;
 
-public interface PhysicsWorld {
+public interface PhysicsWorld extends Disposable {
 
 	/**
 	 * Creates a PhysicsBody from the body definition, placing it at the

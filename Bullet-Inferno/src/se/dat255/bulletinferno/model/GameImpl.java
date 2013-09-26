@@ -200,4 +200,13 @@ public class GameImpl implements Game {
 	public PhysicsWorld getPhysicsWorld() {
 		return world;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void dispose() {
+		world.dispose();
+	}
+	
 }
