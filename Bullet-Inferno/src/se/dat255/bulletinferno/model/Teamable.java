@@ -7,6 +7,7 @@ public interface Teamable {
 
 	/**
 	 * Returns whether the specified team member belongs to my team
+	 * 
 	 * @param teamMember
 	 * @return is team member
 	 */

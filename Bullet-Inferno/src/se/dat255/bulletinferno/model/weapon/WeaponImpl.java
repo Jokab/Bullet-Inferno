@@ -2,24 +2,21 @@ package se.dat255.bulletinferno.model.weapon;
 
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.ProjectileImpl;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Timer;
 import se.dat255.bulletinferno.model.Weapon;
-import se.dat255.bulletinferno.model.WeaponDescription;
-
 import com.badlogic.gdx.math.Vector2;
 
 public class WeaponImpl implements Weapon {
 	private final Timer timer;
-	
+
 	private final Game game;
 	private final float reloadingTime;
 	private final Class<? extends Projectile> projectile;
 	private final Vector2 offset;
 	private final Vector2 projectileVelocity;
 	private final float damage;
-	
+
 	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile,
 			Vector2 offset, Vector2 projectileVelocity, float damage) {
 		this.game = game;
@@ -28,7 +25,7 @@ public class WeaponImpl implements Weapon {
 		this.offset = offset;
 		this.projectileVelocity = projectileVelocity;
 		this.damage = damage;
-		
+
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
 		timer.stop();
@@ -65,15 +62,15 @@ public class WeaponImpl implements Weapon {
 	public Vector2 getOffset() {
 		return offset;
 	}
-	
+
 	@Override
 	public float getDamage() {
-		return this.damage;
+		return damage;
 	}
-	
+
 	@Override
 	public Vector2 getProjectileVelocity() {
-		return this.projectileVelocity;
+		return projectileVelocity;
 	}
 
 	/**
@@ -84,18 +81,19 @@ public class WeaponImpl implements Weapon {
 		if (isLoaded()) {
 			// Get projectile and set properties accordingly
 			Projectile projectile = getProjectile();
-			projectile.init(position.cpy().add(getOffset()), direction.scl(projectileVelocity), 
-					this.damage, source);
-			
+			projectile.init(position.cpy().add(getOffset()), direction.scl(projectileVelocity),
+					damage, source);
+
 			// Start count down
 			timer.restart();
 		}
 	}
-	
+
+	@Override
 	public Timer getTimer() {
-		return this.timer;
+		return timer;
 	}
-	
+
 	/**
 	 * Gets the projectile to be fired.
 	 * Purely for extension purposes. To be overridden when

@@ -12,14 +12,16 @@ public interface PhysicsWorld extends Disposable {
 	 * and move them later, as bad performance will follow.</strong>
 	 * 
 	 * <p>
-	 * The body definitions position will be set to the position. Note that
-	 * while the object is manipulated, its other properties can be re-used for
-	 * performance reasons. The position is explicitly set here to make sure
-	 * unexpected behavior will not follow from this issue.
+	 * The body definitions position will be set to the position. Note that while the object is
+	 * manipulated, its other properties can be re-used for performance reasons. The position is
+	 * explicitly set here to make sure unexpected behavior will not follow from this issue.
 	 * 
-	 * @param definition the body mold to use for creating the body.
-	 * @param collidable the element that will be called when collision detection occurs.
-	 * @param position the initial position of the body in world coordinates. See notice above!
+	 * @param definition
+	 *        the body mold to use for creating the body.
+	 * @param collidable
+	 *        the element that will be called when collision detection occurs.
+	 * @param position
+	 *        the initial position of the body in world coordinates. See notice above!
 	 */
 	public PhysicsBody createBody(PhysicsBodyDefinition definition, Collidable collidable,
 			Vector2 position);
@@ -27,10 +29,11 @@ public interface PhysicsWorld extends Disposable {
 	/**
 	 * Removes the specified body from the world.
 	 * <strong>Is only allowed to be called once on each body</strong>
+	 * 
 	 * @param body
 	 */
 	public void removeBody(PhysicsBody body);
-	
+
 	/**
 	 * Updates the physics simulation (the simulation is time-step based). This
 	 * should be called once every frame. (Callers should have to worry about
@@ -38,7 +41,7 @@ public interface PhysicsWorld extends Disposable {
 	 * implementation, so that behavior is consistent between runs.)
 	 * 
 	 * @param deltaTime
-	 *            the time in seconds since last call.
+	 *        the time in seconds since last call.
 	 */
 	public void update(float deltaTime);
 
@@ -58,17 +61,22 @@ public interface PhysicsWorld extends Disposable {
 	 *        the dimensions of the viewport in world coordinates (width, height).
 	 */
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimension);
-	
-	/** Attaches a movement pattern to the specified body.
-	 * <em>NOTE</em> <strong>only one</strong> movement pattern can be attached to a body
-	 * at a time. I.E. this removes any existing movement patterns attached to the specified body. 
-	 * @param pattern the attach
-	 * @param body to attach to
+
+	/**
+	 * Attaches a movement pattern to the specified body. <em>NOTE</em> <strong>only one</strong>
+	 * movement pattern can be attached to a body
+	 * at a time. I.E. this removes any existing movement patterns attached to the specified body.
+	 * 
+	 * @param pattern
+	 *        the attach
+	 * @param body
+	 *        to attach to
 	 */
 	public void attachMovementPattern(PhysicsMovementPattern pattern, PhysicsBody body);
 
 	/**
 	 * Detaches the movement pattern from the specified body.
+	 * 
 	 * @param body
 	 */
 	public void detachMovementPattern(PhysicsBody body);

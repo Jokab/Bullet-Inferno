@@ -14,10 +14,10 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private float damage;
 	private Teamable source = null;
 	private final Game game;
-	
+
 	/** An instance of a timer to help "running things later", i.e. on the next timestep. */
-	private Timer runLater;
-	
+	private final Timer runLater;
+
 	/**
 	 * Schedule an instance of this class to a timer and it will remove this projectile when the
 	 * timer calls it. This class takes care of unregistering itself on the timer when run.
@@ -26,7 +26,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		@Override
 		public void onTimeout(Timer source, float timeSinceLast) {
 			game.disposeProjectile(ProjectileImpl.this);
-			
+
 			source.unregisterListener(this);
 		}
 	}
@@ -72,7 +72,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public void preCollided(Collidable other) {
 		// NOP
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -80,14 +80,16 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public void postCollided(Collidable other) {
 		// Decrease the damage after hits, since we must let the other object that collided with us
 		// decide if they want to take our current damage (etc.) before we zero it.
-		if(damage > 0 && !(other instanceof Projectile) && other != getSource()) {
-			if(!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)) {
+		if (damage > 0 && !(other instanceof Projectile) && other != getSource()) {
+			if (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)) {
 				damage = 0;
-				
-				// Note: Do not move this out of here - this must be called only once, and that is when
+
+				// Note: Do not move this out of here - this must be called only once, and that is
+				// when
 				// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
-				if(damage <= 0) {
-					// We won't need this projectile anymore, since it is useless and can't hurt anyone.
+				if (damage <= 0) {
+					// We won't need this projectile anymore, since it is useless and can't hurt
+					// anyone.
 					game.disposeProjectile(this);
 				}
 			}
@@ -138,9 +140,9 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	@Override
 	public void viewportIntersectionEnd() {
-		// Run later as we are not allowed to alter the world here.		
+		// Run later as we are not allowed to alter the world here.
 		runLater.registerListener(new RemoveThisProjectileTimerable());
 		runLater.start();
 	}
-	
+
 }

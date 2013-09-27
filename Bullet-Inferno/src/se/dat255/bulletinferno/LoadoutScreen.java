@@ -29,11 +29,11 @@ public class LoadoutScreen extends AbstractScreen {
 	private final static int VIRTUAL_MID_WIDTH = VIRTUAL_WIDTH / 2;
 	private final static int VIRTUAL_MID_HEIGHT = VIRTUAL_HEIGHT / 2;
 
-	private Stage stage;
-	private Skin skin;
-	private SpriteBatch batch;
+	private final Stage stage;
+	private final Skin skin;
+	private final SpriteBatch batch;
 
-	private Texture startImgTexture;
+	private final Texture startImgTexture;
 
 	public LoadoutScreen(final MyGame myGame) {
 		this.myGame = myGame;
@@ -50,25 +50,25 @@ public class LoadoutScreen extends AbstractScreen {
 
 		startImgTexture = new Texture(Gdx.files.internal("data/startBtn.png"));
 		TextureRegion startImage = new TextureRegion(startImgTexture);
-		
+
 		// Add default font as default
 		skin.add("default", new BitmapFont());
-		
+
 		// Set up style for buttons
 		ButtonStyle startBtnStyle = new ButtonStyle();
 		startBtnStyle.up = new TextureRegionDrawable(startImage);
 		startBtnStyle.over = skin.newDrawable(startBtnStyle.up, Color.LIGHT_GRAY);
 		skin.add("startButton", startBtnStyle);
-		
+
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = skin.getFont("default");
 		textButtonStyle.fontColor = Color.BLACK;
 		skin.add("default", textButtonStyle);
-		
+
 		// Create buttons
 		Button startButton = new Button(skin, "startButton");
 		startButton.setSize(600, 150);
-		//startButton.setPosition(VIRTUAL_MID_WIDTH - startButton.getWidth() / 2, 20);
+		// startButton.setPosition(VIRTUAL_MID_WIDTH - startButton.getWidth() / 2, 20);
 		TextButton btn2 = new TextButton("Slower", skin);
 		btn2.setSize(600, 150);
 
@@ -79,12 +79,12 @@ public class LoadoutScreen extends AbstractScreen {
 		// Add it to stage
 		Table t = new Table();
 		t.setFillParent(true);
-		
+
 		t.add(startButton).row();
 		t.add(btn2);
-		
+
 		stage.addActor(t);
-		
+
 		// Start button click listener
 		startButton.addListener(new ChangeListener() {
 			@Override
@@ -94,8 +94,8 @@ public class LoadoutScreen extends AbstractScreen {
 				myGame.setScreen(gameScreen);
 			}
 		});
-		
-		btn2.addListener(new ChangeListener(){
+
+		btn2.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				GameScreen gameScreen = myGame.getGameScreen();

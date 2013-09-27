@@ -24,8 +24,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
-	private Game game;
-	
+	private final Game game;
+
 	protected final Weapon weapon;
 
 	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
@@ -36,16 +36,15 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		this.weapon = weapon;
 		this.score = score;
 		this.credits = credits;
-		
+
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
-		game.getPhysicsWorld().attachMovementPattern(new SineMovementPattern(4,6f), body);
-		
-		
+		game.getPhysicsWorld().attachMovementPattern(new SineMovementPattern(4, 6f), body);
+
 	}
 
 	@Override
@@ -63,12 +62,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if(other instanceof Projectile && !isInMyTeam(((Projectile)other).getSource())) {
+		if (other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource())) {
 			// If got hit by a projectile that wasn't fired from my team
-			takeDamage(((Projectile)other).getDamage());
+			takeDamage(((Projectile) other).getDamage());
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -85,18 +84,18 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	@Override
 	public void takeDamage(float damage) {
 		// Take no damage if enemy isn't alive
-		if(health > 0) {
+		if (health > 0) {
 			health -= damage;
-			
+
 			// If enemy has died
-			if(health <=0) {
+			if (health <= 0) {
 				health = 0;
 				game.removeEnemy(this);
 				dispose();
 			}
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -104,7 +103,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
-		if(weapon != null) {
+		if (weapon != null) {
 			weapon.getTimer().stop();
 		}
 	}
@@ -118,11 +117,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public Vector2 getPosition() {
 		return body.getPosition();
 	}
-	
+
 	public void setVelocity(Vector2 velocity) {
 		body.setVelocity(velocity);
 	}
-	
+
+	@Override
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof Enemy;
 	}

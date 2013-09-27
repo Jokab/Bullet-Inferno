@@ -26,11 +26,11 @@ public interface Game extends Disposable {
 
 	/**
 	 * Sets a reference to the player's ship, for use in update methods.
+	 * 
 	 * @return
 	 */
 	public void setPlayerShip(PlayerShip ship);
-	
-	
+
 	/**
 	 * Returns the player's ship
 	 * 
@@ -54,16 +54,18 @@ public interface Game extends Disposable {
 
 	/**
 	 * Adds the specified enemy to the game
+	 * 
 	 * @param emeny
 	 */
 	public void addEnemy(Enemy emeny);
-	
+
 	/**
 	 * Dispose of the specified enemy from the game
+	 * 
 	 * @param enemy
 	 */
 	public void removeEnemy(Enemy enemy);
-	
+
 	/**
 	 * Returns a new timer
 	 * 

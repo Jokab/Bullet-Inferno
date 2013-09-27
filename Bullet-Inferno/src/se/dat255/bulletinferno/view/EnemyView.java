@@ -2,8 +2,6 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -16,7 +14,6 @@ public class EnemyView implements Renderable {
 	private final Texture texture;
 	private final Sprite sprite;
 
-	
 	public EnemyView(Game game) {
 		this.game = game;
 

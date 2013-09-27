@@ -2,7 +2,6 @@ package se.dat255.bulletinferno;
 
 import com.badlogic.gdx.Gdx;
 
-
 /**
  * The main class that follows with LibGDX, shows a simple way of rendering an
  * image to the screen
@@ -37,7 +36,7 @@ public class MyGame extends com.badlogic.gdx.Game {
 	public void create() {
 		loadoutScreen = new LoadoutScreen(this);
 		gameScreen = new GameScreen(this);
-		
+
 		setScreen(loadoutScreen);
 	}
 
@@ -47,7 +46,6 @@ public class MyGame extends com.badlogic.gdx.Game {
 		gameScreen.dispose();
 		loadoutScreen.dispose();
 	}
-
 
 	public GameScreen getGameScreen() {
 		return gameScreen;

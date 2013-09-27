@@ -10,13 +10,13 @@ import com.badlogic.gdx.math.Vector2;
  * @since 13-09-18
  */
 public interface RenderableGUI extends Renderable {
-	
+
 	/** Called when the object was interacted with */
 	public void pressed();
-	
+
 	/** Gets the position of the GUI element */
 	public Vector2 getPosition();
-	
+
 	/** Gets the size of the GUI element */
 	public Vector2 getSize();
 }

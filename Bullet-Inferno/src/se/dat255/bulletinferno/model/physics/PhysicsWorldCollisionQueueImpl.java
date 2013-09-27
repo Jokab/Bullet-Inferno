@@ -58,7 +58,7 @@ public class PhysicsWorldCollisionQueueImpl implements PhysicsWorldCollisionQueu
 	}
 
 	/** The internal queue implementation for occured collisions. */
-	private Queue<PhysicsWorldCollisionQueue.Entry> queue =
+	private final Queue<PhysicsWorldCollisionQueue.Entry> queue =
 			new LinkedList<PhysicsWorldCollisionQueue.Entry>();
 
 	/**
