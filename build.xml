@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bullet-inferno" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.hamcrest-core-1.3.classpath">
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/hamcrest-core-1.3.jar"/>
+  </path>
+  
+  <path id="library.junit-4.11.classpath">
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/junit-4.11.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Bullet-Inferno -->
+  
+  <dirname property="module.bullet-inferno.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.bullet-inferno" value="${compiler.args}"/>
+  
+  <property name="bullet-inferno.output.dir" value="${module.bullet-inferno.basedir}/Bullet-Inferno/bin"/>
+  <property name="bullet-inferno.testoutput.dir" value="${module.bullet-inferno.basedir}/Bullet-Inferno/bin"/>
+  
+  <path id="bullet-inferno.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bullet-inferno.module.production.classpath">
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+  </path>
+  
+  <path id="bullet-inferno.runtime.production.module.classpath">
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+  </path>
+  
+  <path id="bullet-inferno.module.classpath">
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+  </path>
+  
+  <path id="bullet-inferno.runtime.module.classpath">
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bullet-inferno">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bullet-inferno">
+    <patternset refid="excluded.from.module.bullet-inferno"/>
+  </patternset>
+  
+  <path id="bullet-inferno.module.sourcepath">
+    <dirset dir="${module.bullet-inferno.basedir}/Bullet-Inferno">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.bullet-inferno" depends="compile.module.bullet-inferno.production,compile.module.bullet-inferno.tests" description="Compile module Bullet-Inferno"/>
+  
+  <target name="compile.module.bullet-inferno.production" description="Compile module Bullet-Inferno; production classes">
+    <mkdir dir="${bullet-inferno.output.dir}"/>
+    <javac destdir="${bullet-inferno.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bullet-inferno}"/>
+      <bootclasspath refid="bullet-inferno.module.bootclasspath"/>
+      <classpath refid="bullet-inferno.module.production.classpath"/>
+      <src refid="bullet-inferno.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bullet-inferno"/>
+    </javac>
+    
+    <copy todir="${bullet-inferno.output.dir}">
+      <fileset dir="${module.bullet-inferno.basedir}/Bullet-Inferno/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.bullet-inferno.tests" depends="compile.module.bullet-inferno.production" description="compile module Bullet-Inferno; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.bullet-inferno" description="cleanup module">
+    <delete dir="${bullet-inferno.output.dir}"/>
+    <delete dir="${bullet-inferno.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module Bullet-Inferno-desktop -->
+  
+  <dirname property="module.bullet-inferno-desktop.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.bullet-inferno-desktop" value="${compiler.args}"/>
+  
+  <property name="bullet-inferno-desktop.output.dir" value="${module.bullet-inferno-desktop.basedir}/Bullet-Inferno-desktop/bin"/>
+  <property name="bullet-inferno-desktop.testoutput.dir" value="${module.bullet-inferno-desktop.basedir}/Bullet-Inferno-desktop/bin"/>
+  
+  <path id="bullet-inferno-desktop.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bullet-inferno-desktop.module.production.classpath">
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  <path id="bullet-inferno-desktop.runtime.production.module.classpath">
+    <pathelement location="${bullet-inferno-desktop.output.dir}"/>
+    <path refid="bullet-inferno.runtime.production.module.classpath"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  <path id="bullet-inferno-desktop.module.classpath">
+    <pathelement location="${bullet-inferno-desktop.output.dir}"/>
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  <path id="bullet-inferno-desktop.runtime.module.classpath">
+    <pathelement location="${bullet-inferno-desktop.output.dir}"/>
+    <path refid="bullet-inferno.runtime.module.classpath"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-desktop/libs/gdx-natives.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bullet-inferno-desktop">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bullet-inferno-desktop">
+    <patternset refid="excluded.from.module.bullet-inferno-desktop"/>
+  </patternset>
+  
+  <path id="bullet-inferno-desktop.module.sourcepath">
+    <dirset dir="${module.bullet-inferno-desktop.basedir}/Bullet-Inferno-desktop">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.bullet-inferno-desktop" depends="compile.module.bullet-inferno-desktop.production,compile.module.bullet-inferno-desktop.tests" description="Compile module Bullet-Inferno-desktop"/>
+  
+  <target name="compile.module.bullet-inferno-desktop.production" depends="compile.module.bullet-inferno" description="Compile module Bullet-Inferno-desktop; production classes">
+    <mkdir dir="${bullet-inferno-desktop.output.dir}"/>
+    <javac destdir="${bullet-inferno-desktop.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bullet-inferno-desktop}"/>
+      <bootclasspath refid="bullet-inferno-desktop.module.bootclasspath"/>
+      <classpath refid="bullet-inferno-desktop.module.production.classpath"/>
+      <src refid="bullet-inferno-desktop.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bullet-inferno-desktop"/>
+    </javac>
+    
+    <copy todir="${bullet-inferno-desktop.output.dir}">
+      <fileset dir="${module.bullet-inferno-desktop.basedir}/Bullet-Inferno-desktop/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.bullet-inferno-desktop.tests" depends="compile.module.bullet-inferno-desktop.production" description="compile module Bullet-Inferno-desktop; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.bullet-inferno-desktop" description="cleanup module">
+    <delete dir="${bullet-inferno-desktop.output.dir}"/>
+    <delete dir="${bullet-inferno-desktop.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module Bullet-Inferno-test -->
+  
+  <dirname property="module.bullet-inferno-test.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.bullet-inferno-test" value="${compiler.args}"/>
+  
+  <property name="bullet-inferno-test.output.dir" value="${module.bullet-inferno-test.basedir}/Bullet-Inferno-test/bin"/>
+  <property name="bullet-inferno-test.testoutput.dir" value="${module.bullet-inferno-test.basedir}/Bullet-Inferno-test/bin"/>
+  
+  <path id="bullet-inferno-test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bullet-inferno-test.module.production.classpath">
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+    <pathelement location="${bullet-inferno-desktop.output.dir}"/>
+    <path refid="library.junit-4.11.classpath"/>
+    <path refid="library.hamcrest-core-1.3.classpath"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx-sources.jar"/>
+  </path>
+  
+  <path id="bullet-inferno-test.runtime.production.module.classpath">
+    <pathelement location="${bullet-inferno-test.output.dir}"/>
+    <path refid="bullet-inferno.runtime.production.module.classpath"/>
+    <path refid="bullet-inferno-desktop.runtime.production.module.classpath"/>
+    <path refid="library.junit-4.11.classpath"/>
+    <path refid="library.hamcrest-core-1.3.classpath"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx-sources.jar"/>
+  </path>
+  
+  <path id="bullet-inferno-test.module.classpath">
+    <pathelement location="${bullet-inferno-test.output.dir}"/>
+    <pathelement location="${bullet-inferno.output.dir}"/>
+    <pathelement location="${basedir}/Bullet-Inferno/libs/gdx.jar"/>
+    <pathelement location="${bullet-inferno-desktop.output.dir}"/>
+    <path refid="library.junit-4.11.classpath"/>
+    <path refid="library.hamcrest-core-1.3.classpath"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx-sources.jar"/>
+  </path>
+  
+  <path id="bullet-inferno-test.runtime.module.classpath">
+    <pathelement location="${bullet-inferno-test.output.dir}"/>
+    <path refid="bullet-inferno.runtime.module.classpath"/>
+    <path refid="bullet-inferno-desktop.runtime.module.classpath"/>
+    <path refid="library.junit-4.11.classpath"/>
+    <path refid="library.hamcrest-core-1.3.classpath"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx.jar"/>
+    <pathelement location="${basedir}/Bullet-Inferno-test/libs/gdx-sources.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bullet-inferno-test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bullet-inferno-test">
+    <patternset refid="excluded.from.module.bullet-inferno-test"/>
+  </patternset>
+  
+  <path id="bullet-inferno-test.module.sourcepath">
+    <dirset dir="${module.bullet-inferno-test.basedir}/Bullet-Inferno-test">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.bullet-inferno-test" depends="compile.module.bullet-inferno-test.production,compile.module.bullet-inferno-test.tests" description="Compile module Bullet-Inferno-test"/>
+  
+  <target name="compile.module.bullet-inferno-test.production" depends="compile.module.bullet-inferno,compile.module.bullet-inferno-desktop" description="Compile module Bullet-Inferno-test; production classes">
+    <mkdir dir="${bullet-inferno-test.output.dir}"/>
+    <javac destdir="${bullet-inferno-test.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bullet-inferno-test}"/>
+      <bootclasspath refid="bullet-inferno-test.module.bootclasspath"/>
+      <classpath refid="bullet-inferno-test.module.production.classpath"/>
+      <src refid="bullet-inferno-test.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bullet-inferno-test"/>
+    </javac>
+    
+    <copy todir="${bullet-inferno-test.output.dir}">
+      <fileset dir="${module.bullet-inferno-test.basedir}/Bullet-Inferno-test/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.bullet-inferno-test.tests" depends="compile.module.bullet-inferno-test.production" description="compile module Bullet-Inferno-test; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.bullet-inferno-test" description="cleanup module">
+    <delete dir="${bullet-inferno-test.output.dir}"/>
+    <delete dir="${bullet-inferno-test.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.bullet-inferno, clean.module.bullet-inferno-desktop, clean.module.bullet-inferno-test" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.bullet-inferno, compile.module.bullet-inferno-desktop, compile.module.bullet-inferno-test" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
