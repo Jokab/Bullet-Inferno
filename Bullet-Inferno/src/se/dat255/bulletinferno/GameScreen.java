@@ -39,14 +39,14 @@ public class GameScreen extends AbstractScreen {
 
 	/** The views to use when going in or out pause */
 	private RenderableGUI pauseScreenView, pauseIconView;
-	
+
 	/** The (center of the) current viewport position, in world coordinates */
 	private Vector2 viewportPosition = new Vector2();
-	
+
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions = new Vector2();
 
-	private MyGame myGame;
+	private final MyGame myGame;
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -59,13 +59,12 @@ public class GameScreen extends AbstractScreen {
 	 */
 	public void createNewGame(WeaponData weaponType) {
 		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
-		
-		
-		if(graphics != null ) {
+
+		if (graphics != null) {
 			graphics.dispose();
 			graphics = null;
 		}
-		
+
 		// TODO: Initialize the game
 		graphics = new Graphics();
 		graphics.create();
@@ -140,8 +139,8 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		graphics.dispose();
-		
-		if(game != null) {
+
+		if (game != null) {
 			game.dispose();
 		}
 	}
@@ -162,15 +161,15 @@ public class GameScreen extends AbstractScreen {
 			// graphics commands
 			// can be buffered up for being sent to the graphics pipeline.
 			// Meanwhile, we run the models.
-			
+
 			// Calculate the new world coordinate position (in the middle) of the viewport.
 			viewportPosition = new Vector2(0, 0);
-			graphics.screenToWorld(viewportPosition);
-			viewportPosition.add(0.5f*viewportDimensions.x, 0);
-			viewportPosition.sub(0, 0.5f*viewportDimensions.y);
-			
+			Graphics.screenToWorld(viewportPosition);
+			viewportPosition.add(0.5f * viewportDimensions.x, 0);
+			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
+
 			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
-			
+
 			game.update(delta);
 		}
 	}
@@ -181,9 +180,9 @@ public class GameScreen extends AbstractScreen {
 
 		// Get bottom left (at zero, world origo) and top right corners for further calculation...
 		viewportPosition = new Vector2(0, height);
-		graphics.screenToWorld(viewportPosition);
+		Graphics.screenToWorld(viewportPosition);
 		viewportDimensions = new Vector2(width, 0);
-		graphics.screenToWorld(viewportDimensions);
+		Graphics.screenToWorld(viewportDimensions);
 
 		// ...adjust dimensions to bottom left corner...
 		viewportDimensions.sub(viewportPosition);

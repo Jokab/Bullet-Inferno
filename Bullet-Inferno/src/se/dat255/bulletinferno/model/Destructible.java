@@ -7,7 +7,7 @@ public interface Destructible extends Teamable, Disposable {
 	 * Subtracts the object's health with the taken damage.
 	 * 
 	 * @param damage
-	 *            The damage to be dealt.
+	 *        The damage to be dealt.
 	 */
 	public void takeDamage(float damage);
 

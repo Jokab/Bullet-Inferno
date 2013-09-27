@@ -10,11 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class PauseScreenView implements RenderableGUI {
-	
+
 	private final Vector2 position, size;
 	private final Sprite sprite;
 	private final GameScreen game;
-	
+
 	public PauseScreenView(GameScreen game) {
 		Texture texture = new Texture(Gdx.files.internal("images/gui/screen_pause.png"));
 		sprite = new Sprite(texture);

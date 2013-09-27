@@ -10,13 +10,13 @@ public class PlayerShipImpl implements PlayerShip {
 	private final int initialHealth;
 	private int health;
 	private float moveToPos;
-	private float moveSpeed = 6.0f;
+	private final float moveSpeed = 6.0f;
 
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon) {
 		this.position.set(position);
 		this.game = game;
 		this.initialHealth = initialHealth;
-		this.health = initialHealth;
+		health = initialHealth;
 		this.weapon = weapon;
 
 		game.setPlayerShip(this);
@@ -45,17 +45,17 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void takeDamage(float damage) {
-		this.health -= damage;
+		health -= damage;
 	}
 
 	@Override
 	public int getHealth() {
-		return this.health;
+		return health;
 	}
 
 	@Override
 	public int getInitialHealth() {
-		return this.initialHealth;
+		return initialHealth;
 	}
 
 	@Override
@@ -71,12 +71,12 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void update(float deltaTime) {
 		if (position.y > moveToPos + 0.1f) {
-			this.position.add(0, -moveSpeed * deltaTime);
+			position.add(0, -moveSpeed * deltaTime);
 		} else if (position.y < moveToPos - 0.1f) {
-			this.position.add(0, moveSpeed * deltaTime);
+			position.add(0, moveSpeed * deltaTime);
 		}
 
-		if (this.health <= 0) {
+		if (health <= 0) {
 			dispose();
 		}
 	}
@@ -101,6 +101,7 @@ public class PlayerShipImpl implements PlayerShip {
 		weapon.fire(position, new Vector2(1, 0), this);
 	}
 
+	@Override
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}

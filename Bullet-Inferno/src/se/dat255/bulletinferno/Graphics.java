@@ -37,14 +37,14 @@ public class Graphics {
 	 */
 	public void create() {
 		Gdx.app.log("Graphics", "create()");
-		
+
 		worldCamera = new OrthographicCamera();
 		worldBatch = new SpriteBatch();
-		
+
 		guiCamera = new OrthographicCamera(16, 9);
 		guiBatch = new SpriteBatch();
 		guiBatch.setProjectionMatrix(guiCamera.combined);
-		
+
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
@@ -57,9 +57,9 @@ public class Graphics {
 		Gdx.app.log("Graphics", "camera.setToOrtho(false, " + width + ", "
 				+ GAME_HEIGHT + ")");
 		worldCamera.setToOrtho(false, width, GAME_HEIGHT);
-//		guiCamera.setToOrtho(false, w, h);
-//		guiCamera.update();
-//		guiBatch.setProjectionMatrix(guiCamera.combined);
+		// guiCamera.setToOrtho(false, w, h);
+		// guiCamera.update();
+		// guiBatch.setProjectionMatrix(guiCamera.combined);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Graphics {
 		// Clear the screen every frame
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		// TODO: Render world without blending
 
 		// Render units that have alpha
@@ -125,20 +125,24 @@ public class Graphics {
 				+ ")");
 		guiRenderables.remove(renderable);
 	}
-	
+
 	/**
 	 * Checks if a GUI element was activated, also calling that
-	 *  element.
-	 * @param x The X position of the GUI
-	 * @param y The Y position of the GUI
+	 * element.
+	 * 
+	 * @param x
+	 *        The X position of the GUI
+	 * @param y
+	 *        The Y position of the GUI
 	 * @return If a GUI element was activated
 	 */
-	public boolean guiInput(float x, float y){
+	public boolean guiInput(float x, float y) {
 		Gdx.app.log("guiInput", x + ", " + y);
-		for(RenderableGUI gui : guiRenderables){
+		for (RenderableGUI gui : guiRenderables) {
 			Vector2 position = gui.getPosition();
 			Vector2 size = gui.getSize();
-			if(x > position.x && y > position.y && x < position.x + size.x && y < position.y + size.y){
+			if (x > position.x && y > position.y && x < position.x + size.x
+					&& y < position.y + size.y) {
 				gui.pressed();
 				return true;
 			}

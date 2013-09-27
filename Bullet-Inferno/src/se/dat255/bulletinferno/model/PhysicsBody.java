@@ -17,7 +17,7 @@ public interface PhysicsBody {
 	 * Sets the (linear) velocity of the body.
 	 * 
 	 * @param velocity
-	 *            the velocity to set.
+	 *        the velocity to set.
 	 */
 	public void setVelocity(Vector2 velocity);
 
@@ -25,9 +25,10 @@ public interface PhysicsBody {
 	 * @return the velocity of the body.
 	 */
 	public Vector2 getVelocity();
-	
+
 	/**
 	 * Returns the wrapped Box2d body
+	 * 
 	 * @see Body
 	 * @return Box2D body
 	 */
