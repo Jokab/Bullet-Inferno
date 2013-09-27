@@ -13,9 +13,6 @@ public interface Segment extends Disposable {
 	public int getWidth();
 	/** Gets the start X position of the Segment */
 	public float getPosition();
-	/** Sets the start X position of the Segment
-	 *   and all the slices within */
-	public void setPosition();
 	/** Gets the entry height of the segment */
 	public int getEntryHeight();
 	/** Gets the exit height of the segment */
