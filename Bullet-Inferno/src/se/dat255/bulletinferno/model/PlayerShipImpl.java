@@ -1,10 +1,6 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
-
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 public class PlayerShipImpl implements PlayerShip {
 
@@ -16,21 +12,12 @@ public class PlayerShipImpl implements PlayerShip {
 	private float moveToPos;
 	private float moveSpeed = 6.0f;
 
-	private static PhysicsBodyDefinition bodyDefinition = null;
-	private PhysicsBody body = null;
-
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon) {
 		this.position.set(position);
 		this.game = game;
 		this.initialHealth = initialHealth;
 		this.health = initialHealth;
 		this.weapon = weapon;
-
-		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.5f, 0.5f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 
 		game.setPlayerShip(this);
 	}
@@ -88,7 +75,6 @@ public class PlayerShipImpl implements PlayerShip {
 		} else if (position.y < moveToPos - 0.1f) {
 			this.position.add(0, moveSpeed * deltaTime);
 		}
-		System.out.println(this.health);
 
 		if (this.health <= 0) {
 			dispose();
@@ -126,10 +112,6 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void dispose() {
-		game.getPhysicsWorld().removeBody(body);
-		body = null;
-//		if (weapon != null) {
-//			weapon.getTimer().stop();
-//		}
+
 	}
 }
