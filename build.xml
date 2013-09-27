@@ -348,4 +348,6 @@
   <target name="build.modules" depends="init, clean, compile.module.bullet-inferno, compile.module.bullet-inferno-desktop, compile.module.bullet-inferno-test" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+  <!-- TODO: For now, test is not really test but instead just a build all -->
+  <target name="test" depends="build.modules" description="build all"/>
 </project>
