@@ -1,11 +1,12 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.physics;
+
+import se.dat255.bulletinferno.model.PhysicsShapeFactory;
 
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 /**
- * Factory class that creates various complex Box2D shapes with simple method
- * calls.
+ * Factory class that creates various complex Box2D shapes with simple method calls.
  */
 public class PhysicsShapeFactoryImpl implements PhysicsShapeFactory {
 

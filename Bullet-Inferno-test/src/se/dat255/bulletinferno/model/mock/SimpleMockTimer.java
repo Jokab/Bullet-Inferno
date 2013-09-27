@@ -52,6 +52,7 @@ public class SimpleMockTimer implements Timer {
 
 	@Override
 	public void restart() {
+		this.timeLeft = this.initialValue;
 	}
 
 	@Override

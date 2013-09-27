@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.Renderable;
 
 public class ProjectileView implements Renderable {
 

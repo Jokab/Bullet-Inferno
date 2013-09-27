@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -24,10 +26,15 @@ public class GameImpl implements Game {
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
-
+	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
+	
+	/** List of all timers */
 	private final List<Timer> timers;
-
+	/** List of all queued timers to be added */
+	private final List<Timer> timersAddQueue = new LinkedList<Timer>(); 
+	private boolean isIteratingOverTimers = false;
+	
 	public GameImpl(PhysicsWorld world) {
 		this.world = world;
 		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
@@ -39,13 +46,23 @@ public class GameImpl implements Game {
 	}
 
 	/**
+	 *  {@inheritDoc}
+	 */
+	@Override
+	public void setPlayerShip(PlayerShip ship){
+		this.playerShip = ship;
+	}
+		
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public PlayerShip getPlayerShip() {
 		// TODO Auto-generated method stub
-		return null;
+		return playerShip;
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -63,6 +80,22 @@ public class GameImpl implements Game {
 		return enemies;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addEnemy(Enemy enemy) {
+		enemies.add(enemy);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeEnemy(Enemy enemy) {
+		enemies.remove(enemy);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -127,7 +160,13 @@ public class GameImpl implements Game {
 	@Override
 	public Timer getTimer() {
 		Timer t = new TimerImpl();
-		timers.add(t);
+		
+		if(isIteratingOverTimers) {
+			timersAddQueue.add(t);
+		} else {
+			timers.add(t);
+		}
+	
 		return t;
 	}
 
@@ -136,12 +175,21 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public void update(float deltaTime) {
-		// Update timers
+		// Update timers, set iterator flag
+		// to indicate that no one is allowed to modify list
+		isIteratingOverTimers = true;
 		for (Timer t : timers) {
 			t.update(deltaTime);
 		}
-
+		// If timers are waiting to be added, add them 
+		if(!timersAddQueue.isEmpty()) {
+			timers.addAll(timersAddQueue);
+			timersAddQueue.clear();
+		}
+		isIteratingOverTimers = false;
+		
 		world.update(deltaTime);
+		playerShip.update(deltaTime);
 	}
 
 	/**
@@ -151,4 +199,13 @@ public class GameImpl implements Game {
 	public PhysicsWorld getPhysicsWorld() {
 		return world;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void dispose() {
+		world.dispose();
+	}
+	
 }

@@ -1,7 +1,6 @@
-/**
- * 
- */
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.physics;
+
+import se.dat255.bulletinferno.model.PhysicsBody;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -18,7 +17,7 @@ public class PhysicsBodyImpl implements PhysicsBody {
 	 * Constructs a new PhysicsBody from the Box2D body supplied.
 	 * 
 	 * @param definition
-	 *            a PhysicsBodyDefiniton to inherit properties from.
+	 *        a PhysicsBodyDefiniton to inherit properties from.
 	 */
 	public PhysicsBodyImpl(Body body) {
 		this.body = body;
@@ -46,6 +45,14 @@ public class PhysicsBodyImpl implements PhysicsBody {
 	@Override
 	public Vector2 getVelocity() {
 		return body.getLinearVelocity();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Body getBox2DBody() {
+		return body;
 	}
 
 }
