@@ -35,7 +35,7 @@ public class SliceImpl implements Slice {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getEntryHight() {
+	public int getEntryHeight() {
 		return entryHeight;
 	}
 

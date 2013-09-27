@@ -56,7 +56,7 @@ public class SegmentImpl implements Segment {
 
 	@Override
 	public int getEntryHeight() {
-		return entrySlice.getEntryHight();
+		return entrySlice.getEntryHeight();
 	}
 
 	@Override
