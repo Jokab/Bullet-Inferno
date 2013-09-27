@@ -13,7 +13,7 @@ import se.dat255.bulletinferno.model.WeaponDescription;
  * (for players) or {@link #getEnemyWeaponForGame(Game)} (for enemies) are
  * used to retrieve a Weapon for the game.
  * 
- * @author Jakob Csörgei Gustavsson
+ * @author Jakob Csorgei Gustavsson
  * 
  */
 public enum WeaponData implements WeaponDescription {
