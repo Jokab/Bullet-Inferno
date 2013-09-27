@@ -1,6 +1,8 @@
 package se.dat255.bulletinferno.model;
 
-public interface Destructible extends Teamable{
+import se.dat255.bulletinferno.util.Disposable;
+
+public interface Destructible extends Teamable, Disposable {
 	/**
 	 * Subtracts the object's health with the taken damage.
 	 * 

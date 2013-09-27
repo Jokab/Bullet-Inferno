@@ -75,7 +75,7 @@ public class GameScreen extends AbstractScreen {
 
 		game = new GameImpl();
 
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 100,
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
 				weaponType.getPlayerWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);

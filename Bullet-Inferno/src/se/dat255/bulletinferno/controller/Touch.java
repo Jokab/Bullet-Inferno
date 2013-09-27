@@ -80,6 +80,10 @@ public class Touch implements InputProcessor {
 			ship.setWeapon(WeaponData.SLOW.getPlayerWeaponForGame(game));
 			System.out.println("Switched to fast weapon. Delay: " + WeaponData.SLOW.getReloadTime());
 		}
+		if(keycode == Keys.X) {
+			ship.takeDamage(10);
+			System.out.println("Player health: " + ship.getHealth());
+		}
 		
 		
 		// TODO Auto-generated method stub
