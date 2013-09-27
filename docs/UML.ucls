@@ -1,6 +1,420 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
+  <interface id="1" language="java" name="se.dat255.bulletinferno.model.Collidable" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Collidable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="160" x="1002" y="814"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" language="java" name="se.dat255.bulletinferno.model.Destructible" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Destructible.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="137" x="1103" y="1977"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="3" language="java" name="se.dat255.bulletinferno.model.Enemy" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Enemy.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="133" x="768" y="1977"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" language="java" name="se.dat255.bulletinferno.model.Game" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Game.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1187" y="346"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="5" language="java" name="se.dat255.bulletinferno.model.Obstacle" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Obstacle.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="63" width="133" x="635" y="585"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="se.dat255.bulletinferno.model.PhysicsBody" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsBody.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="148" x="260" y="953"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="7" language="java" name="se.dat255.bulletinferno.model.PhysicsBodyDefinition" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsBodyDefinition.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="211" x="300" y="814"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="8" language="java" name="se.dat255.bulletinferno.model.PhysicsMovementPattern" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsMovementPattern.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="177" x="62" y="814"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="se.dat255.bulletinferno.model.PhysicsShapeFactory" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsShapeFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="217" x="551" y="814"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener" 
+    project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsViewportIntersectionListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="235" x="1002" y="953"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="11" language="java" name="se.dat255.bulletinferno.model.PhysicsWorld" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsWorld.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="357" x="238" y="585"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="12" language="java" name="se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue" 
+    project="Bullet-Inferno" file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsWorldCollisionQueue.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1362" y="590"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="13" language="java" name="se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue.Entry" 
+    project="Bullet-Inferno" file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PhysicsWorldCollisionQueue.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="150" x="1060" y="585"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="14" language="java" name="se.dat255.bulletinferno.model.PlayerShip" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PlayerShip.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="152" x="1256" y="1146"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="15" language="java" name="se.dat255.bulletinferno.model.PositionEntity" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/PositionEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="133" x="829" y="814"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="16" language="java" name="se.dat255.bulletinferno.model.Projectile" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Projectile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1366" y="932"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="17" language="java" name="se.dat255.bulletinferno.model.Ship" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Ship.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="63" width="133" x="829" y="953"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="18" language="java" name="se.dat255.bulletinferno.model.Teamable" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Teamable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="175" x="907" y="1622"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="19" language="java" name="se.dat255.bulletinferno.model.Timer" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Timer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="191" x="1425" y="1622"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="20" language="java" name="se.dat255.bulletinferno.model.Timerable" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Timerable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="155" x="1397" y="1375"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="21" language="java" name="se.dat255.bulletinferno.model.Weapon" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/Weapon.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="200" x="1157" y="1375"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="22" language="java" name="se.dat255.bulletinferno.model.WeaponDescription" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/model/WeaponDescription.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1619" y="143"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="23" language="java" name="se.dat255.bulletinferno.util.Disposable" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/util/Disposable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="120" x="238" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="24" language="java" name="se.dat255.bulletinferno.view.Renderable" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/view/Renderable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="145" x="777" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="25" language="java" name="se.dat255.bulletinferno.view.RenderableGUI" project="Bullet-Inferno" 
+    file="/Bullet-Inferno/src/se/dat255/bulletinferno/view/RenderableGUI.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="127" x="777" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <dependency id="28">    
+    <bendpoint x="1240" y="585"/>    
+    <bendpoint x="1240" y="814"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <dependency id="30">    
+    <bendpoint x="1528" y="585"/>    
+    <bendpoint x="1528" y="814"/>    
+    <bendpoint x="1528" y="953"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <dependency id="32">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="33">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="34">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <dependency id="36">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <generalization id="37">    
+    <bendpoint x="1084" y="1146"/>    
+    <bendpoint x="1112" y="1375"/>    
+    <bendpoint x="1112" y="1622"/>    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <dependency id="38">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="39">    
+    <bendpoint x="1570" y="266"/>    
+    <bendpoint x="1570" y="585"/>    
+    <bendpoint x="1549" y="814"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <generalization id="40">    
+    <bendpoint x="31" y="1622"/>    
+    <bendpoint x="31" y="1375"/>    
+    <bendpoint x="31" y="1146"/>    
+    <bendpoint x="31" y="953"/>    
+    <bendpoint x="31" y="814"/>    
+    <bendpoint x="31" y="585"/>    
+    <bendpoint x="31" y="266"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="41">    
+    <bendpoint x="798" y="1622"/>    
+    <bendpoint x="798" y="1375"/>    
+    <bendpoint x="798" y="1146"/>    
+    <bendpoint x="798" y="953"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <dependency id="42">    
+    <bendpoint x="1105" y="1146"/>    
+    <bendpoint x="1091" y="1375"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="43">    
+    <bendpoint x="798" y="585"/>    
+    <bendpoint x="798" y="814"/>    
+    <bendpoint x="777" y="953"/>    
+    <bendpoint x="777" y="1146"/>    
+    <bendpoint x="777" y="1375"/>    
+    <bendpoint x="777" y="1622"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="45">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="46">    
+    <bendpoint x="1549" y="585"/>    
+    <bendpoint x="1570" y="814"/>    
+    <bendpoint x="1570" y="953"/>    
+    <bendpoint x="1582" y="1146"/>    
+    <bendpoint x="1582" y="1375"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <nesting id="47">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="13"/>  
+  </nesting>  
+  <generalization id="48">    
+    <bendpoint x="247" y="266"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="50">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <generalization id="51">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <dependency id="52">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <dependency id="55">    
+    <bendpoint x="269" y="814"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <generalization id="56">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="58">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="59">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="60">    
+    <bendpoint x="1591" y="266"/>    
+    <bendpoint x="1591" y="585"/>    
+    <bendpoint x="1591" y="814"/>    
+    <bendpoint x="1591" y="953"/>    
+    <bendpoint x="1561" y="1146"/>    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

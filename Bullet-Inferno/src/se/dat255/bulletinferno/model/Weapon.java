@@ -35,10 +35,20 @@ public interface Weapon {
 	public Vector2 getOffset();
 
 	/**
-	 * Fires the weapon from the specified origin with the weapon's given
-	 * offset.
+	 * Fires the weapon from the given position with the weapon's given
+	 * offset, in the given direction. The source is for determine which
+	 * team the fired projectile belongs to.
 	 * 
-	 * @param origin
+	 * @param position
+	 * @param direction
+	 * @param source
 	 */
-	public void fire(Vector2 origin);
+	public void fire(Vector2 position, Vector2 direction, Teamable source);
+
+	float getDamage();
+
+	Vector2 getProjectileVelocity();
+
+	public Timer getTimer();
+
 }

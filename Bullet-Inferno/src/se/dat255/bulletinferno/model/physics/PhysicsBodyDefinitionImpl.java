@@ -1,4 +1,6 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.physics;
+
+import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -6,12 +8,10 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- * Class representing a PhysicsBody type. Body definitions can be re-used for
- * many body creations.
+ * Class representing a PhysicsBody type. Body definitions can be re-used for many body creations.
  * 
  * <p>
- * For Box2D hackers: the PhysicsBodyDefinition contains a BodyDef and one or
- * more Fixture
+ * For Box2D hackers: the PhysicsBodyDefinition contains a BodyDef and one or more Fixture
  */
 public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 		Disposable {
@@ -20,14 +20,12 @@ public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 	private final BodyDef definition = new BodyDef();
 
 	/**
-	 * The internal shape used for the one fixture used by the body definition
-	 * (right now).
+	 * The internal shape used for the one fixture used by the body definition (right now).
 	 */
 	private final Shape shape;
 
 	/**
-	 * The internal fixture definition used for the body. Should be linked to
-	 * this.shape.
+	 * The internal fixture definition used for the body. Should be linked to this.shape.
 	 */
 	private final FixtureDef fixtureDefinition = new FixtureDef();
 
@@ -35,23 +33,22 @@ public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 	 * Construct a new body definition (non-bullet).
 	 * 
 	 * @param shape
-	 *            the shape of the physics body. Will be managed and disposed of
-	 *            by the physics engine from now on.
+	 *        the shape of the physics body. Will be managed and disposed of
+	 *        by the physics engine from now on.
 	 */
 	public PhysicsBodyDefinitionImpl(Shape shape) {
 		this(shape, false);
 	}
 
 	/**
-	 * Construct a new body definition, optionally defined as a bullet, meaning
-	 * it moves very fast (true means higher precision at the expense of worse
-	 * performance).
+	 * Construct a new body definition, optionally defined as a bullet, meaning it moves very fast
+	 * (true means higher precision at the expense of worse performance).
 	 * 
 	 * @param shape
-	 *            the shape of the physics body. Will be managed and disposed of
-	 *            by the physics engine from now on.
+	 *        the shape of the physics body. Will be managed and disposed of by the physics engine
+	 *        from now on.
 	 * @param isBullet
-	 *            whether to apply high precision to the bodies of this type.
+	 *        whether to apply high precision to the bodies of this type.
 	 */
 	public PhysicsBodyDefinitionImpl(Shape shape, boolean isBullet) {
 		definition.type = BodyDef.BodyType.DynamicBody;
@@ -63,8 +60,7 @@ public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 		fixtureDefinition.shape = this.shape;
 		fixtureDefinition.density = 0f;
 		fixtureDefinition.friction = 0f;
-		fixtureDefinition.isSensor = true; // Sensors do not have collision
-											// response.
+		fixtureDefinition.isSensor = true; // Sensors do not have collision response.
 	}
 
 	/**

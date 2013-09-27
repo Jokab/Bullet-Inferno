@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Renderable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

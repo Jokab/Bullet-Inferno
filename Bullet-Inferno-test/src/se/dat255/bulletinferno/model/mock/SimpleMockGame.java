@@ -6,7 +6,6 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
-import se.dat255.bulletinferno.model.PhysicsWorldImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Timer;
@@ -26,7 +25,7 @@ public class SimpleMockGame implements Game {
 	 * We are using the "real" physicsImpl here as creating our own would be
 	 * close to impossible
 	 */
-	public PhysicsWorld physicsWorld = new PhysicsWorldImpl();
+	public PhysicsWorldImplSpy physicsWorld = new PhysicsWorldImplSpy();
 
 	public SimpleMockGame(Timer timer) {
 		this.timer = timer;
@@ -49,6 +48,7 @@ public class SimpleMockGame implements Game {
 
 	@Override
 	public void disposeProjectile(Projectile projectile) {
+		projectile.reset(); // Emulate pool.
 	}
 
 	@Override
@@ -82,6 +82,25 @@ public class SimpleMockGame implements Game {
 	@Override
 	public PhysicsWorld getPhysicsWorld() {
 		return physicsWorld;
+	}
+
+	@Override
+	public void setPlayerShip(PlayerShip ship) {
+	}
+
+	@Override
+	public void addEnemy(Enemy emeny) {
+	}
+
+	@Override
+	public void removeEnemy(Enemy enemy) {
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

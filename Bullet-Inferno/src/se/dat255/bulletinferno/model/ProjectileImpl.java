@@ -1,16 +1,35 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-public class ProjectileImpl implements Projectile {
+public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionListener {
 
 	private static PhysicsBodyDefinition bodyDefinition = null;
 
 	private PhysicsBody body = null;
 
-	private int damage;
+	private float damage;
+	private Teamable source = null;
 	private final Game game;
+
+	/** An instance of a timer to help "running things later", i.e. on the next timestep. */
+	private final Timer runLater;
+
+	/**
+	 * Schedule an instance of this class to a timer and it will remove this projectile when the
+	 * timer calls it. This class takes care of unregistering itself on the timer when run.
+	 */
+	public class RemoveThisProjectileTimerable implements Timerable {
+		@Override
+		public void onTimeout(Timer source, float timeSinceLast) {
+			game.disposeProjectile(ProjectileImpl.this);
+
+			source.unregisterListener(this);
+		}
+	}
 
 	/**
 	 * Constructs a new projectile
@@ -19,26 +38,22 @@ public class ProjectileImpl implements Projectile {
 	 */
 	public ProjectileImpl(Game game) {
 		this.game = game;
-
+		runLater = game.getTimer();
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory()
-					.getRectangularShape(1f, 2f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, true);
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
 		}
 	}
 
 	/**
-	 * Initializes the projectile
-	 * 
-	 * @param origin
-	 *            position
-	 * @param velocity
-	 * @param damage
+	 * {@inheritDoc}
 	 */
-	public void init(Vector2 origin, Vector2 velocity, int damage) {
+	@Override
+	public void init(Vector2 origin, Vector2 velocity, float damage, Teamable source) {
 		this.damage = damage;
+		this.source = source;
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
 
-		this.setPosition(origin);
 		this.setVelocity(velocity);
 	}
 
@@ -46,7 +61,7 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getDamage() {
+	public float getDamage() {
 		return damage;
 	}
 
@@ -54,10 +69,31 @@ public class ProjectileImpl implements Projectile {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void collided(Collidable entity) {
-		// Code for special behavior here
+	public void preCollided(Collidable other) {
+		// NOP
+	}
 
-		game.disposeProjectile(this);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
+		// Decrease the damage after hits, since we must let the other object that collided with us
+		// decide if they want to take our current damage (etc.) before we zero it.
+		if (damage > 0 && !(other instanceof Projectile) && other != getSource()) {
+			if (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)) {
+				damage = 0;
+
+				// Note: Do not move this out of here - this must be called only once, and that is
+				// when
+				// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
+				if (damage <= 0) {
+					// We won't need this projectile anymore, since it is useless and can't hurt
+					// anyone.
+					game.disposeProjectile(this);
+				}
+			}
+		}
 	}
 
 	/**
@@ -65,8 +101,9 @@ public class ProjectileImpl implements Projectile {
 	 */
 	@Override
 	public void reset() {
-		// TODO Reset projectile
-
+		game.getPhysicsWorld().removeBody(body);
+		body = null;
+		source = null;
 	}
 
 	/**
@@ -85,15 +122,27 @@ public class ProjectileImpl implements Projectile {
 		return body.getPosition();
 	}
 
+	@Override
+	public Teamable getSource() {
+		return source;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPosition(Vector2 position) {
-		// @todo fix init method for this.
-		if (body != null) {
-			throw new RuntimeException("Operation not supported yet.");
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, position);
+	public void viewportIntersectionBegin() {
+		// NOP
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void viewportIntersectionEnd() {
+		// Run later as we are not allowed to alter the world here.
+		runLater.registerListener(new RemoveThisProjectileTimerable());
+		runLater.start();
+	}
+
 }

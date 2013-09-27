@@ -1,13 +1,15 @@
 package se.dat255.bulletinferno.model;
 
-public interface Destructible {
+import se.dat255.bulletinferno.util.Disposable;
+
+public interface Destructible extends Teamable, Disposable {
 	/**
 	 * Subtracts the object's health with the taken damage.
 	 * 
 	 * @param damage
-	 *            The damage to be dealt.
+	 *        The damage to be dealt.
 	 */
-	public void takeDamage(int damage);
+	public void takeDamage(float damage);
 
 	/**
 	 * Returns the object's current health.

@@ -2,7 +2,9 @@ package se.dat255.bulletinferno.model;
 
 import java.util.List;
 
-public interface Game {
+import se.dat255.bulletinferno.util.Disposable;
+
+public interface Game extends Disposable {
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
@@ -16,11 +18,18 @@ public interface Game {
 	public Projectile retrieveProjectile(Class<? extends Projectile> type);
 
 	/**
-	 * Disposes of the specified projectile
+	 * Dispose of the specified projectile
 	 * 
 	 * @param projectile
 	 */
 	public void disposeProjectile(Projectile projectile);
+
+	/**
+	 * Sets a reference to the player's ship, for use in update methods.
+	 * 
+	 * @return
+	 */
+	public void setPlayerShip(PlayerShip ship);
 
 	/**
 	 * Returns the player's ship
@@ -42,6 +51,20 @@ public interface Game {
 	 * @return enemies
 	 */
 	public List<? extends Enemy> getEnemies();
+
+	/**
+	 * Adds the specified enemy to the game
+	 * 
+	 * @param emeny
+	 */
+	public void addEnemy(Enemy emeny);
+
+	/**
+	 * Dispose of the specified enemy from the game
+	 * 
+	 * @param enemy
+	 */
+	public void removeEnemy(Enemy enemy);
 
 	/**
 	 * Returns a new timer
