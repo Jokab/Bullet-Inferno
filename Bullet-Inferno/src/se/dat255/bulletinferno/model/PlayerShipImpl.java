@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.Graphics;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipImpl implements PlayerShip {
@@ -11,6 +13,7 @@ public class PlayerShipImpl implements PlayerShip {
 	private int health;
 	private float moveToPos; 
 	private float moveSpeed = 6.0f;
+	private float velocity = 1f;
 
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon) {
 		this.position.set(position);
@@ -74,6 +77,8 @@ public class PlayerShipImpl implements PlayerShip {
 		} else if(position.y < moveToPos - 0.1f){
 			this.position.add(0, moveSpeed *deltaTime);
 		}
+		this.position.add(velocity *deltaTime,0);
+		Graphics.setNewCameraPos((this.getPosition().x+Graphics.GAME_WIDTH/2),(Graphics.GAME_HEIGHT/2));
 	}
 	
 	@Override

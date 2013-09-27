@@ -29,6 +29,10 @@ public class GameImpl implements Game {
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	
+	//For mocking segments
+	private final List<mockSegment> segments = new ArrayList<mockSegment>();
+	
+	
 	/** List of all timers */
 	private final List<Timer> timers;
 	/** List of all queued timers to be added */
@@ -95,6 +99,19 @@ public class GameImpl implements Game {
 	public void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
 	}
+	
+	public void addSegment(mockSegment seg){
+		segments.add(seg);
+	}
+	
+	public void removeSegment(mockSegment seg){
+		segments.remove(seg);
+	}
+	
+	public List<mockSegment> getSegments(){
+		return segments;
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
