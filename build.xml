@@ -358,7 +358,7 @@
     <target name="all" depends="build.modules" description="build all"/>
 
     <target name="test" depends="build.modules" description="run all tests">
-        <junit printsummary="yes" haltonfailure="no" includeantruntime="yes">
+        <junit printsummary="yes" haltonfailure="yes" includeantruntime="yes">
             <classpath>
                 <path refid="bullet-inferno-test.module.classpath"/>
             </classpath>
