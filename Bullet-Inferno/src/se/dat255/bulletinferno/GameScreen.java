@@ -5,8 +5,11 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.model.RenderableGUI;
+import se.dat255.bulletinferno.model.mockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyTypes;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.RenderableGUI;
@@ -46,7 +49,9 @@ public class GameScreen extends AbstractScreen {
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions = new Vector2();
 
-	private final MyGame myGame;
+	private MyGame myGame;
+	
+	static BackgroundView bgView;
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -78,6 +83,9 @@ public class GameScreen extends AbstractScreen {
 				weaponType.getPlayerWeaponForGame(game));
 		ShipView shipView = new ShipView(ship);
 		graphics.addRenderable(shipView);
+		
+		bgView = new BackgroundView(ship, game);
+		//graphics.addRenderable(bgView);
 
 		// Set up input handler
 		processor = new Touch(game, graphics, ship);
@@ -87,6 +95,9 @@ public class GameScreen extends AbstractScreen {
 
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
+		
+		//TODO: Debug test segments
+		setupMockSegments();
 
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
@@ -114,6 +125,17 @@ public class GameScreen extends AbstractScreen {
 		gamePaused = false;
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
+	}
+	
+	private void setupMockSegments(){
+		mockSegment mock1 = new mockSegment(3,10,"data/backgrounds/green.png");
+		mockSegment mock2 = new mockSegment(16,20,"data/backgrounds/red.png");
+		mockSegment mock3 = new mockSegment(24,40,"data/backgrounds/green.png");
+		game.addSegment(mock1);
+		game.addSegment(mock2);
+		game.addSegment(mock3);
+		
+		
 	}
 
 	private void setupHardcodedEnemies() {
@@ -191,6 +213,10 @@ public class GameScreen extends AbstractScreen {
 		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
 
 		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+	}
+	
+	public static BackgroundView getBgView(){
+		return bgView;
 	}
 
 }

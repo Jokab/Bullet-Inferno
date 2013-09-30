@@ -85,5 +85,16 @@ public interface Game extends Disposable {
 	 *         physics game models.
 	 */
 	public PhysicsWorld getPhysicsWorld();
+	
+	
+	
+	public void addSegment(mockSegment seg);
+	
+	public void removeSegment(mockSegment seg);
+	
+	public List<mockSegment> getSegments();
+	
 
 }
+
+
