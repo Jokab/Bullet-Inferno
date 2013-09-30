@@ -109,4 +109,10 @@ public class PlayerShipImpl implements PlayerShip {
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof PlayerShip;
 	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

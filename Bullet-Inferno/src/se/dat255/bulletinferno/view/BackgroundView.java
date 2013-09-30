@@ -6,7 +6,6 @@ import java.util.List;
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Renderable;
 import se.dat255.bulletinferno.model.mockSegment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

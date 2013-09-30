@@ -5,7 +5,6 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
-import se.dat255.bulletinferno.model.RenderableGUI;
 import se.dat255.bulletinferno.model.mockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyTypes;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
