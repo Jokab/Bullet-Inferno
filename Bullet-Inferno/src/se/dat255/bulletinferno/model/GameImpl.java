@@ -207,7 +207,6 @@ public class GameImpl implements Game {
 		}
 		isIteratingOverTimers = false;
 		
-		System.out.println(timers.size());
 		world.update(deltaTime);
 		playerShip.update(deltaTime);
 	}

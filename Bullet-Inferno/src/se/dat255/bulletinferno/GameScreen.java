@@ -1,12 +1,14 @@
 package se.dat255.bulletinferno;
 
 import se.dat255.bulletinferno.controller.Touch;
+import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.model.mockSegment;
-import se.dat255.bulletinferno.model.enemy.EnemyTypes;
+import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -18,6 +20,7 @@ import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends AbstractScreen {
@@ -51,6 +54,9 @@ public class GameScreen extends AbstractScreen {
 	private MyGame myGame;
 	
 	static BackgroundView bgView;
+	
+	private AssetManager assetManager = new AssetManager();
+	private ResourceManagerImpl resourceManager = new ResourceManagerImpl(assetManager);
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -62,6 +68,7 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 */
 	public void createNewGame(WeaponData weaponType) {
+		resourceManager.load();
 		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
 
 		if (graphics != null) {
@@ -141,14 +148,23 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
 		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
+		
+		Enemy enemy = EnemyType.DEFAULT_SHIP.getEnemyShip(game, position);
+		Enemy enemy2 = EnemyType.SLOW_SHIP.getEnemyShip(game, position2);
+		Enemy enemy3 = EnemyType.FAST_SHIP.getEnemyShip(game, position3);
 
-		game.addEnemy(EnemyTypes.DEFAULT_SHIP.getEnemyShip(game, position));
-		game.addEnemy(EnemyTypes.SLOW_SHIP.getEnemyShip(game, position2));
-		game.addEnemy(EnemyTypes.FAST_SHIP.getEnemyShip(game, position3));
+		game.addEnemy(enemy);
+		game.addEnemy(enemy2);
+		game.addEnemy(enemy3);
 
-		EnemyView enemyView = new EnemyView(game);
+		EnemyView enemyView = new EnemyView(game, enemy, resourceManager);
+		EnemyView enemyView2 = new EnemyView(game, enemy2, resourceManager);
+		EnemyView enemyView3 = new EnemyView(game, enemy3, resourceManager);
+		
 
 		graphics.addRenderable(enemyView);
+		graphics.addRenderable(enemyView2);
+		graphics.addRenderable(enemyView3);
 	}
 
 	@Override
