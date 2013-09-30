@@ -361,6 +361,7 @@
         <junit printsummary="yes" haltonfailure="yes" includeantruntime="yes">
             <classpath>
                 <path refid="bullet-inferno-test.module.classpath"/>
+                <path refid="bullet-inferno-desktop.module.classpath"/>
             </classpath>
 
             <formatter type="plain"/>
