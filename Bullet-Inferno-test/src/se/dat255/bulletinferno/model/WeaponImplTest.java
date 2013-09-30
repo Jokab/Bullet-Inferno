@@ -5,17 +5,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
+import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class WeaponImplTest {
 
+	@BeforeClass
+	public static void beforeTests() {
+		Common.loadEssentials();	
+	}
+	
 	SimpleMockGame mockGame;
 	WeaponImplMockTimer mockTimer;
 	
