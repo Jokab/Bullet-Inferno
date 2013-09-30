@@ -8,8 +8,8 @@ import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.Timer;
 import se.dat255.bulletinferno.model.mockSegment;
+import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.utils.GdxNativesLoader;
 

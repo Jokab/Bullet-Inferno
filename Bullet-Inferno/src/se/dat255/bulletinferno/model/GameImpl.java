@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
 
 import com.badlogic.gdx.utils.Pool;
 

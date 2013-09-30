@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model;
 import java.util.List;
 
 import se.dat255.bulletinferno.util.Disposable;
+import se.dat255.bulletinferno.util.Timer;
 
 public interface Game extends Disposable {
 	/**

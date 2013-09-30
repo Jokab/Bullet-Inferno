@@ -5,6 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
+import se.dat255.bulletinferno.util.Timerable;
+
 public class TimerImplTest {
 	
 	private class TimerableMockup implements Timerable { 
