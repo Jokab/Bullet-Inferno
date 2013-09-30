@@ -8,7 +8,6 @@ public class mockSegment {
 
 	
 	private float startX, endX;
-	private String bgColor;
 	private Texture bg;
 	private TextureRegion myTexture;
 	private TextureRegion endTexture;
@@ -17,7 +16,6 @@ public class mockSegment {
 	public mockSegment(float startX, float endX, String texturePath){
 		this.startX = startX;
 		this.endX = endX;
-		this.bgColor = bgColor;
 		this.texturePath = texturePath;
 	
 	
@@ -43,11 +41,6 @@ public class mockSegment {
 		return "mockSegment [startX=" + startX + ", endX=" + endX + ", texture=" + texturePath + "]";
 	}
 
-
-	public String getId(){
-		return bgColor;
-	}
-	
 	public TextureRegion getEndTexture(){
 		return endTexture;
 	}
