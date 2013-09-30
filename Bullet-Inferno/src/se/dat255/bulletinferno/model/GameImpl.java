@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class GameImpl implements Game {
 
-	private PhysicsWorld world;
+	private PhysicsWorld world = new PhysicsWorldImpl();
 
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
