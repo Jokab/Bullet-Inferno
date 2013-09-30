@@ -150,14 +150,21 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 		
 		Enemy enemy = EnemyType.DEFAULT_SHIP.getEnemyShip(game, position);
+		Enemy enemy2 = EnemyType.SLOW_SHIP.getEnemyShip(game, position2);
+		Enemy enemy3 = EnemyType.FAST_SHIP.getEnemyShip(game, position3);
 
 		game.addEnemy(enemy);
-		game.addEnemy(EnemyType.SLOW_SHIP.getEnemyShip(game, position2));
-		game.addEnemy(EnemyType.FAST_SHIP.getEnemyShip(game, position3));
+		game.addEnemy(enemy2);
+		game.addEnemy(enemy3);
 
 		EnemyView enemyView = new EnemyView(game, enemy, resourceManager);
+		EnemyView enemyView2 = new EnemyView(game, enemy2, resourceManager);
+		EnemyView enemyView3 = new EnemyView(game, enemy3, resourceManager);
+		
 
 		graphics.addRenderable(enemyView);
+		graphics.addRenderable(enemyView2);
+		graphics.addRenderable(enemyView3);
 	}
 
 	@Override

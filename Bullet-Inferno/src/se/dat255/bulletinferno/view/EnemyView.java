@@ -18,6 +18,7 @@ public class EnemyView implements Renderable {
 	public EnemyView(Game game, Enemy enemy, ResourceManager resourceManager) {
 		this.game = game;
 
+		System.out.println(enemy.getType().getIdentifier());
 		texture = resourceManager.getTexture(enemy.getType().getIdentifier());
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
