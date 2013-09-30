@@ -18,9 +18,9 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> textures;
 	static {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("DEFAULT_SHIP", "data/enemyShip2.png");
-		map.put("FAST_SHIP", "data/enemyShip.png");
-		map.put("SLOW_SHIP", "data/enemyShip.png");
+		map.put("DEFAULT_SHIP", "data/enemyShip.png");
+		map.put("FAST_SHIP", "data/enemyShip2.png");
+		map.put("SLOW_SHIP", "data/enemyShip2.png");
 		textures = Collections.unmodifiableMap(map);
 	}
 
@@ -33,7 +33,7 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	// TODO: Define these maps
 	private static final Map<String, String> sounds = new HashMap<String, String>();
-	private static final Map<String, String> music = new HashMap<String, String>();;
+	private static final Map<String, String> music = new HashMap<String, String>();
 
 	public ResourceManagerImpl(AssetManager assetManager) {
 		this.manager = assetManager;

@@ -14,11 +14,12 @@ public class EnemyView implements Renderable {
 	private final Game game;
 	private final Texture texture;
 	private final Sprite sprite;
+	private final Enemy enemy;
 
 	public EnemyView(Game game, Enemy enemy, ResourceManager resourceManager) {
 		this.game = game;
+		this.enemy = enemy;
 
-		System.out.println(enemy.getType().getIdentifier());
 		texture = resourceManager.getTexture(enemy.getType().getIdentifier());
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
@@ -29,11 +30,9 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		for (Enemy enemy : game.getEnemies()) {
-			sprite.setPosition(enemy.getPosition().x,
-					enemy.getPosition().y - sprite.getHeight() / 2);
-			sprite.draw(batch);
-		}
+		sprite.setPosition(enemy.getPosition().x,
+				enemy.getPosition().y - sprite.getHeight() / 2);
+		sprite.draw(batch);
 	}
 
 	@Override
