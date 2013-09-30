@@ -1,10 +1,10 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class mockSegment {
+public class MockSegment {
 
 	
 	private float startX, endX;
@@ -13,7 +13,7 @@ public class mockSegment {
 	private TextureRegion endTexture;
 	private String texturePath;
 
-	public mockSegment(float startX, float endX, String texturePath){
+	public MockSegment(float startX, float endX, String texturePath){
 		this.startX = startX;
 		this.endX = endX;
 		this.texturePath = texturePath;

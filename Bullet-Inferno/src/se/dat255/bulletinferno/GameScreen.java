@@ -7,7 +7,7 @@ import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.model.mockSegment;
+import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
@@ -134,9 +134,9 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	private void setupMockSegments(){
-		mockSegment mock1 = new mockSegment(3,10,"data/backgrounds/green.png");
-		mockSegment mock2 = new mockSegment(16,20,"data/backgrounds/red.png");
-		mockSegment mock3 = new mockSegment(24,40,"data/backgrounds/green.png");
+		MockSegment mock1 = new MockSegment(3,10,"data/backgrounds/green.png");
+		MockSegment mock2 = new MockSegment(16,20,"data/backgrounds/red.png");
+		MockSegment mock3 = new MockSegment(24,40,"data/backgrounds/green.png");
 		game.addSegment(mock1);
 		game.addSegment(mock2);
 		game.addSegment(mock3);
