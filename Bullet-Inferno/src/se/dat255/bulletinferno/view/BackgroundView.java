@@ -33,7 +33,7 @@ public class BackgroundView implements Renderable {
 		batch.draw(tex, ship.getPosition().x, 0, 16, 9, 0, 0, 32, 1024, false, false);
 		batch.enableBlending();
 		for(mockSegment s : sl){
-			Gdx.app.log("BGView","Segment" +s.toString());
+			//Gdx.app.log("BGView","Segment" +s.toString());
 			float startX = s.getStart();
 			float endX = s.getEnd();
 			if(ship.getPosition().x <= startX || startX < ship.getPosition().x+16 ){
@@ -42,6 +42,9 @@ public class BackgroundView implements Renderable {
 				batch.draw(s.getTexture(), startX, 0, 0, 0, (endX-startX-2), Graphics.GAME_HEIGHT, 1, 1, 0);
 				batch.draw(s.getEndTexture(), endX-2, 0, 0, 0, 2, Graphics.GAME_HEIGHT, 1, 1, 0);
 			}
+			
+			//TODO: Thread-safe removal of segment that has been passed
+				
 			/*if(s.getEnd()<ship.getPosition().x){
 				game.removeSegment(s);
 			}*/
