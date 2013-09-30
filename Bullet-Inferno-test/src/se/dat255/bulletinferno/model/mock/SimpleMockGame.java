@@ -9,6 +9,7 @@ import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Timer;
+import se.dat255.bulletinferno.model.mockSegment;
 
 import com.badlogic.gdx.utils.GdxNativesLoader;
 
@@ -101,6 +102,24 @@ public class SimpleMockGame implements Game {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void addSegment(mockSegment seg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeSegment(mockSegment seg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<mockSegment> getSegments() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
