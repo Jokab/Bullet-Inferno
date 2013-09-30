@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
@@ -11,9 +12,15 @@ import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.test.Common;
 
 public class ProjectileImplTest {
 
+	@BeforeClass
+	public static void beforeTests() {
+		Common.loadEssentials();	
+	}
+	
 	SimpleMockGame mockGame;
 
 	@Before

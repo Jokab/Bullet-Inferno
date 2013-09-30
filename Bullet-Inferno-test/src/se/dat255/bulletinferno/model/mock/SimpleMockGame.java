@@ -11,13 +11,7 @@ import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.mockSegment;
 import se.dat255.bulletinferno.util.Timer;
 
-import com.badlogic.gdx.utils.GdxNativesLoader;
-
 public class SimpleMockGame implements Game {
-	static {
-		GdxNativesLoader.load();
-	}
-
 	public final Projectile mockProjectile = new SimpleMockProjectile(null);
 	public int numProjectilesSpawned = 0;
 	public Timer timer;
