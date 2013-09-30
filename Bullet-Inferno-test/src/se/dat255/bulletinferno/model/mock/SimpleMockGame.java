@@ -8,8 +8,8 @@ import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.mockSegment;
 import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.view.MockSegment;
 
 public class SimpleMockGame implements Game {
 	public final Projectile mockProjectile = new SimpleMockProjectile(null);
@@ -99,19 +99,19 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public void addSegment(mockSegment seg) {
+	public void addSegment(MockSegment seg) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void removeSegment(mockSegment seg) {
+	public void removeSegment(MockSegment seg) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<mockSegment> getSegments() {
+	public List<MockSegment> getSegments() {
 		// TODO Auto-generated method stub
 		return null;
 	}
