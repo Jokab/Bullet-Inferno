@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.test.Common;
 
+
 public class TimerImplTest {
 	
 	@BeforeClass

@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.view.RenderableGUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -36,6 +37,7 @@ public class Graphics {
 	 * Initializes all the required assets
 	 */
 	public void create() {
+		Texture.setEnforcePotImages(false);
 		Gdx.app.log("Graphics", "create()");
 
 		worldCamera = new OrthographicCamera();
@@ -74,6 +76,7 @@ public class Graphics {
 	 * Positions the camera correctly and renders all the graphics of the game
 	 */
 	public void render() {
+		
 		// Update the camera position
 		// TODO: camera.setPosition(...)
 		worldCamera.update();
@@ -84,6 +87,9 @@ public class Graphics {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		// TODO: Render world without blending
+		worldBatch.begin();
+		GameScreen.getBgView().render(worldBatch);
+		worldBatch.end();
 
 		// Render units that have alpha
 		worldBatch.begin();
@@ -168,4 +174,9 @@ public class Graphics {
 		Gdx.app.log("Graphics", "result: " + vector);
 		position.set(vector.x, vector.y);
 	}
+	
+	public static void setNewCameraPos(float x, float y){
+		worldCamera.position.set(x,y,0);
+	}
+	
 }
