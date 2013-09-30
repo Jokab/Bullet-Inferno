@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.util.Disposable;
 
 public interface Enemy extends PositionEntity, Disposable, Teamable {
@@ -17,4 +18,6 @@ public interface Enemy extends PositionEntity, Disposable, Teamable {
 	 * @return The credits received.
 	 */
 	public int getCredits();
+	
+	EnemyType getType();
 }

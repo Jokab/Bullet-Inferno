@@ -2,7 +2,8 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import com.badlogic.gdx.Gdx;
+import se.dat255.bulletinferno.model.ResourceManager;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,10 +15,10 @@ public class EnemyView implements Renderable {
 	private final Texture texture;
 	private final Sprite sprite;
 
-	public EnemyView(Game game) {
+	public EnemyView(Game game, Enemy enemy, ResourceManager resourceManager) {
 		this.game = game;
 
-		texture = new Texture(Gdx.files.internal("data/enemyShip.png"));
+		texture = resourceManager.getTexture(enemy.getType().getIdentifier());
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		sprite = new Sprite(texture);

@@ -1,11 +1,12 @@
 package se.dat255.bulletinferno.model.enemy;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.math.Vector2;
 
-public enum EnemyTypes {
+public enum EnemyType implements ResourceIdentifier {
 
 	// ORDER:
 	// velocity, health, weapon, score, credits
@@ -19,7 +20,7 @@ public enum EnemyTypes {
 	private final int score;
 	private final int credits;
 
-	EnemyTypes(Vector2 velocity, int initialHealth, WeaponData weaponData, int score, int credits) {
+	EnemyType(Vector2 velocity, int initialHealth, WeaponData weaponData, int score, int credits) {
 		this.velocity = velocity;
 		this.initialHealth = initialHealth;
 		this.weaponData = weaponData;
@@ -28,7 +29,7 @@ public enum EnemyTypes {
 	}
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
-		return new DefaultEnemyShipImpl(game, position, velocity, initialHealth,
+		return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 				weaponData.getEnemyWeaponForGame(game), score, credits);
 	}
 
@@ -50,5 +51,10 @@ public enum EnemyTypes {
 
 	public int getCredits() {
 		return credits;
+	}
+
+	@Override
+	public String getIdentifier() {
+		return this.name();
 	}
 }
