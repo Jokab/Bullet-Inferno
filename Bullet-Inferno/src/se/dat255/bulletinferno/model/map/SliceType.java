@@ -9,34 +9,41 @@ import se.dat255.bulletinferno.model.Game;
 import com.badlogic.gdx.math.Vector2;
 
 public enum SliceType {
-	WATER(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_1(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_2(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_3(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_4(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_5(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_6(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_7(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	MOUNTAIN_8(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
-	SIMPLE_GROUND(2f, 2f, 20f, Arrays.asList(ObstacleDefinitionImpl.FLAT_GROUND))
+	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_1(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_2(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_3(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_4(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_5(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_6(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_7(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_8(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
+	SIMPLE_GROUND(2f, 2f, 20f, Arrays.asList(place(ObstacleDefinitionImpl.FLAT_GROUND, 0, 0)))
 	;
 	
 	private final float entryHeight;
 	private final float exitHeight;
 	private final float width;
-	private final List<? extends ObstacleDefinition> obstacleDefinitions;
+	private final List<? extends ObstaclePlacement> obstaclePlacements;
 	
 	SliceType(float entryHeight, float exitHeight, float width, 
-			List<? extends ObstacleDefinition> obstacleDefinitions){
+			List<? extends ObstaclePlacement> obstaclePlacements){
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.width = width;
-		this.obstacleDefinitions = obstacleDefinitions;
+		this.obstaclePlacements = obstaclePlacements;
 	}
-	
+
 	public Slice getSlice(Game game, Vector2 position) {
 		return new SliceImpl(game, this, entryHeight, exitHeight, position, width,
-				obstacleDefinitions);
+				obstaclePlacements);
+	}
+	
+	/**
+	 * Internal helper to create an {@link ObstaclePlacement} quickly for enum definitions.
+	 */
+	private static ObstaclePlacement place(ObstacleDefinition definition, float x, float y) {
+		return new ObstaclePlacementImpl(definition, new Vector2(x, y));
 	}
 	
 }
