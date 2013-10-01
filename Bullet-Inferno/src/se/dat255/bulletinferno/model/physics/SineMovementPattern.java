@@ -10,6 +10,7 @@ public class SineMovementPattern implements PhysicsMovementPattern {
 	private float time = 0;
 	private final float frequency;
 	private final float maxForce;
+	private static int i = 0;
 
 	public SineMovementPattern(float frequency, float maxForce) {
 		this.frequency = frequency;
@@ -20,10 +21,17 @@ public class SineMovementPattern implements PhysicsMovementPattern {
 	public void update(float timeDelta, PhysicsBody body) {
 		Body box2dBody = body.getBox2DBody();
 		time += timeDelta;
-
+		// System.out.println(this);
 		box2dBody.applyForceToCenter(new Vector2(0,
 				(float) (-maxForce * Math.cos(frequency * time)))
-				, false);
+				, true);
+	}
+
+	@Override
+	public PhysicsMovementPattern copy() {
+
+		return new SineMovementPattern(frequency, maxForce);
+
 	}
 
 }

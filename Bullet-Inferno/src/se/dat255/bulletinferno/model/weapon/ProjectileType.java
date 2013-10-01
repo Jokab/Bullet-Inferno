@@ -15,8 +15,8 @@ public enum ProjectileType implements ResourceIdentifier {
 	
 	DEFAULT_PROJECTILE(5f, null), // null = straight forward 
 	LEFT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
-	RIGHT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(3, 0))),
-	SINE_PROJECTILE(10f, new SineMovementPattern(10f, 10f));
+	RIGHT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),
+	SINE_PROJECTILE(10f, new SineMovementPattern(4f,6f));
 	
 	private float damage;
 	private PhysicsMovementPattern pmp;

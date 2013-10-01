@@ -1,7 +1,10 @@
 package se.dat255.bulletinferno.model.enemy;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
+import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
+import se.dat255.bulletinferno.model.physics.SineMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.math.Vector2;
@@ -10,18 +13,19 @@ public enum EnemyType implements ResourceIdentifier {
 
 	// ORDER:
 	// velocity, health, weapon, score, credits
-	DEFAULT_SHIP(new Vector2(-3, 0), 5, WeaponData.FASTENEMY, 10, 10),
-	FAST_SHIP(new Vector2(-6, 0), 5, WeaponData.FASTENEMY, 10, 10),
-	SLOW_SHIP(new Vector2(-1.5f, 0), 5, WeaponData.FASTENEMY, 10, 10);
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0),  new SineMovementPattern(4, 6f), 5, WeaponData.SLOW,  10, 10),
+	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), new AccelerationMovementPattern(new Vector2(-10,0)), 5, WeaponData.SLOW, 10, 10);
 
 	private final Vector2 velocity;
+	private final PhysicsMovementPattern pmp;
 	private final int initialHealth;
 	private final WeaponData weaponData;
 	private final int score;
 	private final int credits;
 
-	EnemyType(Vector2 velocity, int initialHealth, WeaponData weaponData, int score, int credits) {
-		this.velocity = velocity;
+	EnemyType(Vector2 velocity, PhysicsMovementPattern pmp, int initialHealth, WeaponData weaponData, int score, int credits) {
+		this.velocity = velocity.cpy();
+		this.pmp = pmp;
 		this.initialHealth = initialHealth;
 		this.weaponData = weaponData;
 		this.score = score;
@@ -29,7 +33,7 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
-		return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
+		return new DefaultEnemyShipImpl(game, this, position, velocity, pmp, initialHealth,
 				weaponData.getEnemyWeaponForGame(game), score, credits);
 	}
 

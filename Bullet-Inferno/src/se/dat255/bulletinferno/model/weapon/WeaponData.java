@@ -22,12 +22,8 @@ public enum WeaponData implements WeaponDescription {
 	 * Order:
 	 * reloadTime, projectile, offset, projectileVelocity, damage
 	 */
-	FAST(0.1f, ProjectileType.RIGHT_ACCELERATING_PROJECTILE, new Vector2(), 10f, 1f),
-	STANDARD(0.5f, ProjectileType.DEFAULT_PROJECTILE, new Vector2(), 5f, 1f),
-	SLOW(1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 1f, 1f),
-
-	// Enemy weapons below
-	FASTENEMY(1f, ProjectileType.LEFT_ACCELERATING_PROJECTILE, new Vector2(), 10f, 1f);
+	FAST(0.1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4, 6f),
+	SLOW(1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4, 6f);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;

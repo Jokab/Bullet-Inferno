@@ -71,7 +71,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 
 		// Check if there is a movement pattern to attach
 		if (pmp != null) {
-			game.getPhysicsWorld().attachMovementPattern(pmp, body);
+			game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
 		}
 
 		this.setVelocity(velocity);

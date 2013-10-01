@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -31,7 +32,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	protected final Weapon weapon;
 
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pmp,
 			int initialHealth, Weapon weapon, int score, int credits) {
 		this.game = game;
 		this.type = type;
@@ -48,7 +49,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
-		game.getPhysicsWorld().attachMovementPattern(new SineMovementPattern(4, 6f), body);
+		game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
 
 	}
 
