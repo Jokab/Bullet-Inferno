@@ -116,7 +116,7 @@ public class GameScreen extends AbstractScreen {
 	/** Initiates the pause components when the player starts a level */
 	private void setupGUI() {
 		pauseIconView = new PauseIconView(this);
-		pauseScreenView = new PauseScreenView(this);
+		pauseScreenView = new PauseScreenView(this, resourceManager);
 		graphics.addRenderableGUI(pauseIconView);
 	}
 
