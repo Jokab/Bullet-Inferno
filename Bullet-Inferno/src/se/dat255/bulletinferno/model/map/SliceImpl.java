@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.model.map;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
@@ -14,11 +16,12 @@ public class SliceImpl implements Slice, Collidable {
 	private final float exitHeight;
 	private final Game game;
 	private final SliceType id;
+	private final float width;
 	private final List<PhysicsBody> bodies = new LinkedList<PhysicsBody>();
 	
-	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, float x, 
-			List<PhysicsBodyDefinition> bodyDefinitions) {
-		this(game, id, entryHeight, exitHeight, x);
+	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, 
+			Vector2 position, float width, PhysicsBodyDefinition[] bodyDefinitions) {
+		this(game, id, entryHeight, exitHeight, position, width);
 		
 		// Define bodies
 		for(PhysicsBodyDefinition def : bodyDefinitions) {
@@ -26,16 +29,18 @@ public class SliceImpl implements Slice, Collidable {
 			// add the slice's world coordinates to the definitions
 			// position relative to the slice, to get world coordinate
 			game.getPhysicsWorld().createBody(def, this, 
-					def.getBox2DBodyDefinition().position.add(x, 0));
+					def.getBox2DBodyDefinition().position.add(position));
 		}
 		
 	}
 	
-	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, float x) {
+	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, Vector2 position,
+			float width) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.game = game;
 		this.id = id;
+		this.width = width;
 	}
 	
 	/**
@@ -90,6 +95,22 @@ public class SliceImpl implements Slice, Collidable {
 	@Override
 	public void postCollided(Collidable other) {
 		// NOP
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getIdentifier() {
+		return id.name();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public float getWidth() {
+		return width;
 	}
 	
 }

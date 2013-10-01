@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model.map;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.PhysicsBody;
+import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.util.Disposable;
 
 /**
@@ -10,7 +11,7 @@ import se.dat255.bulletinferno.util.Disposable;
  * in a Segment. 
  *
  */
-public interface Slice extends Disposable {
+public interface Slice extends Disposable, ResourceIdentifier {
 	/**
 	 * Returns the height, measured in meters
 	 * above sea-level, for the entry point of the slide
@@ -33,4 +34,9 @@ public interface Slice extends Disposable {
 	 */
 	public List<PhysicsBody> getPhysicsBodyies();
 	
+	/**
+	 * Returns the width of the slice in meters
+	 * @return width (m)
+	 */
+	public float getWidth();	
 }
