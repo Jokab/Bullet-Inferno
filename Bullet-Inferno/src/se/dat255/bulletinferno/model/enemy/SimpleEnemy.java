@@ -6,16 +6,20 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.SineMovementPattern;
-import se.dat255.bulletinferno.model.Teamable;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.Timerable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
+public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
+		PhysicsViewportIntersectionListener {
 
 	private int health;
 	private final int initialHealth;
@@ -30,10 +34,28 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	
 
 	protected final Weapon weapon;
+	
+	/** An instance of a timer to help "running things later", i.e. on the next timestep. */
+	private final Timer runLater;
+	
+	/**
+	 * Schedule an instance of this class to a timer and it will remove this projectile when the
+	 * timer calls it. This class takes care of unregistering itself on the timer when run.
+	 */
+	public class RemoveThisEnemyTimerable implements Timerable {
+		@Override
+		public void onTimeout(Timer source, float timeSinceLast) {
+			game.removeEnemy(SimpleEnemy.this);
+
+			source.unregisterListener(this);
+		}
+	}
+	
 
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth, Weapon weapon, int score, int credits) {
 		this.game = game;
+		this.runLater = game.getTimer();
 		this.type = type;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
@@ -94,9 +116,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 			// If enemy has died
 			if (health <= 0) {
-				health = 0;
-				game.removeEnemy(this);
-				dispose();
+				runLater.registerListener(new RemoveThisEnemyTimerable());
+				runLater.start();
 			}
 		}
 	}
@@ -110,7 +131,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		body = null;
 		if (weapon != null) {
 			weapon.getTimer().stop();
-		} 
+		}
 	}
 
 	@Override
@@ -131,9 +152,22 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof Enemy;
 	}
-	
+
 	@Override
 	public EnemyType getType() {
 		return this.type;
+	}
+
+	@Override
+	public void viewportIntersectionBegin() {
+		// NOP
+
+	}
+
+	@Override
+	public void viewportIntersectionEnd() {
+		// Run later as we are not allowed to alter the world here.
+		runLater.registerListener(new RemoveThisEnemyTimerable());
+		runLater.start();
 	}
 }
