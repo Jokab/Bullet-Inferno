@@ -10,16 +10,15 @@ import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 
 public class SliceImpl implements Slice, Collidable {
-	private final int entryHeight;
-	private final int exitHeight;
+	private final float entryHeight;
+	private final float exitHeight;
 	private final Game game;
+	private final SliceType id;
 	private final List<PhysicsBody> bodies = new LinkedList<PhysicsBody>();
 	
-	public SliceImpl(Game game, int entryHeight, int exitHeight, int x, 
+	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, float x, 
 			List<PhysicsBodyDefinition> bodyDefinitions) {
-		this.entryHeight = entryHeight;
-		this.exitHeight = exitHeight;
-		this.game = game;
+		this(game, id, entryHeight, exitHeight, x);
 		
 		// Define bodies
 		for(PhysicsBodyDefinition def : bodyDefinitions) {
@@ -32,10 +31,11 @@ public class SliceImpl implements Slice, Collidable {
 		
 	}
 	
-	public SliceImpl(Game game, int entryHeight, int exitHeight, int x) {
+	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, float x) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.game = game;
+		this.id = id;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class SliceImpl implements Slice, Collidable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getEntryHeight() {
+	public float getEntryHeight() {
 		return entryHeight;
 	}
 
@@ -64,7 +64,7 @@ public class SliceImpl implements Slice, Collidable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getExitHeight() {
+	public float getExitHeight() {
 		return exitHeight;
 	}
 

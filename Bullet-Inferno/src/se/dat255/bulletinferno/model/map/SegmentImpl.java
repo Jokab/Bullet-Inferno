@@ -55,12 +55,12 @@ public class SegmentImpl implements Segment {
 	}
 
 	@Override
-	public int getEntryHeight() {
+	public float getEntryHeight() {
 		return entrySlice.getEntryHeight();
 	}
 
 	@Override
-	public int getExitHeight() {
+	public float getExitHeight() {
 		return exitSlice.getExitHeight();
 	}
 

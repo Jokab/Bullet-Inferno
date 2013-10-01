@@ -16,14 +16,14 @@ public interface Slice extends Disposable {
 	 * above sea-level, for the entry point of the slide
 	 * @return height in meters
 	 */
-	public int getEntryHeight();
+	public float getEntryHeight();
 	
 	/**
 	 * Returns the height, measured in meters
 	 * above sea-level, for the exit point of the slide
 	 * @return height in meters
 	 */
-	public int getExitHeight();
+	public float getExitHeight();
 	
 	/**
 	 * Returns the physics bodies contained

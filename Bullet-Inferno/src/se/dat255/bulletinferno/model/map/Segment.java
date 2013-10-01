@@ -14,7 +14,7 @@ public interface Segment extends Disposable {
 	/** Gets the start X position of the Segment */
 	public float getPosition();
 	/** Gets the entry height of the segment */
-	public int getEntryHeight();
+	public float getEntryHeight();
 	/** Gets the exit height of the segment */
-	public int getExitHeight();
+	public float getExitHeight();
 }
