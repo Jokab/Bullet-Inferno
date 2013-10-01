@@ -247,6 +247,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	@Override
 	public void removeBody(PhysicsBody body) {
 		world.destroyBody(body.getBox2DBody());
+		detachMovementPattern(body);
 	}
 
 	/**

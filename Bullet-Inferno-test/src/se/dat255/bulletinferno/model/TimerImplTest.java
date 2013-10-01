@@ -1,11 +1,21 @@
 package se.dat255.bulletinferno.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.test.Common;
+
+
 public class TimerImplTest {
+	
+	@BeforeClass
+	public static void beforeTests() {
+		Common.loadEssentials();	
+	}
 	
 	private class TimerableMockup implements Timerable { 
 		private boolean gotACall = false;

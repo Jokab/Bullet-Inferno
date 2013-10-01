@@ -3,8 +3,9 @@ package se.dat255.bulletinferno.model.weapon;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
-import se.dat255.bulletinferno.model.Timer;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.util.Timer;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class WeaponImpl implements Weapon {

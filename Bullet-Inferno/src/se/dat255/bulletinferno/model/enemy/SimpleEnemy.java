@@ -21,6 +21,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	private final int initialHealth;
 	private final int score;
 	private final int credits;
+	private final EnemyType type;
 
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
@@ -28,9 +29,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 	protected final Weapon weapon;
 
-	public SimpleEnemy(Game game, Vector2 position, Vector2 velocity,
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth, Weapon weapon, int score, int credits) {
 		this.game = game;
+		this.type = type;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
 		this.weapon = weapon;
@@ -105,7 +107,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		body = null;
 		if (weapon != null) {
 			weapon.getTimer().stop();
-		}
+		} 
 	}
 
 	@Override
@@ -125,5 +127,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	@Override
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof Enemy;
+	}
+	
+	@Override
+	public EnemyType getType() {
+		return this.type;
 	}
 }

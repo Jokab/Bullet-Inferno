@@ -99,4 +99,9 @@ public enum WeaponData implements WeaponDescription {
 		return new EnemyWeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity,
 				damage);
 	}
+	
+	@Override
+	public String getIdentifier() {
+		return this.name();
+	}
 }

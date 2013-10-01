@@ -5,17 +5,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
+import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipImplTest {
 
+	@BeforeClass
+	public static void beforeTests() {
+		Common.loadEssentials();	
+	}
+	
 	Game mockGame;
 
 	private class MockWeapon extends WeaponImpl {
@@ -62,7 +70,7 @@ public class PlayerShipImplTest {
 		// Tests the set and get position methods
 
 		Vector2 position = new Vector2(0, 0);
-		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 
 		assertEquals("The position should be set in the constructor", position,
 				playerShip.getPosition());
@@ -81,7 +89,7 @@ public class PlayerShipImplTest {
 
 		Vector2 position = new Vector2(0, 0);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+				WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 
 		int health = playerShip.getHealth();
 		int initialHealth = playerShip.getInitialHealth();
@@ -108,7 +116,7 @@ public class PlayerShipImplTest {
 		// Test the constructor
 		Vector2 position = new Vector2(0, 0);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+				WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 		position.x = 20;
 
 		assertTrue(
@@ -129,7 +137,7 @@ public class PlayerShipImplTest {
 	public void testFireWeapon() {
 		MockWeapon weapon = new MockWeapon(mockGame, 0, null, new Vector2(), new Vector2(), 0);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
-				weapon);
+				weapon, ShipType.PLAYER_DEFAULT);
 		
 		playerShip.fireWeapon();
 		assertTrue("Check that ship has fired it's weapon", weapon.hasFired);
@@ -138,10 +146,10 @@ public class PlayerShipImplTest {
 	@Test
 	public void testIsInMyTeam() {
 		PlayerShipImpl playerShip1 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+				WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 		
 		PlayerShip playerShip2 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+				WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 		
 		NonTeamMember enemy = new NonTeamMember();
 		
@@ -160,7 +168,7 @@ public class PlayerShipImplTest {
 	@Test
 	public void testPreCollided() {
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+				WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 		
 		// Create an entity that's not on the ships team
 		NonTeamMember enemy = new NonTeamMember();
@@ -178,7 +186,7 @@ public class PlayerShipImplTest {
 		
 		// Create another player, i.e. somebody who's in the same team
 		PlayerShipImpl playerShip2 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
-				WeaponData.FAST.getPlayerWeaponForGame(mockGame));
+				WeaponData.FAST.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 		projectile = new ColidedTestMockProjectile();
 		projectile.setSource(playerShip2);
 		preCollisionHealth = playerShip.getHealth();

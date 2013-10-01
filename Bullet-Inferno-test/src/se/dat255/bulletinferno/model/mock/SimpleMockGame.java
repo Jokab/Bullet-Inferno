@@ -8,15 +8,10 @@ import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.Timer;
-
-import com.badlogic.gdx.utils.GdxNativesLoader;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.view.MockSegment;
 
 public class SimpleMockGame implements Game {
-	static {
-		GdxNativesLoader.load();
-	}
-
 	public final Projectile mockProjectile = new SimpleMockProjectile(null);
 	public int numProjectilesSpawned = 0;
 	public Timer timer;
@@ -101,6 +96,24 @@ public class SimpleMockGame implements Game {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void addSegment(MockSegment seg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeSegment(MockSegment seg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<MockSegment> getSegments() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -3,6 +3,7 @@
 	<name>Bullet-Inferno-test</name>
 	<comment></comment>
 	<projects>
+		<project>Bullet-Inferno</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
