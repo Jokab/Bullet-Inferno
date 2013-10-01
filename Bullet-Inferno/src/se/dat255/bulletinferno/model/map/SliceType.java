@@ -1,46 +1,42 @@
 package se.dat255.bulletinferno.model.map;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 public enum SliceType {
-	WATER(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_1(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_2(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_3(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_4(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_5(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_6(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_7(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
-	MOUNTAIN_8(0, 0, 20, new PhysicsBodyPositionDefinition[] {});
+	WATER(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_1(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_2(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_3(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_4(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_5(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_6(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_7(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	MOUNTAIN_8(0, 0, 20f, Collections.<ObstacleDefinition>emptyList()),
+	SIMPLE_GROUND(2f, 2f, 20f, Arrays.asList(ObstacleDefinitionImpl.FLAT_GROUND))
+	;
 	
 	private final float entryHeight;
 	private final float exitHeight;
 	private final float width;
-	private final PhysicsBodyPositionDefinition[] bodyDefinitions;
-	
-	private class PhysicsBodyPositionDefinition extends PhysicsBodyDefinitionImpl {
-		public PhysicsBodyPositionDefinition(Shape shape, Vector2 position) {
-			super(shape);
-			getBox2DBodyDefinition().position.set(position);
-		}
-	}
+	private final List<? extends ObstacleDefinition> obstacleDefinitions;
 	
 	SliceType(float entryHeight, float exitHeight, float width, 
-			PhysicsBodyPositionDefinition[] bodyDefinitions){
+			List<? extends ObstacleDefinition> obstacleDefinitions){
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.width = width;
-		this.bodyDefinitions = bodyDefinitions;
+		this.obstacleDefinitions = obstacleDefinitions;
 	}
 	
 	public Slice getSlice(Game game, Vector2 position) {
-		return new SliceImpl(game, this, entryHeight, exitHeight, position, width, bodyDefinitions);
+		return new SliceImpl(game, this, entryHeight, exitHeight, position, width,
+				obstacleDefinitions);
 	}
-	
-	
 	
 }

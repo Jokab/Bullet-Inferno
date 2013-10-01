@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model.map;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.PhysicsWorld;
@@ -17,30 +20,31 @@ public class SliceImpl implements Slice, Collidable {
 	private final Game game;
 	private final SliceType id;
 	private final float width;
-	private final List<PhysicsBody> bodies = new LinkedList<PhysicsBody>();
 	
-	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, 
-			Vector2 position, float width, PhysicsBodyDefinition[] bodyDefinitions) {
-		this(game, id, entryHeight, exitHeight, position, width);
-		
-		// Define bodies
-		for(PhysicsBodyDefinition def : bodyDefinitions) {
-			// Create a new body from the definition,
-			// add the slice's world coordinates to the definitions
-			// position relative to the slice, to get world coordinate
-			game.getPhysicsWorld().createBody(def, this, 
-					def.getBox2DBodyDefinition().position.add(position));
-		}
-		
-	}
+	/** The obstacles present in this slice. */
+	private final List<? extends Obstacle> obstacles;
 	
-	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight, Vector2 position,
-			float width) {
+	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight,
+			Vector2 position, float width, List<? extends ObstacleDefinition> obstacleDefinitions) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.game = game;
 		this.id = id;
 		this.width = width;
+
+		// Create obstacles from definitions.
+		List<Obstacle> obstacles = new ArrayList<Obstacle>(obstacleDefinitions.size());
+		for (ObstacleDefinition obstacleDefinition : obstacleDefinitions) {
+			Vector2 obstaclePosition = position.cpy(); // @todo Add obstacle-in-slice position here.
+			obstacles.add(obstacleDefinition.createObstacle(game, obstaclePosition));
+		}
+		this.obstacles = obstacles;
+	}
+
+	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight,
+			Vector2 position, float width) {
+		this(game, id, entryHeight, exitHeight, position, width,
+				Collections.<ObstacleDefinition> emptyList());
 	}
 	
 	/**
@@ -48,12 +52,8 @@ public class SliceImpl implements Slice, Collidable {
 	 */
 	@Override
 	public void dispose() {
-		PhysicsWorld world = game.getPhysicsWorld();
-		// Remove all bodies from world, if there is any
-		if(bodies != null) {
-			for(PhysicsBody body : bodies) {
-				world.removeBody(body);
-			}
+		for(Obstacle obstacle : obstacles) {
+			obstacle.dispose();
 		}
 	}
 
@@ -77,8 +77,8 @@ public class SliceImpl implements Slice, Collidable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<PhysicsBody> getPhysicsBodyies() {
-		return bodies;
+	public List<? extends Obstacle> getObstacles() {
+		return obstacles;
 	}
 
 	/**

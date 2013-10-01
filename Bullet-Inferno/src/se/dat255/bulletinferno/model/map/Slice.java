@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
-import se.dat255.bulletinferno.model.PhysicsBody;
+import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.util.Disposable;
 
@@ -27,12 +27,9 @@ public interface Slice extends Disposable, ResourceIdentifier {
 	public float getExitHeight();
 	
 	/**
-	 * Returns the physics bodies contained
-	 * in this slice. I.e. all the physical space
-	 * of this slice
-	 * @return physics bodies
+	 * @return a list of all Obstacles in the slice.
 	 */
-	public List<PhysicsBody> getPhysicsBodyies();
+	public List<? extends Obstacle> getObstacles();
 	
 	/**
 	 * Returns the width of the slice in meters
