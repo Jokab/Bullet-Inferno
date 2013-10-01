@@ -27,7 +27,6 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		long start = System.currentTimeMillis();
 		for(Enemy enemy : game.getEnemies()) {
 			this.texture = resourceManager.getTexture(enemy.getType().getIdentifier());
 			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -38,7 +37,6 @@ public class EnemyView implements Renderable {
 					enemy.getPosition().y - sprite.getHeight() / 2);
 			sprite.draw(batch);
 		}
-		System.out.println("Time elapsed: " + (System.currentTimeMillis() - start));
 	}
 
 	@Override
