@@ -101,6 +101,7 @@ public class GameImpl implements Game {
 	@Override
 	public void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
+		enemy.dispose();
 	}
 	
 	public void addSegment(MockSegment seg){
