@@ -20,6 +20,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		map.put("DEFAULT_SHIP", "data/enemyShip.png");
 		map.put("FAST_SHIP", "data/enemyShip2.png");
 		map.put("SLOW_SHIP", "data/enemyShip2.png");
+		map.put("PLAYER_DEFAULT", "data/ship.png");
 		textures = Collections.unmodifiableMap(map);
 	}
 
