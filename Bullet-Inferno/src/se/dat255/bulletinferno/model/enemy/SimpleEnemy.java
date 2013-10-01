@@ -46,6 +46,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		@Override
 		public void onTimeout(Timer source, float timeSinceLast) {
 			game.removeEnemy(SimpleEnemy.this);
+			dispose();
 
 			source.unregisterListener(this);
 		}
