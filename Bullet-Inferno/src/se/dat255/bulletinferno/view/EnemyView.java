@@ -12,29 +12,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class EnemyView implements Renderable {
 
 	private final Game game;
-	private final Texture texture;
-	private final Sprite sprite;
-	private final Enemy enemy;
+	private Texture texture;
+	private Sprite sprite;
+	private ResourceManager resourceManager;
 
-	public EnemyView(Game game, Enemy enemy, ResourceManager resourceManager) {
+	public EnemyView(Game game, ResourceManager resourceManager) {
 		this.game = game;
-		this.enemy = enemy;
+		this.resourceManager = resourceManager;
 
-		texture = resourceManager.getTexture(enemy.getType().getIdentifier());
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		sprite = new Sprite(texture);
+		this.sprite = new Sprite();
 		sprite.setOrigin(0, 0);
 		sprite.setSize(1, 1);
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		if (game.getEnemies().contains(enemy)) {
+		long start = System.currentTimeMillis();
+		for(Enemy enemy : game.getEnemies()) {
+			this.texture = resourceManager.getTexture(enemy.getType().getIdentifier());
+			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			this.sprite.setTexture(texture);
+			sprite.setRegion(texture);
+
 			sprite.setPosition(enemy.getPosition().x,
 					enemy.getPosition().y - sprite.getHeight() / 2);
 			sprite.draw(batch);
 		}
+		System.out.println("Time elapsed: " + (System.currentTimeMillis() - start));
 	}
 
 	@Override

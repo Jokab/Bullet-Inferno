@@ -8,7 +8,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 
 public class ResourceManagerImpl implements ResourceManager {
@@ -22,13 +21,6 @@ public class ResourceManagerImpl implements ResourceManager {
 		map.put("FAST_SHIP", "data/enemyShip2.png");
 		map.put("SLOW_SHIP", "data/enemyShip2.png");
 		textures = Collections.unmodifiableMap(map);
-	}
-
-	private static final Map<String, String> sprites;
-	static {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("DEFAULT_SHIP", "data/enemyShip.png");
-		sprites = Collections.unmodifiableMap(map);
 	}
 
 	// TODO: Define these maps
@@ -60,14 +52,6 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Sprite getSprite(String identifier) {
-		return manager.get(sprites.get(identifier), Sprite.class);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Sound getSound(String identifier) {
 		return manager.get(sounds.get(identifier), Sound.class);
 	}
@@ -83,12 +67,6 @@ public class ResourceManagerImpl implements ResourceManager {
 	private void loadTextures() {
 		for (String path : textures.values()) {
 			manager.load(path, Texture.class);
-		}
-	}
-
-	private void loadSprites() {
-		for (String path : sprites.values()) {
-			manager.load(path, Sprite.class);
 		}
 	}
 

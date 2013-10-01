@@ -157,14 +157,14 @@ public class GameScreen extends AbstractScreen {
 		game.addEnemy(enemy2);
 		game.addEnemy(enemy3);
 
-		EnemyView enemyView = new EnemyView(game, enemy, resourceManager);
-		EnemyView enemyView2 = new EnemyView(game, enemy2, resourceManager);
-		EnemyView enemyView3 = new EnemyView(game, enemy3, resourceManager);
+		EnemyView enemyView = new EnemyView(game, resourceManager);
+//		EnemyView enemyView2 = new EnemyView(game, enemy2, resourceManager);
+//		EnemyView enemyView3 = new EnemyView(game, enemy3, resourceManager);
 		
 
 		graphics.addRenderable(enemyView);
-		graphics.addRenderable(enemyView2);
-		graphics.addRenderable(enemyView3);
+//		graphics.addRenderable(enemyView2);
+//		graphics.addRenderable(enemyView3);
 	}
 
 	@Override
