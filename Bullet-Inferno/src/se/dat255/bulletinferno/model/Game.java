@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.model;
 import java.util.List;
 
 import se.dat255.bulletinferno.util.Disposable;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.view.MockSegment;
 
 public interface Game extends Disposable {
 	/**
@@ -88,11 +90,11 @@ public interface Game extends Disposable {
 	
 	
 	
-	public void addSegment(mockSegment seg);
+	public void addSegment(MockSegment seg);
 	
-	public void removeSegment(mockSegment seg);
+	public void removeSegment(MockSegment seg);
 	
-	public List<mockSegment> getSegments();
+	public List<MockSegment> getSegments();
 	
 
 }

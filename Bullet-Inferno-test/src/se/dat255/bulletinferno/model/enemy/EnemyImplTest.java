@@ -1,7 +1,10 @@
 package se.dat255.bulletinferno.model.enemy;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.Collidable;
@@ -11,11 +14,17 @@ import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
+import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class EnemyImplTest {
 
+	@BeforeClass
+	public static void beforeTests() {
+		Common.loadEssentials();	
+	}
+	
 	private class EnemyMockup extends SimpleEnemy {
 
 		public EnemyMockup(Game game, EnemyType type, Vector2 position, Vector2 velocity,

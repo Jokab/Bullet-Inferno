@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
+import se.dat255.bulletinferno.view.MockSegment;
 
 import com.badlogic.gdx.utils.Pool;
 
@@ -30,7 +33,7 @@ public class GameImpl implements Game {
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	
 	//For mocking segments
-	private final List<mockSegment> segments = new ArrayList<mockSegment>();
+	private final List<MockSegment> segments = new ArrayList<MockSegment>();
 	
 	
 	/** List of all timers */
@@ -100,15 +103,15 @@ public class GameImpl implements Game {
 		enemies.remove(enemy);
 	}
 	
-	public void addSegment(mockSegment seg){
+	public void addSegment(MockSegment seg){
 		segments.add(seg);
 	}
 	
-	public void removeSegment(mockSegment seg){
+	public void removeSegment(MockSegment seg){
 		segments.remove(seg);
 	}
 	
-	public List<mockSegment> getSegments(){
+	public List<MockSegment> getSegments(){
 		return segments;
 	}
 	

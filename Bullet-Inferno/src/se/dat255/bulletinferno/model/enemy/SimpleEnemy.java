@@ -107,7 +107,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		body = null;
 		if (weapon != null) {
 			weapon.getTimer().stop();
-		}
+		} 
 	}
 
 	@Override
