@@ -27,15 +27,6 @@ public class WeaponDataTest {
 	}
 
 	@Test
-	public void testFastWeaponDamage() {
-		Weapon weapon = WeaponData.FAST.getPlayerWeaponForGame(mockGame);
-
-		assertTrue(
-				"The damage of the fast weapon should be the same as the weapon's damage created from the FAST enum.",
-				WeaponData.FAST.getDamage() == weapon.getDamage());
-	}
-
-	@Test
 	public void testSlowWeaponReloadingTime() {
 		Weapon weapon = WeaponData.SLOW.getPlayerWeaponForGame(mockGame);
 

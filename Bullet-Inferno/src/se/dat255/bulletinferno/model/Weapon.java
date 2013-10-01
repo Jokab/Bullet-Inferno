@@ -46,9 +46,9 @@ public interface Weapon {
 	 * @param direction
 	 * @param source
 	 */
-	public void fire(Vector2 position, Teamable source);
+	public void fire(Vector2 position, Vector2 direction, Teamable source);
 
-	Vector2 getProjectileVelocity();
+	float getProjectileVelocity();
 	
 	ProjectileType getProjectileType();
 
