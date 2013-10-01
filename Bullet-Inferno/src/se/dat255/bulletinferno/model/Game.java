@@ -10,7 +10,7 @@ public interface Game extends Disposable {
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
-	 * @return
+	 * @return a list of projectiles currently in the game.
 	 */
 	public List<? extends Projectile> getProjectiles();
 
@@ -22,21 +22,20 @@ public interface Game extends Disposable {
 	/**
 	 * Dispose of the specified projectile
 	 * 
-	 * @param projectile
+	 * @param projectile The projectile reference to dispose.
 	 */
 	public void disposeProjectile(Projectile projectile);
 
 	/**
 	 * Sets a reference to the player's ship, for use in update methods.
-	 * 
-	 * @return
+	 *
 	 */
 	public void setPlayerShip(PlayerShip ship);
 
 	/**
 	 * Returns the player's ship
 	 * 
-	 * @return
+	 * @return The player's ship.
 	 */
 	public PlayerShip getPlayerShip();
 
@@ -57,14 +56,14 @@ public interface Game extends Disposable {
 	/**
 	 * Adds the specified enemy to the game
 	 * 
-	 * @param emeny
+	 * @param emeny The enemy to be added to the game world.
 	 */
 	public void addEnemy(Enemy emeny);
 
 	/**
 	 * Dispose of the specified enemy from the game
 	 * 
-	 * @param enemy
+	 * @param enemy The enemy to be disposed of.
 	 */
 	public void removeEnemy(Enemy enemy);
 
@@ -78,7 +77,7 @@ public interface Game extends Disposable {
 	/**
 	 * Updates the game
 	 * 
-	 * @param delta
+	 * @param delta Time elapsed in seconds since the last update.
 	 */
 	public void update(float delta);
 

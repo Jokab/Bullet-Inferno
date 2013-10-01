@@ -36,7 +36,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	/**
 	 * Constructs a new projectile
 	 * 
-	 * @param world
+	 * @param game the game instance.
 	 */
 	public ProjectileImpl(Game game) {
 		this.game = game;

@@ -42,9 +42,9 @@ public interface Weapon {
 	 * offset, in the given direction. The source is for determine which
 	 * team the fired projectile belongs to.
 	 * 
-	 * @param position
-	 * @param direction
-	 * @param source
+	 * @param position The initial position where the projectile should be added.
+	 * @param direction The direction of the projectile.
+	 * @param source The Teamable that should be used by the projectile.
 	 */
 	public void fire(Vector2 position, Vector2 direction, Teamable source);
 

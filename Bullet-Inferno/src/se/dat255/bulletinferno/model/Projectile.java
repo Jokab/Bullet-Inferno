@@ -46,7 +46,7 @@ public interface Projectile extends Collidable, Poolable {
 	/**
 	 * Sets the velocity of the projectile
 	 * 
-	 * @param velocity
+	 * @param velocity The new velocity of the projectile.
 	 */
 	public void setVelocity(Vector2 velocity);
 

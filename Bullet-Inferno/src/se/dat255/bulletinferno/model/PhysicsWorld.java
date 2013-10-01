@@ -30,7 +30,7 @@ public interface PhysicsWorld extends Disposable {
 	 * Removes the specified body from the world.
 	 * <strong>Is only allowed to be called once on each body</strong>
 	 * 
-	 * @param body
+	 * @param body The body to be removed from the world.
 	 */
 	public void removeBody(PhysicsBody body);
 
@@ -77,7 +77,7 @@ public interface PhysicsWorld extends Disposable {
 	/**
 	 * Detaches the movement pattern from the specified body.
 	 * 
-	 * @param body
+	 * @param body The body that should have its movement pattern removed.
 	 */
 	public void detachMovementPattern(PhysicsBody body);
 
