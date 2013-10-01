@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
 
+import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
@@ -75,7 +76,7 @@ public class ProjectileImplTest {
 		float initialDamage = projectile.getDamage();
 
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
-				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -93,7 +94,7 @@ public class ProjectileImplTest {
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, 
-				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 		
 		// Set the ship as the source
 		projectile.init(new Vector2(), new Vector2(), 30, sourceShip);
@@ -163,7 +164,7 @@ public class ProjectileImplTest {
 		});
 
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
-				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame));
+				WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), ShipType.PLAYER_DEFAULT);
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : mockGame.physicsWorld.createBodyCalls) {
