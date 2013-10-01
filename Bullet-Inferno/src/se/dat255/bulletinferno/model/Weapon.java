@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
@@ -47,9 +48,9 @@ public interface Weapon {
 	 */
 	public void fire(Vector2 position, Vector2 direction, Teamable source);
 
-	float getDamage();
-
-	Vector2 getProjectileVelocity();
+	float getProjectileVelocity();
+	
+	ProjectileType getProjectileType();
 
 	public Timer getTimer();
 

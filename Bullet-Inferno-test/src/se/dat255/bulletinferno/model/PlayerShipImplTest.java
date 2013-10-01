@@ -11,6 +11,7 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.test.Common;
@@ -29,9 +30,9 @@ public class PlayerShipImplTest {
 	private class MockWeapon extends WeaponImpl {
 		private boolean hasFired = false;
 		
-		public MockWeapon(Game game, float reloadingTime, Class<? extends Projectile> projectile,
-				Vector2 offset, Vector2 projectileVelocity, float damage) {
-			super(game, reloadingTime, projectile, offset, projectileVelocity, damage);
+		public MockWeapon(Game game, float reloadingTime, ProjectileType projectileType,
+				Vector2 offset, float velocity, float damage) {
+			super(game, reloadingTime, projectileType, offset, velocity, damage);
 		}
 		
 		@Override
@@ -135,7 +136,7 @@ public class PlayerShipImplTest {
 	
 	@Test
 	public void testFireWeapon() {
-		MockWeapon weapon = new MockWeapon(mockGame, 0, null, new Vector2(), new Vector2(), 0);
+		MockWeapon weapon = new MockWeapon(mockGame, 0, ProjectileType.DEFAULT_PROJECTILE, new Vector2(), 0, 0);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				weapon, ShipType.PLAYER_DEFAULT);
 		
