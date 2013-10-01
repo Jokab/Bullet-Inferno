@@ -10,7 +10,7 @@ import java.util.Map;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
-import se.dat255.bulletinferno.view.MockSegment;
+import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.utils.Pool;
 
@@ -31,9 +31,8 @@ public class GameImpl implements Game {
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
-	
-	//For mocking segments
-	private final List<MockSegment> segments = new ArrayList<MockSegment>();
+	/** Currently active segments on the map */
+	private final List<SegmentView> segments = new ArrayList<SegmentView>();
 	
 	
 	/** List of all timers */
@@ -103,15 +102,24 @@ public class GameImpl implements Game {
 		enemies.remove(enemy);
 	}
 	
-	public void addSegment(MockSegment seg){
-		segments.add(seg);
+	/**
+	 * {@inheritDoc}
+	 */
+	public void addSegment(SegmentView segment){
+		segments.add(segment);
 	}
 	
-	public void removeSegment(MockSegment seg){
-		segments.remove(seg);
+	/**
+	 * {@inheritDoc}
+	 */
+	public void removeSegment(SegmentView segment){
+		segments.remove(segment);
 	}
 	
-	public List<MockSegment> getSegments(){
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<SegmentView> getSegments(){
 		return segments;
 	}
 	

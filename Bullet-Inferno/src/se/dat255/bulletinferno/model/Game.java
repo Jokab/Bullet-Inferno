@@ -4,7 +4,7 @@ import java.util.List;
 
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.view.MockSegment;
+import se.dat255.bulletinferno.view.map.SegmentView;
 
 public interface Game extends Disposable {
 	/**
@@ -88,14 +88,18 @@ public interface Game extends Disposable {
 	 */
 	public PhysicsWorld getPhysicsWorld();
 	
-	
-	
-	public void addSegment(MockSegment seg);
-	
-	public void removeSegment(MockSegment seg);
-	
-	public List<MockSegment> getSegments();
-	
+	/**
+	 * Adds a segment to the world
+	 * @param segment The segment to add
+	 */
+	public void addSegment(SegmentView segment);
+	/**
+	 * Removes a segment from the world
+	 * @param segment The segment to remove
+	 */
+	public void removeSegment(SegmentView segment);
+	/** @return A list of all the active segments in the world */
+	public List<SegmentView> getSegments();
 
 }
 
