@@ -29,12 +29,19 @@ public class PlayerShipImpl implements PlayerShip {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if(other instanceof Projectile  && !isInMyTeam(((Projectile)other).getSource())) {
-			// If got hit by a projectile not fired by me
+		if(hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
-		} else if (other instanceof Teamable && !isInMyTeam((Teamable)other)) {
+		} else if (collidedWithSomethingElse(other)) {
 			// TODO game over / die
 		}
+	}
+
+	private boolean collidedWithSomethingElse(Collidable other) {
+		return other instanceof Teamable && !isInMyTeam((Teamable)other);
+	}
+
+	private boolean hitByOtherProjectile(Collidable other) {
+		return other instanceof Projectile  && !isInMyTeam(((Projectile)other).getSource());
 	}
 	
 	/**
