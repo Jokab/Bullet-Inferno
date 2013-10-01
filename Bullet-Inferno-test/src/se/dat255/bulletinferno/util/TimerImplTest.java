@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.util;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.test.Common;
-
+import se.dat255.bulletinferno.util.Timerable;
+import se.dat255.bulletinferno.util.Timer;
 
 public class TimerImplTest {
 	
