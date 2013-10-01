@@ -10,23 +10,26 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 		PLAYER_DEFAULT;
 	}
 	
-	private final Vector2 position = new Vector2();
+	private final Vector2 position;
 	private final Game game;
-	private Weapon weapon;
 	private final int initialHealth;
 	private int health;
 	private float moveToPos; 
 	private float moveSpeed = 6.0f;
 	private float velocity = 1f;
 	private final ShipType shipType;
+	private final Loadout loadout;
 
-	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon, ShipType shipType) {
-		this.position.set(position);
+	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout, ShipType shipType) {
+		this.position = position.cpy();
 		this.game = game;
 		this.initialHealth = initialHealth;
 		this.health = initialHealth;
-		this.weapon = weapon;
+		this.loadout = loadout;
 		this.shipType = shipType;
+		
+		//TODO: should probably not apply this here
+		loadout.getPassiveAbility().getEffect().applyEffect(this);
 	}
 
 	/**
@@ -110,11 +113,12 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
 	@Override
 	public void fireWeapon() {
-		weapon.fire(position, new Vector2(1,0), this);
+		loadout.getPrimaryWeapon().fire(position, new Vector2(1,0), this);
 	}
 	
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
+	@Override
+	public Weapon getWeapon() {
+		return this.loadout.getPrimaryWeapon();
 	}
 
 	@Override
@@ -128,8 +132,17 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	}
 	
 	@Override
+	public void attachPassive(PassiveAbility passiveAbility) {
+		passiveAbility.getEffect().applyEffect(this);
+	}
+	
+	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		// TODO: do stuff here
+	}
+
+	@Override
+	public Loadout getLoadout() {
+		return this.loadout;
 	}
 }

@@ -72,16 +72,6 @@ public class Touch implements InputProcessor {
 		if (keycode == DOWNKEY && ship.getMovePos() < ship.getPosition().y) {
 			ship.stopMovement();
 		}
-		if (keycode == Keys.NUM_1) {
-			ship.setWeapon(WeaponData.FAST.getPlayerWeaponForGame(game));
-			System.out
-					.println("Switched to fast weapon. Delay: " + WeaponData.FAST.getReloadTime());
-		}
-		if (keycode == Keys.NUM_2) {
-			ship.setWeapon(WeaponData.SLOW.getPlayerWeaponForGame(game));
-			System.out
-					.println("Switched to fast weapon. Delay: " + WeaponData.SLOW.getReloadTime());
-		}
 		if (keycode == Keys.X) {
 			ship.takeDamage(10);
 			System.out.println("Player health: " + ship.getHealth());

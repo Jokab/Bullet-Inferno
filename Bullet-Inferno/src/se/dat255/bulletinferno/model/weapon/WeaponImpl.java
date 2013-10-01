@@ -12,7 +12,7 @@ public class WeaponImpl implements Weapon {
 	private final Timer timer;
 
 	private final Game game;
-	private final float reloadingTime;
+	private float reloadingTime;
 	private final Class<? extends Projectile> projectile;
 	private final Vector2 offset;
 	private final Vector2 projectileVelocity;
@@ -103,5 +103,12 @@ public class WeaponImpl implements Weapon {
 	protected Projectile getProjectile() {
 		// Retrieve a projectile from the world
 		return game.retrieveProjectile(projectile);
+	}
+
+	@Override
+	public void setReloadingTime(float reloadingTime) {
+		this.reloadingTime = reloadingTime;
+		timer.setTime(reloadingTime);
+		timer.start();
 	}
 }

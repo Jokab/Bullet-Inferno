@@ -4,12 +4,17 @@ import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
+import se.dat255.bulletinferno.model.Loadout;
+import se.dat255.bulletinferno.model.PassiveAbility;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
+import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveReloadingSpeed;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -85,9 +90,10 @@ public class GameScreen extends AbstractScreen {
 		// Set up the player ship, view and add it to gfx.
 
 		game = new GameImpl();
-
+		
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(game), null, null, new PassiveAbilityImpl(new PassiveReloadingSpeed()));
 		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
-				weaponType.getPlayerWeaponForGame(game), ShipType.PLAYER_DEFAULT);
+				loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.addRenderable(shipView);

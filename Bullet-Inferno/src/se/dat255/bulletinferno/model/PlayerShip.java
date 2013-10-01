@@ -27,6 +27,9 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 
 	public float getMovePos();
 
-	public void setWeapon(Weapon weapon);
+	public Weapon getWeapon();
 
+	public Loadout getLoadout();
+	
+	public void attachPassive(PassiveAbility passiveAbility);
 }

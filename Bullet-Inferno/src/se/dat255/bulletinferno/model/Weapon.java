@@ -53,4 +53,6 @@ public interface Weapon {
 
 	public Timer getTimer();
 
+	public void setReloadingTime(float reloadingTime);
+
 }
