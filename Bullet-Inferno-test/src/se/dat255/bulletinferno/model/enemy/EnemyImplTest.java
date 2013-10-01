@@ -14,6 +14,7 @@ import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
+import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
@@ -135,6 +136,7 @@ public class EnemyImplTest {
 	public void testTakeDamage() {		
 		// Set up a new enemy with a health of 101
 		EnemyGameMockup game = new EnemyGameMockup();
+
 		SimpleEnemy enemy = new EnemyMockup(game, EnemyType.DEFAULT_SHIP, new Vector2(), new Vector2(), 
 				101, null, 0, 0);
 		
@@ -147,6 +149,7 @@ public class EnemyImplTest {
 		enemy.takeDamage(40);
 		
 		assertTrue("Enemy should be dead, i.e. health=0", enemy.getHealth() == 0);
+		((SimpleMockTimer)game.timer).callAllListeners(2);
 		assertTrue(game.isEnemyRemoved());
 		assertEquals(enemy, game.getRemovedEnemy());
 		
