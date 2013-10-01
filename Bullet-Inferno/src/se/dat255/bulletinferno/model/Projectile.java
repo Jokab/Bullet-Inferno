@@ -24,6 +24,24 @@ public interface Projectile extends Collidable, Poolable {
 	 *        the team source from which it was fired.
 	 */
 	public void init(Vector2 position, Vector2 velocity, float damage, Teamable source);
+	
+	/**
+	 * Initializes the projectile and attaches a specific movement pattern. Call upon acquiring from the Pool.
+	 * 
+	 * @param position
+	 *        the initial position.
+	 * @param velocity
+	 *        the initial velocity.
+	 * @param damage
+	 *        the projectile damage coefficient.
+	 * @param source
+	 *        the team source from which it was fired.
+	 * @param pmp
+	 *        the attached movement pattern 
+	 *        
+	 */
+	public void init(Vector2 position, Vector2 velocity, float damage, Teamable source, PhysicsMovementPattern pmp);
+
 
 	/**
 	 * Sets the velocity of the projectile

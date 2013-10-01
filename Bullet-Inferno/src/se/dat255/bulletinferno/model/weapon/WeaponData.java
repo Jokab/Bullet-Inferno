@@ -22,22 +22,23 @@ public enum WeaponData implements WeaponDescription {
 	 * Order:
 	 * reloadTime, projectile, offset, projectileVelocity, damage
 	 */
-	FAST(0f, ProjectileImpl.class, new Vector2(), new Vector2(5, 0), 1f),
-	STANDARD(0.5f, ProjectileImpl.class, new Vector2(), new Vector2(3.5f, 0), 1f),
-	SLOW(1f, ProjectileImpl.class, new Vector2(), new Vector2(2, 0), 1f),
+	FAST(0.1f, ProjectileType.RIGHT_ACCELERATING_PROJECTILE, new Vector2(), new Vector2(5, 0), 1f),
+	STANDARD(0.5f, ProjectileType.DEFAULT_PROJECTILE, new Vector2(), new Vector2(3.5f, 0), 1f),
+	SLOW(1f, ProjectileType.SINE_PROJECTILE, new Vector2(), new Vector2(2, 0), 1f),
 
-	FASTENEMY(1f, ProjectileImpl.class, new Vector2(), new Vector2(-5, 0), 1f);
+	// Enemy weapons below
+	FASTENEMY(1f, ProjectileType.LEFT_ACCELERATING_PROJECTILE, new Vector2(), new Vector2(-10, 0), 1f);
 
 	private float reloadingTime;
-	private final Class<? extends Projectile> projectile;
+	private final ProjectileType projectileType;
 	private final Vector2 offset;
 	private final Vector2 projectileVelocity;
 	private final float damage;
 
-	WeaponData(float reloadTime, Class<? extends Projectile> projectile, Vector2 offset,
+	WeaponData(float reloadTime, ProjectileType projectileType, Vector2 offset,
 			Vector2 projectileVelocity, float damage) {
 		reloadingTime = reloadTime;
-		this.projectile = projectile;
+		this.projectileType = projectileType;
 		this.offset = offset;
 		this.projectileVelocity = projectileVelocity;
 		this.damage = damage;
@@ -49,14 +50,6 @@ public enum WeaponData implements WeaponDescription {
 	@Override
 	public float getReloadTime() {
 		return reloadingTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Class<? extends Projectile> getProjectile() {
-		return projectile;
 	}
 
 	/**
@@ -88,7 +81,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getPlayerWeaponForGame(Game game) {
-		return new WeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity, damage);
+		return new WeaponImpl(game, reloadingTime, projectileType, offset, projectileVelocity, damage);
 	}
 
 	/**
@@ -96,12 +89,17 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getEnemyWeaponForGame(Game game) {
-		return new EnemyWeaponImpl(game, reloadingTime, projectile, offset, projectileVelocity,
+		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, projectileVelocity,
 				damage);
 	}
 	
 	@Override
 	public String getIdentifier() {
 		return this.name();
+	}
+
+	@Override
+	public ProjectileType getProjectileType() {
+		return projectileType;
 	}
 }

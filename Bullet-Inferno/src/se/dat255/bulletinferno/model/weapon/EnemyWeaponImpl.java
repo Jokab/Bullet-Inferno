@@ -7,8 +7,10 @@ import se.dat255.bulletinferno.model.Teamable;
 import com.badlogic.gdx.math.Vector2;
 
 public class EnemyWeaponImpl extends WeaponImpl {
+	
+	
 
-	public EnemyWeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile,
+	public EnemyWeaponImpl(Game game, float reloadingTime, ProjectileType projectile,
 			Vector2 offset, Vector2 projectileVelocity, float damage) {
 		super(game, reloadingTime, projectile, offset, projectileVelocity, damage);
 		if (getReloadingTime() == 0) {
@@ -22,15 +24,15 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fire(Vector2 origin, Vector2 velocity, Teamable source) {
-		if (isLoaded()) {
-			// Get projectile and set properties accordingly
-			Projectile projectile = getProjectile();
-			projectile.init(origin.cpy().add(getOffset()), getProjectileVelocity(), getDamage(),
-					source);
+	public void fire(Vector2 position, Teamable source) {
 
+		if (isLoaded()) {
+
+			getProjectileType().releasePorjectile(game, position, getOffset(),
+					getProjectileVelocity(), source);
 			// Start count down
 			getTimer().restart();
 		}
+
 	}
 }

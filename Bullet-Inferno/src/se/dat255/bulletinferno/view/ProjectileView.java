@@ -12,8 +12,9 @@ public class ProjectileView implements Renderable {
 
 	private final Sprite sprite;
 	private final Game game;
+	
 
-	public ProjectileView(Game game) {
+	public ProjectileView(Game game, float x) {
 		this.game = game;
 		Texture texture = new Texture(Gdx.files.internal("data/projectile.png"));
 		sprite = new Sprite(texture);

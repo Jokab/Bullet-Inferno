@@ -21,7 +21,7 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		weapon.fire(new Vector2(getPosition().x, getPosition().y), weapon.getProjectileVelocity()
-				.cpy().nor(), this);
+		weapon.fire(new Vector2(getPosition().x, getPosition().y), this);
+	
 	}
 }
