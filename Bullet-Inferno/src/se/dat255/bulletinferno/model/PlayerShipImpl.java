@@ -27,7 +27,6 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 		this.health = initialHealth;
 		this.weapon = weapon;
 		this.shipType = shipType;
-		game.setPlayerShip(this);
 	}
 
 	/**
