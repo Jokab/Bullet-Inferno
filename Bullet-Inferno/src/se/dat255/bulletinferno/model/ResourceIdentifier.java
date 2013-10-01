@@ -11,7 +11,7 @@ public interface ResourceIdentifier {
 	 * Returns the identifier that this {@link ResourceIdentifier} uses to retrieve
 	 * its connected resource.
 	 * 
-	 * @return
+	 * @return the identifier for this ResourceIdentifier.
 	 */
 	String getIdentifier();
 }

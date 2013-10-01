@@ -44,7 +44,7 @@ public interface WeaponDescription extends ResourceIdentifier {
 	/**
 	 * Returns a new Weapon instance by using the data in the passed enum.
 	 * 
-	 * @param game
+	 * @param game The Game instance.
 	 * @return A new weapon instance.
 	 */
 	Weapon getPlayerWeaponForGame(Game game);
@@ -53,7 +53,7 @@ public interface WeaponDescription extends ResourceIdentifier {
 	 * Returns a new Weapon instance by using the data in the passed enum, which is tailored for use
 	 * in an enemy.
 	 * 
-	 * @param game
+	 * @param game The Game instance.
 	 * @return A new weapon instance.
 	 */
 	Weapon getEnemyWeaponForGame(Game game);
