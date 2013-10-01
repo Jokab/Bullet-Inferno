@@ -20,4 +20,11 @@ public class AccelerationMovementPattern implements PhysicsMovementPattern {
 		
 	}
 
+	@Override
+	public PhysicsMovementPattern copy() {
+		
+		return new AccelerationMovementPattern(forceVector);
+		
+	}
+
 }
