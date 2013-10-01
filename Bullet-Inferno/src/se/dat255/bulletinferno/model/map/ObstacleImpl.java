@@ -16,7 +16,11 @@ import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
  */
 public class ObstacleImpl implements Obstacle {
 
-	private final PhysicsBody body;
+	/** The physics body used by this Obstacle. */
+	private PhysicsBody body;
+	
+	/** The Game instance this Obstacle belongs to. */
+	private final Game game;
 
 	/**
 	 * Construct a new ObstacleImpl with a body definition and position. The Obstacle will be added
@@ -27,6 +31,7 @@ public class ObstacleImpl implements Obstacle {
 	 * @param position the world-position of the obstacle.
 	 */
 	public ObstacleImpl(Game game, PhysicsBodyDefinition bodyDefinition, Vector2 position) {
+		this.game = game;
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 	}
 
@@ -38,6 +43,12 @@ public class ObstacleImpl implements Obstacle {
 	@Override
 	public void postCollided(Collidable other) {
 		// NOP
+	}
+
+	@Override
+	public void dispose() {
+		game.getPhysicsWorld().removeBody(body);
+		body = null;
 	}
 
 }

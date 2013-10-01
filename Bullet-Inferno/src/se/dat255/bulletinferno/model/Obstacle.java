@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
-public interface Obstacle extends Collidable {
+import se.dat255.bulletinferno.util.Disposable;
+
+public interface Obstacle extends Collidable, Disposable {
 
 }
