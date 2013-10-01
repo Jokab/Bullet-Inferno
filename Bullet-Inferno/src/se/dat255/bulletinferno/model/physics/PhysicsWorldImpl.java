@@ -215,8 +215,12 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 
 		bodyDef.position.set(position);
 		Body body = world.createBody(bodyDef);
-		body.createFixture(definition.getBox2DFixtureDefinition());
 		body.setUserData(collidable);
+		
+		for(FixtureDef fixtureDef : definition.getBox2DFixtureDefinition()) {
+			body.createFixture(fixtureDef);
+		}
+		
 		return new PhysicsBodyImpl(body);
 	}
 

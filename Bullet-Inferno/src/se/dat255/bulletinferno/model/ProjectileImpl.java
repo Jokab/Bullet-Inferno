@@ -44,7 +44,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		runLater = game.getTimer();
 		if (bodyDefinition == null) {
 			Shape shape = PhysicsShapeFactory.getRectangularShape(0.1f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 	}
 
