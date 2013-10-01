@@ -116,7 +116,7 @@ public class Touch implements InputProcessor {
 
 		Gdx.app.log("Touch", "Down id = " + pointer);
 
-		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
+		if (touchVector.x <= ship.getPosition().x + 8f) {
 			// Left half of the screen
 			// Move ship by giving the touch coordinate to the moveTo-method
 			touchDragged(screenX, screenY, pointer);
@@ -141,7 +141,7 @@ public class Touch implements InputProcessor {
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
 
-		if (touchVector.x <= Graphics.GAME_WIDTH / 2) {
+		if (touchVector.x <= ship.getPosition().x + 8f) {
 			// Left half of the screen
 			// Move ship by giving the touch coordinate to the moveTo-method
 			ship.stopMovement();
