@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.view.map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -27,7 +28,8 @@ public class SliceView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		batch.draw(textureRegion, positionX, 0);
+		Gdx.app.log("Slice render", "X[" + positionX + "] TexReg[" + textureRegion.getRegionX() + "," + textureRegion.getRegionY() + "]["+textureRegion.getRegionWidth()+","+textureRegion.getRegionHeight()+"]");
+		batch.draw(textureRegion, positionX, 0, 20, 9);
 	}
 
 	@Override

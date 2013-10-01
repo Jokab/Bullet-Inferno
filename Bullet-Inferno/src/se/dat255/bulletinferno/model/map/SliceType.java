@@ -7,7 +7,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 public enum SliceType {
-	WATER(0, 0, 0, new PhysicsBodyPositionDefinition[] {});
+	WATER(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_1(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_2(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_3(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_4(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_5(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_6(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_7(0, 0, 20, new PhysicsBodyPositionDefinition[] {}),
+	MOUNTAIN_8(0, 0, 20, new PhysicsBodyPositionDefinition[] {});
 	
 	private final float entryHeight;
 	private final float exitHeight;

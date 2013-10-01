@@ -37,9 +37,11 @@ public class BackgroundView implements Renderable {
 		float shipLeftX = ship.getPosition().x;
 		float shipRightX = ship.getPosition().x + 16;
 		for(SegmentView segmentView : segmentViews){
+			Gdx.app.log("BGW", "Should draw? " + segmentView.toString());
 			float startX = segmentView.segment.getPosition();
 			float endX = startX + segmentView.segment.getWidth();
 			if(shipLeftX <= startX || startX < shipRightX){
+				Gdx.app.log("BGW", "Drawing " + segmentView.toString());
 				segmentView.render(batch);
 				//batch.draw(s.getEndTexture(), startX, 9, 0, 0, 2, Graphics.GAME_HEIGHT, 1, 1, 180);
 				//batch.draw(s.getTexture(), startX, 0, 0, 0, (endX-startX-2), Graphics.GAME_HEIGHT, 1, 1, 0);
