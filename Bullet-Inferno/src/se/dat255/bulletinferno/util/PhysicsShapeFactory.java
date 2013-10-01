@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.util;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
@@ -28,6 +29,20 @@ public class PhysicsShapeFactory {
 	public static Shape getRectangularShape(float width, float height) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width * 2f, height * 2f);
+		return shape;
+	}
+	
+	/**
+	 * Like {@link PhysicsShapeFactory#getRectangularShape(float, float)} but has position. Yep,
+	 * Box2D shapes have (relative) position, which is usually interpreted as how much off-center
+	 * they are on a physics body (which in turn depends on other shapes/fixtures on the body).
+	 * 
+	 * @param position the position relative to center (usually on a physics body).
+	 * @see PhysicsShapeFactory#getRectangularShape(float, float)
+	 */
+	public static Shape getRectangularShape(float width, float height, Vector2 position) {
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(width * 2f, height * 2f, position, 0);
 		return shape;
 	}
 
