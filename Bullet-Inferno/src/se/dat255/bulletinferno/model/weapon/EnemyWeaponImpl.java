@@ -11,8 +11,8 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	
 
 	public EnemyWeaponImpl(Game game, float reloadingTime, ProjectileType projectile,
-			Vector2 offset, Vector2 projectileVelocity, float damage) {
-		super(game, reloadingTime, projectile, offset, projectileVelocity, damage);
+			Vector2 offset, float velocity, float damage) {
+		super(game, reloadingTime, projectile, offset, velocity, damage);
 		if (getReloadingTime() == 0) {
 			throw new RuntimeException("Enemy reloading speed must not be 0.");
 		}
@@ -24,12 +24,12 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fire(Vector2 position, Teamable source) {
+	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 
 		if (isLoaded()) {
 
-			getProjectileType().releasePorjectile(game, position, getOffset(),
-					getProjectileVelocity(), source);
+			getProjectileType().releaseProjectile(game, position, getOffset(),
+					direction.scl(getProjectileVelocity()), source);
 			// Start count down
 			getTimer().restart();
 		}

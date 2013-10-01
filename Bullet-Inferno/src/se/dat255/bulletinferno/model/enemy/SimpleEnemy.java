@@ -26,6 +26,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private final Game game;
+	protected Vector2 velocity;
+	
 
 	protected final Weapon weapon;
 
@@ -38,6 +40,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		this.weapon = weapon;
 		this.score = score;
 		this.credits = credits;
+		this.velocity = velocity;
 
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);

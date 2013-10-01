@@ -16,15 +16,15 @@ public class WeaponImpl implements Weapon {
 	private final float reloadingTime;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
-	private final Vector2 projectileVelocity;	
+	private final float velocity;
 
 	public WeaponImpl(Game game, float reloadingTime, ProjectileType projectileType,
-			Vector2 offset, Vector2 projectileVelocity, float damage) {
+			Vector2 offset, float velocity, float damage) {
 		this.game = game;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
 		this.offset = offset;
-		this.projectileVelocity = projectileVelocity;
+		this.velocity = velocity;
 
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
@@ -64,18 +64,18 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public Vector2 getProjectileVelocity() {
-		return projectileVelocity;
+	public float getProjectileVelocity() {
+		return velocity;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fire(Vector2 position, Teamable source) {
+	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releasePorjectile(game, position, getOffset(), projectileVelocity, source);
+			projectileType.releaseProjectile(game, position, getOffset(), direction.scl(velocity), source);
 			// Start count down
 			timer.restart();
 		}

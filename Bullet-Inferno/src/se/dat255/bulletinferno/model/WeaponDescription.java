@@ -32,7 +32,7 @@ public interface WeaponDescription extends ResourceIdentifier {
 	 * 
 	 * @return The projectile's velocity.
 	 */
-	Vector2 getProjectileVelocity();
+	float getProjectileVelocity();
 
 	/**
 	 * Returns the amount of damage this weapon's bullets will deal.

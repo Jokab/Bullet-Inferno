@@ -98,7 +98,7 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	@Override
 	public void fireWeapon() {
-		weapon.fire(position, this);
+		weapon.fire(position, new Vector2(1,0), this);
 	}
 	
 	public void setWeapon(Weapon weapon) {

@@ -26,11 +26,11 @@ public enum ProjectileType implements ResourceIdentifier {
 		this.pmp = pmp;
 	}
 
-	public void releasePorjectile(Game game, Vector2 position, Vector2 offset,
-			Vector2 projectileVelocity, Teamable source) {
+	public void releaseProjectile(Game game, Vector2 position, Vector2 offset,
+			Vector2 projectileVector, Teamable source) {
 		
 		Projectile projectile = game.retrieveProjectile(ProjectileImpl.class);
-		projectile.init(position.cpy().add(offset), projectileVelocity,
+		projectile.init(position.cpy().add(offset), projectileVector,
 				damage, source, pmp);
 
 	}
