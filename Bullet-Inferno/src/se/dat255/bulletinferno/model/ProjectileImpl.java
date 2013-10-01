@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
@@ -42,7 +43,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		this.game = game;
 		runLater = game.getTimer();
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(0.1f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
 		}
 	}

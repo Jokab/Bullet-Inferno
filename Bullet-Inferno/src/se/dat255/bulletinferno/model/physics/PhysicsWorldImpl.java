@@ -7,11 +7,11 @@ import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.PhysicsMovementPattern;
-import se.dat255.bulletinferno.model.PhysicsShapeFactory;
 import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue;
 import se.dat255.bulletinferno.util.Disposable;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -47,11 +47,6 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 
 	/** Holds the Box2D world. */
 	private final World world;
-
-	/**
-	 * Holds a shape factory instance. Creates Box2D shape objects in various ways.
-	 */
-	private final PhysicsShapeFactory shapeFactory = new PhysicsShapeFactoryImpl();
 
 	/**
 	 * A collision queue but with filtering and internal usage of special bodies.
@@ -162,7 +157,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 
 				// Create a body with a fixture of the same dimensions as the viewport.
 				viewportIntersectionBody = world.createBody(viewportIntersectionBodyDef);
-				viewportIntersectionFixtureDef.shape = shapeFactory.getRectangularShape(
+				viewportIntersectionFixtureDef.shape = PhysicsShapeFactory.getRectangularShape(
 						viewportDimensions.x, viewportDimensions.y);
 				viewportIntersectionFixture = viewportIntersectionBody.createFixture(
 						viewportIntersectionFixtureDef);
@@ -170,7 +165,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 				// Resize the fixture def and body if its size changed.
 				if (!viewportDimensions.equals(lastViewportDimensions)) {
 					viewportIntersectionFixtureDef.shape.dispose();
-					viewportIntersectionFixtureDef.shape = shapeFactory.getRectangularShape(
+					viewportIntersectionFixtureDef.shape = PhysicsShapeFactory.getRectangularShape(
 							viewportDimensions.x, viewportDimensions.y);
 
 					// Replace the fixture with a resized one, moving the body in between.
@@ -278,14 +273,6 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 			collidableB.postCollided(collidableA);
 		}
 		collisionQueue.removeAll();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PhysicsShapeFactory getShapeFactory() {
-		return shapeFactory;
 	}
 
 	/**
