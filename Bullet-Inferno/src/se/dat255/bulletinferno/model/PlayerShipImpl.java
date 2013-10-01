@@ -4,7 +4,11 @@ import se.dat255.bulletinferno.Graphics;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class PlayerShipImpl implements PlayerShip {
+public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
+	
+	public enum ShipType {
+		PLAYER_DEFAULT;
+	}
 	
 	private final Vector2 position = new Vector2();
 	private final Game game;
@@ -14,13 +18,15 @@ public class PlayerShipImpl implements PlayerShip {
 	private float moveToPos; 
 	private float moveSpeed = 6.0f;
 	private float velocity = 1f;
+	private final ShipType shipType;
 
-	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon) {
+	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon, ShipType shipType) {
 		this.position.set(position);
 		this.game = game;
 		this.initialHealth = initialHealth;
 		this.health = initialHealth;
 		this.weapon = weapon;
+		this.shipType = shipType;
 		game.setPlayerShip(this);
 	}
 
@@ -116,7 +122,12 @@ public class PlayerShipImpl implements PlayerShip {
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof PlayerShip;
 	}
-
+	
+	@Override
+	public String getIdentifier() {
+		return this.shipType.name();
+	}
+	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub

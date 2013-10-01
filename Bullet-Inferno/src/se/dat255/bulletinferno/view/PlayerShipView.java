@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.ResourceManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,23 +10,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class ShipView implements Renderable {
+public class PlayerShipView implements Renderable {
 	private final Texture texture;
 	private final Sprite sprite;
 
 	private final PlayerShip ship;
 
-	public ShipView(final PlayerShip ship) {
+	public PlayerShipView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
 
-		texture = new Texture(Gdx.files.internal("data/ship.png"));
+		texture = resourceManager.getTexture(ship.getIdentifier());
 		texture.setFilter(Texture.TextureFilter.Linear,
 				Texture.TextureFilter.Linear);
+//
+//		TextureRegion region = new TextureRegion(texture, 0, 0,
+//				texture.getWidth(), texture.getHeight());
 
-		TextureRegion region = new TextureRegion(texture, 0, 0,
-				texture.getWidth(), texture.getHeight());
-
-		sprite = new Sprite(region);
+		sprite = new Sprite(texture);
 		sprite.setSize(1f, 1f);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.setRotation(-90f);

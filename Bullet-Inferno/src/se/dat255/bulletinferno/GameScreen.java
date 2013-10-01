@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
+import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
@@ -14,7 +15,7 @@ import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.RenderableGUI;
-import se.dat255.bulletinferno.view.ShipView;
+import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
@@ -86,8 +87,8 @@ public class GameScreen extends AbstractScreen {
 		game = new GameImpl();
 
 		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
-				weaponType.getPlayerWeaponForGame(game));
-		ShipView shipView = new ShipView(ship);
+				weaponType.getPlayerWeaponForGame(game), ShipType.PLAYER_DEFAULT);
+		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.addRenderable(shipView);
 		
 		bgView = new BackgroundView(ship, game);
@@ -115,7 +116,7 @@ public class GameScreen extends AbstractScreen {
 	/** Initiates the pause components when the player starts a level */
 	private void setupGUI() {
 		pauseIconView = new PauseIconView(this);
-		pauseScreenView = new PauseScreenView(this);
+		pauseScreenView = new PauseScreenView(this, resourceManager);
 		graphics.addRenderableGUI(pauseIconView);
 	}
 
