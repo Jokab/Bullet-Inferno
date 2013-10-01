@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.GL10;
 public abstract class AbstractScreen implements Screen {
 	protected boolean isHidden = true;
 	protected boolean isPaused = true;
-	
-	
+
 	@Override
 	public void render(float delta) {
 		// Clear the screen every frame
@@ -23,6 +22,7 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void hide() {
+		Gdx.input.setInputProcessor(null);
 		isHidden = true;
 	}
 
@@ -34,11 +34,6 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void resume() {
 		isPaused = false;
-	}
-
-	@Override
-	public void dispose() {
-		
 	}
 
 }

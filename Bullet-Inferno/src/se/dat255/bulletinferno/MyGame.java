@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno;
 
+import com.badlogic.gdx.Gdx;
 
 /**
  * The main class that follows with LibGDX, shows a simple way of rendering an
@@ -35,12 +36,13 @@ public class MyGame extends com.badlogic.gdx.Game {
 	public void create() {
 		loadoutScreen = new LoadoutScreen(this);
 		gameScreen = new GameScreen(this);
-		
+
 		setScreen(loadoutScreen);
 	}
 
 	@Override
 	public void dispose() {
+		Gdx.app.log("MyGame", "dispose()");
 		gameScreen.dispose();
 		loadoutScreen.dispose();
 	}

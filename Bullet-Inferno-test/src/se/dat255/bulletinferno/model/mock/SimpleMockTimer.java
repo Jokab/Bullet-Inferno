@@ -3,8 +3,8 @@ package se.dat255.bulletinferno.model.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Timer;
-import se.dat255.bulletinferno.model.Timerable;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.Timerable;
 
 public class SimpleMockTimer implements Timer {
 	public float timeLeft = 10;
@@ -52,6 +52,7 @@ public class SimpleMockTimer implements Timer {
 
 	@Override
 	public void restart() {
+		this.timeLeft = this.initialValue;
 	}
 
 	@Override

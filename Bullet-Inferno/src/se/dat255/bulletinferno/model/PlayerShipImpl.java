@@ -1,33 +1,65 @@
 package se.dat255.bulletinferno.model;
-import com.badlogic.gdx.Gdx;
+
+import se.dat255.bulletinferno.Graphics;
+
 import com.badlogic.gdx.math.Vector2;
 
-
-public class PlayerShipImpl implements PlayerShip {
+public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
+	
+	public enum ShipType {
+		PLAYER_DEFAULT;
+	}
+	
 	private final Vector2 position = new Vector2();
-	private Game world;
+	private final Game game;
 	private Weapon weapon;
 	private final int initialHealth;
 	private int health;
 	private float moveToPos; 
-	private float moveSpeed = 0.1f;
+	private float moveSpeed = 6.0f;
+	private float velocity = 1f;
+	private final ShipType shipType;
 
-	public PlayerShipImpl(final Vector2 position, Game world, int initialHealth) {
+	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon, ShipType shipType) {
 		this.position.set(position);
-		this.world = world;
+		this.game = game;
 		this.initialHealth = initialHealth;
-		weapon = new WeaponImpl(0, world);
-		world.setPlayerShip(this);
+		this.health = initialHealth;
+		this.weapon = weapon;
+		this.shipType = shipType;
+		game.setPlayerShip(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void preCollided(Collidable other) {
+		if(hitByOtherProjectile(other)) {
+			takeDamage(((Projectile) other).getDamage());
+		} else if (collidedWithSomethingElse(other)) {
+			// TODO game over / die
+		}
+	}
+
+	private boolean collidedWithSomethingElse(Collidable other) {
+		return other instanceof Teamable && !isInMyTeam((Teamable)other);
+	}
+
+	private boolean hitByOtherProjectile(Collidable other) {
+		return other instanceof Projectile  && !isInMyTeam(((Projectile)other).getSource());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postCollided(Collidable other) {
+		// NOP
 	}
 
 	@Override
-	public void collided(Collidable with) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void takeDamage(int damage) {
+	public void takeDamage(float damage) {
 		this.health -= damage;
 	}
 
@@ -40,7 +72,6 @@ public class PlayerShipImpl implements PlayerShip {
 	public int getInitialHealth() {
 		return this.initialHealth;
 	}
-	
 
 	@Override
 	public Vector2 getPosition() {
@@ -54,14 +85,13 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	@Override
 	public void update(float deltaTime){
-				
 		if(position.y > moveToPos + 0.1f){
-			this.position.add(0, -moveSpeed);
-		}else if(position.y < moveToPos - 0.1f){
-			this.position.add(0, moveSpeed);
+			this.position.add(0, -moveSpeed *deltaTime);
+		} else if(position.y < moveToPos - 0.1f){
+			this.position.add(0, moveSpeed *deltaTime);
 		}
-		
-
+		this.position.add(velocity *deltaTime,0);
+		Graphics.setNewCameraPos((this.getPosition().x+Graphics.GAME_WIDTH/2),(Graphics.GAME_HEIGHT/2));
 	}
 	
 	@Override
@@ -81,7 +111,26 @@ public class PlayerShipImpl implements PlayerShip {
 	
 	@Override
 	public void fireWeapon() {
-		weapon.fire(position);
+		weapon.fire(position, new Vector2(1,0), this);
+	}
+	
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
 
+	@Override
+	public boolean isInMyTeam(Teamable teamMember) {
+		return teamMember instanceof PlayerShip;
+	}
+	
+	@Override
+	public String getIdentifier() {
+		return this.shipType.name();
+	}
+	
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

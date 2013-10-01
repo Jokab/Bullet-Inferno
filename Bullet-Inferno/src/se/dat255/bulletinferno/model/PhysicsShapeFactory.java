@@ -13,14 +13,13 @@ public interface PhysicsShapeFactory {
 	 * half-width/heights as Box2D usually uses.)
 	 * 
 	 * <p>
-	 * Please note that shapes must be properly disposed of (but the physics
-	 * system will handle that for you if you have used the shape with the
-	 * system, e.g. in a PhysicsBodyDefinition).
+	 * Please note that shapes must be properly disposed of (but the physics system will handle that
+	 * for you if you have used the shape with the system, e.g. in a PhysicsBodyDefinition).
 	 * 
 	 * @param width
-	 *            the width of the shape.
+	 *        the width of the shape.
 	 * @param height
-	 *            the height of the shape.
+	 *        the height of the shape.
 	 * @return a rectangular Box2D shape.
 	 */
 	public Shape getRectangularShape(float width, float height);

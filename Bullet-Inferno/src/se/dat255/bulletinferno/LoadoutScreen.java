@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno;
 
+import se.dat255.bulletinferno.model.weapon.WeaponData;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -7,31 +9,37 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LoadoutScreen extends AbstractScreen {
 	private final MyGame myGame;
 
-	private Stage stage;
-	private Skin skin;
-	private SpriteBatch batch;
+	private final static int VIRTUAL_WIDTH = 1280;
+	private final static int VIRTUAL_HEIGHT = 720;
+	private final static int VIRTUAL_MID_WIDTH = VIRTUAL_WIDTH / 2;
+	private final static int VIRTUAL_MID_HEIGHT = VIRTUAL_HEIGHT / 2;
+
+	private final Stage stage;
+	private final Skin skin;
+	private final SpriteBatch batch;
+
+	private final Texture startImgTexture;
 
 	public LoadoutScreen(final MyGame myGame) {
 		this.myGame = myGame;
 
 		batch = new SpriteBatch();
-
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		Gdx.input.setInputProcessor(stage);
-
-		// Set up skin
 		skin = new Skin();
 
 		// Generate a 1x1 white texture and store it in the skin named "white".
@@ -40,36 +48,59 @@ public class LoadoutScreen extends AbstractScreen {
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
 
+		startImgTexture = new Texture(Gdx.files.internal("data/startBtn.png"));
+		TextureRegion startImage = new TextureRegion(startImgTexture);
+
 		// Add default font as default
 		skin.add("default", new BitmapFont());
 
-		// Set up style for labels
-		TextButtonStyle btnStyle = new TextButtonStyle();
-		btnStyle.font = skin.getFont("default");
-		btnStyle.up = skin.newDrawable("white", Color.LIGHT_GRAY);
-		btnStyle.over = skin.newDrawable("white", Color.DARK_GRAY);
-		btnStyle.fontColor = Color.BLACK;
-		skin.add("default", btnStyle);
+		// Set up style for buttons
+		ButtonStyle startBtnStyle = new ButtonStyle();
+		startBtnStyle.up = new TextureRegionDrawable(startImage);
+		startBtnStyle.over = skin.newDrawable(startBtnStyle.up, Color.LIGHT_GRAY);
+		skin.add("startButton", startBtnStyle);
+
+		TextButtonStyle textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = skin.getFont("default");
+		textButtonStyle.fontColor = Color.BLACK;
+		skin.add("default", textButtonStyle);
 
 		// Create buttons
-		TextButton startButton = new TextButton("Start THE GAME ALREADY!", skin);
-		TextButton exitButton = new TextButton("LOL YOU CANT CLICK ME. I NO WORK!", skin);
+		Button startButton = new Button(skin, "startButton");
+		startButton.setSize(600, 150);
+		// startButton.setPosition(VIRTUAL_MID_WIDTH - startButton.getWidth() / 2, 20);
+		TextButton btn2 = new TextButton("Slower", skin);
+		btn2.setSize(600, 150);
+
+		// startButton.setSize(1280/2, 720/2);
 
 		// Create a table that fills the screen
-		Table table = new Table();
-		table.setFillParent(true);
-		table.debug();
-		
+
 		// Add it to stage
-		table.add(startButton).pad(20).row();
-		table.add(exitButton);
-		stage.addActor(table);
-		
-		
+		Table t = new Table();
+		t.setFillParent(true);
+
+		t.add(startButton).row();
+		t.add(btn2);
+
+		stage.addActor(t);
+
+		// Start button click listener
 		startButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myGame.setScreen(myGame.getGameScreen());
+				GameScreen gameScreen = myGame.getGameScreen();
+				gameScreen.createNewGame(WeaponData.FAST);
+				myGame.setScreen(gameScreen);
+			}
+		});
+
+		btn2.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				GameScreen gameScreen = myGame.getGameScreen();
+				gameScreen.createNewGame(WeaponData.SLOW);
+				myGame.setScreen(gameScreen);
 			}
 		});
 
@@ -77,7 +108,8 @@ public class LoadoutScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-
+		Gdx.app.debug("LoadoutScreen", "Screen shown");
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -90,12 +122,13 @@ public class LoadoutScreen extends AbstractScreen {
 
 	@Override
 	public void resize(int width, int height) {
-		stage.setViewport(width, height, false);
+		stage.setViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false);
 	}
 
 	@Override
 	public void dispose() {
-		super.dispose();
+		Gdx.app.debug("LoadoutScreen", "Screen Disposed");
+		startImgTexture.dispose();
 		stage.dispose();
 		skin.dispose();
 	}

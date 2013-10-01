@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

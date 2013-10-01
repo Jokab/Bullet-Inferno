@@ -1,6 +1,9 @@
 package se.dat255.bulletinferno.model;
 
-public interface Enemy extends PositionEntity {
+import se.dat255.bulletinferno.model.enemy.EnemyType;
+import se.dat255.bulletinferno.util.Disposable;
+
+public interface Enemy extends PositionEntity, Disposable, Teamable {
 
 	/**
 	 * Returns the score that you get from destroying this enemy.
@@ -15,4 +18,6 @@ public interface Enemy extends PositionEntity {
 	 * @return The credits received.
 	 */
 	public int getCredits();
+	
+	EnemyType getType();
 }

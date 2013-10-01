@@ -87,7 +87,7 @@ public interface Timer {
 	 * Updates the time
 	 * 
 	 * @param delta
-	 *            time passed since last call in seconds
+	 *        time passed since last call in seconds
 	 */
 	public void update(float delta);
 }

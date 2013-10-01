@@ -6,18 +6,12 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
-import se.dat255.bulletinferno.model.PhysicsWorldImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.Timer;
-
-import com.badlogic.gdx.utils.GdxNativesLoader;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.view.MockSegment;
 
 public class SimpleMockGame implements Game {
-	static {
-		GdxNativesLoader.load();
-	}
-
 	public final Projectile mockProjectile = new SimpleMockProjectile(null);
 	public int numProjectilesSpawned = 0;
 	public Timer timer;
@@ -26,7 +20,7 @@ public class SimpleMockGame implements Game {
 	 * We are using the "real" physicsImpl here as creating our own would be
 	 * close to impossible
 	 */
-	public PhysicsWorld physicsWorld = new PhysicsWorldImpl();
+	public PhysicsWorldImplSpy physicsWorld = new PhysicsWorldImplSpy();
 
 	public SimpleMockGame(Timer timer) {
 		this.timer = timer;
@@ -49,6 +43,7 @@ public class SimpleMockGame implements Game {
 
 	@Override
 	public void disposeProjectile(Projectile projectile) {
+		projectile.reset(); // Emulate pool.
 	}
 
 	@Override
@@ -86,6 +81,39 @@ public class SimpleMockGame implements Game {
 
 	@Override
 	public void setPlayerShip(PlayerShip ship) {
+	}
+
+	@Override
+	public void addEnemy(Enemy emeny) {
+	}
+
+	@Override
+	public void removeEnemy(Enemy enemy) {
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addSegment(MockSegment seg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeSegment(MockSegment seg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<MockSegment> getSegments() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
