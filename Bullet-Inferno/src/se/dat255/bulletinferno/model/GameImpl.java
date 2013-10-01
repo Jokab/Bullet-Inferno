@@ -18,9 +18,8 @@ import com.badlogic.gdx.utils.Pool;
  * Default implementation of Game, the central type in Bullet Inferno.
  * 
  * <p>
- * Game acts as a single point of entry for the outside environment, as well as
- * central point of lookup for the inside. It handles instance-based object
- * creation and initialization (injection).
+ * Game acts as a single point of entry for the outside environment, as well as central point of
+ * lookup for the inside. It handles instance-based object creation and initialization (injection).
  */
 public class GameImpl implements Game {
 
@@ -31,21 +30,24 @@ public class GameImpl implements Game {
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
-	
-	//For mocking segments
+
+	// For mocking segments
 	private final List<MockSegment> segments = new ArrayList<MockSegment>();
-	
-	
+
 	/** List of all timers */
 	private final List<Timer> timers;
 	/** List of all queued timers to be added */
-	private final List<Timer> timersAddQueue = new LinkedList<Timer>(); 
+	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
 	private boolean isIteratingOverTimers = false;
-	
+
+	/** A list of Runnables that will be run at the next update. */
+	private final List<Runnable> runLaters;
+
 	public GameImpl(PhysicsWorld world) {
 		this.world = world;
 		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
 		timers = new LinkedList<Timer>();
+		runLaters = new LinkedList<Runnable>();
 	}
 
 	public GameImpl() {
@@ -53,14 +55,13 @@ public class GameImpl implements Game {
 	}
 
 	/**
-	 *  {@inheritDoc}
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPlayerShip(PlayerShip ship){
+	public void setPlayerShip(PlayerShip ship) {
 		this.playerShip = ship;
 	}
-		
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,7 +70,6 @@ public class GameImpl implements Game {
 		// TODO Auto-generated method stub
 		return playerShip;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -94,7 +94,7 @@ public class GameImpl implements Game {
 	public void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -102,20 +102,19 @@ public class GameImpl implements Game {
 	public void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
 	}
-	
-	public void addSegment(MockSegment seg){
+
+	public void addSegment(MockSegment seg) {
 		segments.add(seg);
 	}
-	
-	public void removeSegment(MockSegment seg){
+
+	public void removeSegment(MockSegment seg) {
 		segments.remove(seg);
 	}
-	
-	public List<MockSegment> getSegments(){
+
+	public List<MockSegment> getSegments() {
 		return segments;
 	}
-	
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -180,13 +179,13 @@ public class GameImpl implements Game {
 	@Override
 	public Timer getTimer() {
 		Timer t = new TimerImpl();
-		
-		if(isIteratingOverTimers) {
+
+		if (isIteratingOverTimers) {
 			timersAddQueue.add(t);
 		} else {
 			timers.add(t);
 		}
-	
+
 		return t;
 	}
 
@@ -201,13 +200,19 @@ public class GameImpl implements Game {
 		for (Timer t : timers) {
 			t.update(deltaTime);
 		}
-		// If timers are waiting to be added, add them 
-		if(!timersAddQueue.isEmpty()) {
+		// If timers are waiting to be added, add them
+		if (!timersAddQueue.isEmpty()) {
 			timers.addAll(timersAddQueue);
 			timersAddQueue.clear();
 		}
 		isIteratingOverTimers = false;
-		
+
+		// Run all runLater Runnables from the previous tick.
+		for (Runnable task : runLaters) {
+			task.run();
+		}
+		runLaters.clear();
+
 		world.update(deltaTime);
 		playerShip.update(deltaTime);
 	}
@@ -226,6 +231,11 @@ public class GameImpl implements Game {
 	@Override
 	public void dispose() {
 		world.dispose();
+	}
+
+	@Override
+	public void runLater(Runnable task) {
+		runLaters.add(task);
 	}
 
 }
