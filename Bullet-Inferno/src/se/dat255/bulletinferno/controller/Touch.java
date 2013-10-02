@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -41,6 +40,8 @@ public class Touch implements InputProcessor {
 	 */
 	private final int steeringFinger = -1;
 
+	private Vector2 touchOrigin = new Vector2(); 
+	
 	private final Game game;
 
 	public Touch(final Game game, final Graphics graphics, final PlayerShip ship) {
@@ -52,10 +53,10 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == UPKEY) {
-			ship.moveTo(Graphics.GAME_HEIGHT);
+			//ship.moveTo(Graphics.GAME_HEIGHT);
 		}
 		if (keycode == DOWNKEY) {
-			ship.moveTo(0f);
+			//ship.moveTo(0f);
 		}
 		if (keycode == FIREKEY) {
 			ship.fireWeapon();
@@ -66,12 +67,6 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == UPKEY && ship.getMovePos() > ship.getPosition().y) {
-			ship.stopMovement();
-		}
-		if (keycode == DOWNKEY && ship.getMovePos() < ship.getPosition().y) {
-			ship.stopMovement();
-		}
 		if (keycode == Keys.X) {
 			ship.takeDamage(10);
 			System.out.println("Player health: " + ship.getHealth());
@@ -89,7 +84,6 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
 		// Check if GUI input was to be handled TODO: The second division can be made in prehand
 		float guiX = (float) screenX / (Gdx.graphics.getWidth() / 16);
 		float guiY = (float) screenY / (Gdx.graphics.getHeight() / 9);
@@ -99,11 +93,13 @@ public class Touch implements InputProcessor {
 		}
 
 		// Otherwise it's world input
-
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
 
+		// Set the touchOrigin vector to know where the touch originated from
+		touchOrigin.set(touchVector);
+		
 		Gdx.app.log("Touch", "Down id = " + pointer);
 
 		if (touchVector.x <= ship.getPosition().x + 8f) {
@@ -121,7 +117,7 @@ public class Touch implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		ship.stopMovement();
+		touchOrigin.set(new Vector2());
 		return false;
 	}
 
@@ -130,18 +126,9 @@ public class Touch implements InputProcessor {
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
-
 		if (touchVector.x <= ship.getPosition().x + 8f) {
-			// Left half of the screen
-			// Move ship by giving the touch coordinate to the moveTo-method
-			ship.stopMovement();
-			if (touchVector.y > ship.getPosition().y + 0.1f) {
-				ship.moveTo(touchVector.y);
-			} else if (touchVector.y < ship.getPosition().y - 0.1f) {
-				ship.moveTo(touchVector.y);
-			} else {
-				ship.stopMovement();
-			}
+				ship.moveY(touchVector.y - touchOrigin.y, 3);
+				touchOrigin.set(touchVector);
 		}
 		return false;
 	}
@@ -152,16 +139,6 @@ public class Touch implements InputProcessor {
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
-
-		// Move ship by giving the touch coordinate to the moveTo-method
-		ship.stopMovement();
-		if (touchVector.y > ship.getPosition().y + 0.1f) {
-			ship.moveTo(touchVector.y);
-		} else if (touchVector.y < ship.getPosition().y - 0.1f) {
-			ship.moveTo(touchVector.y);
-		} else {
-			ship.stopMovement();
-		}
 
 		return false;
 	}

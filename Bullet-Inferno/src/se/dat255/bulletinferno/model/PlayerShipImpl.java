@@ -40,7 +40,7 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(new Vector2(3,0));
+		body.setVelocity(new Vector2(2,0));
 	}
 
 	/**
@@ -107,23 +107,13 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	}
 	
 	@Override
-	public void moveTo(float yPos){
-		yPos = yPos - getPosition().y;
-		if(yPos > 0.001f || yPos < -0.001f) {
-			body.getBox2DBody().setTransform(getPosition().add(0, yPos), 0);
-		}
+	public void moveY(float dy){
+		body.getBox2DBody().setTransform(getPosition().add(0, dy), 0);
 	}
 	
 	@Override
-	public float getMovePos(){
-		return moveToPos;
-		// TODO : Remove?
-	}
-		
-	@Override
-	public void stopMovement(){
-		moveToPos = position.y;
-		// TODO : Remove?
+	public void moveY(float dy, float scale){
+		body.getBox2DBody().setTransform(getPosition().add(0, scale*dy), 0);
 	}
 	
 	@Override

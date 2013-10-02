@@ -22,24 +22,20 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	void setPosition(Vector2 position);
 
 	/**
-	 * Makes the PlayerShip move to the specified position.
+	 * Makes the PlayerShip move the specified distance on the y-axis
 	 * 
-	 * @param yPos
-	 *        The position that the ship should move to.
+	 * @param dy distance in y
 	 */
-	public void moveTo(float yPos);
-
+	public void moveY(float dy);
+	
 	/**
-	 * Stops the PlayerShip's movement.
+	 * Makes the PlayerShip move the specified distance on the y-axis, with
+	 * a specified scale. For example scale = 0.5 only moves the ship half the
+	 * distance specified, and scale = 2 twice as long
+	 * @param dy distance in y
+	 * @param scale
 	 */
-	public void stopMovement();
-
-	/**
-	 * Returns the position that the PlayerShip is currently moving to.
-	 * 
-	 * @return The position.
-	 */
-	public float getMovePos();
+	public void moveY(float dy, float scale);
 
 	/**
 	 * Returns the Weapon that is currently in the PlayerShip's Loadout.
