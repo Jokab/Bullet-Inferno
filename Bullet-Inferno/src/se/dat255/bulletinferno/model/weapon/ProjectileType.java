@@ -16,10 +16,10 @@ public enum ProjectileType implements ResourceIdentifier {
 	/**
 	 * damage, movementpattern
 	 */
-	DEFAULT_PROJECTILE(5f, null), // null = straight forward 
-	LEFT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
-	RIGHT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),
-	SINE_PROJECTILE(1f, new DisorderedMovementPattern(0.1f,2f));
+	RED_PROJECTILE(5f, null), // null = straight forward 
+	GREEN_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
+	PINK_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),
+	YELLOW_PROJECTILE(1f, new DisorderedMovementPattern(0.1f,2f));
 	
 	private float damage;
 	private PhysicsMovementPattern pattern;

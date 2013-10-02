@@ -86,7 +86,7 @@ public class LoadoutScreen extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				GameScreen gameScreen = myGame.getGameScreen();
-				gameScreen.createNewGame(WeaponData.FAST);
+				gameScreen.createNewGame(WeaponData.MISSILE_LAUNCHER);
 				myGame.setScreen(gameScreen);
 			}
 		});
@@ -95,7 +95,7 @@ public class LoadoutScreen extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				GameScreen gameScreen = myGame.getGameScreen();
-				gameScreen.createNewGame(WeaponData.SLOW);
+				gameScreen.createNewGame(WeaponData.DISOREDER);
 				myGame.setScreen(gameScreen);
 			}
 		});

@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Vector2;
 public enum EnemyType implements ResourceIdentifier {
 
 	// (movement pattern = null) => no movement patter
-	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, WeaponData.FAST, 10,
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, WeaponData.DISOREDER, 10,
 			10),
-	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), null , 5,
-			WeaponData.FAST, 10, 10);
+	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1) , 5,
+			WeaponData.FORCE_GUN, 10, 10);
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;

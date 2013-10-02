@@ -29,7 +29,6 @@ public class PlayerShipView implements Renderable {
 		sprite = new Sprite(texture);
 		sprite.setSize(1f, 1f);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		sprite.setRotation(-90f);
 
 	}
 

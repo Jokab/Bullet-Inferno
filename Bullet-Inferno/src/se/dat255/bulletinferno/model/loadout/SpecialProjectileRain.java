@@ -46,7 +46,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public void onTimeout(Timer source, float timeSinceLast) {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS -1);
 		if (counter < AMOUNT_BULLETS) {
-			ProjectileType.RIGHT_ACCELERATING_PROJECTILE.releaseProjectile(game,
+			ProjectileType.PINK_PROJECTILE.releaseProjectile(game,
 					bulletPositions.get(index), new Vector2(), new Vector2(3, 0), playerShip);
 			counter++;
 		}

@@ -22,17 +22,17 @@ public class ResourceManagerImpl implements ResourceManager {
 		Map<String, String> map = new HashMap<String, String>();
 		
 		// Enemies
-		map.put("DEFAULT_ENEMY_SHIP", "data/enemyShip.png");
-		map.put("SPECIAL_ENEMY_SHIP", "data/enemyShip2.png");
+		map.put("DEFAULT_ENEMY_SHIP", "data/defaultEnemy.png");
+		map.put("SPECIAL_ENEMY_SHIP", "data/specialEnemy.png");
 		
 		// Player ship
-		map.put("PLAYER_DEFAULT", "data/ship.png");
+		map.put("PLAYER_DEFAULT", "data/playerShip.png");
 		
 		//Projectiles
-		map.put("DEFAULT_PROJECTILE", "data/projectile.png");
-		map.put("LEFT_ACCELERATING_PROJECTILE", "data/projectile.png");
-		map.put("RIGHT_ACCELERATING_PROJECTILE", "data/projectile.png");
-		map.put("SINE_PROJECTILE", "data/enemyShip2.png");
+		map.put("RED_PROJECTILE", "data/redDotProjectile.png");
+		map.put("GREEN_PROJECTILE", "data/greenDotProjectile.png");
+		map.put("PINK_PROJECTILE", "data/pinkDotProjectile.png");
+		map.put("YELLOW_PROJECTILE", "data/yellowDotProjectile.png");
 		
 		// Buttons
 		map.put("PAUSE_SCREEN", "images/gui/screen_pause.png");
