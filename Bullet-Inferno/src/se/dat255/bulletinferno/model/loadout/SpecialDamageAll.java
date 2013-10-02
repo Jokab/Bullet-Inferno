@@ -5,12 +5,12 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.SpecialEffect;
 
-public class SpecialDamageAllEnemies implements SpecialEffect {
+public class SpecialDamageAll implements SpecialEffect {
 
 	private final Game game;
 	private static final float damage = 5;
 
-	public SpecialDamageAllEnemies(Game game) {
+	public SpecialDamageAll(Game game) {
 		this.game = game;
 	}
 
