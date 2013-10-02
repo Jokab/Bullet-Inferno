@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.view.map;
 
+import java.util.List;
+
 import javax.management.RuntimeErrorException;
 
 import com.badlogic.gdx.Gdx;
@@ -33,35 +35,40 @@ public class SegmentView implements Renderable {
 		// Load segment image into texture
 		texture = resourceManager.getTexture("MAP_MOUNTAIN");
 		
-		Slice[] slices = segment.getSlices();
-		int length = slices.length;
+		List<? extends Slice> slices = segment.getSlices();
+		for(Slice slice : slices) {
+			System.out.println(slice.getIdentifier());
+		}
+		int length = slices.size();
 		this.slices = new SliceView[length];
-		for(int i = 0; i < length; i++){
-			float positionX = segment.getPosition() + i*20;
+		int i = 0; // TODO : Fix iteration 
+		for(Slice slice : slices){
+			float positionX = segment.getPosition().x + i*20;
 			
 			// TODO: Determine where on Texture the slice image is
 			// TODO: Create TextureRegion of that part and pass to constructor below
 			TextureRegion textureRegion = null;
-			if(slices[i].getIdentifier().equals("MOUNTAIN_1")){
+			if(slice.getIdentifier().equals("MOUNTAIN_1")){
 				textureRegion = new TextureRegion(texture, 0, 0, 512, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_2")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_2")){
 				textureRegion = new TextureRegion(texture, 512, 0, 512, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_3")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_3")){
 				textureRegion = new TextureRegion(texture, 0, 256, 512, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_4")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_4")){
 				textureRegion = new TextureRegion(texture, 512, 256, 512, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_5")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_5")){
 				textureRegion = new TextureRegion(texture, 0, 512, 512, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_6")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_6")){
 				textureRegion = new TextureRegion(texture, 512, 512, 512, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_7")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_7")){
 				textureRegion = new TextureRegion(texture, 0, 0, 768, 256);
-			} else if(slices[i].getIdentifier().equals("MOUNTAIN_8")){
+			} else if(slice.getIdentifier().equals("MOUNTAIN_8")){
 				textureRegion = new TextureRegion(texture, 512, 768, 512, 256);
 			}
 			if(texture == null || textureRegion == null) throw new RuntimeException((texture == null) + " or " + (textureRegion == null));
 			SliceView sliceView = new SliceView(textureRegion, positionX);
 			this.slices[i] = sliceView;
+			i++;
 		}
 	}
 

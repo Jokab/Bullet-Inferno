@@ -1,17 +1,15 @@
 package se.dat255.bulletinferno.model.map;
 
+import java.util.List;
+
+import com.badlogic.gdx.math.Vector2;
+
 public class SegmentImpl implements Segment {
 	
-	/** The first Slice of the Segment */
-	private final Slice entrySlice;
-	/** The last Slice of the Segment */
-	private final Slice exitSlice;
-	/** The middle Slices */
-	//private final Slice[] middleSlices;
 	/** All slices this Segment handles */
-	private final Slice[] allSlices; // TODO: Needed to keep separate?
+	private final List<? extends Slice> allSlices;
 	/** The position of this Segment */
-	private final float positionX;
+	private final Vector2 position;
 	
 	/**
 	 * Creates a new Segment with the given data to be used in game
@@ -20,48 +18,46 @@ public class SegmentImpl implements Segment {
 	 * @param slices The slices between entry and exit
 	 * @param positionX The position of the Segment
 	 */
-	public SegmentImpl(Slice entrySlice, Slice exitSlice, Slice[] slices, float positionX) {
-		this.entrySlice = entrySlice;
-		this.exitSlice = exitSlice;
-		//this.middleSlices = slices;
-		
-		int length = slices.length;
-		this.allSlices = new Slice[length + 2];
-		allSlices[0] = entrySlice;
-		allSlices[length + 1] = exitSlice;
-		System.arraycopy(slices, 0, allSlices, 1, length);
-		
-		this.positionX = positionX;
+	public SegmentImpl(List<? extends Slice> slices, Vector2 position) {		
+		this.allSlices = slices;		
+		this.position = position;
+		// TODO check if slices.size() > 0
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		for(Slice slice : allSlices) {
+			slice.dispose();
+		}
 	}
 
 	@Override
-	public Slice[] getSlices() {
+	public List<? extends Slice> getSlices() {
 		return allSlices;
 	}
 
 	@Override
-	public int getWidth() {
-		return allSlices.length * 20;
+	public float getWidth() {
+		float width = 0;
+		for(Slice slice : allSlices) {
+			width += slice.getWidth();
+		}
+		return width;
 	}
 
 	@Override
-	public float getPosition() {
-		return positionX;
+	public Vector2 getPosition() {
+		return position;
 	}
 
 	@Override
 	public float getEntryHeight() {
-		return entrySlice.getEntryHeight();
+		return allSlices.get(0).getEntryHeight();
 	}
 
 	@Override
 	public float getExitHeight() {
-		return exitSlice.getExitHeight();
+		return allSlices.get(allSlices.size()-1).getExitHeight();
 	}
 
 }
