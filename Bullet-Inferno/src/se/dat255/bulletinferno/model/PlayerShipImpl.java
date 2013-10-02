@@ -30,7 +30,9 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 		this.shipType = shipType;
 		
 		//TODO: should probably not apply this here
-		loadout.getPassiveAbility().getEffect().applyEffect(this);
+		if(loadout.getPassiveAbility() != null) {
+			loadout.getPassiveAbility().getEffect().applyEffect(this);
+		}
 	}
 
 	/**
