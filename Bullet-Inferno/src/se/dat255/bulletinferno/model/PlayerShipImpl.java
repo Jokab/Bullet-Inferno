@@ -141,7 +141,8 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
 	@Override
 	public void dispose() {
-		// TODO: do stuff here
+		game.getPhysicsWorld().removeBody(body);
+		body = null;
 	}
 
 	@Override
