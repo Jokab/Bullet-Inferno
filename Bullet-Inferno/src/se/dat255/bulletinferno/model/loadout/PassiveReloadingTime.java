@@ -8,15 +8,20 @@ import se.dat255.bulletinferno.model.Weapon;
  * Lowers reloading speed by 15%.
  * 
  */
-public class PassiveReloadingSpeed implements PassiveEffect {
+public class PassiveReloadingTime implements PassiveEffect {
 
+	private final float percent;
 	private float initialReloadingSpeed;
+	
+	public PassiveReloadingTime(float percent) {
+		this.percent = percent;
+	}
 	
 	@Override
 	public void applyEffect(PlayerShip playerShip) {
 		Weapon weapon = playerShip.getWeapon();
 		initialReloadingSpeed = weapon.getReloadingTime();
-		weapon.setReloadingTime(initialReloadingSpeed * 0.1f);
+		weapon.setReloadingTime(initialReloadingSpeed * percent);
 	}
 
 	@Override

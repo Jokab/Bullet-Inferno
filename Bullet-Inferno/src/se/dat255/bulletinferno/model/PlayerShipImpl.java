@@ -13,6 +13,7 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	private final Vector2 position;
 	private final Game game;
 	private final int initialHealth;
+	private float takeDamageModifier = 1; // default
 	private int health;
 	private float moveToPos; 
 	private float moveSpeed = 6.0f;
@@ -62,7 +63,12 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 
 	@Override
 	public void takeDamage(float damage) {
-		this.health -= damage;
+		this.health -= damage * takeDamageModifier;
+	}
+	
+	@Override
+	public void setTakeDamageModifier(float takeDamageModifier) {
+		this.takeDamageModifier = takeDamageModifier;
 	}
 
 	@Override

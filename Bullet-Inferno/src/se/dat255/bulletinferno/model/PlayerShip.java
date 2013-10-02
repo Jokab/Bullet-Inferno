@@ -32,4 +32,6 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	public Loadout getLoadout();
 	
 	public void attachPassive(PassiveAbility passiveAbility);
+
+	void setTakeDamageModifier(float takeDamageModifier);
 }
