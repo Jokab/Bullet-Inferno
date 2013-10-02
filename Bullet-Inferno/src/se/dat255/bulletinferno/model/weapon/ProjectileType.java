@@ -38,8 +38,8 @@ public enum ProjectileType implements ResourceIdentifier {
 
 	}
 	
-	public void setDamagePercent(float damagePercent) {
-		this.damage *= damagePercent;
+	public void setDamage(float damage) {
+		this.damage = damage;
 	}
 
 	@Override

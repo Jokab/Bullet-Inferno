@@ -72,9 +72,8 @@ public class Touch implements InputProcessor {
 		if (keycode == DOWNKEY && ship.getMovePos() < ship.getPosition().y) {
 			ship.stopMovement();
 		}
-		if (keycode == Keys.X) {
-			ship.takeDamage(10);
-			System.out.println("Player health: " + ship.getHealth());
+		if(keycode == Keys.G){
+			ship.getLoadout().getSpecialAbility().getEffect().activate(ship);
 		}
 
 		// TODO Auto-generated method stub

@@ -7,13 +7,12 @@ import se.dat255.bulletinferno.model.Weapon;
 public class PassiveReloadingTime implements PassiveEffect {
 
 	private final float percent;
-	private float initialReloadingSpeed;
+	private float initialReloadingTime;
 
 	/**
 	 * @param percent
-	 *        The percentage that the reloading time will be <b>lowered</b> by. So a value of 0.1
-	 *        means that the reloading time
-	 *        now is 90% of the original.
+	 *        The percentage that the reloading time will be multiplied by. So a value of 0.9 will
+	 *        set the reloading time to 90% of the original.
 	 */
 	public PassiveReloadingTime(float percent) {
 		this.percent = percent;
@@ -22,13 +21,13 @@ public class PassiveReloadingTime implements PassiveEffect {
 	@Override
 	public void applyEffect(PlayerShip playerShip) {
 		Weapon weapon = playerShip.getWeapon();
-		initialReloadingSpeed = weapon.getReloadingTime();
-		weapon.setReloadingTime(initialReloadingSpeed * (1 - percent));
+		initialReloadingTime = weapon.getReloadingTime();
+		weapon.setReloadingTime(initialReloadingTime * percent);
 	}
 
 	@Override
 	public void removeEffect(PlayerShip playerShip) {
 		Weapon weapon = playerShip.getWeapon();
-		weapon.setReloadingTime(initialReloadingSpeed);
+		weapon.setReloadingTime(initialReloadingTime);
 	}
 }
