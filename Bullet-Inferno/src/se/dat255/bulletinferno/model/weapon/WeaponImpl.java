@@ -98,8 +98,4 @@ public class WeaponImpl implements Weapon {
 		timer.start();
 	}
 
-	@Override
-	public void setDamagePercent(float damagePercent) {
-		this.getProjectileType().setDamagePercent(damagePercent);
-	}
 }
