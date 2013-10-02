@@ -16,7 +16,7 @@ public class WeaponImpl implements Weapon {
 	private final Class<? extends Projectile> projectile;
 	private final Vector2 offset;
 	private final Vector2 projectileVelocity;
-	private final float damage;
+	private float damage;
 
 	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile,
 			Vector2 offset, Vector2 projectileVelocity, float damage) {
@@ -110,5 +110,10 @@ public class WeaponImpl implements Weapon {
 		this.reloadingTime = reloadingTime;
 		timer.setTime(reloadingTime);
 		timer.start();
+	}
+
+	@Override
+	public void setDamage(float damage) {
+		this.damage = damage;
 	}
 }
