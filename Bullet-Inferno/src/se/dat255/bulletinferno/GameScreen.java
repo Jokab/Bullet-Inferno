@@ -16,6 +16,7 @@ import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialDamageAll;
+import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -92,7 +93,9 @@ public class GameScreen extends AbstractScreen {
 
 		game = new GameImpl();
 		
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(game), null, new SpecialAbilityImpl(new SpecialDamageAll(game)), new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
+		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(game), null, 
+				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
+				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
 		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
 				loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
@@ -167,13 +170,7 @@ public class GameScreen extends AbstractScreen {
 		game.addEnemy(enemy3);
 
 		EnemyView enemyView = new EnemyView(game, resourceManager);
-//		EnemyView enemyView2 = new EnemyView(game, enemy2, resourceManager);
-//		EnemyView enemyView3 = new EnemyView(game, enemy3, resourceManager);
-		
-
 		graphics.addRenderable(enemyView);
-//		graphics.addRenderable(enemyView2);
-//		graphics.addRenderable(enemyView3);
 	}
 
 	@Override

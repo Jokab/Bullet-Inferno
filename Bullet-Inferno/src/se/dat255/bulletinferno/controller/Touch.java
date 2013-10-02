@@ -73,7 +73,7 @@ public class Touch implements InputProcessor {
 			ship.stopMovement();
 		}
 		if(keycode == Keys.G){
-			ship.getLoadout().getSpecialAbility().getEffect().activate();
+			ship.getLoadout().getSpecialAbility().getEffect().activate(ship);
 		}
 
 		// TODO Auto-generated method stub

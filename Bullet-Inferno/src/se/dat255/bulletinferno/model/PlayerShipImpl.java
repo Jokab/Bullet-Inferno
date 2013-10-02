@@ -6,8 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
-	public enum ShipType {
-		PLAYER_DEFAULT
+	public enum ShipType implements Teamable {
+		PLAYER_DEFAULT;
+
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return true;
+		}
 	}
 	
 	private final Vector2 position;

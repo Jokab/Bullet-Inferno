@@ -2,6 +2,6 @@ package se.dat255.bulletinferno.model;
 
 public interface SpecialEffect {
 
-	public void activate();
+	public void activate(PlayerShip playerShip);
 	
 }
