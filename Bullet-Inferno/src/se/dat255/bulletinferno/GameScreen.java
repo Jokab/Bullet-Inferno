@@ -13,7 +13,7 @@ import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.map.Segment;
-import se.dat255.bulletinferno.model.map.SegmentFactory;
+import se.dat255.bulletinferno.model.map.SegmentDefinitionImpl;
 import se.dat255.bulletinferno.model.map.SegmentImpl;
 import se.dat255.bulletinferno.model.map.Slice;
 import se.dat255.bulletinferno.model.map.SliceDefinitionImpl;
@@ -122,7 +122,7 @@ public class GameScreen extends AbstractScreen {
 
 	private void setupHardcodedSegments() {
 		
-		Segment segment = SegmentFactory.MOUNTAIN.generateSegment(game, new Vector2(), 6);
+		Segment segment = SegmentDefinitionImpl.MOUNTAIN.generateSegment(game, new Vector2(), 6);
 		SegmentView sW = new SegmentView(resourceManager, segment);
 		
 		

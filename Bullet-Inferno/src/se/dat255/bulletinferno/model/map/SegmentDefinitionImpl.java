@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Game;
 
-public enum SegmentFactory {
+public enum SegmentDefinitionImpl implements SegmentDefinition {
 	WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, new ArrayList<SliceDefinitionImpl>() {{ 
 		add(SliceDefinitionImpl.WATER);}}),
 		
@@ -28,19 +28,23 @@ public enum SegmentFactory {
 	private final SliceDefinitionImpl exitSlice;
 	private final List<SliceDefinitionImpl> suitableSlices;
 	
-	SegmentFactory(SliceDefinitionImpl entry, SliceDefinitionImpl exit, List<SliceDefinitionImpl> suitableSlices) {
+	SegmentDefinitionImpl(SliceDefinitionImpl entry, SliceDefinitionImpl exit, List<SliceDefinitionImpl> suitableSlices) {
 		this.entrySlice = entry;
 		this.exitSlice = exit;
 		this.suitableSlices = suitableSlices;
 	}
 	
 	public Segment generateRandomSegment(Game game, Vector2 position, int sliceAmount) {
-		SegmentFactory[] values = SegmentFactory.values();
+		SegmentDefinitionImpl[] values = SegmentDefinitionImpl.values();
 		Random random = new Random();
-		return values[random.nextInt(values.length)].generateSegment(game, position, sliceAmount);
+		return values[random.nextInt(values.length)].createSegment(game, position, sliceAmount);
 	}
 	
-	public Segment generateSegment(Game game, Vector2 position, int sliceAmount) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Segment createSegment(Game game, Vector2 position, int sliceAmount) {
 		List<SliceDefinitionImpl> sliceDefinitonsPath = getSlides(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
