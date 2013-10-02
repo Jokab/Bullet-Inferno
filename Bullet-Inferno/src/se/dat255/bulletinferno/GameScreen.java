@@ -16,7 +16,7 @@ import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.SegmentFactory;
 import se.dat255.bulletinferno.model.map.SegmentImpl;
 import se.dat255.bulletinferno.model.map.Slice;
-import se.dat255.bulletinferno.model.map.SliceType;
+import se.dat255.bulletinferno.model.map.SliceDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
