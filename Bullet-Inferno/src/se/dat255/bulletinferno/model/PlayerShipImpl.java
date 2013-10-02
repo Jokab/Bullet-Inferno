@@ -4,7 +4,10 @@ import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
@@ -17,11 +20,10 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	private final int initialHealth;
 	private float takeDamageModifier = 1; // default
 	private int health;
-	private float moveToPos; 
-	private float moveSpeed = 6.0f;
 	private final ShipType shipType;
 	private final Loadout loadout;
 	private PhysicsBody body = null;
+	private MouseJoint mouseJoint;
 	
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout, ShipType shipType) {
 		this.position = position.cpy();
@@ -41,6 +43,15 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(new Vector2(2,0));
+		
+		MouseJointDef mouseJointDef = new MouseJointDef();
+		mouseJointDef.bodyA = game.getPhysicsWorld()
+								.createBody(bodyDefinition, this, new Vector2(-100,-100))
+								.getBox2DBody();
+		mouseJointDef.bodyB = body.getBox2DBody();
+		mouseJointDef.target.set(new Vector2(getPosition().x, 8));
+		mouseJointDef.maxForce = 3;
+		mouseJoint = (MouseJoint)body.getBox2DBody().getWorld().createJoint(mouseJointDef);
 	}
 
 	/**
@@ -108,17 +119,19 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
 	@Override
 	public void moveY(float dy){
-		body.getBox2DBody().setTransform(getPosition().add(0, dy), 0);
+		moveY(dy, 1);
 	}
 	
 	@Override
 	public void moveY(float dy, float scale){
-		body.getBox2DBody().setTransform(getPosition().add(0, scale*dy), 0);
+		mouseJoint.setTarget(new Vector2(body.getPosition().cpy().add(0, dy)));
+		// TODO this could be used if instant positioning is wanted 
+		// body.getBox2DBody().setTransform(getPosition().add(0, scale*dy), 0);
 	}
 	
 	@Override
 	public void fireWeapon() {
-		loadout.getPrimaryWeapon().fire(position, new Vector2(1,0), this);
+		loadout.getPrimaryWeapon().fire(getPosition(), new Vector2(1,0), this);
 	}
 	
 	@Override
@@ -143,7 +156,7 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
 	@Override
 	public void dispose() {
-		// TODO: do stuff here
+		game.getPhysicsWorld().removeBody(body);
 	}
 
 	@Override
