@@ -68,7 +68,7 @@ public class BackgroundView implements Renderable {
 		
 		// Add new segment views, creating their actual views.
 		for(Segment segment : segments.subList(segmentViewsNotRemoved, segments.size()-1)) {
-			segmentViews.add(new SegmentView(resourceManager, segment));
+			newSegmentViews.add(new SegmentView(resourceManager, segment));
 		}
 		
 		segmentViews = newSegmentViews;
