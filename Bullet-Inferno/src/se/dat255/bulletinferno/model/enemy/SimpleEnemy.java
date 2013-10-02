@@ -12,7 +12,6 @@ import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
-import se.dat255.bulletinferno.model.physics.SineMovementPattern;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -112,11 +111,18 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		if (health > 0) {
 			health -= damage;
 
-			// If enemy has died
-			if (health <= 0) {
+			if (isDead()) {
 				scheduleRemoveSelf();
 			}
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isDead() {
+		return health <= 0;
 	}
 
 	/**
