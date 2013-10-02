@@ -120,7 +120,7 @@ public class GameScreen extends AbstractScreen {
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
 		// projectile.setPosition(new Vector2(5, 7));
-		ProjectileView projectileView = new ProjectileView(game);
+		ProjectileView projectileView = new ProjectileView(game, resourceManager);
 		graphics.addRenderable(projectileView);
 	}
 

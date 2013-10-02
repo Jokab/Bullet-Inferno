@@ -7,7 +7,7 @@ import se.dat255.bulletinferno.model.ProjectileImpl;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
-import se.dat255.bulletinferno.model.physics.SineMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -19,23 +19,23 @@ public enum ProjectileType implements ResourceIdentifier {
 	DEFAULT_PROJECTILE(5f, null), // null = straight forward 
 	LEFT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
 	RIGHT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),
-	SINE_PROJECTILE(10f, new SineMovementPattern(4f,6f));
+	SINE_PROJECTILE(1f, new DisorderedMovementPattern(0.1f,2f));
 	
 	private float damage;
-	private PhysicsMovementPattern pmp;
+	private PhysicsMovementPattern pattern;
 	
-	ProjectileType(float damage, PhysicsMovementPattern pmp) {
+	ProjectileType(float damage, PhysicsMovementPattern pattern) {
 		this.damage = damage;
-		this.pmp = pmp;
+		this.pattern = pattern;
 	}
 
 	public void releaseProjectile(Game game, Vector2 position, Vector2 offset,
 			Vector2 projectileVector, Teamable source) {
 		
 		Projectile projectile = game.retrieveProjectile(ProjectileImpl.class);
-		projectile.init(position.cpy().add(offset), projectileVector,
-				damage, source, pmp);
-
+		projectile.init(this, position.cpy().add(offset), projectileVector,
+				damage, source);
+		
 	}
 	
 	public void setDamage(float damage) {
@@ -47,6 +47,10 @@ public enum ProjectileType implements ResourceIdentifier {
 		return this.name();
 	}
 
+	public PhysicsMovementPattern getMovementPattern() {
+		return pattern;
+	}
+	
 	public float getDamage() {
 		return this.damage;
 	}
