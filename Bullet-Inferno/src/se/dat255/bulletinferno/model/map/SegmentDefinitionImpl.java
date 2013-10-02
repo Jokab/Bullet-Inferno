@@ -1,118 +1,164 @@
 package se.dat255.bulletinferno.model.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
-import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Game;
 
+import com.badlogic.gdx.math.Vector2;
+
 public enum SegmentDefinitionImpl implements SegmentDefinition {
-	WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, new ArrayList<SliceDefinitionImpl>() {{ 
-		add(SliceDefinitionImpl.WATER);}}),
-		
-	MOUNTAIN(SliceDefinitionImpl.MOUNTAIN_1, SliceDefinitionImpl.MOUNTAIN_8, 
-			new ArrayList<SliceDefinitionImpl>() {{ 
-					add(SliceDefinitionImpl.MOUNTAIN_2);
-					add(SliceDefinitionImpl.MOUNTAIN_3);
-					add(SliceDefinitionImpl.MOUNTAIN_4);
-					add(SliceDefinitionImpl.MOUNTAIN_5);
-					add(SliceDefinitionImpl.MOUNTAIN_6);
-					add(SliceDefinitionImpl.MOUNTAIN_7);
-				}});	
-	
+	/**
+	 * A water segment.
+	 */
+	WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
+			.asList(SliceDefinitionImpl.WATER)),
+
+	/**
+	 * A mountain segment.
+	 */
+	MOUNTAIN(SliceDefinitionImpl.MOUNTAIN_1, SliceDefinitionImpl.MOUNTAIN_8, Arrays.asList(
+			SliceDefinitionImpl.MOUNTAIN_2,
+			SliceDefinitionImpl.MOUNTAIN_3,
+			SliceDefinitionImpl.MOUNTAIN_4,
+			SliceDefinitionImpl.MOUNTAIN_5,
+			SliceDefinitionImpl.MOUNTAIN_6,
+			SliceDefinitionImpl.MOUNTAIN_7));
+
+	/**
+	 * The entry (i.e. the first) slice of the segment.
+	 */
 	private final SliceDefinitionImpl entrySlice;
+
+	/**
+	 * The exit (i.e. the last) slice of the segment.
+	 */
 	private final SliceDefinitionImpl exitSlice;
+
+	/**
+	 * A list of slices that can be used to fill space between the entry and the exit slice.
+	 */
 	private final List<SliceDefinitionImpl> suitableSlices;
-	
-	SegmentDefinitionImpl(SliceDefinitionImpl entry, SliceDefinitionImpl exit, List<SliceDefinitionImpl> suitableSlices) {
+
+	/**
+	 * 
+	 * @param entry
+	 *        The entry (i.e. the first) slice of the segment.
+	 * @param exit
+	 *        The exit (i.e. the last) slice of the segment.
+	 * @param suitableSlices
+	 *        A list of slices that can be used to fill space between the entry and the exit slice.
+	 */
+	SegmentDefinitionImpl(SliceDefinitionImpl entry, SliceDefinitionImpl exit,
+			List<SliceDefinitionImpl> suitableSlices) {
 		this.entrySlice = entry;
 		this.exitSlice = exit;
 		this.suitableSlices = suitableSlices;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Segment createSegment(Game game, Vector2 position, int sliceAmount) {
-		List<SliceDefinitionImpl> sliceDefinitonsPath = getSlides(sliceAmount);
+		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
-		System.out.println(sliceDefinitonsPath);
-		for(SliceDefinitionImpl sliceType : sliceDefinitonsPath) {
+
+		// TODO: Debug
+		// System.out.println(sliceDefinitonsPath);
+
+		for (SliceDefinition sliceType : sliceDefinitonsPath) {
 			slices.add(sliceType.createSlice(game, slicePosition));
 		}
+		
 		return new SegmentImpl(slices, position);
 	}
-	
-	List<SliceDefinitionImpl> getSlides(int amount)  {
-		List<List<SliceDefinitionImpl>> exceptions = new ArrayList<List<SliceDefinitionImpl>>(amount);
-		for(int i = 0; i < amount; i++) {
-			exceptions.add(new LinkedList<SliceDefinitionImpl>());
+
+	/**
+	 * Returns a list of size <i>amount</i> of slices that fit together.
+	 * 
+	 * @param amount
+	 *        The number of slices that should be returned.
+	 * @return a list of <i>amount</i> number of slices
+	 */
+	private List<SliceDefinition> getSlices(int amount) {
+		// The number of slices we have to generate, entry and exit is already set.
+		int numMiddleSlices = amount - 2;
+
+		// The final path of slices that will be returned
+		List<SliceDefinition> path = new ArrayList<SliceDefinition>(amount);
+
+		// Add the entry slice as the first entry of the path.
+		path.add(entrySlice);
+
+		// A list of "dead ends" that will not be tried again
+		List<List<SliceDefinition>> exceptions = new ArrayList<List<SliceDefinition>>(
+				amount);
+		for (int i = 0; i < amount; i++) {
+			exceptions.add(new LinkedList<SliceDefinition>());
 		}
 
-		List<SliceDefinitionImpl> path = new ArrayList<SliceDefinitionImpl>(amount);
-		boolean foundAMatch = false;
-		SliceDefinitionImpl current = entrySlice;
-		path.add(entrySlice);
-		
-		for(int i = 0; i < amount - 2; i++) {
+		// The current step of the path we are currently trying
+		SliceDefinition current = entrySlice;
+
+		for (int sliceNum = 0; sliceNum < numMiddleSlices; sliceNum++) {
 			// Shuffle around the slices to randomize path
 			Collections.shuffle(suitableSlices);
-			foundAMatch = false;
-			
+			boolean foundAMatch = false;
+
 			// Go through all the suitable slices to find a matching one
-			for(SliceDefinitionImpl slice : suitableSlices) {
-				// Find a matching slice that is not in the exceptions list
-				if(slice.getEntryHeight() == current.getExitHeight() 
-						&& !exceptions.get(i).contains(slice)) {
-					// If the tile to be found is the second to last one 
-					// i.e. the one before exit slice
-					if(i == (amount - 3)) {
-						// make sure it also matches the exit slice
-						if(slice.getExitHeight() == exitSlice.getEntryHeight()) {
-							path.add(slice);
-							current = slice;
-							foundAMatch = true;
-							break;
-						}
-					} else {
+			for (SliceDefinitionImpl slice : suitableSlices) {
+				// We want a matching slice that is not in the exceptions list
+				if (slice.getEntryHeight() != current.getExitHeight()
+						|| exceptions.get(sliceNum).contains(slice)) {
+					continue;
+				}
+
+				// If the current slice is the one before the exit slice
+				if (sliceNum == (numMiddleSlices - 1)) {
+					// make sure it also matches the exit slice
+					if (slice.getExitHeight() == exitSlice.getEntryHeight()) {
 						path.add(slice);
 						current = slice;
 						foundAMatch = true;
 						break;
 					}
+				} else {
+					path.add(slice);
+					current = slice;
+					foundAMatch = true;
+					break;
 				}
 			}
-			
-			
-			
-			if(!foundAMatch) {
-				if(i == 0) {
+
+			if (!foundAMatch) {
+				// If we fail on first iteration, that means there is no path.
+				if (sliceNum == 0) {
 					throw new RuntimeException("Coudln't find a way from specified " +
-							"entry slice to end slice " + i);
+							"entry slice to end slice " + sliceNum);
 				}
-				
+
 				// Remove current slice from path
-				if(path.size() > i) {
-					path.remove(i);
+				if (path.size() > sliceNum) {
+					path.remove(sliceNum);
 				}
 
 				// Erase exception list on this stage because this path leads nowhere
 				// and won't be tried again
-				exceptions.get(i).clear();
-				// Add the current slice as an exception to the past one
-				exceptions.get(i-1).add(current);
+				exceptions.get(sliceNum).clear();
 				
+				// Add the current slice as an exception to the past one
+				exceptions.get(sliceNum - 1).add(current);
+
 				// Set the past one to be the current to find another slice mate
-				current = path.get(i-1);
-				i -= 2;
+				current = path.get(sliceNum - 1);
+				sliceNum -= 2;
 			}
-		}	
+		}
 		path.add(exitSlice);
 		return path;
 	}
