@@ -11,7 +11,9 @@ public class PassiveTakeDamageModifier implements PassiveEffect {
 
 	/**
 	 * @param percent
-	 *        The percentage that the damage will be modified by. So 1.10 means 10% damage increase.
+	 *        The percentage which the damage taken will be modified by. So a value of 0.1 means
+	 *        that the player now takes
+	 *        10% less damage, i.e. 90% of the original.
 	 */
 	public PassiveTakeDamageModifier(float percent) {
 		this.percent = percent;
@@ -19,7 +21,7 @@ public class PassiveTakeDamageModifier implements PassiveEffect {
 
 	@Override
 	public void applyEffect(PlayerShip playerShip) {
-		playerShip.setTakeDamageModifier(percent);
+		playerShip.setTakeDamageModifier(1 - percent);
 	}
 
 	@Override
