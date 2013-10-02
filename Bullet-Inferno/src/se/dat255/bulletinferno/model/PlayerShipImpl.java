@@ -4,7 +4,7 @@ import se.dat255.bulletinferno.Graphics;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
+public class PlayerShipImpl implements PlayerShip {
 	
 	public enum ShipType implements Teamable {
 		PLAYER_DEFAULT;
