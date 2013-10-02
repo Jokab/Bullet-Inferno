@@ -4,7 +4,7 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
-import se.dat255.bulletinferno.model.physics.SineMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.math.Vector2;
@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Vector2;
 public enum EnemyType implements ResourceIdentifier {
 
 	// (movement pattern = null) => no movement patter
-	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), new SineMovementPattern(4, 6f), 5, WeaponData.SLOW, 10,
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, WeaponData.FAST, 10,
 			10),
-	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), new AccelerationMovementPattern(new Vector2(-10, 0)), 5,
-			WeaponData.SLOW, 10, 10);
+	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), null , 5,
+			WeaponData.FAST, 10, 10);
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;

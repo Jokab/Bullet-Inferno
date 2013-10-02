@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -14,6 +15,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private float damage;
 	private Teamable source = null;
 	private final Game game;
+	private ProjectileType projectileType;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -44,27 +46,15 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Vector2 origin, Vector2 velocity, float damage, Teamable source) {
-		this.damage = damage;
-		this.source = source;
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
-
-		this.setVelocity(velocity);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void init(Vector2 origin, Vector2 velocity, float damage, Teamable source,
-			PhysicsMovementPattern pattern) {
+	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, Teamable source) {
+		projectileType = type;
 		this.damage = damage;
 		this.source = source;
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
 
 		// Check if there is a movement pattern to attach
-		if (pattern != null) {
-			game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
+		if (type.getMovementPattern() != null) {
+			game.getPhysicsWorld().attachMovementPattern(type.getMovementPattern().copy(), body);
 		}
 
 		this.setVelocity(velocity);
@@ -158,6 +148,11 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public void viewportIntersectionEnd() {
 		// Run later as we are not allowed to alter the world here.
 		game.runLater(removeSelf);
+	}
+
+	@Override
+	public ProjectileType getType() {
+		return projectileType;
 	}
 
 }
