@@ -1,8 +1,10 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Shape;
 
 public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
@@ -17,10 +19,10 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	private int health;
 	private float moveToPos; 
 	private float moveSpeed = 6.0f;
-	private float velocity = 1f;
 	private final ShipType shipType;
 	private final Loadout loadout;
-
+	private PhysicsBody body = null;
+	
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout, ShipType shipType) {
 		this.position = position.cpy();
 		this.game = game;
@@ -33,6 +35,12 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 		if(loadout.getPassiveAbility() != null) {
 			loadout.getPassiveAbility().getEffect().applyEffect(this);
 		}
+		
+		Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		body.setVelocity(new Vector2(3,0));
 	}
 
 	/**
@@ -43,7 +51,7 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 		if(hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
 		} else if (collidedWithSomethingElse(other)) {
-			// TODO game over / die
+			System.out.println("You crashed!!!");
 		}
 	}
 
@@ -85,38 +93,37 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 
 	@Override
 	public Vector2 getPosition() {
-		return position;
+		return body.getPosition();
 	}
 
 	@Override
 	public void setPosition(Vector2 position) {
 		this.position.set(position);
 	}
-	
+
 	@Override
 	public void update(float deltaTime){
-		if(position.y > moveToPos + 0.1f){
-			this.position.add(0, -moveSpeed *deltaTime);
-		} else if(position.y < moveToPos - 0.1f){
-			this.position.add(0, moveSpeed *deltaTime);
-		}
-		this.position.add(velocity *deltaTime,0);
 		Graphics.setNewCameraPos((this.getPosition().x+Graphics.GAME_WIDTH/2),(Graphics.GAME_HEIGHT/2));
 	}
 	
 	@Override
 	public void moveTo(float yPos){
-		moveToPos = yPos;
+		yPos = yPos - getPosition().y;
+		if(yPos > 0.001f || yPos < -0.001f) {
+			body.getBox2DBody().setTransform(getPosition().add(0, yPos), 0);
+		}
 	}
 	
 	@Override
 	public float getMovePos(){
 		return moveToPos;
+		// TODO : Remove?
 	}
 		
 	@Override
 	public void stopMovement(){
 		moveToPos = position.y;
+		// TODO : Remove?
 	}
 	
 	@Override
