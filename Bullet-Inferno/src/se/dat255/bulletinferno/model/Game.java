@@ -10,7 +10,7 @@ public interface Game extends Disposable {
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
-	 * @return
+	 * @return a list of projectiles currently in the game.
 	 */
 	public List<? extends Projectile> getProjectiles();
 
@@ -23,20 +23,20 @@ public interface Game extends Disposable {
 	 * Dispose of the specified projectile
 	 * 
 	 * @param projectile
+	 *        The projectile reference to dispose.
 	 */
 	public void disposeProjectile(Projectile projectile);
 
 	/**
 	 * Sets a reference to the player's ship, for use in update methods.
 	 * 
-	 * @return
 	 */
 	public void setPlayerShip(PlayerShip ship);
 
 	/**
 	 * Returns the player's ship
 	 * 
-	 * @return
+	 * @return The player's ship.
 	 */
 	public PlayerShip getPlayerShip();
 
@@ -58,6 +58,7 @@ public interface Game extends Disposable {
 	 * Adds the specified enemy to the game
 	 * 
 	 * @param emeny
+	 *        The enemy to be added to the game world.
 	 */
 	public void addEnemy(Enemy emeny);
 
@@ -65,6 +66,7 @@ public interface Game extends Disposable {
 	 * Dispose of the specified enemy from the game
 	 * 
 	 * @param enemy
+	 *        The enemy to be disposed of.
 	 */
 	public void removeEnemy(Enemy enemy);
 
@@ -76,9 +78,23 @@ public interface Game extends Disposable {
 	public Timer getTimer();
 
 	/**
+	 * Runs a task at the next update.
+	 * 
+	 * <p>
+	 * This method could for example be used to schedule physics altering operation to after a
+	 * physics world update has been completed.
+	 * </p>
+	 * 
+	 * @param task
+	 *        The Runnable that should be run.
+	 */
+	public void runLater(Runnable task);
+
+	/**
 	 * Updates the game
 	 * 
 	 * @param delta
+	 *        Time elapsed in seconds since the last update.
 	 */
 	public void update(float delta);
 
@@ -87,16 +103,11 @@ public interface Game extends Disposable {
 	 *         physics game models.
 	 */
 	public PhysicsWorld getPhysicsWorld();
-	
-	
-	
+
 	public void addSegment(MockSegment seg);
-	
+
 	public void removeSegment(MockSegment seg);
-	
+
 	public List<MockSegment> getSegments();
-	
 
 }
-
-

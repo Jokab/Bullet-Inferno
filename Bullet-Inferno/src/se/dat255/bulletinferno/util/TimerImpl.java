@@ -36,7 +36,7 @@ public class TimerImpl implements Timer {
 	 * Constructs a new Timer with specified time to count down, that is not
 	 * continuous.
 	 * 
-	 * @param time
+	 * @param time The time to count down from.
 	 */
 	public TimerImpl(float time) {
 		if (time < 0) {
@@ -48,8 +48,8 @@ public class TimerImpl implements Timer {
 	/**
 	 * Constructs a new Timer with specified time and specified continuity
 	 * 
-	 * @param time
-	 * @param continuous
+	 * @param time The time to count down form.
+	 * @param continuous Whether the timer is continuous (looping) or not.
 	 */
 	public TimerImpl(float time, boolean continuous) {
 		this(time);

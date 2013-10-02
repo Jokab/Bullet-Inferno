@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model.weapon;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
@@ -11,21 +12,19 @@ import com.badlogic.gdx.math.Vector2;
 public class WeaponImpl implements Weapon {
 	private final Timer timer;
 
-	private final Game game;
-	private float reloadingTime;
-	private final Class<? extends Projectile> projectile;
+	protected final Game game;
+	private final ProjectileType projectileType;
 	private final Vector2 offset;
-	private final Vector2 projectileVelocity;
-	private float damage;
+	private final float velocity;
+	private float reloadingTime;
 
-	public WeaponImpl(Game game, float reloadingTime, Class<? extends Projectile> projectile,
-			Vector2 offset, Vector2 projectileVelocity, float damage) {
+	public WeaponImpl(Game game, float reloadingTime, ProjectileType projectileType,
+			Vector2 offset, float velocity) {
 		this.game = game;
 		this.reloadingTime = reloadingTime;
-		this.projectile = projectile;
+		this.projectileType = projectileType;
 		this.offset = offset;
-		this.projectileVelocity = projectileVelocity;
-		this.damage = damage;
+		this.velocity = velocity;
 
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
@@ -65,13 +64,8 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public float getDamage() {
-		return damage;
-	}
-
-	@Override
-	public Vector2 getProjectileVelocity() {
-		return projectileVelocity;
+	public float getProjectileVelocity() {
+		return velocity;
 	}
 
 	/**
@@ -80,11 +74,8 @@ public class WeaponImpl implements Weapon {
 	@Override
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
-			// Get projectile and set properties accordingly
-			Projectile projectile = getProjectile();
-			projectile.init(position.cpy().add(getOffset()), direction.scl(projectileVelocity),
-					damage, source);
-
+			
+			projectileType.releaseProjectile(game, position, getOffset(), direction.scl(velocity), source);
 			// Start count down
 			timer.restart();
 		}
@@ -95,14 +86,9 @@ public class WeaponImpl implements Weapon {
 		return timer;
 	}
 
-	/**
-	 * Gets the projectile to be fired.
-	 * Purely for extension purposes. To be overridden when
-	 * some kind of special property is needed for the projectile.
-	 */
-	protected Projectile getProjectile() {
-		// Retrieve a projectile from the world
-		return game.retrieveProjectile(projectile);
+	@Override
+	public ProjectileType getProjectileType() {
+		return projectileType;
 	}
 
 	@Override
@@ -113,7 +99,7 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public void setDamage(float damage) {
-		this.damage = damage;
+	public void setDamagePercent(float damagePercent) {
+		this.getProjectileType().setDamagePercent(damagePercent);
 	}
 }

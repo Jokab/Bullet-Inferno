@@ -6,16 +6,19 @@ import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsBody;
 import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
+import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.SineMovementPattern;
-import se.dat255.bulletinferno.model.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
+public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
+		PhysicsViewportIntersectionListener {
 
 	private int health;
 	private final int initialHealth;
@@ -26,10 +29,24 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private final Game game;
-
+	protected Vector2 velocity;
+	
 	protected final Weapon weapon;
+	
+	/**
+	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
+	 * the physics world during a simulation.
+	 */
+	private Runnable removeSelf = new Runnable() {
+		@Override
+		public void run() {
+			game.removeEnemy(SimpleEnemy.this);
+			dispose();
+		}
+	};
+	
 
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pmp,
 			int initialHealth, Weapon weapon, int score, int credits) {
 		this.game = game;
 		this.type = type;
@@ -38,6 +55,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		this.weapon = weapon;
 		this.score = score;
 		this.credits = credits;
+		this.velocity = velocity;
 
 		if (bodyDefinition == null) {
 			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
@@ -45,7 +63,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
-		game.getPhysicsWorld().attachMovementPattern(new SineMovementPattern(4, 6f), body);
+		if(pmp != null) {
+			game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
+		}
 
 	}
 
@@ -91,9 +111,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 
 			// If enemy has died
 			if (health <= 0) {
-				health = 0;
-				game.removeEnemy(this);
-				dispose();
+				scheduleRemoveSelf();
 			}
 		}
 	}
@@ -107,7 +125,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 		body = null;
 		if (weapon != null) {
 			weapon.getTimer().stop();
-		} 
+		}
 	}
 
 	@Override
@@ -128,9 +146,28 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible {
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof Enemy;
 	}
-	
+
 	@Override
 	public EnemyType getType() {
 		return this.type;
+	}
+
+	@Override
+	public void viewportIntersectionBegin() {
+		// NOP
+
+	}
+
+	@Override
+	public void viewportIntersectionEnd() {
+		scheduleRemoveSelf();
+	}
+	
+	/**
+	 * Removes the ship from the world using game.runLater to not modify physics world while
+	 * running.
+	 */
+	private void scheduleRemoveSelf() {
+		game.runLater(removeSelf);
 	}
 }

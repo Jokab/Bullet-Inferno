@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LoadoutScreen extends AbstractScreen {
-	private final MyGame myGame;
 
 	private final static int VIRTUAL_WIDTH = 1280;
 	private final static int VIRTUAL_HEIGHT = 720;
@@ -31,14 +30,11 @@ public class LoadoutScreen extends AbstractScreen {
 
 	private final Stage stage;
 	private final Skin skin;
-	private final SpriteBatch batch;
 
 	private final Texture startImgTexture;
 
 	public LoadoutScreen(final MyGame myGame) {
-		this.myGame = myGame;
 
-		batch = new SpriteBatch();
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
 

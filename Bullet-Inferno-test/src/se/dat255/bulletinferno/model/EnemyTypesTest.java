@@ -30,15 +30,15 @@ public class EnemyTypesTest {
 
 	@Test
 	public void testEnemyHealth() {
-		SimpleEnemy enemy = EnemyType.DEFAULT_SHIP.getEnemyShip(mockGame, new Vector2());
+		SimpleEnemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(mockGame, new Vector2());
 
-		assertTrue(EnemyType.DEFAULT_SHIP.getInitialHealth() == enemy.getHealth());
+		assertTrue(EnemyType.DEFAULT_ENEMY_SHIP.getInitialHealth() == enemy.getHealth());
 	}
 
 	@Test
 	public void testEnemyPosition() {
 		Vector2 position = new Vector2(1, 1);
-		SimpleEnemy enemy = EnemyType.FAST_SHIP.getEnemyShip(mockGame, position);
+		SimpleEnemy enemy = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(mockGame, position);
 
 		assertEquals(
 				"Position that was sent to the factory should be the same as the created enemy's position. ",
@@ -47,7 +47,7 @@ public class EnemyTypesTest {
 
 	@Test
 	public void testEnemy() {
-		assertTrue("The fast ship should be faster than the slow ship.", EnemyType.FAST_SHIP
-				.getVelocity().len() > EnemyType.SLOW_SHIP.getVelocity().len());
+		assertTrue("The fast ship should be faster than the slow ship.", EnemyType.SPECIAL_ENEMY_SHIP
+				.getVelocity().len() > EnemyType.DEFAULT_ENEMY_SHIP.getVelocity().len());
 	}
 }

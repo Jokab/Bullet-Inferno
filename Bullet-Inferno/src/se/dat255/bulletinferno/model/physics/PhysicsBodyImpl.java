@@ -14,9 +14,9 @@ public class PhysicsBodyImpl implements PhysicsBody {
 	private final Body body;
 
 	/**
-	 * Constructs a new PhysicsBody from the Box2D body supplied.
+	 * Constructs a new PhysicsBodyImpl from the Box2D body supplied.
 	 * 
-	 * @param definition
+	 * @param body
 	 *        a PhysicsBodyDefiniton to inherit properties from.
 	 */
 	public PhysicsBodyImpl(Body body) {

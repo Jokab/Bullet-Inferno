@@ -17,9 +17,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> textures;
 	static {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("DEFAULT_SHIP", "data/enemyShip.png");
-		map.put("FAST_SHIP", "data/enemyShip2.png");
-		map.put("SLOW_SHIP", "data/enemyShip2.png");
+		map.put("DEFAULT_ENEMY_SHIP", "data/enemyShip.png");
+		map.put("SPECIAL_ENEMY_SHIP", "data/enemyShip2.png");
 		map.put("PLAYER_DEFAULT", "data/ship.png");
 		
 		map.put("PAUSE_SCREEN", "images/gui/screen_pause.png");

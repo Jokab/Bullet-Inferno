@@ -96,8 +96,7 @@ public class ProjectileImplTest {
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(mockGame);
 		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
-		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, 
-				loadout, ShipType.PLAYER_DEFAULT);
+		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, loadout, ShipType.PLAYER_DEFAULT);
 		
 		// Set the ship as the source
 		projectile.init(new Vector2(), new Vector2(), 30, sourceShip);
