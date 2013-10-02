@@ -17,8 +17,6 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	private final int initialHealth;
 	private float takeDamageModifier = 1; // default
 	private int health;
-	private float moveToPos; 
-	private float moveSpeed = 6.0f;
 	private final ShipType shipType;
 	private final Loadout loadout;
 	private PhysicsBody body = null;
@@ -108,7 +106,7 @@ public class PlayerShipImpl implements PlayerShip, ResourceIdentifier {
 	
 	@Override
 	public void moveY(float dy){
-		body.getBox2DBody().setTransform(getPosition().add(0, dy), 0);
+		moveY(dy, 1);
 	}
 	
 	@Override
