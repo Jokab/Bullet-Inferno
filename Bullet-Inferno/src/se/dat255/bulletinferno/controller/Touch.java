@@ -127,7 +127,7 @@ public class Touch implements InputProcessor {
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
 		if (touchVector.x <= ship.getPosition().x + 8f) {
-				ship.moveY(touchVector.y - touchOrigin.y, 3);
+				ship.moveY(touchVector.y - touchOrigin.y, 1);
 				touchOrigin.set(touchVector);
 		}
 		return false;

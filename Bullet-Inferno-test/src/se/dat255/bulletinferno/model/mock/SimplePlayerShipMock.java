@@ -66,19 +66,6 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void moveTo(float yPos) {
-	}
-
-	@Override
-	public void stopMovement() {
-	}
-
-	@Override
-	public float getMovePos() {
-		return 0;
-	}
-
-	@Override
 	public Weapon getWeapon() {
 		// TODO Auto-generated method stub
 		return null;
@@ -98,6 +85,18 @@ public class SimplePlayerShipMock implements PlayerShip {
 
 	@Override
 	public void setTakeDamageModifier(float takeDamageModifier) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveY(float dy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveY(float dy, float scale) {
 		// TODO Auto-generated method stub
 		
 	}
