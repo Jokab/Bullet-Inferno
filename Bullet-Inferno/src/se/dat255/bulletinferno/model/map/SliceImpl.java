@@ -14,13 +14,13 @@ public class SliceImpl implements Slice, Collidable {
 	private final float entryHeight;
 	private final float exitHeight;
 	private final Game game;
-	private final SliceType id;
+	private final SliceDefinitionImpl id;
 	private final float width;
 	
 	/** The obstacles present in this slice. */
 	private final List<? extends Obstacle> obstacles;
 	
-	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight,
+	public SliceImpl(Game game, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
@@ -42,7 +42,7 @@ public class SliceImpl implements Slice, Collidable {
 		this.obstacles = obstacles;
 	}
 
-	public SliceImpl(Game game, SliceType id, float entryHeight, float exitHeight,
+	public SliceImpl(Game game, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width) {
 		this(game, id, entryHeight, exitHeight, position, width,
 				Collections.<ObstaclePlacement> emptyList());

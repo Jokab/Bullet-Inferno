@@ -1,5 +1,8 @@
 package se.dat255.bulletinferno;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
@@ -10,9 +13,10 @@ import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.map.SegmentDefinitionImpl;
 import se.dat255.bulletinferno.model.map.SegmentImpl;
 import se.dat255.bulletinferno.model.map.Slice;
-import se.dat255.bulletinferno.model.map.SliceType;
+import se.dat255.bulletinferno.model.map.SliceDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -117,11 +121,13 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private void setupHardcodedSegments() {
-		Slice entry = SliceType.MOUNTAIN_1.getSlice(game, new Vector2(0, 0));
-		Slice[] middle = new Slice[]{SliceType.MOUNTAIN_2.getSlice(game, new Vector2(20, 0))};
-		Slice exit = SliceType.MOUNTAIN_8.getSlice(game, new Vector2(40, 0));
-		Segment segment = new SegmentImpl(entry, exit, middle, 0);
+		// SegmentFactory segmentFactory = new SegmentFactory();
+		// Segment segment = segmentFactory.generateRandomSegment(game, Vector2(), 9);
+		Segment segment = SegmentDefinitionImpl.MOUNTAIN.createSegment(game, new Vector2(), 6);
 		SegmentView sW = new SegmentView(resourceManager, segment);
+		
+		
+		
 		game.addSegment(sW);
 	}
 
