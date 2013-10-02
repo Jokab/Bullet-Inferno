@@ -11,9 +11,18 @@ import com.badlogic.gdx.math.Vector2;
 
 public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable {
 
-	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pmp,
+	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth, Weapon weapon, int score, int credits) {
-		super(game, type, position, velocity, pmp, initialHealth, weapon, score, credits);
+		super(game, type, position, velocity, initialHealth, weapon, score, credits);
+
+		Timer timer = weapon.getTimer();
+		timer.registerListener(this);
+
+	}
+	
+	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
+			int initialHealth, Weapon weapon, int score, int credits) {
+		super(game, type, position, velocity, pattern, initialHealth, weapon, score, credits);
 
 		Timer timer = weapon.getTimer();
 		timer.registerListener(this);

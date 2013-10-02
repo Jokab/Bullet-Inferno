@@ -11,10 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyType implements ResourceIdentifier {
 
-	// ORDER:
-	// velocity, health, weapon, score, credits
-	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0),  new SineMovementPattern(4, 6f), 5, WeaponData.SLOW,  10, 10),
-	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), new AccelerationMovementPattern(new Vector2(-10,0)), 5, WeaponData.SLOW, 10, 10);
+	// (movement pattern = null) => no movement patter
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), new SineMovementPattern(4, 6f), 5, WeaponData.SLOW, 10,
+			10),
+	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), new AccelerationMovementPattern(new Vector2(-10, 0)), 5,
+			WeaponData.SLOW, 10, 10);
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
@@ -23,7 +24,8 @@ public enum EnemyType implements ResourceIdentifier {
 	private final int score;
 	private final int credits;
 
-	EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, WeaponData weaponData, int score, int credits) {
+	EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth,
+			WeaponData weaponData, int score, int credits) {
 		this.velocity = velocity.cpy();
 		this.pattern = pattern;
 		this.initialHealth = initialHealth;
@@ -33,8 +35,13 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
-		return new DefaultEnemyShipImpl(game, this, position, velocity, pattern, initialHealth,
-				weaponData.getEnemyWeaponForGame(game), score, credits);
+		if (pattern == null) {
+			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
+					weaponData.getEnemyWeaponForGame(game), score, credits);
+		} else {
+			return new DefaultEnemyShipImpl(game, this, position, velocity, pattern, initialHealth,
+					weaponData.getEnemyWeaponForGame(game), score, credits);
+		}
 	}
 
 	public Vector2 getVelocity() {

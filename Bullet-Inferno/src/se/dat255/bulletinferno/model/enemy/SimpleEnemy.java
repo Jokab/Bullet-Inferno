@@ -44,6 +44,26 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
+
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			int initialHealth, Weapon weapon, int score, int credits) {
+		this.game = game;
+		this.type = type;
+		this.initialHealth = initialHealth;
+		health = initialHealth;
+		this.weapon = weapon;
+		this.score = score;
+		this.credits = credits;
+		this.velocity = velocity;
+
+		if (bodyDefinition == null) {
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+		}
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		body.setVelocity(velocity);
+	}
+	
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			PhysicsMovementPattern pattern,
 			int initialHealth, Weapon weapon, int score, int credits) {
