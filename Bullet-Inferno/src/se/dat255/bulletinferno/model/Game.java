@@ -2,9 +2,9 @@ package se.dat255.bulletinferno.model;
 
 import java.util.List;
 
+import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.view.map.SegmentView;
 
 public interface Game extends Disposable {
 	/**
@@ -89,18 +89,30 @@ public interface Game extends Disposable {
 	public PhysicsWorld getPhysicsWorld();
 	
 	/**
-	 * Adds a segment to the world
-	 * @param segment The segment to add
+	 * Adds a segment to the end of the world segment list (i.e. to the right of the last).
+	 * 
+	 * @param segment
+	 *        the segment to add.
 	 */
-	public void addSegment(SegmentView segment);
+	public void addSegment(Segment segment);
+
 	/**
-	 * Removes a segment from the world
-	 * @param segment The segment to remove
+	 * Removes segments from the beginning of the world segment list (i.e. the leftmost ones).
+	 * 
+	 * @param segment
+	 *        the number of segments to remove.
 	 */
-	public void removeSegment(SegmentView segment);
-	/** @return A list of all the active segments in the world */
-	public List<SegmentView> getSegments();
+	public void removeSegments(int numberOfSegments);
+
+	/**
+	 * @return a list of all the active segments in the world.
+	 */
+	public List<? extends Segment> getSegments();
+
+	/**
+	 * @return the number of segments that has been removed from the segment list since the game
+	 *         started. Removes only happen from the beginning of the segment list.
+	 */
+	public int getRemovedSegmentCount();
 
 }
-
-

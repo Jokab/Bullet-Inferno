@@ -2,17 +2,13 @@ package se.dat255.bulletinferno.view.map;
 
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import se.dat255.bulletinferno.model.ResourceManagerImpl;
+import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.Slice;
-import se.dat255.bulletinferno.model.map.SliceDefinitionImpl;
 import se.dat255.bulletinferno.view.Renderable;
 
 /**
@@ -28,7 +24,7 @@ public class SegmentView implements Renderable {
 	public final Texture texture;
 	
 	/** Creates a new view for the given segment */
-	public SegmentView(ResourceManagerImpl resourceManager, Segment segment) {
+	public SegmentView(ResourceManager resourceManager, Segment segment) {
 		this.segment = segment;
 		
 		// TODO: Not hardcode

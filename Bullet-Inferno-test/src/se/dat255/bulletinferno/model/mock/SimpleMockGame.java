@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.mock;
 
+import java.util.Collections;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.Enemy;
@@ -8,8 +9,8 @@ import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.view.MockSegment;
 
 public class SimpleMockGame implements Game {
 	public final Projectile mockProjectile = new SimpleMockProjectile(null);
@@ -99,21 +100,23 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public void addSegment(MockSegment seg) {
-		// TODO Auto-generated method stub
-		
+	public void addSegment(Segment segment) {
+		// NOP
 	}
 
 	@Override
-	public void removeSegment(MockSegment seg) {
-		// TODO Auto-generated method stub
-		
+	public void removeSegments(int numberOfSegments) {
+		// NOP
 	}
 
 	@Override
-	public List<MockSegment> getSegments() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<? extends Segment> getSegments() {
+		return Collections.<Segment> emptyList();
+	}
+
+	@Override
+	public int getRemovedSegmentCount() {
+		return 0;
 	}
 
 }

@@ -1,8 +1,5 @@
 package se.dat255.bulletinferno;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
@@ -10,13 +7,11 @@ import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.SegmentDefinitionImpl;
-import se.dat255.bulletinferno.model.map.SegmentImpl;
-import se.dat255.bulletinferno.model.map.Slice;
-import se.dat255.bulletinferno.model.map.SliceDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -25,7 +20,6 @@ import se.dat255.bulletinferno.view.RenderableGUI;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
-import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -65,7 +59,7 @@ public class GameScreen extends AbstractScreen {
 	static BackgroundView bgView;
 	
 	private AssetManager assetManager = new AssetManager();
-	private ResourceManagerImpl resourceManager = new ResourceManagerImpl(assetManager);
+	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -99,7 +93,7 @@ public class GameScreen extends AbstractScreen {
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.addRenderable(shipView);
 		
-		bgView = new BackgroundView(ship, game);
+		bgView = new BackgroundView(game, resourceManager, ship);
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
@@ -124,11 +118,7 @@ public class GameScreen extends AbstractScreen {
 		// SegmentFactory segmentFactory = new SegmentFactory();
 		// Segment segment = segmentFactory.generateRandomSegment(game, Vector2(), 9);
 		Segment segment = SegmentDefinitionImpl.MOUNTAIN.createSegment(game, new Vector2(), 6);
-		SegmentView sW = new SegmentView(resourceManager, segment);
-		
-		
-		
-		game.addSegment(sW);
+		game.addSegment(segment);
 	}
 
 	/** Initiates the pause components when the player starts a level */

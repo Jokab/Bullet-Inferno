@@ -7,10 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
-import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.utils.Pool;
 
@@ -31,9 +31,16 @@ public class GameImpl implements Game {
 	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
-	/** Currently active segments on the map */
-	private final List<SegmentView> segments = new ArrayList<SegmentView>();
 	
+	/** The number of segments that have been removed from the (beginning of) segments so far. */
+	private int removedSegmentCount = 0;
+	
+	/**
+	 * Currently active segments on the map. Removes from this list increments removedSegmentsCount
+	 * by one one for each removed segment. Removes are only allowed from the head (beginning) and
+	 * adds only allowed to the tail (end), similar to a queue but not exactly.
+	 */
+	private List<Segment> segments = new ArrayList<Segment>(0);
 	
 	/** List of all timers */
 	private final List<Timer> timers;
@@ -105,24 +112,53 @@ public class GameImpl implements Game {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void addSegment(SegmentView segment){
+	@Override
+	public void addSegment(Segment segment) {
 		segments.add(segment);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removeSegment(SegmentView segment){
-		segments.remove(segment);
+	@Override
+	public void removeSegments(int numberOfSegments) {
+		if (segments.size() < numberOfSegments) {
+			throw new IllegalArgumentException("numberOfSegments exceeds segment list length");
+		}
+
+		// The idea here is to use the old number of segments as an initial capacity, as there will
+		// probably be inserted exactly numberOfSegments new segments very soon!
+		List<Segment> newSegments = new ArrayList<Segment>(segments.size());
+
+		int leftToRemove = numberOfSegments;
+		for (Segment segment : segments) {
+			if (leftToRemove > 0) {
+				segment.dispose();
+				leftToRemove--;
+			} else {
+				newSegments.add(segment);
+			}
+		}
+
+		segments = newSegments;
+		removedSegmentCount += numberOfSegments;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<SegmentView> getSegments(){
+	@Override
+	public List<? extends Segment> getSegments() {
 		return segments;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getRemovedSegmentCount() {
+		return removedSegmentCount;
+	}
 	
 	/**
 	 * {@inheritDoc}
