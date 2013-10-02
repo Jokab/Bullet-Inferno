@@ -35,7 +35,7 @@ public class ProjectileImplTest {
 	public void testGetDamage() {
 		// Tests that the projectileImpl has a default damage > 0.
 		ProjectileImpl projectile = new ProjectileImpl(mockGame);
-		projectile.init(ProjectileType.DEFAULT_PROJECTILE, new Vector2(), new Vector2(), 30, null);
+		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, null);
 
 		assertTrue("The default damage of a projectile should be above 0",
 				projectile.getDamage() > 0);
@@ -46,11 +46,11 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedOtherProjectileNoDamageChange() {
 		Projectile projectileA = new ProjectileImpl(mockGame);
-		projectileA.init(ProjectileType.DEFAULT_PROJECTILE,new Vector2(), new Vector2(), 30, null);
+		projectileA.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null);
 		float initialDamage = projectileA.getDamage();
 
 		Projectile projectileB = new ProjectileImpl(mockGame);
-		projectileB.init(ProjectileType.DEFAULT_PROJECTILE,new Vector2(), new Vector2(), 30, null);
+		projectileB.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null);
 
 		projectileA.preCollided(projectileB);
 		assertTrue("A projectile should not take damage upon hit by another projectile (pre)",
@@ -67,7 +67,7 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedDamageDecreasePostCollision() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		projectile.init(ProjectileType.DEFAULT_PROJECTILE,new Vector2(), new Vector2(), 30, new Teamable() {
+		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, new Teamable() {
 			
 			@Override
 			public boolean isInMyTeam(Teamable teamMember) {
@@ -77,7 +77,7 @@ public class ProjectileImplTest {
 		});
 		float initialDamage = projectile.getDamage();
 
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
@@ -96,11 +96,11 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, loadout, ShipType.PLAYER_DEFAULT);
 		
 		// Set the ship as the source
-		projectile.init(ProjectileType.DEFAULT_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip);
+		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip);
 		
 		float initialDamage = projectile.getDamage();
 		projectile.postCollided(sourceShip);
@@ -139,7 +139,7 @@ public class ProjectileImplTest {
 		TeamA teamA2 = new TeamA();
 		TeamB teamB = new TeamB();
 		// Set team A as the source
-		projectile.init(ProjectileType.DEFAULT_PROJECTILE, new Vector2(), new Vector2(), 30, teamA1);
+		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, teamA1);
 		
 		float initialDamage = projectile.getDamage();
 		projectile.postCollided(teamA2);
@@ -157,7 +157,7 @@ public class ProjectileImplTest {
 	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		projectile.init(ProjectileType.DEFAULT_PROJECTILE, new Vector2(), new Vector2(), 30, new Teamable() {
+		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, new Teamable() {
 			
 			@Override
 			public boolean isInMyTeam(Teamable teamMember) {
@@ -166,7 +166,7 @@ public class ProjectileImplTest {
 			}
 		});
 
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
