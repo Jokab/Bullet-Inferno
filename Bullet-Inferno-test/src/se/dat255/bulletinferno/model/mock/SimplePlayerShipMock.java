@@ -102,4 +102,10 @@ public class SimplePlayerShipMock implements PlayerShip {
 		
 	}
 
+	@Override
+	public boolean isDead() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
