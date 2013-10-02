@@ -1,8 +1,6 @@
 package se.dat255.bulletinferno.model.weapon;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
-import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.util.Timer;
@@ -15,16 +13,16 @@ public class WeaponImpl implements Weapon {
 	protected final Game game;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
-	private final float velocity;
+	private final float projectileSpeed;
 	private float reloadingTime;
 
 	public WeaponImpl(Game game, float reloadingTime, ProjectileType projectileType,
-			Vector2 offset, float velocity) {
+			Vector2 offset, float projectileSpeed) {
 		this.game = game;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
 		this.offset = offset;
-		this.velocity = velocity;
+		this.projectileSpeed = projectileSpeed;
 
 		timer = game.getTimer();
 		timer.setTime(reloadingTime);
@@ -65,7 +63,7 @@ public class WeaponImpl implements Weapon {
 
 	@Override
 	public float getProjectileVelocity() {
-		return velocity;
+		return projectileSpeed;
 	}
 
 	/**
@@ -75,7 +73,7 @@ public class WeaponImpl implements Weapon {
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releaseProjectile(game, position, getOffset(), direction.scl(velocity), source);
+			projectileType.releaseProjectile(game, position, getOffset(), direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();
 		}

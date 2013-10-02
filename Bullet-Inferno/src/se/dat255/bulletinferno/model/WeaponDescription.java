@@ -32,7 +32,7 @@ public interface WeaponDescription extends ResourceIdentifier {
 	 * 
 	 * @return The projectile's velocity.
 	 */
-	float getProjectileVelocity();
+	float getProjectileSpeed();
 
 	/**
 	 * Returns a new Weapon instance by using the data in the passed enum.

@@ -13,6 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public enum ProjectileType implements ResourceIdentifier {
 	
+	/**
+	 * damage, movementpattern
+	 */
 	DEFAULT_PROJECTILE(5f, null), // null = straight forward 
 	LEFT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
 	RIGHT_ACCELERATING_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),

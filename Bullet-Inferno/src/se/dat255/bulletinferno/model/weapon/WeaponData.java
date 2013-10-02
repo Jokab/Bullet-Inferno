@@ -9,7 +9,7 @@ import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.WeaponDescription;
 
 /**
- * Enum class for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
+ * Enum for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
  * (for players) or {@link #getEnemyWeaponForGame(Game)} (for enemies) are
  * used to retrieve a Weapon for the game.
  * 
@@ -20,7 +20,7 @@ public enum WeaponData implements WeaponDescription {
 
 	/**
 	 * Order:
-	 * reloadTime, projectile, offset, projectileVelocity, damage
+	 * reloadTime, projectile, offset, projectileVelocity
 	 */
 	FAST(0.1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4),
 	SLOW(1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4);
@@ -28,14 +28,14 @@ public enum WeaponData implements WeaponDescription {
 	private float reloadingTime;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
-	private final float velocity;
+	private final float projectileSpeed;
 
 	WeaponData(float reloadTime, ProjectileType projectileType, Vector2 offset,
-			float velocity) {
-		reloadingTime = reloadTime;
+			float projectileSpeed) {
+		this.reloadingTime = reloadTime;
 		this.projectileType = projectileType;
 		this.offset = offset;
-		this.velocity = velocity;
+		this.projectileSpeed = projectileSpeed;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public float getReloadTime() {
-		return reloadingTime;
+		return this.reloadingTime;
 	}
 
 	/**
@@ -51,15 +51,15 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Vector2 getOffset() {
-		return offset;
+		return this.offset;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public float getProjectileVelocity() {
-		return velocity;
+	public float getProjectileSpeed() {
+		return this.projectileSpeed;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getPlayerWeaponForGame(Game game) {
-		return new WeaponImpl(game, reloadingTime, projectileType, offset, velocity);
+		return new WeaponImpl(game, reloadingTime, projectileType, offset, projectileSpeed);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getEnemyWeaponForGame(Game game) {
-		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, velocity);
+		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, projectileSpeed);
 	}
 	
 	@Override
@@ -85,6 +85,6 @@ public enum WeaponData implements WeaponDescription {
 
 	@Override
 	public ProjectileType getProjectileType() {
-		return projectileType;
+		return this.projectileType;
 	}
 }

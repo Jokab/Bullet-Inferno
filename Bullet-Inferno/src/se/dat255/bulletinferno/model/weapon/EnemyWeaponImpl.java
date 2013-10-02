@@ -10,8 +10,8 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	
 
 	public EnemyWeaponImpl(Game game, float reloadingTime, ProjectileType projectile,
-			Vector2 offset, float velocity) {
-		super(game, reloadingTime, projectile, offset, velocity);
+			Vector2 offset, float projectileSpeed) {
+		super(game, reloadingTime, projectile, offset, projectileSpeed);
 		if (getReloadingTime() == 0) {
 			throw new RuntimeException("Enemy reloading speed must not be 0.");
 		}
