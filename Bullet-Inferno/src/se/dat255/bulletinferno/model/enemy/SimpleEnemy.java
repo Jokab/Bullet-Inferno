@@ -29,9 +29,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private PhysicsBody body = null;
 	private final Game game;
 	protected Vector2 velocity;
-	
+
 	protected final Weapon weapon;
-	
+
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
@@ -43,9 +43,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			dispose();
 		}
 	};
-	
 
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pmp,
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			PhysicsMovementPattern pattern,
 			int initialHealth, Weapon weapon, int score, int credits) {
 		this.game = game;
 		this.type = type;
@@ -62,7 +62,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
-		game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
+		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 
 	}
 
@@ -169,7 +169,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void viewportIntersectionEnd() {
 		scheduleRemoveSelf();
 	}
-	
+
 	/**
 	 * Removes the ship from the world using game.runLater to not modify physics world while
 	 * running.

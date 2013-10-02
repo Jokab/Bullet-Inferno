@@ -17,15 +17,15 @@ public enum EnemyType implements ResourceIdentifier {
 	SPECIAL_ENEMY_SHIP(new Vector2(-6, 0), new AccelerationMovementPattern(new Vector2(-10,0)), 5, WeaponData.SLOW, 10, 10);
 
 	private final Vector2 velocity;
-	private final PhysicsMovementPattern pmp;
+	private final PhysicsMovementPattern pattern;
 	private final int initialHealth;
 	private final WeaponData weaponData;
 	private final int score;
 	private final int credits;
 
-	EnemyType(Vector2 velocity, PhysicsMovementPattern pmp, int initialHealth, WeaponData weaponData, int score, int credits) {
+	EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, WeaponData weaponData, int score, int credits) {
 		this.velocity = velocity.cpy();
-		this.pmp = pmp;
+		this.pattern = pattern;
 		this.initialHealth = initialHealth;
 		this.weaponData = weaponData;
 		this.score = score;
@@ -33,7 +33,7 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
-		return new DefaultEnemyShipImpl(game, this, position, velocity, pmp, initialHealth,
+		return new DefaultEnemyShipImpl(game, this, position, velocity, pattern, initialHealth,
 				weaponData.getEnemyWeaponForGame(game), score, credits);
 	}
 

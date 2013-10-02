@@ -57,14 +57,14 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	@Override
 	public void init(Vector2 origin, Vector2 velocity, float damage, Teamable source,
-			PhysicsMovementPattern pmp) {
+			PhysicsMovementPattern pattern) {
 		this.damage = damage;
 		this.source = source;
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
 
 		// Check if there is a movement pattern to attach
-		if (pmp != null) {
-			game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
+		if (pattern != null) {
+			game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 		}
 
 		this.setVelocity(velocity);
