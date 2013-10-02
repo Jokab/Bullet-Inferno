@@ -45,12 +45,12 @@ public class BackgroundView implements Renderable {
 		// Note that is is possible that segmentViews.size() < removedSegmentsSinceLast!
 		int segmentViewsActuallyRemoved = 0;
 		for(SegmentView segmentView : segmentViews) {
-			segmentView.dispose();
-			segmentViewsActuallyRemoved++;
-			
 			if(segmentViewsActuallyRemoved >= removedSegmentsSinceLast) {
 				break;
 			}
+			
+			segmentView.dispose();
+			segmentViewsActuallyRemoved++;
 		}
 		
 		// This is a safe measurement even if removedSegmentsSinceLast exceeds segmentViews.size().
