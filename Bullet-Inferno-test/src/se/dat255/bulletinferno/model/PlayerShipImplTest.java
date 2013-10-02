@@ -68,21 +68,15 @@ public class PlayerShipImplTest {
 	}
 
 	@Test
-	public void testSetGetPosition() {
+	public void testGetPosition() {
 		// Tests the set and get position methods
 
-		Vector2 position = new Vector2(0, 0);
+		Vector2 position = new Vector2(8, 9);
 		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, loadout, ShipType.PLAYER_DEFAULT);
 
-		assertEquals("The position should be set in the constructor", position,
-				playerShip.getPosition());
-
-		Vector2 position2 = new Vector2(1, 1);
-		playerShip.setPosition(position2);
-
-		assertEquals("The setPosition should set the position", position2,
-				playerShip.getPosition());
+		assertTrue("The position should be set in the constructor", 
+				position.equals(playerShip.getPosition()));
 	}
 
 	@Test
@@ -128,14 +122,6 @@ public class PlayerShipImplTest {
 				"Changing the vector outside the object should not affect the object",
 				playerShip.getPosition().x != position.x);
 
-		// Test the setPosition method.
-		Vector2 position2 = new Vector2(0, 0);
-		playerShip.setPosition(position2);
-		position2.x = 20;
-
-		assertTrue(
-				"Changing the vector outside the object should not affect the object",
-				playerShip.getPosition().x != position2.x);
 	}
 	
 	@Test
