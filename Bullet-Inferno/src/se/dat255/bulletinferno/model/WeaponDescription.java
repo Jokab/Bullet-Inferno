@@ -35,13 +35,6 @@ public interface WeaponDescription extends ResourceIdentifier {
 	float getProjectileVelocity();
 
 	/**
-	 * Returns the amount of damage this weapon's bullets will deal.
-	 * 
-	 * @return The damage.
-	 */
-	float getDamage();
-
-	/**
 	 * Returns a new Weapon instance by using the data in the passed enum.
 	 * 
 	 * @param game The Game instance.

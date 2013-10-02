@@ -54,4 +54,8 @@ public interface Weapon {
 
 	public Timer getTimer();
 
+	public void setReloadingTime(float reloadingTime);
+	
+	public void setDamagePercent(float damagePercent);
+
 }

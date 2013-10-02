@@ -13,13 +13,13 @@ public class WeaponImpl implements Weapon {
 	private final Timer timer;
 
 	protected final Game game;
-	private final float reloadingTime;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
 	private final float velocity;
+	private float reloadingTime;
 
 	public WeaponImpl(Game game, float reloadingTime, ProjectileType projectileType,
-			Vector2 offset, float velocity, float damage) {
+			Vector2 offset, float velocity) {
 		this.game = game;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
@@ -91,4 +91,15 @@ public class WeaponImpl implements Weapon {
 		return projectileType;
 	}
 
+	@Override
+	public void setReloadingTime(float reloadingTime) {
+		this.reloadingTime = reloadingTime;
+		timer.setTime(reloadingTime);
+		timer.start();
+	}
+
+	@Override
+	public void setDamagePercent(float damagePercent) {
+		this.getProjectileType().setDamagePercent(damagePercent);
+	}
 }

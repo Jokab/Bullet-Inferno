@@ -22,22 +22,20 @@ public enum WeaponData implements WeaponDescription {
 	 * Order:
 	 * reloadTime, projectile, offset, projectileVelocity, damage
 	 */
-	FAST(0.1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4, 6f),
-	SLOW(1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4, 6f);
+	FAST(0.1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4),
+	SLOW(1f, ProjectileType.SINE_PROJECTILE, new Vector2(), 4);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
 	private final float velocity;
-	private final float damage;
 
 	WeaponData(float reloadTime, ProjectileType projectileType, Vector2 offset,
-			float velocity, float damage) {
+			float velocity) {
 		reloadingTime = reloadTime;
 		this.projectileType = projectileType;
 		this.offset = offset;
 		this.velocity = velocity;
-		this.damage = damage;
 	}
 
 	/**
@@ -68,16 +66,8 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public float getDamage() {
-		return damage;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Weapon getPlayerWeaponForGame(Game game) {
-		return new WeaponImpl(game, reloadingTime, projectileType, offset, velocity, damage);
+		return new WeaponImpl(game, reloadingTime, projectileType, offset, velocity);
 	}
 
 	/**
@@ -85,8 +75,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getEnemyWeaponForGame(Game game) {
-		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, velocity,
-				damage);
+		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, velocity);
 	}
 	
 	@Override
