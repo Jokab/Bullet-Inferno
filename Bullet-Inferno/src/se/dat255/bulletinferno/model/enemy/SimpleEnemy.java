@@ -63,9 +63,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 		body.setVelocity(velocity);
-		if(pmp != null) {
-			game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
-		}
+		game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
 
 	}
 
