@@ -121,8 +121,9 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private void setupHardcodedSegments() {
-		
-		Segment segment = SegmentDefinitionImpl.MOUNTAIN.generateSegment(game, new Vector2(), 6);
+		// SegmentFactory segmentFactory = new SegmentFactory();
+		// Segment segment = segmentFactory.generateRandomSegment(game, Vector2(), 9);
+		Segment segment = SegmentDefinitionImpl.MOUNTAIN.createSegment(game, new Vector2(), 6);
 		SegmentView sW = new SegmentView(resourceManager, segment);
 		
 		

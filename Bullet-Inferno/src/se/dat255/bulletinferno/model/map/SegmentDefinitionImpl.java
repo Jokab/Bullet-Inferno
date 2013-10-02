@@ -34,12 +34,6 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 		this.suitableSlices = suitableSlices;
 	}
 	
-	public Segment generateRandomSegment(Game game, Vector2 position, int sliceAmount) {
-		SegmentDefinitionImpl[] values = SegmentDefinitionImpl.values();
-		Random random = new Random();
-		return values[random.nextInt(values.length)].createSegment(game, position, sliceAmount);
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
