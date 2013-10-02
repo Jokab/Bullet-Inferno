@@ -158,4 +158,9 @@ public class PlayerShipImpl implements PlayerShip {
 	public Loadout getLoadout() {
 		return this.loadout;
 	}
+
+	@Override
+	public boolean isDead() {
+		return this.health <= 0;
+	}
 }
