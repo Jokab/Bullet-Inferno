@@ -114,8 +114,7 @@ public class SegmentManagerImpl implements SegmentManager {
 		// Remove any segments that is not in the viewport.
 		int segmentsToRemove = 0;
 		for(Segment segment : segments) {
-			Vector2 position = segment.getPosition();
-			if(position.x < xMin) {
+			if(segment.getPosition().x + segment.getWidth() < xMin) {
 				segmentsToRemove++;
 			}
 		}
