@@ -12,6 +12,8 @@ import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.Teamable;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -57,7 +59,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.velocity = velocity;
 
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(0.08f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
@@ -77,7 +79,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.velocity = velocity;
 
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(0.08f, 0.1f);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);

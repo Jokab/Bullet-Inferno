@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -37,8 +38,8 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public ProjectileImpl(Game game) {
 		this.game = game;
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(0.1f, 0.1f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 	}
 
@@ -46,7 +47,8 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, Teamable source) {
+	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
+			Teamable source) {
 		projectileType = type;
 		this.damage = damage;
 		this.source = source;

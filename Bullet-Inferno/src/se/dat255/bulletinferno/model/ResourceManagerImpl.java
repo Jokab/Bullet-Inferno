@@ -20,6 +20,11 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> textures;
 	static {
 		Map<String, String> map = new HashMap<String, String>();
+		map.put("DEFAULT_SHIP", "data/defaultEnemy.png");
+		map.put("FAST_SHIP", "data/defaultEnemy.png");
+		map.put("SLOW_SHIP", "data/defaultEnemy.png");
+		map.put("PLAYER_DEFAULT", "data/defaultEnemy.png");
+		map.put("MAP_MOUNTAIN", "images/game/mountain.png");
 		
 		// Enemies
 		map.put("DEFAULT_ENEMY_SHIP", "data/defaultEnemy.png");

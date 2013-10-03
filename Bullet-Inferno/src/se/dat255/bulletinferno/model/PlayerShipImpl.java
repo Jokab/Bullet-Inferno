@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -39,7 +40,7 @@ public class PlayerShipImpl implements PlayerShip {
 			loadout.getPassiveAbility().getEffect().applyEffect(this);
 		}
 
-		Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+		Shape shape = PhysicsShapeFactory.getRectangularShape(0.08f, 0.1f);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);

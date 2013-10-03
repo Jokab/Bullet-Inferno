@@ -10,13 +10,11 @@ import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialDamageAll;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
@@ -106,8 +104,7 @@ public class GameScreen extends AbstractScreen {
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
 		
-		bgView = new BackgroundView(ship, game);
-		//TODO: remove this below?
+		bgView = new BackgroundView(game, resourceManager, ship);
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
@@ -117,9 +114,6 @@ public class GameScreen extends AbstractScreen {
 		setupGUI();
 
 		setupHardcodedEnemies();
-		
-		//TODO: Debug test segments
-		setupMockSegments();
 
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
@@ -147,17 +141,6 @@ public class GameScreen extends AbstractScreen {
 		gamePaused = false;
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
-	}
-	
-	private void setupMockSegments(){
-		MockSegment mock1 = new MockSegment(3,10,"data/backgrounds/green.png");
-		MockSegment mock2 = new MockSegment(16,20,"data/backgrounds/red.png");
-		MockSegment mock3 = new MockSegment(24,40,"data/backgrounds/green.png");
-		game.addSegment(mock1);
-		game.addSegment(mock2);
-		game.addSegment(mock3);
-		
-		
 	}
 
 	private void setupHardcodedEnemies() {
@@ -216,7 +199,7 @@ public class GameScreen extends AbstractScreen {
 			viewportPosition.add(0.5f * viewportDimensions.x, 0);
 			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
 
-			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+			game.setViewport(viewportPosition, viewportDimensions);
 
 			game.update(delta);
 		}
@@ -238,7 +221,7 @@ public class GameScreen extends AbstractScreen {
 		// ...adjust position to being in the middle of the viewport...
 		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
 
-		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+		game.setViewport(viewportPosition, viewportDimensions);
 	}
 	
 	public static BackgroundView getBgView(){
