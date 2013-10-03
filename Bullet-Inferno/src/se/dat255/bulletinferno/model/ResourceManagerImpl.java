@@ -27,6 +27,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		
 		// Player ship
 		map.put("PLAYER_DEFAULT", "data/playerShip.png");
+		map.put("PLAYER_EXPLOSION", "data/explosion.gif");
 		
 		//Weapons
 		map.put("MISSILE_LAUNCHER", "data/missileLauncher.png");

@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.Loadout;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
@@ -66,7 +67,7 @@ public class GameScreen extends AbstractScreen {
 	static BackgroundView bgView;
 	
 	private AssetManager assetManager = new AssetManager();
-	private ResourceManagerImpl resourceManager = new ResourceManagerImpl(assetManager);
+	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -98,14 +99,15 @@ public class GameScreen extends AbstractScreen {
 		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), null, 
 				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
 				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
+		ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
 				loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
-		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
 		
 		bgView = new BackgroundView(ship, game);
+		//TODO: remove this below?
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
@@ -114,7 +116,6 @@ public class GameScreen extends AbstractScreen {
 		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();
 
-		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
 		
 		//TODO: Debug test segments
