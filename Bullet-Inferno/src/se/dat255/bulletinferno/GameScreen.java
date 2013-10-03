@@ -102,7 +102,7 @@ public class GameScreen extends AbstractScreen {
 		ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
 				loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
-		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
 		
