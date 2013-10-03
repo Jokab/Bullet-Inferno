@@ -94,7 +94,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	private List<SliceDefinition> getSlices(int amount) {
 		// The number of slices we have to generate, entry and exit is already set.
 		int numMiddleSlices = amount - 2;
-
+		System.out.println(amount);
 		// The final path of slices that will be returned
 		List<SliceDefinition> path = new ArrayList<SliceDefinition>(amount);
 
@@ -107,7 +107,6 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 		for (int i = 0; i < amount; i++) {
 			exceptions.add(new LinkedList<SliceDefinition>());
 		}
-
 		// The current step of the path we are currently trying
 		SliceDefinition current = entrySlice;
 
@@ -124,7 +123,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 					continue;
 				}
 
-				// If the current slice is the one before the exit slice
+				// If the current slice is the second to the last exit slice
 				if (sliceNum == (numMiddleSlices - 1)) {
 					// make sure it also matches the exit slice
 					if (slice.getExitHeight() == exitSlice.getEntryHeight()) {

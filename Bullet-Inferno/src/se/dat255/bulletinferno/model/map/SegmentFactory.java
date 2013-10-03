@@ -48,6 +48,6 @@ public class SegmentFactory {
 	public Segment generateRandomSegment(Game game, Vector2 position, int minSliceLength,
 			int maxSliceLength) {
 		return generateRandomSegment(game, position,
-				random.nextInt(maxSliceLength - minSliceLength) + 1);
+				random.nextInt(maxSliceLength - minSliceLength + 1) + minSliceLength);
 	}
 }
