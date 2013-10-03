@@ -28,11 +28,11 @@ public class WeaponDataTest {
 
 	@Test
 	public void testSlowWeaponReloadingTime() {
-		Weapon weapon = WeaponData.DISOREDER.getPlayerWeaponForGame(mockGame);
+		Weapon weapon = WeaponData.DISORDERER.getPlayerWeaponForGame(mockGame);
 
 		assertTrue(
 				"The reloading time of the slow weapon should be the same as the weapon's reloading time created from the SLOW enum.",
-				WeaponData.DISOREDER.getReloadTime() == weapon.getReloadingTime());
+				WeaponData.DISORDERER.getReloadTime() == weapon.getReloadingTime());
 	}
 
 	@Test
