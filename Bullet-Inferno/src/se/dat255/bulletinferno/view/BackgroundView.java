@@ -59,20 +59,23 @@ public class BackgroundView implements Renderable {
 		List<? extends Segment> segments = game.getSegments();
 		int newSegmentCount = segments.size() - segmentViewsNotRemoved;
 		
-		int newSegmentViewsSize = segmentViewsNotRemoved + newSegmentCount;
-		List<SegmentView> newSegmentViews = new ArrayList<SegmentView>(newSegmentViewsSize);
-		
-		// Add old segment views.
-		newSegmentViews.addAll(segmentViews.subList(segmentViewsActuallyRemoved,
-				segmentViewsActuallyRemoved + segmentViewsNotRemoved));
-		
-		// Add new segment views, creating their actual views.
-		for(Segment segment : segments.subList(segmentViewsNotRemoved, segments.size())) {
-			newSegmentViews.add(new SegmentView(resourceManager, segment));
+		// Only create a new list if something actually changed (removals, additions).
+		if(segmentViewsActuallyRemoved > 0 || newSegmentCount > 0) {
+			int newSegmentViewsSize = segmentViewsNotRemoved + newSegmentCount;
+			List<SegmentView> newSegmentViews = new ArrayList<SegmentView>(newSegmentViewsSize);
+			
+			// Add old segment views.
+			newSegmentViews.addAll(segmentViews.subList(segmentViewsActuallyRemoved,
+					segmentViewsActuallyRemoved + segmentViewsNotRemoved));
+			
+			// Add new segment views, creating their actual views.
+			for(Segment segment : segments.subList(segmentViewsNotRemoved, segments.size())) {
+				newSegmentViews.add(new SegmentView(resourceManager, segment));
+			}
+			
+			segmentViews = newSegmentViews;
+			lastRemovedSegmentCount = removedSegmentCount;
 		}
-		
-		segmentViews = newSegmentViews;
-		lastRemovedSegmentCount = removedSegmentCount;
 	}
 	
 	@Override
