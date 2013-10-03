@@ -32,9 +32,7 @@ public class SegmentView implements Renderable {
 		texture = resourceManager.getTexture("MAP_MOUNTAIN");
 		
 		List<? extends Slice> slices = segment.getSlices();
-		for(Slice slice : slices) {
-			System.out.println(slice.getIdentifier());
-		}
+
 		int length = slices.size();
 		this.slices = new SliceView[length];
 		int i = 0; // TODO : Fix iteration 

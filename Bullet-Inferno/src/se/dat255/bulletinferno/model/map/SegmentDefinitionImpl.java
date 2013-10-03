@@ -94,7 +94,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	private List<SliceDefinition> getSlices(int amount) {
 		// The number of slices we have to generate, entry and exit is already set.
 		int numMiddleSlices = amount - 2;
-		System.out.println(amount);
+		
 		// The final path of slices that will be returned
 		List<SliceDefinition> path = new ArrayList<SliceDefinition>(amount);
 
