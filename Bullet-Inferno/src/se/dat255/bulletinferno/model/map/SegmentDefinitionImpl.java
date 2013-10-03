@@ -31,17 +31,17 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	/**
 	 * The entry (i.e. the first) slice of the segment.
 	 */
-	private final SliceDefinitionImpl entrySlice;
+	private final SliceDefinition entrySlice;
 
 	/**
 	 * The exit (i.e. the last) slice of the segment.
 	 */
-	private final SliceDefinitionImpl exitSlice;
+	private final SliceDefinition exitSlice;
 
 	/**
 	 * A list of slices that can be used to fill space between the entry and the exit slice.
 	 */
-	private final List<SliceDefinitionImpl> suitableSlices;
+	private final List<? extends SliceDefinition> suitableSlices;
 
 	/**
 	 * 
@@ -52,8 +52,8 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 * @param suitableSlices
 	 *        A list of slices that can be used to fill space between the entry and the exit slice.
 	 */
-	SegmentDefinitionImpl(SliceDefinitionImpl entry, SliceDefinitionImpl exit,
-			List<SliceDefinitionImpl> suitableSlices) {
+	SegmentDefinitionImpl(SliceDefinition entry, SliceDefinition exit,
+			List<? extends SliceDefinition> suitableSlices) {
 		this.entrySlice = entry;
 		this.exitSlice = exit;
 		this.suitableSlices = suitableSlices;
@@ -111,7 +111,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			boolean foundAMatch = false;
 
 			// Go through all the suitable slices to find a matching one
-			for (SliceDefinitionImpl slice : suitableSlices) {
+			for (SliceDefinition slice : suitableSlices) {
 				// We want a matching slice that is not in the exceptions list
 				if (slice.getEntryHeight() != current.getExitHeight()
 						|| exceptions.get(sliceNum).contains(slice)) {
