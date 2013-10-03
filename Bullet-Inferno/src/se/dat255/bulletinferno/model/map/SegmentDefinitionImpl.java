@@ -140,7 +140,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			if (!foundAMatch) {
 				// If we fail on first iteration, that means there is no path.
 				if (sliceNum == 0) {
-					throw new RuntimeException("Coudln't find a way from specified " +
+					throw new RuntimeException("Couldn't find a way from specified " +
 							"entry slice to end slice " + sliceNum);
 				}
 
