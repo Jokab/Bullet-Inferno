@@ -41,8 +41,8 @@ public class Touch implements InputProcessor {
 	 */
 	private final int steeringFinger = -1;
 
-	private Vector2 touchOrigin = new Vector2(); 
-	
+	private Vector2 touchOrigin = new Vector2();
+
 	private final Game game;
 
 	public Touch(final Game game, final Graphics graphics, final PlayerShip ship) {
@@ -54,17 +54,17 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == UPKEY) {
-//			ship.moveTo(Graphics.GAME_HEIGHT);
+			// ship.moveTo(Graphics.GAME_HEIGHT);
 		}
 		if (keycode == DOWNKEY) {
-			//ship.moveTo(0f);
+			// ship.moveTo(0f);
 		}
 		if (keycode == FIREKEY) {
 			ship.fireWeapon();
 		}
-		if (keycode == Keys.G){
+		if (keycode == Keys.G) {
 			SpecialEffect effect = ship.getLoadout().getSpecialAbility().getEffect();
-			if(effect != null) {
+			if (effect != null) {
 				effect.activate(ship);
 			}
 		}
@@ -106,7 +106,7 @@ public class Touch implements InputProcessor {
 
 		// Set the touchOrigin vector to know where the touch originated from
 		touchOrigin.set(touchVector);
-		
+
 		Gdx.app.log("Touch", "Down id = " + pointer);
 
 		if (touchVector.x <= ship.getPosition().x + 8f) {
@@ -118,7 +118,6 @@ public class Touch implements InputProcessor {
 			// Right half of the screen
 			ship.fireWeapon();
 		}
-
 		return true;
 	}
 
@@ -134,8 +133,8 @@ public class Touch implements InputProcessor {
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
 		if (touchVector.x <= ship.getPosition().x + 8f) {
-				ship.moveY(touchVector.y - touchOrigin.y, 1);
-				touchOrigin.set(touchVector);
+			ship.moveY(touchVector.y - touchOrigin.y, 1);
+			touchOrigin.set(touchVector);
 		}
 		return false;
 	}

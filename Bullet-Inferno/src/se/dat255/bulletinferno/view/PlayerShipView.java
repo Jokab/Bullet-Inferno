@@ -22,9 +22,9 @@ public class PlayerShipView implements Renderable {
 		texture = resourceManager.getTexture(ship.getIdentifier());
 		texture.setFilter(Texture.TextureFilter.Linear,
 				Texture.TextureFilter.Linear);
-//
-//		TextureRegion region = new TextureRegion(texture, 0, 0,
-//				texture.getWidth(), texture.getHeight());
+		//
+		// TextureRegion region = new TextureRegion(texture, 0, 0,
+		// texture.getWidth(), texture.getHeight());
 
 		sprite = new Sprite(texture);
 		sprite.setSize(1f, 1f);
@@ -34,12 +34,16 @@ public class PlayerShipView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		Vector2 pos = ship.getPosition();
-		float x = pos.x;
-		float y = pos.y - sprite.getHeight() / 2;
+		if (!ship.isDead()) {
+			Vector2 pos = ship.getPosition();
+			float x = pos.x;
+			float y = pos.y - sprite.getHeight() / 2;
 
-		sprite.setPosition(x, y);
-		sprite.draw(batch);
+			sprite.setPosition(x, y);
+			sprite.draw(batch);
+		} else {
+			// TODO: draw cool explosion
+		}
 	}
 
 	@Override
