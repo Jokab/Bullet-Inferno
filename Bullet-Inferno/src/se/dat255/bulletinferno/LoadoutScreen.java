@@ -30,7 +30,6 @@ public class LoadoutScreen extends AbstractScreen {
 
 	private final Stage stage;
 	private final Skin skin;
-
 	private final Texture startImgTexture;
 
 	public LoadoutScreen(final MyGame myGame) {
@@ -66,7 +65,7 @@ public class LoadoutScreen extends AbstractScreen {
 		startButton.setSize(600, 150);
 		// startButton.setPosition(VIRTUAL_MID_WIDTH - startButton.getWidth() / 2, 20);
 		TextButton btn2 = new TextButton("Slower", skin);
-		btn2.setSize(600, 150);
+		btn2.setSize(1200, 300);
 
 		// startButton.setSize(1280/2, 720/2);
 
@@ -95,7 +94,7 @@ public class LoadoutScreen extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				GameScreen gameScreen = myGame.getGameScreen();
-				gameScreen.createNewGame(WeaponData.DISOREDER);
+				gameScreen.createNewGame(WeaponData.DISORDERER);
 				myGame.setScreen(gameScreen);
 			}
 		});

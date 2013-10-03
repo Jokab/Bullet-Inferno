@@ -30,7 +30,7 @@ public class ProjectileView implements Renderable {
 			texture = resourceManager.getTexture(projectile.getType().getIdentifier());
 			sprite = new Sprite(texture);
 			sprite.setOrigin(0, 0);
-			sprite.setSize(0.2f, 0.2f);
+			sprite.setSize(0.5f, 0.3f);
 			sprite.setPosition(projectile.getPosition().x,
 					projectile.getPosition().y - sprite.getHeight() / 2);
 			sprite.draw(batch);

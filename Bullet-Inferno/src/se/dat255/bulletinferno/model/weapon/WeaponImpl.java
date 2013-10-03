@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model.weapon;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.WeaponDescription;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
@@ -15,9 +16,11 @@ public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float projectileSpeed;
 	private float reloadingTime;
+	private WeaponDescription type;
 
-	public WeaponImpl(Game game, float reloadingTime, ProjectileType projectileType,
+	public WeaponImpl(WeaponDescription weaponData, Game game, float reloadingTime, ProjectileType projectileType,
 			Vector2 offset, float projectileSpeed) {
+		type = weaponData;
 		this.game = game;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
@@ -94,6 +97,11 @@ public class WeaponImpl implements Weapon {
 		this.reloadingTime = reloadingTime;
 		timer.setTime(reloadingTime);
 		timer.start();
+	}
+
+	@Override
+	public WeaponDescription getType() {
+		return type;
 	}
 
 }

@@ -95,7 +95,7 @@ public class GameScreen extends AbstractScreen {
 
 		game = new GameImpl();
 		
-		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(game), null, 
+		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), null, 
 				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
 				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
 		ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,

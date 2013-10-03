@@ -28,11 +28,15 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Player ship
 		map.put("PLAYER_DEFAULT", "data/playerShip.png");
 		
+		//Weapons
+		map.put("MISSILE_LAUNCHER", "data/missileLauncher.png");
+		map.put("DISORDERER","data/disorderer.png");
+		
 		//Projectiles
 		map.put("RED_PROJECTILE", "data/redDotProjectile.png");
 		map.put("GREEN_PROJECTILE", "data/greenDotProjectile.png");
-		map.put("PINK_PROJECTILE", "data/pinkDotProjectile.png");
-		map.put("YELLOW_PROJECTILE", "data/yellowDotProjectile.png");
+		map.put("MISSILE", "data/missile.png");
+		map.put("PLASMA", "data/plasma.png");
 		
 		// Buttons
 		map.put("PAUSE_SCREEN", "images/gui/screen_pause.png");
