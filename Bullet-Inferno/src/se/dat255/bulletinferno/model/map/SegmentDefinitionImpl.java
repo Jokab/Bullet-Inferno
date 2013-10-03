@@ -19,8 +19,9 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	/**
 	 * A water segment.
 	 */
-	WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
-			.asList(SliceDefinitionImpl.WATER)),
+	// Add when the view can handle this.
+	//WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
+	//		.asList(SliceDefinitionImpl.WATER)),
 
 	/**
 	 * A mountain segment.

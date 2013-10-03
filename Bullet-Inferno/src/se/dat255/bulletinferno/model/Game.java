@@ -2,6 +2,8 @@ package se.dat255.bulletinferno.model;
 
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
@@ -87,22 +89,6 @@ public interface Game extends Disposable {
 	 *         physics game models.
 	 */
 	public PhysicsWorld getPhysicsWorld();
-	
-	/**
-	 * Adds a segment to the end of the world segment list (i.e. to the right of the last).
-	 * 
-	 * @param segment
-	 *        the segment to add.
-	 */
-	public void addSegment(Segment segment);
-
-	/**
-	 * Removes segments from the beginning of the world segment list (i.e. the leftmost ones).
-	 * 
-	 * @param segment
-	 *        the number of segments to remove.
-	 */
-	public void removeSegments(int numberOfSegments);
 
 	/**
 	 * @return a list of all the active segments in the world.
@@ -114,5 +100,16 @@ public interface Game extends Disposable {
 	 *         started. Removes only happen from the beginning of the segment list.
 	 */
 	public int getRemovedSegmentCount();
+	
+	/**
+	 * Sets the viewport the Game happens in. Used as an optimization to not run the game in areas
+	 * that is not within (wholly or partially), or near, the viewport.
+	 * 
+	 * @param viewportPosition
+	 *        the center-position i world coordinates for the viewport.
+	 * @param viewportDimensions
+	 *        the dimensions of the viewport in world coordinates (width, height).
+	 */
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
 }

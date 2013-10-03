@@ -104,21 +104,12 @@ public class GameScreen extends AbstractScreen {
 
 		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
-		
-		setupHardcodedSegments();
 
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
 		// projectile.setPosition(new Vector2(5, 7));
 		ProjectileView projectileView = new ProjectileView(game);
 		graphics.addRenderable(projectileView);
-	}
-
-	private void setupHardcodedSegments() {
-		// SegmentFactory segmentFactory = new SegmentFactory();
-		// Segment segment = segmentFactory.generateRandomSegment(game, Vector2(), 9);
-		Segment segment = SegmentDefinitionImpl.MOUNTAIN.createSegment(game, new Vector2(), 6);
-		game.addSegment(segment);
 	}
 
 	/** Initiates the pause components when the player starts a level */
@@ -203,7 +194,7 @@ public class GameScreen extends AbstractScreen {
 			viewportPosition.add(0.5f * viewportDimensions.x, 0);
 			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
 
-			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+			game.setViewport(viewportPosition, viewportDimensions);
 
 			game.update(delta);
 		}
@@ -225,7 +216,7 @@ public class GameScreen extends AbstractScreen {
 		// ...adjust position to being in the middle of the viewport...
 		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
 
-		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+		game.setViewport(viewportPosition, viewportDimensions);
 	}
 	
 	public static BackgroundView getBgView(){

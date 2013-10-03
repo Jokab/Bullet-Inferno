@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.model.mock;
 import java.util.Collections;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Obstacle;
@@ -100,16 +102,6 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public void addSegment(Segment segment) {
-		// NOP
-	}
-
-	@Override
-	public void removeSegments(int numberOfSegments) {
-		// NOP
-	}
-
-	@Override
 	public List<? extends Segment> getSegments() {
 		return Collections.<Segment> emptyList();
 	}
@@ -117,6 +109,11 @@ public class SimpleMockGame implements Game {
 	@Override
 	public int getRemovedSegmentCount() {
 		return 0;
+	}
+
+	@Override
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
+		// NOP
 	}
 
 }

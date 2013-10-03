@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.map.SegmentManager;
+import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -32,15 +35,8 @@ public class GameImpl implements Game {
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	
-	/** The number of segments that have been removed from the (beginning of) segments so far. */
-	private int removedSegmentCount = 0;
-	
-	/**
-	 * Currently active segments on the map. Removes from this list increments removedSegmentsCount
-	 * by one one for each removed segment. Removes are only allowed from the head (beginning) and
-	 * adds only allowed to the tail (end), similar to a queue but not exactly.
-	 */
-	private List<Segment> segments = new ArrayList<Segment>(0);
+	/** The default segment manager used to place segments in the viewport current (remove old). */
+	private final SegmentManager segmentManager = new SegmentManagerImpl(this);
 	
 	/** List of all timers */
 	private final List<Timer> timers;
@@ -113,43 +109,8 @@ public class GameImpl implements Game {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addSegment(Segment segment) {
-		segments.add(segment);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeSegments(int numberOfSegments) {
-		if (segments.size() < numberOfSegments) {
-			throw new IllegalArgumentException("numberOfSegments exceeds segment list length");
-		}
-
-		// The idea here is to use the old number of segments as an initial capacity, as there will
-		// probably be inserted exactly numberOfSegments new segments very soon!
-		List<Segment> newSegments = new ArrayList<Segment>(segments.size());
-
-		int leftToRemove = numberOfSegments;
-		for (Segment segment : segments) {
-			if (leftToRemove > 0) {
-				segment.dispose();
-				leftToRemove--;
-			} else {
-				newSegments.add(segment);
-			}
-		}
-
-		segments = newSegments;
-		removedSegmentCount += numberOfSegments;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<? extends Segment> getSegments() {
-		return segments;
+		return segmentManager.getSegments();
 	}
 	
 	/**
@@ -157,7 +118,7 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public int getRemovedSegmentCount() {
-		return removedSegmentCount;
+		return segmentManager.getRemovedSegmentCount();
 	}
 	
 	/**
@@ -270,6 +231,15 @@ public class GameImpl implements Game {
 	@Override
 	public void dispose() {
 		world.dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
+		world.setViewport(viewportPosition, viewportDimensions);
+		segmentManager.setViewport(viewportPosition, viewportDimensions);
 	}
 
 }
