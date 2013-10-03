@@ -1,5 +1,9 @@
 package se.dat255.bulletinferno;
 
+import java.awt.TextField;
+
+import javax.xml.soap.Text;
+
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.Gdx;
@@ -30,7 +34,8 @@ public class LoadoutScreen extends AbstractScreen {
 
 	private final Stage stage;
 	private final Skin skin;
-	private final Texture startImgTexture;
+	private final Texture weaponTexture1;
+	private final Texture weaponTexture2;
 
 	public LoadoutScreen(final MyGame myGame) {
 
@@ -43,17 +48,25 @@ public class LoadoutScreen extends AbstractScreen {
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
 
-		startImgTexture = new Texture(Gdx.files.internal("data/startBtn.png"));
-		TextureRegion startImage = new TextureRegion(startImgTexture);
+		weaponTexture1 = new Texture(Gdx.files.internal("data/missileLauncher.png"));
+		TextureRegion weaponTextureRegion1 = new TextureRegion(weaponTexture1);
+		
+		weaponTexture2 = new Texture(Gdx.files.internal("data/disorderer.png"));
+		TextureRegion weaponTextureRegion2 = new TextureRegion(weaponTexture2);
 
 		// Add default font as default
 		skin.add("default", new BitmapFont());
 
 		// Set up style for buttons
-		ButtonStyle startBtnStyle = new ButtonStyle();
-		startBtnStyle.up = new TextureRegionDrawable(startImage);
-		startBtnStyle.over = skin.newDrawable(startBtnStyle.up, Color.LIGHT_GRAY);
-		skin.add("startButton", startBtnStyle);
+		ButtonStyle weaponButtonStyle1 = new ButtonStyle();
+		weaponButtonStyle1.up = new TextureRegionDrawable(weaponTextureRegion1);
+		weaponButtonStyle1.over = skin.newDrawable(weaponButtonStyle1.up, Color.LIGHT_GRAY);
+		skin.add("weaponButton1", weaponButtonStyle1);
+		
+		ButtonStyle weaponButtonStyle2 = new ButtonStyle();
+		weaponButtonStyle2.up = new TextureRegionDrawable(weaponTextureRegion2);
+		weaponButtonStyle2.over = skin.newDrawable(weaponButtonStyle2.up, Color.LIGHT_GRAY);
+		skin.add("weaponButton2", weaponButtonStyle2);
 
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = skin.getFont("default");
@@ -61,27 +74,27 @@ public class LoadoutScreen extends AbstractScreen {
 		skin.add("default", textButtonStyle);
 
 		// Create buttons
-		Button startButton = new Button(skin, "startButton");
-		startButton.setSize(600, 150);
-		// startButton.setPosition(VIRTUAL_MID_WIDTH - startButton.getWidth() / 2, 20);
-		TextButton btn2 = new TextButton("Slower", skin);
-		btn2.setSize(1200, 300);
+		Button weaponButton1 = new Button(skin, "weaponButton1");
+		weaponButton1.setSize(600, 150);
+		// weaponButton1.setPosition(VIRTUAL_MID_WIDTH - weaponButton1.getWidth() / 2, 20);
+		Button weaponButton2 = new Button(skin, "weaponButton2");
+		weaponButton2.setSize(600, 150);
 
-		// startButton.setSize(1280/2, 720/2);
+		// weaponButton1.setSize(1280/2, 720/2);
 
 		// Create a table that fills the screen
-
+		
 		// Add it to stage
 		Table t = new Table();
 		t.setFillParent(true);
-
-		t.add(startButton).row();
-		t.add(btn2);
+		
+		t.add(weaponButton1).row();
+		t.add(weaponButton2);
 
 		stage.addActor(t);
 
 		// Start button click listener
-		startButton.addListener(new ChangeListener() {
+		weaponButton1.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				GameScreen gameScreen = myGame.getGameScreen();
@@ -90,7 +103,8 @@ public class LoadoutScreen extends AbstractScreen {
 			}
 		});
 
-		btn2.addListener(new ChangeListener() {
+		
+		weaponButton2.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				GameScreen gameScreen = myGame.getGameScreen();
@@ -98,6 +112,7 @@ public class LoadoutScreen extends AbstractScreen {
 				myGame.setScreen(gameScreen);
 			}
 		});
+		
 
 	}
 
@@ -123,7 +138,7 @@ public class LoadoutScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		Gdx.app.debug("LoadoutScreen", "Screen Disposed");
-		startImgTexture.dispose();
+		weaponTexture1.dispose();
 		stage.dispose();
 		skin.dispose();
 	}
