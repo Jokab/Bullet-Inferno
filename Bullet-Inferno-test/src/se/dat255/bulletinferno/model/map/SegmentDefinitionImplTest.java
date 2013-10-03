@@ -23,10 +23,6 @@ public class SegmentDefinitionImplTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		Common.loadEssentials();
-
-		// Make sure we have pre-defined segmentDefinitions
-		assertTrue("SegmentDefinitionImpl should define at least one SegmentDefinition",
-				SegmentDefinitionImpl.values().length > 0);
 	}
 
 	private Game mockGame;
@@ -36,6 +32,13 @@ public class SegmentDefinitionImplTest {
 	public void setUp() throws Exception {
 		mockGame = new SimpleMockGame();
 		pos = new Vector2(10, 1);
+	}
+
+	@Test
+	public void testHasDefinitions() {
+		// Make sure we have pre-defined segmentDefinitions
+		assertTrue("SegmentDefinitionImpl should define at least one SegmentDefinition",
+				SegmentDefinitionImpl.values().length > 0);
 	}
 
 	@Test
