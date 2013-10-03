@@ -28,7 +28,7 @@ public class ObstacleImpl implements Obstacle {
 	 * 
 	 * @param game the game in which the obstacle will operate.
 	 * @param bodyDefinition a body definition the obstacle will use for its body.
-	 * @param position the world-position of the obstacle.
+	 * @param position The world-coordinates the Obstacle will be placed at in the physics world.
 	 */
 	public ObstacleImpl(Game game, PhysicsBodyDefinition bodyDefinition, Vector2 position) {
 		this.game = game;

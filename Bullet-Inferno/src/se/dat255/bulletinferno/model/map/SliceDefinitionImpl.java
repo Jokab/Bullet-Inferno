@@ -8,6 +8,11 @@ import se.dat255.bulletinferno.model.Game;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Configurations of simple SliceDefinitions.
+ * 
+ * @see SliceDefinition
+ */
 public enum SliceDefinitionImpl implements SliceDefinition {
 	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
 	MOUNTAIN_1(0, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
@@ -21,9 +26,16 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	SIMPLE_GROUND(2f, 2f, 20f, Arrays.asList(place(ObstacleDefinitionImpl.FLAT_GROUND, 0, 0)))
 	;
 	
+	/** The entry height of the slice */
 	private final float entryHeight;
+	
+	/** The exit height of the slice */
 	private final float exitHeight;
+	
+	/** The width of the slice */
 	private final float width;
+	
+	/** A list of ObstaclePlacement, used to place Obstacles in the Slice */
 	private final List<? extends ObstaclePlacement> obstaclePlacements;
 	
 	SliceDefinitionImpl(float entryHeight, float exitHeight, float width, 

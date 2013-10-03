@@ -10,6 +10,11 @@ import se.dat255.bulletinferno.model.Game;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Configurations of simple SegmentDefinitions.
+ * 
+ * @see SegmentDefinition
+ */
 public enum SegmentDefinitionImpl implements SegmentDefinition {
 	/**
 	 * A water segment.
@@ -67,9 +72,6 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
-
-		// TODO: Debug
-		// System.out.println(sliceDefinitonsPath);
 
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
 			slices.add(sliceType.createSlice(game, slicePosition));

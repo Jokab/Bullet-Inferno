@@ -4,42 +4,53 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * An implementation of the Segment interface. A Segment is one more many "map slices" that fit
+ * together both by size and in-game look. Use an appropriate SegmentDefinition to get help creating
+ * the Segment.
+ * 
+ * @see SegmentDefinition
+ */
 public class SegmentImpl implements Segment {
-	
-	/** All slices this Segment handles */
-	private final List<? extends Slice> allSlices;
+
+	/** All slices contained within this Segment */
+	private final List<? extends Slice> slices;
+
 	/** The position of this Segment */
 	private final Vector2 position;
-	
+
 	/**
 	 * Creates a new Segment with the given data to be used in game
-	 * @param entrySlice The Slice to use as entry
-	 * @param exitSlice The Slice to use as exit
-	 * @param slices The slices between entry and exit
-	 * @param positionX The position of the Segment
+	 * 
+	 * @param slices
+	 *        A list of slices that this segment should be made of. Must be at least 1.
+	 * @param position
+	 *        The position of the Segment.
 	 */
-	public SegmentImpl(List<? extends Slice> slices, Vector2 position) {		
-		this.allSlices = slices;		
+	public SegmentImpl(List<? extends Slice> slices, Vector2 position) {
+		// TODO: For debugging purposes. Should probably throw exception or do nothing instead.
+		assert slices.size() > 0 : "Number of slices must be > 0";
+
+		this.slices = slices;
 		this.position = position;
-		// TODO check if slices.size() > 0
 	}
 
 	@Override
 	public void dispose() {
-		for(Slice slice : allSlices) {
+		for (Slice slice : slices) {
 			slice.dispose();
 		}
 	}
 
 	@Override
 	public List<? extends Slice> getSlices() {
-		return allSlices;
+		return slices;
 	}
 
 	@Override
 	public float getWidth() {
 		float width = 0;
-		for(Slice slice : allSlices) {
+		for (Slice slice : slices) {
 			width += slice.getWidth();
 		}
 		return width;
@@ -52,12 +63,12 @@ public class SegmentImpl implements Segment {
 
 	@Override
 	public float getEntryHeight() {
-		return allSlices.get(0).getEntryHeight();
+		return slices.get(0).getEntryHeight();
 	}
 
 	@Override
 	public float getExitHeight() {
-		return allSlices.get(allSlices.size()-1).getExitHeight();
+		return slices.get(slices.size() - 1).getExitHeight();
 	}
 
 }

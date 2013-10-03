@@ -6,17 +6,19 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Obstacle;
 
 /**
- * A definition of an obstacle type.
+ * A definition of an Obstacle type.
  */
 public interface ObstacleDefinition {
-	
+
 	/**
-	 * Create a new obstacle in the Game supplided.
+	 * Creates a new obstacle in the supplied Game instance.
 	 * 
-	 * @param game the Game instance to create the Obstacle in.
-	 * @param position the world-coordinates the Obstacle will be placed at, in the physics world.
+	 * @param game
+	 *        The Game instance to create the Obstacle in.
+	 * @param position
+	 *        The world-coordinates the Obstacle will be placed at in the physics world.
 	 * @return a new Obstacle.
 	 */
 	public Obstacle createObstacle(Game game, Vector2 position);
-	
+
 }
