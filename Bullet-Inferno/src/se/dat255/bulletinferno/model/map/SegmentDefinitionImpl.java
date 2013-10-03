@@ -74,11 +74,14 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
 
+		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
-			slices.add(sliceType.createSlice(game, slicePosition));
+			slice = sliceType.createSlice(game, slicePosition.cpy());
+			slices.add(slice);
+			slicePosition.add(slice.getWidth(), 0);
 		}
 		
-		return new SegmentImpl(slices, position);
+		return new SegmentImpl(slices, position.cpy());
 	}
 
 	/**
