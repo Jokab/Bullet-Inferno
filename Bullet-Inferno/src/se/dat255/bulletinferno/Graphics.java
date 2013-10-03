@@ -27,6 +27,8 @@ public class Graphics {
 	/** Inverted size, multiplication is faster than division */
 	public static final float GAME_WIDTH_INVERTED = 1 / GAME_WIDTH,
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
+	
+	private Vector3 nextCameraPos;
 
 	/** List of all objects that are to be rendered in the world */
 	private final HashSet<Renderable> renderables = new HashSet<Renderable>();
@@ -78,7 +80,7 @@ public class Graphics {
 	public void render() {
 		
 		// Update the camera position
-		// TODO: camera.setPosition(...)
+		worldCamera.position.set(nextCameraPos);
 		worldCamera.update();
 		worldBatch.setProjectionMatrix(worldCamera.combined);
 
@@ -175,8 +177,8 @@ public class Graphics {
 		position.set(vector.x, vector.y);
 	}
 	
-	public static void setNewCameraPos(float x, float y){
-		worldCamera.position.set(x,y,0);
+	public void setNewCameraPos(float x, float y){
+		nextCameraPos = new Vector3(x,y,0);
 	}
 	
 }

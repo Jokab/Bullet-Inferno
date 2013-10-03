@@ -61,6 +61,8 @@ public class GameScreen extends AbstractScreen {
 
 	private MyGame myGame;
 	
+	private PlayerShip ship;
+	
 	static BackgroundView bgView;
 	
 	private AssetManager assetManager = new AssetManager();
@@ -96,10 +98,11 @@ public class GameScreen extends AbstractScreen {
 		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(game), null, 
 				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
 				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
+		ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
 				loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
 		
 		bgView = new BackgroundView(ship, game);
@@ -193,6 +196,7 @@ public class GameScreen extends AbstractScreen {
 	 */
 	@Override
 	public void render(float delta) {
+		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		super.render(delta);
 
 		// Render the game

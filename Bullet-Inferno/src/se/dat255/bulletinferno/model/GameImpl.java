@@ -214,7 +214,6 @@ public class GameImpl implements Game {
 		runLaters.clear();
 
 		world.update(deltaTime);
-		playerShip.update(deltaTime);
 	}
 
 	/**

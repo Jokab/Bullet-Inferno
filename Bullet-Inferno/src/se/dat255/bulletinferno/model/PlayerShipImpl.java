@@ -97,10 +97,6 @@ public class PlayerShipImpl implements PlayerShip {
 		return body.getPosition();
 	}
 
-	@Override
-	public void update(float deltaTime){
-		Graphics.setNewCameraPos((this.getPosition().x+Graphics.GAME_WIDTH/2),(Graphics.GAME_HEIGHT/2));
-	}
 	
 	@Override
 	public void moveY(float dy){
