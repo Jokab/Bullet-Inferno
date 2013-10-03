@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
@@ -147,5 +146,10 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public boolean isDead() {
 		return this.health <= 0;
+	}
+	
+	@Override
+	public void setXSpeed(Vector2 speed){
+		body.setVelocity(speed);
 	}
 }

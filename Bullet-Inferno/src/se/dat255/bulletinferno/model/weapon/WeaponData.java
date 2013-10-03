@@ -20,17 +20,24 @@ public enum WeaponData implements WeaponDescription {
 
 	/**
 	 * Order:
-	 * reloadTime, projectile, offset, projectileVelocity
+	 * reloadTime, projectile, offset, quantity, projectileVelocity
 	 */
 	DISOREDER(0.5f, ProjectileType.YELLOW_PROJECTILE, new Vector2(), 5),
 	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(), 14),
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 7),
-	MISSILE_LAUNCHER(0.2f, ProjectileType.PINK_PROJECTILE, new Vector2(), 5);
+	MISSILE_LAUNCHER(0.2f, ProjectileType.PINK_PROJECTILE, new Vector2(), 5),
+	
+	BOSS_LAUNCHER(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 5),
+	BOSS_LAUNCHER2(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 5),
+	BOSS_LAUNCHER3(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 5),
+	BOSS_LAUNCHER4(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 5),
+	BOSS_LAUNCHER5(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 5);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
 	private final float projectileSpeed;
+
 
 	WeaponData(float reloadTime, ProjectileType projectileType, Vector2 offset,
 			float projectileSpeed) {
@@ -77,6 +84,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getEnemyWeaponForGame(Game game) {
+		
 		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, projectileSpeed);
 	}
 	

@@ -10,6 +10,7 @@ import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.MockSegment;
+import se.dat255.bulletinferno.model.enemy.AngryBoss;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
@@ -17,6 +18,7 @@ import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialDamageAll;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -163,14 +165,23 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
 		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
+		Vector2 position4 = new Vector2(22 - 1, 9 / 3f * 2 - 2);
+		Vector2 bossSpeed = new Vector2(0,-0.5f);
 		
-		Enemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position);
-		Enemy enemy2 = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(game, position2);
-		Enemy enemy3 = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position3);
+				
+		Enemy boss = EnemyType.BOSS_ENEMY_SHIP.getEnemyShip(game, position4, true);
+		
+		Enemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position, false);
+		Enemy enemy2 = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(game, position2, false);
+		Enemy enemy3 = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position3, false);
+		
+		
 
 		game.addEnemy(enemy);
 		game.addEnemy(enemy2);
 		game.addEnemy(enemy3);
+		game.addEnemy(boss);
+		
 
 		EnemyView enemyView = new EnemyView(game, resourceManager);
 		graphics.addRenderable(enemyView);
@@ -197,6 +208,9 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
+		if(ship.getPosition().x > 16f && ship.getPosition().x <= 17f){
+			ship.setXSpeed(new Vector2(0,0));
+		}
 		super.render(delta);
 
 		// Render the game

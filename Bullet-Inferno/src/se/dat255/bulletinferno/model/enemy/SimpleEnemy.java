@@ -30,7 +30,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final Game game;
 	protected Vector2 velocity;
 
-	protected final Weapon weapon;
+	protected Weapon[] weapon;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -46,7 +46,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon weapon, int score, int credits) {
+			int initialHealth, Weapon[] weapon, int score, int credits) {
 		this.game = game;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -65,8 +65,26 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 	
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			int initialHealth, int score, int credits) {
+		this.game = game;
+		this.type = type;
+		this.initialHealth = initialHealth;
+		health = initialHealth;
+		this.score = score;
+		this.credits = credits;
+		this.velocity = velocity;
+
+		if (bodyDefinition == null) {
+			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+		}
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		body.setVelocity(velocity);
+	}
+	
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			PhysicsMovementPattern pattern,
-			int initialHealth, Weapon weapon, int score, int credits) {
+			int initialHealth, Weapon[] weapon, int score, int credits) {
 		this.game = game;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -151,7 +169,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
 		if (weapon != null) {
-			weapon.getTimer().stop();
+			for(int i = 0; i < weapon.length; i++){
+				weapon[i].getTimer().stop();
+			}
 		}
 	}
 

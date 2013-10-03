@@ -60,4 +60,6 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 *        The modifier value.
 	 */
 	void setTakeDamageModifier(float takeDamageModifier);
+
+	public void setXSpeed(Vector2 vector2);
 }
