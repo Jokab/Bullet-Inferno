@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.SpecialEffect;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -53,13 +54,19 @@ public class Touch implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == UPKEY) {
-			//ship.moveTo(Graphics.GAME_HEIGHT);
+//			ship.moveTo(Graphics.GAME_HEIGHT);
 		}
 		if (keycode == DOWNKEY) {
 			//ship.moveTo(0f);
 		}
 		if (keycode == FIREKEY) {
 			ship.fireWeapon();
+		}
+		if (keycode == Keys.G){
+			SpecialEffect effect = ship.getLoadout().getSpecialAbility().getEffect();
+			if(effect != null) {
+				effect.activate(ship);
+			}
 		}
 		// TODO Auto-generated method stub
 		return false;
