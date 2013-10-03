@@ -58,10 +58,6 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void update(float deltaTime) {
-	}
-
-	@Override
 	public Weapon getWeapon() {
 		// TODO Auto-generated method stub
 		return null;
