@@ -15,13 +15,13 @@ import com.badlogic.gdx.math.Vector2;
  */
 public enum SliceDefinitionImpl implements SliceDefinition {
 	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_1(0, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_2(4, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_3(2, 4, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_4(4, 4, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_5(4, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_6(4, 6, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_7(6, 4, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_1(0, 1, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_2(2, 3, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_3(2, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_4(1, 3, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_5(1, 1, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_6(3, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
+	MOUNTAIN_7(3, 2, 20f, Collections.<ObstaclePlacement>emptyList()),
 	MOUNTAIN_8(2, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
 	SIMPLE_GROUND(2f, 2f, 20f, Arrays.asList(place(ObstacleDefinitionImpl.FLAT_GROUND, 0, 0)))
 	;

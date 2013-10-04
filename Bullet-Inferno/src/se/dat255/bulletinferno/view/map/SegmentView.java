@@ -55,7 +55,7 @@ public class SegmentView implements Renderable {
 			} else if(slice.getIdentifier().equals("MOUNTAIN_6")){
 				textureRegion = new TextureRegion(texture, 512, 512, 512, 256);
 			} else if(slice.getIdentifier().equals("MOUNTAIN_7")){
-				textureRegion = new TextureRegion(texture, 0, 0, 768, 256);
+				textureRegion = new TextureRegion(texture, 0, 768, 512, 256);
 			} else if(slice.getIdentifier().equals("MOUNTAIN_8")){
 				textureRegion = new TextureRegion(texture, 512, 768, 512, 256);
 			}
