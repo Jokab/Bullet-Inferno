@@ -87,7 +87,6 @@ public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 			fixtureDefinition.density = 0f;
 			fixtureDefinition.friction = 0f;
 			fixtureDefinition.isSensor = true; // Sensors do not have collision response.
-			
 			fixtureDefinitions.add(fixtureDefinition);
 		}
 		this.fixtureDefinitions = fixtureDefinitions;

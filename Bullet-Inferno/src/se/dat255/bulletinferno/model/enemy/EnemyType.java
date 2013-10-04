@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.model.enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
-import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
@@ -39,8 +38,8 @@ public enum EnemyType implements ResourceIdentifier {
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 					weaponData.getEnemyWeaponForGame(game), score, credits);
 		} else {
-			return new DefaultEnemyShipImpl(game, this, position, velocity, pattern, initialHealth,
-					weaponData.getEnemyWeaponForGame(game), score, credits);
+			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
+					weaponData.getEnemyWeaponForGame(game), score, credits, pattern);
 		}
 	}
 
