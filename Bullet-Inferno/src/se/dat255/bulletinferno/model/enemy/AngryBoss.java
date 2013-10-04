@@ -9,89 +9,63 @@ import se.dat255.bulletinferno.util.Timerable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class AngryBoss extends BossAI implements Ship, Timerable{
-	
+public class AngryBoss extends BossAI implements Ship, Timerable {
 
-		
-	public AngryBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
-			int initialHealth, Weapon[] weapons, int score, int credits, Vector2[] offsets) {
-		super(game, type, position, velocity, initialHealth, weapons, score, credits, offsets, pattern);
+	/**
+	 * Constructs a new Angry Boss
+	 * @param game The game instance
+	 * @param type The enemy definition
+	 * @param position
+	 * @param velocity
+	 * @param pattern The movement pattern
+	 * @param initialHealth
+	 * @param weapons
+	 * @param score The score rewarded when boss is killed
+	 * @param credits The credit rewarded when boss is killed
+	 * @param offsets 
+	 */
+	public AngryBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			PhysicsMovementPattern pattern, int initialHealth, Weapon[] weapons, int score,
+			int credits, Vector2[] offsets) {
+		super(game, type, position, velocity, initialHealth, weapons, score, credits, offsets,
+				pattern);
 	}
-	
-	
+
 	/*
 	 * This should be used instead of onTimeout, but for some reason we get a NullPointerException
-	 * 
 	 */
 	@Override
-	public void fire(){
-		if(isShooting()){
-			if(getHealth() > 0.75*getInitialHealth()){
-				fireSpread();		
-			}else if(getHealth() <= 0.5*getInitialHealth() && getHealth() > 0.25*getInitialHealth()){
-				fireAimed();
-			}else{
+	public void fire() {
+		if (isShooting()) {
+			if (getHealth() > 0.75 * getInitialHealth()) {
 				fireSpread();
+			} else if (getHealth() <= 0.5 * getInitialHealth()
+					&& getHealth() > 0.25 * getInitialHealth()) {
 				fireAimed();
-			}
-		}
-	}
-	
-	@Override
-	public void onTimeout(Timer source, float timeSinceLast) {
-		if(isShooting()){
-			if(getHealth() > 0.75*getInitialHealth()){
-				fireSpread();		
-			}else if(getHealth() <= 0.5*getInitialHealth() && getHealth() > 0.25*getInitialHealth()){
-				fireAimed();
-			}else{
+			} else {
 				fireSpread();
 				fireAimed();
 			}
 		}
 	}
 
+	@Override
+	public void onTimeout(Timer source, float timeSinceLast) {
+		if (isShooting()) {
+			if (getHealth() > 0.75 * getInitialHealth()) {
+				fireSpread();
+			} else if (getHealth() <= 0.5 * getInitialHealth()
+					&& getHealth() > 0.25 * getInitialHealth()) {
+				fireAimed();
+			} else {
+				fireSpread();
+				fireAimed();
+			}
+		}
+	}
 
 	@Override
 	public Vector2 getDimensions() {
-		return new Vector2(2,2);
+		return new Vector2(2, 2);
 	}
 }
-
-	
-	
-	
-	
-	
-	
-	/*
-	If agentpower > playerpower and health is high:
-	    mood = 'attack'
-	If agentpower > playerpower and health is low:
-	    mood = 'findpowerup'
-	Else:
-	    mood = 'evade'
-	    
-	    
-	    if mood == 'attack':
-	        if player is in range:
-	            attack
-	        else:
-	            move closer
-	    if mood == 'findpowerup':
-	        if player is in range:
-	            move away
-	        if player is in range of power up:
-	            if really need power up:
-	                attack
-	            if not really need power up:
-	                move away
-	        else:
-	            move closer to power up
-	    if mood == 'evade':
-	        if player is in range:
-	            move away
-	        else:
-	            find powerup	          
-*/
-
