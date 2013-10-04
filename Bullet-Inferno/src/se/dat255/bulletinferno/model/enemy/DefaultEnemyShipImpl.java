@@ -10,28 +10,35 @@ import se.dat255.bulletinferno.util.Timerable;
 import com.badlogic.gdx.math.Vector2;
 
 public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable {
-
+	private Timer timer;
+	
 	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth, Weapon weapon, int score, int credits) {
 		super(game, type, position, velocity, initialHealth, weapon, score, credits);
 
-		Timer timer = weapon.getTimer();
+		timer = weapon.getTimer();
 		timer.registerListener(this);
-
+		timer.stop();
 	}
 	
-	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
-			int initialHealth, Weapon weapon, int score, int credits) {
-		super(game, type, position, velocity, pattern, initialHealth, weapon, score, credits);
+	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			int initialHealth, Weapon weapon, int score, int credits, 
+			PhysicsMovementPattern pattern) {
+		super(game, type, position, velocity, initialHealth, weapon, score, credits, pattern);
 
-		Timer timer = weapon.getTimer();
+		timer = weapon.getTimer();
 		timer.registerListener(this);
-
+		timer.stop();
 	}
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		weapon.fire(new Vector2(getPosition().x, getPosition().y), velocity.cpy().nor(), this);
+	}
 	
+	@Override
+	public void viewportIntersectionBegin() {
+		super.viewportIntersectionBegin();
+		timer.start();
 	}
 }
