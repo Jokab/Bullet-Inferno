@@ -47,7 +47,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	/**
 	 * A list of slices that can be used to fill space between the entry and the exit slice.
 	 */
-	private final List<? extends SliceDefinition> suitableSlices;
+	protected final List<? extends SliceDefinition> suitableSlices;
 
 	/**
 	 * 
