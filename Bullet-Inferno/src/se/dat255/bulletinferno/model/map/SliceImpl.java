@@ -47,9 +47,12 @@ public class SliceImpl implements Slice, Collidable {
 	 *        The width of the Slice.
 	 * @param obstaclePlacements
 	 *        A list of mappings to where Obstacles should be placed in the Slice.
+	 * @param enemyPlacement
+	 * 		  A list of mappings to where enemies should be place in the Slice
 	 */
 	public SliceImpl(Game game, SliceDefinitionImpl id, float entryHeight, float exitHeight,
-			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements) {
+			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
+			List<? extends EnemyPlacement> enemyPlacements) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.game = game;
@@ -68,6 +71,36 @@ public class SliceImpl implements Slice, Collidable {
 		}
 		
 		this.obstacles = obstacles;
+		
+		// Create enemies from the provided definitions
+		for (EnemyPlacement enemyPlacement : enemyPlacements) {
+			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
+			game.addEnemy(enemyPlacement.getContent().getEnemyShip(game, enemyPosition));
+		}
+	}
+	
+	/**
+	 * Creates a new Slice in the Game instance provided.
+	 * 
+	 * @param game
+	 *        The Game instance the Slice is to be created in.
+	 * @param id
+	 *        The identifier to be used when identifying this Slice.
+	 * @param entryHeight
+	 *        The entry (i.e. the leftmost) height of the Slice.
+	 * @param exitHeight
+	 *        The exit (i.e. the rightmost) height of the Slice.
+	 * @param position
+	 *        The world-coordinates the Slice will be placed at in the physics world.
+	 * @param width
+	 *        The width of the Slice.
+	 * @param obstaclePlacements
+	 *        A list of mappings to where Obstacles should be placed in the Slice.
+	 */
+	public SliceImpl(Game game, SliceDefinitionImpl id, float entryHeight, float exitHeight,
+			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements) {
+		this(game, id, entryHeight, exitHeight, position, width, obstaclePlacements, 
+				Collections.<EnemyPlacement>emptyList());
 	}
 
 	public SliceImpl(Game game, SliceDefinitionImpl id, float entryHeight, float exitHeight,

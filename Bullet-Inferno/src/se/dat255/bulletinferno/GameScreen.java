@@ -127,7 +127,8 @@ public class GameScreen extends AbstractScreen {
 		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();
 
-		setupHardcodedEnemies();
+		EnemyView enemyView = new EnemyView(game, resourceManager);
+		graphics.addRenderable(enemyView);
 
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
@@ -162,23 +163,6 @@ public class GameScreen extends AbstractScreen {
 		gamePaused = false;
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
-	}
-
-	private void setupHardcodedEnemies() {
-		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
-		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
-		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
-		
-		Enemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position);
-		Enemy enemy2 = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(game, position2);
-		Enemy enemy3 = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position3);
-
-		game.addEnemy(enemy);
-		game.addEnemy(enemy2);
-		game.addEnemy(enemy3);
-
-		EnemyView enemyView = new EnemyView(game, resourceManager);
-		graphics.addRenderable(enemyView);
 	}
 
 	@Override

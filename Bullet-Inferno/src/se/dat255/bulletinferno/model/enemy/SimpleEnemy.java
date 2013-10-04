@@ -12,7 +12,6 @@ import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
-import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
@@ -31,9 +30,14 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private PhysicsBody body = null;
 	private final Game game;
 	protected Vector2 velocity;
-
 	protected final Weapon weapon;
+	
+	/** A flag to make sure we don't remove ourself twice */
+	private boolean flaggedForRemoval = false;
 
+	// TODO : Fix this in box2d instead
+	private boolean isAwake = false;
+	
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
@@ -63,27 +67,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
 	}
 	
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			PhysicsMovementPattern pattern,
-			int initialHealth, Weapon weapon, int score, int credits) {
-		this.game = game;
-		this.type = type;
-		this.initialHealth = initialHealth;
-		health = initialHealth;
-		this.weapon = weapon;
-		this.score = score;
-		this.credits = credits;
-		this.velocity = velocity;
-
-		if (bodyDefinition == null) {
-			Shape shape = PhysicsShapeFactory.getRectangularShape(0.08f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
+			int initialHealth, Weapon weapon, int score, int credits, 
+			PhysicsMovementPattern pattern) {
+		this(game, type, position, velocity, initialHealth, weapon, score, credits);
 		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 
 	}
@@ -103,7 +92,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (hitByOtherProjectile(other)) {
+		if (isAwake && hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
 		}
 	}
@@ -183,8 +172,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	@Override
 	public void viewportIntersectionBegin() {
-		// NOP
-
+		isAwake = true;
+		body.setVelocity(velocity);
 	}
 
 	@Override
@@ -197,7 +186,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 * running.
 	 */
 	private void scheduleRemoveSelf() {
-		game.runLater(removeSelf);
+		if (!flaggedForRemoval) {
+			game.runLater(removeSelf);
+			flaggedForRemoval = true;
+		}
 	}
 	
 	@Override
