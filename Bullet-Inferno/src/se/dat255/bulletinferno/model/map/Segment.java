@@ -1,10 +1,9 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.map.Slice;
 import se.dat255.bulletinferno.util.Disposable;
 
 /**
