@@ -18,8 +18,10 @@ public enum EnemyType implements ResourceIdentifier {
 			10),
 	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1) , 5,
 			new WeaponData[]{WeaponData.FORCE_GUN}, 10, 10),
-	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4) , 50,
-			new WeaponData[]{WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_LAUNCHER2, WeaponData.BOSS_LAUNCHER3, WeaponData.BOSS_LAUNCHER4, WeaponData.BOSS_LAUNCHER5}, 10, 10);
+	
+			
+	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4) , 15,
+			new WeaponData[]{WeaponData.BOSS_GUN, WeaponData.BOSS_GUN2, WeaponData.BOSS_GUN3, WeaponData.BOSS_GUN4, WeaponData.BOSS_GUN5,WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_LAUNCHER2, WeaponData.BOSS_LAUNCHER3, WeaponData.BOSS_LAUNCHER4, WeaponData.BOSS_LAUNCHER5}, 10, 10);
  
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
@@ -75,7 +77,7 @@ public enum EnemyType implements ResourceIdentifier {
 				offsets[i]=weaponsData[i].getOffset();
 			}
 			return new AngryBoss(game, this, position, velocity, pattern, initialHealth,
-					wData, offsets, score, credits);
+					wData, score, credits, offsets);
 		}
 	}
 

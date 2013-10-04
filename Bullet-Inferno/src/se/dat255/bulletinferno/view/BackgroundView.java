@@ -30,7 +30,7 @@ public class BackgroundView implements Renderable {
 	public void render(SpriteBatch batch) {
 		sl = game.getSegments();
 		batch.disableBlending();
-		batch.draw(tex, ship.getPosition().x, 0, 16, 9, 0, 0, 32, 1024, false, false);
+		batch.draw(tex, ship.getPosition().x-1, 0, 18, 9, 0, 0, 32, 1024, false, false);
 		batch.enableBlending();
 		for(MockSegment s : sl){
 			//Gdx.app.log("BGView","Segment" +s.toString());

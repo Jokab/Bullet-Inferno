@@ -25,13 +25,21 @@ public enum WeaponData implements WeaponDescription {
 	DISOREDER(0.5f, ProjectileType.YELLOW_PROJECTILE, new Vector2(), 5),
 	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(), 14),
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 7),
+	FORCE_GUN2(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
 	MISSILE_LAUNCHER(0.2f, ProjectileType.PINK_PROJECTILE, new Vector2(), 5),
 	
-	BOSS_LAUNCHER(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 5),
-	BOSS_LAUNCHER2(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 5),
-	BOSS_LAUNCHER3(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 5),
-	BOSS_LAUNCHER4(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 5),
-	BOSS_LAUNCHER5(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 5);
+
+	BOSS_LAUNCHER(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 5),
+	BOSS_LAUNCHER2(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 5),
+	BOSS_LAUNCHER3(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 5),
+	BOSS_LAUNCHER4(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 5),
+	BOSS_LAUNCHER5(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 5),
+	
+	BOSS_GUN(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 5),
+	BOSS_GUN2(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 5),
+	BOSS_GUN3(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 5),
+	BOSS_GUN4(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 5),
+	BOSS_GUN5(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 5);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;

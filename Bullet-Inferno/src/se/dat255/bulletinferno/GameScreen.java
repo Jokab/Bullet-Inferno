@@ -67,6 +67,7 @@ public class GameScreen extends AbstractScreen {
 	
 	static BackgroundView bgView;
 	
+	
 	private AssetManager assetManager = new AssetManager();
 	private ResourceManagerImpl resourceManager = new ResourceManagerImpl(assetManager);
 
@@ -150,6 +151,8 @@ public class GameScreen extends AbstractScreen {
 		graphics.addRenderableGUI(pauseIconView);
 	}
 	
+
+	
 	private void setupMockSegments(){
 		MockSegment mock1 = new MockSegment(3,10,"data/backgrounds/green.png");
 		MockSegment mock2 = new MockSegment(16,20,"data/backgrounds/red.png");
@@ -165,8 +168,7 @@ public class GameScreen extends AbstractScreen {
 		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
 		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
-		Vector2 position4 = new Vector2(22 - 1, 9 / 3f * 2 - 2);
-		Vector2 bossSpeed = new Vector2(0,-0.5f);
+		Vector2 position4 = new Vector2(60 - 1, 9 / 3f * 2 - 2);
 		
 				
 		Enemy boss = EnemyType.BOSS_ENEMY_SHIP.getEnemyShip(game, position4, true);
@@ -208,9 +210,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
-		if(ship.getPosition().x > 16f && ship.getPosition().x <= 17f){
-			ship.setXSpeed(new Vector2(0,0));
-		}
+		
 		super.render(delta);
 
 		// Render the game

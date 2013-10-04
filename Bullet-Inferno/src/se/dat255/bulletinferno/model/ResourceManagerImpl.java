@@ -24,7 +24,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Enemies
 		map.put("DEFAULT_ENEMY_SHIP", "data/defaultEnemy.png");
 		map.put("SPECIAL_ENEMY_SHIP", "data/specialEnemy.png");
-		map.put("BOSS_ENEMY_SHIP", "data/specialEnemy.png");
+		map.put("BOSS_ENEMY_SHIP", "data/boss.png");
 		
 		// Player ship
 		map.put("PLAYER_DEFAULT", "data/playerShip.png");
@@ -34,6 +34,8 @@ public class ResourceManagerImpl implements ResourceManager {
 		map.put("GREEN_PROJECTILE", "data/greenDotProjectile.png");
 		map.put("PINK_PROJECTILE", "data/pinkDotProjectile.png");
 		map.put("YELLOW_PROJECTILE", "data/yellowDotProjectile.png");
+		map.put("BOSS_PROJECTILE", "data/greenDotProjectile.png");
+		map.put("BOSS_PROJECTILE2", "data/pinkDotProjectile.png");
 		
 		// Buttons
 		map.put("PAUSE_SCREEN", "images/gui/screen_pause.png");

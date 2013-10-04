@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedProjectileMovementPattern;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -19,7 +20,8 @@ public enum ProjectileType implements ResourceIdentifier {
 	RED_PROJECTILE(5f, null), // null = straight forward 
 	GREEN_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
 	PINK_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),
-	YELLOW_PROJECTILE(1f, new DisorderedMovementPattern(0.1f,2f));
+	YELLOW_PROJECTILE(1f, new DisorderedProjectileMovementPattern(0.1f,2f));
+	
 	
 	private float damage;
 	private PhysicsMovementPattern pattern;

@@ -96,4 +96,5 @@ public class WeaponImpl implements Weapon {
 		timer.start();
 	}
 
+	
 }

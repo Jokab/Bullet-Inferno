@@ -61,5 +61,12 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 */
 	void setTakeDamageModifier(float takeDamageModifier);
 
-	public void setXSpeed(Vector2 vector2);
+	public void setXSpeed(float speed);
+	
+	
+	/**
+	 * Restores speed to what it was before setXSpeed was used last
+	 * Used mainly for starting movement after defeating a boss
+	 */
+	public void restoreSpeed();
 }

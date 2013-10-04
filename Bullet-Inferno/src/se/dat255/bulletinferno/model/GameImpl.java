@@ -12,6 +12,8 @@ import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.view.MockSegment;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -69,6 +71,12 @@ public class GameImpl implements Game {
 	public PlayerShip getPlayerShip() {
 		// TODO Auto-generated method stub
 		return playerShip;
+	}
+	
+	@Override
+	public void bossDead(){
+		Gdx.app.log("Game","Boss dead!");
+		playerShip.restoreSpeed();
 	}
 
 	/**

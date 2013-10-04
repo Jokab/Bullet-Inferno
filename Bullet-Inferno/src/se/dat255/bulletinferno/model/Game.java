@@ -110,4 +110,6 @@ public interface Game extends Disposable {
 
 	public List<MockSegment> getSegments();
 
+	public void bossDead();
+
 }

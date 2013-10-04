@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 
@@ -23,6 +24,7 @@ public class PlayerShipImpl implements PlayerShip {
 	private final ShipType shipType;
 	private final Loadout loadout;
 	private PhysicsBody body = null;
+	private float lastSpeed;
 	
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout, ShipType shipType) {
 		this.game = game;
@@ -149,7 +151,15 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 	
 	@Override
-	public void setXSpeed(Vector2 speed){
-		body.setVelocity(speed);
+	public void setXSpeed(float speed){
+		lastSpeed = body.getVelocity().x;
+		body.setVelocity(new Vector2(speed,0));
 	}
+	
+	@Override
+	public void restoreSpeed(){
+		body.setVelocity(new Vector2(lastSpeed,0));
+		Gdx.app.log("Ship speed restored",""+body.getVelocity().x);
+	}
+	
 }
