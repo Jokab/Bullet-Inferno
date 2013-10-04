@@ -64,12 +64,11 @@ public class GameController extends SimpleController {
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
 	
-	/** Stores te weapon type for restarting the game */
+	/** Stores the weapon type for restarting the game */
 	private WeaponData weaponData;
 
 	private MasterController myGame;
 	
-	private PlayerShip ship;
 	
 	static BackgroundView bgView;
 	
@@ -101,24 +100,29 @@ public class GameController extends SimpleController {
 			graphics = null;
 		}
 
-		// TODO: Initialize the game
 		graphics = new Graphics();
 		graphics.create();
 
-		// TODO: should probably not be created here
 		// Set up the player ship, view and add it to gfx.
 
 		game = new GameImpl();
 		
-		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), null, 
-				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
-				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
-				loadout, ShipType.PLAYER_DEFAULT);
+		// Create a new loadout for the ship and create the ship
+		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), 
+									null, 
+									new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
+									new PassiveAbilityImpl(new PassiveReloadingTime(0.5f))
+								);
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
+								loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
+		
 		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
-		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, 
+				Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
+		
+		
 		
 		bgView = new BackgroundView(game, resourceManager, ship);
 		//graphics.addRenderable(bgView);
@@ -126,15 +130,11 @@ public class GameController extends SimpleController {
 		// Set up input handler
 		processor = new GameTouchController(game, graphics, ship);
 
-		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();
 
 		EnemyView enemyView = new EnemyView(game, resourceManager);
 		graphics.addRenderable(enemyView);
 
-		// TODO: Debug test add bullet
-		// ProjectileImpl projectile = new ProjectileImpl(null);
-		// projectile.setPosition(new Vector2(5, 7));
 		ProjectileView projectileView = new ProjectileView(game, resourceManager);
 		graphics.addRenderable(projectileView);
 	}
@@ -187,7 +187,10 @@ public class GameController extends SimpleController {
 	 */
 	@Override
 	public void render(float delta) {
-		graphics.setNewCameraPos(ship.getPosition().x-ship.getDimensions().x/2+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(game.getPlayerShip().getPosition().x - 
+									game.getPlayerShip().getDimensions().x/2 + 
+									Graphics.GAME_WIDTH/2, 
+								Graphics.GAME_HEIGHT/2);
 
 		// Render the game
 		graphics.render();
