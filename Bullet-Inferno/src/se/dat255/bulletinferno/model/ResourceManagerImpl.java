@@ -29,6 +29,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Enemies
 		map.put("DEFAULT_ENEMY_SHIP", "data/defaultEnemy.png");
 		map.put("SPECIAL_ENEMY_SHIP", "data/specialEnemy.png");
+		map.put("BOSS_ENEMY_SHIP", "data/boss.png");
 		
 		// Player ship
 		map.put("PLAYER_DEFAULT", "data/playerShip.png");

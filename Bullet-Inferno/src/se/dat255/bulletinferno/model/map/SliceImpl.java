@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Obstacle;
+import se.dat255.bulletinferno.model.enemy.EnemyType;
 
 public class SliceImpl implements Slice, Collidable {
 
@@ -75,7 +76,12 @@ public class SliceImpl implements Slice, Collidable {
 		// Create enemies from the provided definitions
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
-			game.addEnemy(enemyPlacement.getContent().getEnemyShip(game, enemyPosition));
+			if(enemyPlacement.getContent()==EnemyType.BOSS_ENEMY_SHIP){
+				game.addEnemy(enemyPlacement.getContent().getEnemyShip(game, enemyPosition, true));
+			}else{
+				game.addEnemy(enemyPlacement.getContent().getEnemyShip(game, enemyPosition, false));
+			}
+			
 		}
 	}
 	

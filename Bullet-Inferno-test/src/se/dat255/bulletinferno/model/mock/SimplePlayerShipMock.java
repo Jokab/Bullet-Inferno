@@ -104,4 +104,16 @@ public class SimplePlayerShipMock implements PlayerShip {
 		return null;
 	}
 
+	@Override
+	public void setXSpeed(float speed) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void restoreSpeed() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

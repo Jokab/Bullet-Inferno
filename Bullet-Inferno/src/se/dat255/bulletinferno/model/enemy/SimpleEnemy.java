@@ -30,14 +30,14 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private PhysicsBody body = null;
 	private final Game game;
 	protected Vector2 velocity;
-	protected final Weapon weapon;
-	
-	/** A flag to make sure we don't remove ourself twice */
-	private boolean flaggedForRemoval = false;
+	protected Weapon[] weapons;
 
-	// TODO : Fix this in box2d instead
+/** A flag to make sure we don't remove ourself twice */
+	private boolean flaggedForRemoval = false;
+// TODO : Fix this in box2d instead
 	private boolean isAwake = false;
 	
+
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
@@ -52,12 +52,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon weapon, int score, int credits) {
+			int initialHealth, Weapon[] weapons, int score, int credits) {
 		this.game = game;
 		this.type = type;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
-		this.weapon = weapon;
+		this.weapons = weapons;
 		this.score = score;
 		this.credits = credits;
 		this.velocity = velocity;
@@ -67,12 +67,13 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		body.setVelocity(velocity);
 	}
 	
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon weapon, int score, int credits, 
+			int initialHealth, Weapon[] weapons, int score, int credits, 
 			PhysicsMovementPattern pattern) {
-		this(game, type, position, velocity, initialHealth, weapon, score, credits);
+		this(game, type, position, velocity, initialHealth, weapons, score, credits);
 		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 
 	}
@@ -140,10 +141,15 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	@Override
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
-		body = null;
-		if (weapon != null) {
-			weapon.getTimer().stop();
+		if(weapons!=null){
+			for(int i = 0; i<(weapons.length); i++){
+				if (weapons[i] != null) {
+					weapons[i].getTimer().stop();
+				}
 		}
+
+		body = null;
+				}
 	}
 
 	@Override

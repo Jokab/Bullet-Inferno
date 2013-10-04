@@ -126,4 +126,10 @@ public class SimpleMockGame implements Game {
 	public void runLater(Runnable task) {
 		runLaters.add(task);
 	}
+
+	@Override
+	public void bossDead() {
+		// TODO Auto-generated method stub
+		
+	}
 }

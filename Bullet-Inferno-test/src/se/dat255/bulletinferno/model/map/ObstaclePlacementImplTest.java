@@ -31,7 +31,7 @@ public class ObstaclePlacementImplTest {
 	public void testCreateObstaclePlacementImpl() {
 		// Create an ObstaclePlacementImpl and make sure the properties are set.
 
-		ObstaclePlacement obstaclePlacement = new ObstaclePlacementImpl(mockObstacleDef, pos);
+		ObstaclePlacement obstaclePlacement = new ObstaclePlacementImpl(mockObstacleDef, pos.x, pos.y);
 
 		assertEquals("The obstacle definition should be the one provided",
 				obstaclePlacement.getObstacleDefinition(), mockObstacleDef);

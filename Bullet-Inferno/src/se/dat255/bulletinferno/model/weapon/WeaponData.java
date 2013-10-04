@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.ProjectileImpl;
-import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.WeaponDescription;
 
@@ -26,7 +25,19 @@ public enum WeaponData implements WeaponDescription {
 	DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(0,0.5f), 5f),
 	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(0,1), 14),
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
-	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 2f);
+	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 2f),
+
+	BOSS_LAUNCHER(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 5),
+	BOSS_LAUNCHER2(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1f), 5),
+	BOSS_LAUNCHER3(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,2), 5),
+	BOSS_LAUNCHER4(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1f), 5),
+	BOSS_LAUNCHER5(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-2), 5),
+	
+	BOSS_GUN(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 0.5f),
+	BOSS_GUN2(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 0.5f),
+	BOSS_GUN3(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 0.5f),
+	BOSS_GUN4(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 0.5f),
+	BOSS_GUN5(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 0.5f);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;

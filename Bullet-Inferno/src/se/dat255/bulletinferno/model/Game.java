@@ -128,4 +128,6 @@ public interface Game extends Disposable {
 	 */
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
+	public void bossDead();
+
 }
