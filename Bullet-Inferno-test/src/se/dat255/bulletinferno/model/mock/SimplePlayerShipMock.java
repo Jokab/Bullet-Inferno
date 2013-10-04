@@ -98,4 +98,10 @@ public class SimplePlayerShipMock implements PlayerShip {
 		
 	}
 
+	@Override
+	public Vector2 getDimensions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
