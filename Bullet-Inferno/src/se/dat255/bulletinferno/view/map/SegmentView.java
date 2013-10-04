@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.Slice;
 import se.dat255.bulletinferno.view.Renderable;
@@ -29,7 +30,7 @@ public class SegmentView implements Renderable {
 		
 		// TODO: Not hardcode
 		// Load segment image into texture
-		texture = resourceManager.getTexture("MAP_MOUNTAIN");
+		texture = TextureType.MAP_MOUNTAIN.getTexture();
 		
 		List<? extends Slice> slices = segment.getSlices();
 

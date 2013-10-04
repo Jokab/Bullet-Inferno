@@ -1,7 +1,11 @@
 package se.dat255.bulletinferno.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.ManagedTexture;
 import se.dat255.bulletinferno.model.ResourceManager;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -15,10 +19,13 @@ public class EnemyView implements Renderable {
 	private Texture texture;
 	private Sprite sprite;
 	private ResourceManager resourceManager;
+	private List<ManagedTexture> managedTextures;
 
 	public EnemyView(Game game, ResourceManager resourceManager) {
 		this.game = game;
 		this.resourceManager = resourceManager;
+		
+		this.managedTextures = new ArrayList<ManagedTexture>();
 
 		this.sprite = new Sprite();
 		sprite.setOrigin(0, 0);
@@ -28,7 +35,8 @@ public class EnemyView implements Renderable {
 	@Override
 	public void render(SpriteBatch batch) {
 		for(Enemy enemy : game.getEnemies()) {
-			this.texture = resourceManager.getTexture(enemy.getType().getIdentifier());
+			ManagedTexture mTexture = resourceManager.getManagedTexture(enemy.getType());
+			this.texture = mTexture.getTexture();
 			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			this.sprite.setTexture(texture);
 			sprite.setRegion(texture);
@@ -41,6 +49,8 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void dispose() {
-		texture.dispose();
+		for(ManagedTexture mTexture : managedTextures) {
+			mTexture.dispose(resourceManager);
+		}
 	}
 }
