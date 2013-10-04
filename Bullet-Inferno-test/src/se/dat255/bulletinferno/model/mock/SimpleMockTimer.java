@@ -3,8 +3,8 @@ package se.dat255.bulletinferno.model.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Timer;
-import se.dat255.bulletinferno.model.Timerable;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.Timerable;
 
 public class SimpleMockTimer implements Timer {
 	public float timeLeft = 10;
@@ -12,7 +12,10 @@ public class SimpleMockTimer implements Timer {
 	public float initialValue = 10;
 	public boolean isContinuous = false;
 	public List<Timerable> registeredListeners = new ArrayList<Timerable>();
-	
+
+	private List<Timerable> listenersToBeRemoved = new ArrayList<Timerable>();
+	private boolean isLooping = false;
+
 	@Override
 	public float getTimeLeft() {
 		return this.timeLeft;
@@ -72,10 +75,27 @@ public class SimpleMockTimer implements Timer {
 
 	@Override
 	public void unregisterListener(Timerable listener) {
-		registeredListeners.remove(listener);
+		if (isLooping) {
+			listenersToBeRemoved.add(listener);
+		} else {
+			registeredListeners.remove(listener);
+		}
 	}
 
 	@Override
 	public void update(float delta) {
+	}
+
+	public void callAllListeners(float timeSinceLast) {
+		isLooping = true;
+		for (Timerable listener : registeredListeners) {
+			listener.onTimeout(this, timeSinceLast);
+		}
+		isLooping = false;
+
+		for (Timerable listener : listenersToBeRemoved) {
+			registeredListeners.remove(listener);
+		}
+		listenersToBeRemoved.clear();
 	}
 }

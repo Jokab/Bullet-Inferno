@@ -7,25 +7,32 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.ResourceManager;
 
 public class ProjectileView implements Renderable {
 
-	private final Sprite sprite;
+	private Sprite sprite;
 	private final Game game;
+	private ResourceManager resourceManager;
+	private Texture texture;
 
-	public ProjectileView(Game game) {
+	public ProjectileView(Game game, ResourceManager resourceManager) {
+		this.resourceManager = resourceManager;
 		this.game = game;
-		Texture texture = new Texture(Gdx.files.internal("data/projectile.png"));
-		sprite = new Sprite(texture);
-		sprite.setOrigin(0, 0);
-		sprite.setSize(0.2f, 0.2f);
+		
+		
+		
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
 		for (Projectile projectile : game.getProjectiles()) {
-			sprite.setPosition(projectile.getPosition().x,
-					projectile.getPosition().y - sprite.getHeight() / 2);
+			texture = resourceManager.getTexture(projectile.getType().getIdentifier());
+			sprite = new Sprite(texture);
+			//sprite.setOrigin(0, 0);
+			sprite.setSize(projectile.getDimensions().x, projectile.getDimensions().y);
+			sprite.setPosition(projectile.getPosition().x-projectile.getDimensions().x/2,
+					projectile.getPosition().y-projectile.getDimensions().y/2);
 			sprite.draw(batch);
 		}
 	}

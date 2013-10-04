@@ -7,8 +7,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.map.SegmentManager;
+import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -24,20 +32,26 @@ public class GameImpl implements Game {
 
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
-	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
-
+	
+	/** The default segment manager used to place segments in the viewport current (remove old). */
+	private final SegmentManager segmentManager = new SegmentManagerImpl(this);
+	
 	/** List of all timers */
 	private final List<Timer> timers;
 	/** List of all queued timers to be added */
 	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
 	private boolean isIteratingOverTimers = false;
 
+	/** A list of Runnables that will be run at the next update. */
+	private final List<Runnable> runLaters;
+
 	public GameImpl(PhysicsWorld world) {
 		this.world = world;
 		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
 		timers = new LinkedList<Timer>();
+		runLaters = new LinkedList<Runnable>();
 	}
 
 	public GameImpl() {
@@ -49,7 +63,7 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public void setPlayerShip(PlayerShip ship) {
-		playerShip = ship;
+		this.playerShip = ship;
 	}
 
 	/**
@@ -60,13 +74,11 @@ public class GameImpl implements Game {
 		// TODO Auto-generated method stub
 		return playerShip;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
+	
 	@Override
-	public List<? extends Obstacle> getObstacles() {
-		return obstacles;
+	public void bossDead(){
+		Gdx.app.log("Game","Boss dead!");
+		playerShip.restoreSpeed();
 	}
 
 	/**
@@ -92,7 +104,23 @@ public class GameImpl implements Game {
 	public void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<? extends Segment> getSegments() {
+		return segmentManager.getSegments();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getRemovedSegmentCount() {
+		return segmentManager.getRemovedSegmentCount();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -185,8 +213,13 @@ public class GameImpl implements Game {
 		}
 		isIteratingOverTimers = false;
 
+		// Run all runLater Runnables from the previous tick.
+		for (Runnable task : runLaters) {
+			task.run();
+		}
+		runLaters.clear();
+
 		world.update(deltaTime);
-		playerShip.update(deltaTime);
 	}
 
 	/**
@@ -203,6 +236,20 @@ public class GameImpl implements Game {
 	@Override
 	public void dispose() {
 		world.dispose();
+	}
+
+	@Override
+	public void runLater(Runnable task) {
+		runLaters.add(task);
+	}	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
+		world.setViewport(viewportPosition, viewportDimensions);
+		segmentManager.setViewport(viewportPosition, viewportDimensions);
 	}
 
 }

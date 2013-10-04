@@ -1,25 +1,57 @@
 package se.dat255.bulletinferno.model;
 
+import java.util.ArrayList;
+
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Shape;
 
 public class PlayerShipImpl implements PlayerShip {
 
-	private final Vector2 position = new Vector2();
-	private final Game game;
-	private Weapon weapon;
-	private final int initialHealth;
-	private int health;
-	private float moveToPos;
-	private final float moveSpeed = 6.0f;
+	public enum ShipType implements Teamable {
+		PLAYER_DEFAULT;
 
-	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Weapon weapon) {
-		this.position.set(position);
+		@Override
+		public boolean isInMyTeam(Teamable teamMember) {
+			return true;
+		}
+	}
+
+	private final Game game;
+	private final int initialHealth;
+	private float takeDamageModifier = 1; // default
+	private int health;
+	private final ShipType shipType;
+	private final Loadout loadout;
+	private PhysicsBody body = null;
+	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
+	private float lastSpeed;
+
+	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout,
+			ShipType shipType) {
 		this.game = game;
 		this.initialHealth = initialHealth;
-		health = initialHealth;
-		this.weapon = weapon;
+		this.health = initialHealth;
+		this.loadout = loadout;
+		this.shipType = shipType;
 
-		game.setPlayerShip(this);
+		// TODO: should probably not apply this here
+		if (loadout.getPassiveAbility() != null) {
+			loadout.getPassiveAbility().getEffect().applyEffect(this);
+		}
+
+		Shape shape = PhysicsShapeFactory.getRectangularShape(1, 1);
+		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+
+		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		body.setVelocity(forwardSpeed);
 	}
 
 	/**
@@ -27,12 +59,19 @@ public class PlayerShipImpl implements PlayerShip {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource())) {
-			// If got hit by a projectile not fired by me
+		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
-		} else if (other instanceof Teamable && !isInMyTeam((Teamable) other)) {
-			// TODO game over / die
+		} else if (collidedWithSomethingElse(other)) {
+			System.out.println("You crashed!!!");
 		}
+	}
+
+	private boolean collidedWithSomethingElse(Collidable other) {
+		return other instanceof Teamable && !isInMyTeam((Teamable) other);
+	}
+
+	private boolean hitByOtherProjectile(Collidable other) {
+		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());
 	}
 
 	/**
@@ -45,65 +84,53 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void takeDamage(float damage) {
-		health -= damage;
-	}
+		this.health -= damage * takeDamageModifier;
 
-	@Override
-	public int getHealth() {
-		return health;
-	}
-
-	@Override
-	public int getInitialHealth() {
-		return initialHealth;
-	}
-
-	@Override
-	public Vector2 getPosition() {
-		return position;
-	}
-
-	@Override
-	public void setPosition(Vector2 position) {
-		this.position.set(position);
-	}
-
-	@Override
-	public void update(float deltaTime) {
-		if (position.y > moveToPos + 0.1f) {
-			position.add(0, -moveSpeed * deltaTime);
-		} else if (position.y < moveToPos - 0.1f) {
-			position.add(0, moveSpeed * deltaTime);
-		}
-
-		if (health <= 0) {
+		if (isDead()) {
 			dispose();
 		}
 	}
 
 	@Override
-	public void moveTo(float yPos) {
-		moveToPos = yPos;
+	public void setTakeDamageModifier(float takeDamageModifier) {
+		this.takeDamageModifier = takeDamageModifier;
 	}
 
 	@Override
-	public float getMovePos() {
-		return moveToPos;
+	public int getHealth() {
+		return this.health;
 	}
 
 	@Override
-	public void stopMovement() {
-		moveToPos = position.y;
+	public int getInitialHealth() {
+		return this.initialHealth;
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return body.getPosition();
+	}
+
+	@Override
+	public void moveY(float dy) {
+		moveY(dy, 1);
+	}
+
+	@Override
+	public void moveY(float dy, float scale) {
+		if (!isDead()) {
+			body.getBox2DBody().setTransform(getPosition().add(0, scale * dy), 0);
+		}
 	}
 
 	@Override
 	public void fireWeapon() {
-		weapon.fire(position, new Vector2(1, 0), this);
+		loadout.getPrimaryWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
+	public Weapon getWeapon() {
+		return this.loadout.getPrimaryWeapon();
 	}
 
 	@Override
@@ -112,7 +139,49 @@ public class PlayerShipImpl implements PlayerShip {
 	}
 
 	@Override
-	public void dispose() {
-
+	public String getIdentifier() {
+		return this.shipType.name();
 	}
+
+	@Override
+	public void attachPassive(PassiveAbility passiveAbility) {
+		passiveAbility.getEffect().applyEffect(this);
+	}
+
+	@Override
+	public void dispose() {
+		body.setVelocity(new Vector2()); // we need to stop moving
+	}
+
+	@Override
+	public Loadout getLoadout() {
+		return this.loadout;
+	}
+
+	@Override
+	public boolean isDead() {
+		return this.health <= 0;
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		ArrayList<Fixture> fixtures = body.getBox2DBody().getFixtureList();
+		BoundingBox boundingBox = new BoundingBox();
+		for (Fixture fixture : fixtures) {
+			// TODO
+		}
+		// TODO: Temporary solution, remove when above is working. 
+		return new Vector2(1, 1);
+	}
+	
+	public void setXSpeed(float speed){
+		lastSpeed = body.getVelocity().x;
+		body.setVelocity(new Vector2(speed,0));
+	}
+
+	@Override
+	public void restoreSpeed(){
+		body.setVelocity(new Vector2(lastSpeed,0));
+	}
+	
 }

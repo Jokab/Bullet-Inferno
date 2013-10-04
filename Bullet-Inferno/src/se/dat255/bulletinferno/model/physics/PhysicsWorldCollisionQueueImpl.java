@@ -4,8 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import se.dat255.bulletinferno.model.Collidable;
-import se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
