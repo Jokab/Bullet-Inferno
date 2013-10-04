@@ -1,10 +1,11 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 public class PlayerShipImpl implements PlayerShip {

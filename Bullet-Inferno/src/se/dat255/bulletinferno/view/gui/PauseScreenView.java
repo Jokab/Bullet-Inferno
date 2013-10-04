@@ -4,7 +4,6 @@ import se.dat255.bulletinferno.GameScreen;
 import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,7 +36,7 @@ public class PauseScreenView implements RenderableGUI {
 	}
 
 	@Override
-	public void pressed() {
+	public void pressed(float x, float y) {
 		game.unpauseGame();
 	}
 

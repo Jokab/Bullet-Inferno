@@ -151,7 +151,7 @@ public class Graphics {
 			Vector2 size = gui.getSize();
 			if (x > position.x && y > position.y && x < position.x + size.x
 					&& y < position.y + size.y) {
-				gui.pressed();
+				gui.pressed(x, y);
 				return true;
 			}
 		}

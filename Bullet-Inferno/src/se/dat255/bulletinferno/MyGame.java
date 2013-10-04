@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno;
 
+import se.dat255.bulletinferno.model.weapon.WeaponData;
+
 import com.badlogic.gdx.Gdx;
 
 /**
@@ -35,7 +37,7 @@ public class MyGame extends com.badlogic.gdx.Game {
 	@Override
 	public void create() {
 		loadoutScreen = new LoadoutScreen(this);
-		gameScreen = new GameScreen(this);
+		//gameScreen = new GameScreen(this);
 
 		setScreen(loadoutScreen);
 	}
@@ -45,6 +47,19 @@ public class MyGame extends com.badlogic.gdx.Game {
 		Gdx.app.log("MyGame", "dispose()");
 		gameScreen.dispose();
 		loadoutScreen.dispose();
+	}
+	
+	/** Starts a new game and changes the screen to that game */
+	public void startGame(WeaponData weaponData){
+		if(weaponData == null){
+			if(gameScreen == null) throw new RuntimeException(
+					"MyGame.startGame(null): Can't load weapon data since game screen is null.");
+			weaponData = gameScreen.getWeaponData();
+		}
+		if(gameScreen != null) gameScreen.dispose();
+		gameScreen = new GameScreen(this);
+		gameScreen.createNewGame(weaponData);
+		setScreen(gameScreen);
 	}
 
 	public GameScreen getGameScreen() {

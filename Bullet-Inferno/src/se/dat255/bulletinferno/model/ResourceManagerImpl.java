@@ -46,6 +46,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		
 		// Buttons
 		map.put("PAUSE_SCREEN", "images/gui/screen_pause.png");
+		map.put("GAMEOVER_SCREEN", "images/gui/screen_gameover.png");
 		textures = Collections.unmodifiableMap(map);
 	}
 

@@ -22,6 +22,7 @@ import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.RenderableGUI;
 import se.dat255.bulletinferno.view.PlayerShipView;
+import se.dat255.bulletinferno.view.gui.GameoverScreenView;
 import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
@@ -44,19 +45,25 @@ public class GameScreen extends AbstractScreen {
 	private InputProcessor processor;
 
 	/** The current session instance of the game model. */
-	private Game game = null;
+	private Game game;
 
 	/** If the game is paused; Should not update the game */
 	private boolean gamePaused;
+	
+	/** If the player died; Should not update the game */
+	private boolean gameOver;
 
 	/** The views to use when going in or out pause */
 	private RenderableGUI pauseScreenView, pauseIconView;
 
 	/** The (center of the) current viewport position, in world coordinates */
-	private Vector2 viewportPosition = new Vector2();
+	private Vector2 viewportPosition;
 
 	/** The current viewport dimensions, in world coordinates. */
-	private Vector2 viewportDimensions = new Vector2();
+	private Vector2 viewportDimensions;
+	
+	/** Stores te weapon type for restarting the game */
+	private WeaponData weaponData;
 
 	private MyGame myGame;
 	
@@ -77,6 +84,13 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 */
 	public void createNewGame(WeaponData weaponType) {
+		// Initiate instead of declaring statically above
+		game = null;
+		viewportPosition = new Vector2();
+		viewportDimensions = new Vector2();
+		this.weaponData = weaponType;
+		
+		// Original create new game code
 		resourceManager.load();
 		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
 
@@ -127,6 +141,13 @@ public class GameScreen extends AbstractScreen {
 		pauseIconView = new PauseIconView(this);
 		pauseScreenView = new PauseScreenView(this, resourceManager);
 		graphics.addRenderableGUI(pauseIconView);
+	}
+	
+	/** The player has died, the game is over */
+	public void gameOver() {
+		gameOver = true;
+		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
+		graphics.addRenderableGUI(gameOver);
 	}
 
 	/** Pauses the game */
@@ -185,9 +206,13 @@ public class GameScreen extends AbstractScreen {
 
 		// Render the game
 		graphics.render();
+		
+		if(!gameOver && game.getPlayerShip().isDead()){
+			gameOver();
+		}
 
 		// Only pause logics, rendering of GUI could still be needed
-		if (!gamePaused) {
+		if (!gamePaused && !gameOver) {
 			// Update models. This should be done after graphics rendering, so that
 			// graphics commands
 			// can be buffered up for being sent to the graphics pipeline.
@@ -226,6 +251,11 @@ public class GameScreen extends AbstractScreen {
 	
 	public static BackgroundView getBgView(){
 		return bgView;
+	}
+	
+	/** Get method for weapon data set in create new game */
+	public WeaponData getWeaponData(){
+		return weaponData;
 	}
 
 }
