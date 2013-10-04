@@ -32,9 +32,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	protected Vector2 velocity;
 	protected Weapon[] weapons;
 
-/** A flag to make sure we don't remove ourself twice */
+	/** A flag to make sure we don't remove ourself twice */
 	private boolean flaggedForRemoval = false;
-// TODO : Fix this in box2d instead
+	// TODO : Fix this in box2d instead?
 	private boolean isAwake = false;
 	
 
@@ -67,7 +67,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
 	}
 	
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
