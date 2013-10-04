@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.physics;
 
 /**
  * Collision detection event callback for a body in the physics world that can collide.

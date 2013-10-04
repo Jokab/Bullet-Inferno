@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 

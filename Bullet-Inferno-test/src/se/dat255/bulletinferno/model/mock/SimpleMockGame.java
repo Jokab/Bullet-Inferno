@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Obstacle;
-import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.util.Timer;
 
 public class SimpleMockGame implements Game {

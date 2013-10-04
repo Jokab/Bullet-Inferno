@@ -3,9 +3,9 @@ package se.dat255.bulletinferno.model.enemy;
 import java.awt.Dimension;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Ship;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 

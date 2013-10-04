@@ -3,8 +3,6 @@ package se.dat255.bulletinferno.model.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 
 public class DisorderedProjectileMovementPattern implements PhysicsMovementPattern {
 	private float time = 0;

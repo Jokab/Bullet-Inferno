@@ -10,6 +10,7 @@ import java.util.Map;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.SegmentManager;
 import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;

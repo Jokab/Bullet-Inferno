@@ -3,7 +3,11 @@ package se.dat255.bulletinferno.model;
 import java.awt.Dimension;
 import java.awt.geom.Dimension2D;
 
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 

@@ -3,13 +3,6 @@ package se.dat255.bulletinferno.model.physics;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import se.dat255.bulletinferno.model.Collidable;
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
-import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
-import se.dat255.bulletinferno.model.PhysicsWorld;
-import se.dat255.bulletinferno.model.PhysicsWorldCollisionQueue;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 

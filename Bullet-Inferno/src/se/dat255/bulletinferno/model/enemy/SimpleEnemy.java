@@ -1,17 +1,17 @@
 package se.dat255.bulletinferno.model.enemy;
 
-import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Destructible;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
