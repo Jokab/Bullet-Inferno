@@ -33,7 +33,7 @@ public class Graphics {
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
 	
 	/** A vector that checks where the camera should be placed next update */
-	private Vector2 nextCameraPos;
+	private Vector2 nextCameraPos = new Vector2();
 
 	/** List of all objects that are to be rendered in the world */
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
