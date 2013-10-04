@@ -39,7 +39,6 @@ public class GameoverScreenView implements RenderableGUI {
 
 	@Override
 	public void pressed(float x, float y) {
-		Gdx.app.log("GameoverScreenView.pressed("+x+", "+y+")", "Key was pressed");
 		// Restart
 		if(2.6f < x && x < 6.4f && 2.44f < y && y < 4f){
 			game.startGame(null);

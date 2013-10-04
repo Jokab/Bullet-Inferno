@@ -97,8 +97,6 @@ public class GameTouchController implements InputProcessor {
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
 
-		Gdx.app.log("Touch", "Down id = " + pointer);
-
 		if (touchVector.x <= ship.getPosition().x + 8f) {
 			// Left half of the screen
 			// Set the touchOrigin vector to know where the touch originated from

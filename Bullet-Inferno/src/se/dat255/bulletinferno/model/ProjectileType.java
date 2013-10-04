@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
-import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
 

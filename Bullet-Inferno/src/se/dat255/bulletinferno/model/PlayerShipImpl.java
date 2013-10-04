@@ -1,16 +1,13 @@
 package se.dat255.bulletinferno.model;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 
-import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -185,7 +182,6 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void restoreSpeed(){
 		body.setVelocity(new Vector2(lastSpeed,0));
-		Gdx.app.log("Ship speed restored",""+body.getVelocity().x);
 	}
 	
 }

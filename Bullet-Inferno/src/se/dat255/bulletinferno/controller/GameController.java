@@ -92,7 +92,6 @@ public class GameController extends SimpleController {
 		
 		// Original create new game code
 		resourceManager.load();
-		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
 
 		if (graphics != null) {
 			graphics.dispose();
