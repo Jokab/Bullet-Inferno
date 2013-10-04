@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.RenderableGUI;
@@ -31,9 +32,9 @@ public class Graphics {
 	private Vector3 nextCameraPos;
 
 	/** List of all objects that are to be rendered in the world */
-	private final HashSet<Renderable> renderables = new HashSet<Renderable>();
+	private final Set<Renderable> renderables = new HashSet<Renderable>();
 	/** List of all objects that are to be rendered as GUI elements */
-	private final HashSet<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
+	private final Set<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
 
 	/**
 	 * Initializes all the required assets
