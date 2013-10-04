@@ -181,7 +181,6 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		graphics.setNewCameraPos(ship.getPosition().x-ship.getDimensions().x/2+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
-		super.render(delta);
 
 		// Render the game
 		graphics.render();

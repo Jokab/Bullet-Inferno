@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -124,7 +125,9 @@ public class LoadoutScreen extends AbstractScreen {
 
 	@Override
 	public void render(float delta) {
-		super.render(delta);
+		// Clear the screen every frame
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
