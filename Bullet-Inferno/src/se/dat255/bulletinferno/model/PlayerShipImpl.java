@@ -1,10 +1,15 @@
 package se.dat255.bulletinferno.model;
 
+import java.awt.Dimension;
+import java.util.ArrayList;
+
 import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 public class PlayerShipImpl implements PlayerShip {
@@ -40,7 +45,7 @@ public class PlayerShipImpl implements PlayerShip {
 			loadout.getPassiveAbility().getEffect().applyEffect(this);
 		}
 
-		Shape shape = PhysicsShapeFactory.getRectangularShape(0.08f, 0.1f);
+		Shape shape = PhysicsShapeFactory.getRectangularShape(1, 1);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
@@ -155,4 +160,16 @@ public class PlayerShipImpl implements PlayerShip {
 	public boolean isDead() {
 		return this.health <= 0;
 	}
+
+	@Override
+	public Vector2 getDimensions() {
+		ArrayList<Fixture> fixtures = body.getBox2DBody().getFixtureList();
+		BoundingBox boundingBox = new BoundingBox();
+		for (Fixture fixture : fixtures) {
+			// TODO
+		}
+		// Lämna denna som den är medans jag googlar på det
+		return new Vector2(1, 1);
+	}
+
 }

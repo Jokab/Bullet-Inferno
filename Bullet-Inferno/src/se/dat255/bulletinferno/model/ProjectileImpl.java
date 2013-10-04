@@ -1,5 +1,8 @@
 package se.dat255.bulletinferno.model;
 
+import java.awt.Dimension;
+import java.awt.geom.Dimension2D;
+
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
@@ -38,7 +41,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public ProjectileImpl(Game game) {
 		this.game = game;
 		if (bodyDefinition == null) {
-			Shape shape = PhysicsShapeFactory.getRectangularShape(0.1f, 0.1f);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 	}
@@ -155,6 +158,13 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	@Override
 	public ProjectileType getType() {
 		return projectileType;
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		
+		//...
+		return new Vector2(0.5f,0.5f) ;
 	}
 
 }

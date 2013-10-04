@@ -59,7 +59,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.velocity = velocity;
 
 		if (bodyDefinition == null) {
-			Shape shape = PhysicsShapeFactory.getRectangularShape(0.08f, 0.1f);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
@@ -198,5 +198,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	private void scheduleRemoveSelf() {
 		game.runLater(removeSelf);
+	}
+	
+	@Override
+	public Vector2 getDimensions() {
+		return new Vector2(1,1);
 	}
 }

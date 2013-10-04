@@ -19,7 +19,7 @@ public enum ProjectileType implements ResourceIdentifier {
 	RED_PROJECTILE(5f, null), // null = straight forward 
 	GREEN_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0))),
 	MISSILE(3f, new AccelerationMovementPattern(new Vector2(10, 0))),
-	PLASMA(1f, new DisorderedMovementPattern(0.1f,2f));
+	PLASMA(1f, null);
 	
 	private float damage;
 	private PhysicsMovementPattern pattern;

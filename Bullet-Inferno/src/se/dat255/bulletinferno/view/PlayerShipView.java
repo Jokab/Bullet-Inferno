@@ -44,7 +44,7 @@ public class PlayerShipView implements Renderable, Timerable {
 				Texture.TextureFilter.Linear);
 
 		sprite = new Sprite(texture);
-		sprite.setSize(1f, 1f);
+		sprite.setSize(ship.getDimensions().x, ship.getDimensions().y);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
 		primaryWeaponSprite = new Sprite(primaryWeaponTexture);
@@ -60,8 +60,8 @@ public class PlayerShipView implements Renderable, Timerable {
 				removeWeapons();
 			}
 			Vector2 pos = ship.getPosition();
-			float x = pos.x;
-			float y = pos.y - sprite.getHeight() / 2;
+			float x = pos.x - ship.getDimensions().x/2;
+			float y = pos.y - ship.getDimensions().y/2;
 			
 			sprite.setPosition(x, y);
 			sprite.draw(batch);
