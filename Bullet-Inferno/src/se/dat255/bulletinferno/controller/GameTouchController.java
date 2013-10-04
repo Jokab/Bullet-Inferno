@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.SpecialEffect;
@@ -18,7 +17,7 @@ import com.badlogic.gdx.math.Vector2;
  * @version 1.0
  * @since 13-09-12
  */
-public class Touch implements InputProcessor {
+public class GameTouchController implements InputProcessor {
 
 	private final int UPKEY = 51;
 	private final int DOWNKEY = 47;
@@ -46,7 +45,7 @@ public class Touch implements InputProcessor {
 
 	private final Game game;
 
-	public Touch(final Game game, final Graphics graphics, final PlayerShip ship) {
+	public GameTouchController(final Game game, final Graphics graphics, final PlayerShip ship) {
 		this.game = game;
 		this.graphics = graphics;
 		this.ship = ship;

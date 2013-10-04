@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno;
 
+import se.dat255.bulletinferno.controller.MasterController;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -21,6 +22,6 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;
         
-        initialize(new MyGame(), cfg);
+        initialize(new MasterController(), cfg);
     }
 }

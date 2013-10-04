@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
 import java.util.HashSet;
 
@@ -90,7 +90,7 @@ public class Graphics {
 
 		// TODO: Render world without blending
 		worldBatch.begin();
-		GameScreen.getBgView().render(worldBatch);
+		GameController.getBgView().render(worldBatch);
 		worldBatch.end();
 
 		// Render units that have alpha

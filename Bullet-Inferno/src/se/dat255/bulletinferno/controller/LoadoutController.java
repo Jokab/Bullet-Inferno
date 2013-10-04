@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
 import java.awt.TextField;
 
@@ -26,7 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class LoadoutScreen extends AbstractScreen {
+public class LoadoutController extends SimpleController {
 
 	private final static int VIRTUAL_WIDTH = 1280;
 	private final static int VIRTUAL_HEIGHT = 720;
@@ -38,7 +38,7 @@ public class LoadoutScreen extends AbstractScreen {
 	private final Texture weaponTexture1;
 	private final Texture weaponTexture2;
 
-	public LoadoutScreen(final MyGame myGame) {
+	public LoadoutController(final MasterController myGame) {
 
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();

@@ -3,7 +3,7 @@ package se.dat255.bulletinferno.model;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;

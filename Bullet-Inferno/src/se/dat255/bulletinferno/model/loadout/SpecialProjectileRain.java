@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.SpecialEffect;

@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.GameScreen;
+import se.dat255.bulletinferno.controller.GameController;
 import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
@@ -13,9 +13,9 @@ public class PauseScreenView implements RenderableGUI {
 
 	private final Vector2 position, size;
 	private final Sprite sprite;
-	private final GameScreen game;
+	private final GameController game;
 
-	public PauseScreenView(GameScreen game, ResourceManager resourceManager) {
+	public PauseScreenView(GameController game, ResourceManager resourceManager) {
 		Texture texture = resourceManager.getTexture("PAUSE_SCREEN");
 		sprite = new Sprite(texture);
 		size = new Vector2(16.0f, 9.0f);

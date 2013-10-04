@@ -1,6 +1,5 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
@@ -34,7 +33,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
-public class GameScreen extends AbstractScreen {
+public class GameController extends SimpleController {
 
 	/**
 	 * Handles all the graphics with the game.<br>
@@ -68,7 +67,7 @@ public class GameScreen extends AbstractScreen {
 	/** Stores te weapon type for restarting the game */
 	private WeaponData weaponData;
 
-	private MyGame myGame;
+	private MasterController myGame;
 	
 	private PlayerShip ship;
 	
@@ -77,7 +76,7 @@ public class GameScreen extends AbstractScreen {
 	private AssetManager assetManager = new AssetManager();
 	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
 
-	public GameScreen(MyGame myGame) {
+	public GameController(MasterController myGame) {
 		this.myGame = myGame;
 	}
 
@@ -125,7 +124,7 @@ public class GameScreen extends AbstractScreen {
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
-		processor = new Touch(game, graphics, ship);
+		processor = new GameTouchController(game, graphics, ship);
 
 		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();

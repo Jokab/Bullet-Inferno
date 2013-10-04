@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
@@ -29,14 +29,14 @@ import com.badlogic.gdx.Gdx;
  * @version 1.0
  * @since 2013-09-12
  */
-public class MyGame extends com.badlogic.gdx.Game {
+public class MasterController extends com.badlogic.gdx.Game {
 
-	LoadoutScreen loadoutScreen;
-	GameScreen gameScreen;
+	LoadoutController loadoutScreen;
+	GameController gameScreen;
 
 	@Override
 	public void create() {
-		loadoutScreen = new LoadoutScreen(this);
+		loadoutScreen = new LoadoutController(this);
 		//gameScreen = new GameScreen(this);
 
 		setScreen(loadoutScreen);
@@ -57,16 +57,16 @@ public class MyGame extends com.badlogic.gdx.Game {
 			weaponData = gameScreen.getWeaponData();
 		}
 		if(gameScreen != null) gameScreen.dispose();
-		gameScreen = new GameScreen(this);
+		gameScreen = new GameController(this);
 		gameScreen.createNewGame(weaponData);
 		setScreen(gameScreen);
 	}
 
-	public GameScreen getGameScreen() {
+	public GameController getGameScreen() {
 		return gameScreen;
 	}
 
-	public LoadoutScreen getLoadoutScreen() {
+	public LoadoutController getLoadoutScreen() {
 		return loadoutScreen;
 	}
 }

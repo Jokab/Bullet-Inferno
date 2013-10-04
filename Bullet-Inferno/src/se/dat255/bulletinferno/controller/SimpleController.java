@@ -1,10 +1,8 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
 
-public abstract class AbstractScreen implements Screen {
+public abstract class SimpleController implements Controller {
 	protected boolean isHidden = true;
 	protected boolean isPaused = true;
 
