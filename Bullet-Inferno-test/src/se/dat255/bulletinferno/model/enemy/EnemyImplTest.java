@@ -126,10 +126,14 @@ public class EnemyImplTest {
 		projectile = new ColidedTestMockProjectile();
 		projectile.setSource(nonTeam);
 		preCollisionHealth = enemy.getHealth();
-
+		
+		// Wake enemy by saying it's in the viewport
+		enemy.viewportIntersectionBegin();
+		
 		enemy.preCollided(projectile);
 		assertTrue("Should take specified damage from projectile",
 				enemy.getHealth() == preCollisionHealth - projectile.getDamage());
+		
 	}
 
 	@Test
