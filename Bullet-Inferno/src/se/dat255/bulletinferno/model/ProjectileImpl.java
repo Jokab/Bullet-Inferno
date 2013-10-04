@@ -151,6 +151,9 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	@Override
 	public void viewportIntersectionEnd() {
 		// Run later as we are not allowed to alter the world here.
+		// Check if the projectile has any damage left, i.e. if it has already
+		// exploded (only happens in rare cases on the same frame as collided),
+		// if so, explode and remove
 		if(damage > 0) {
 			game.runLater(removeSelf);
 			damage = 0;
