@@ -1,22 +1,24 @@
 package se.dat255.bulletinferno.view.gui;
 
 import se.dat255.bulletinferno.GameScreen;
+import se.dat255.bulletinferno.MyGame;
 import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class PauseScreenView implements RenderableGUI {
+public class GameoverScreenView implements RenderableGUI {
 
 	private final Vector2 position, size;
 	private final Sprite sprite;
-	private final GameScreen game;
+	private final MyGame game;
 
-	public PauseScreenView(GameScreen game, ResourceManager resourceManager) {
-		Texture texture = resourceManager.getTexture("PAUSE_SCREEN");
+	public GameoverScreenView(MyGame game, ResourceManager resourceManager) {
+		Texture texture = resourceManager.getTexture("GAMEOVER_SCREEN");
 		sprite = new Sprite(texture);
 		size = new Vector2(16.0f, 9.0f);
 		sprite.setSize(size.x, size.y);
@@ -37,7 +39,16 @@ public class PauseScreenView implements RenderableGUI {
 
 	@Override
 	public void pressed(float x, float y) {
-		game.unpauseGame();
+		Gdx.app.log("GameoverScreenView.pressed("+x+", "+y+")", "Key was pressed");
+		// Restart
+		if(2.6f < x && x < 6.4f && 2.44f < y && y < 4f){
+			game.startGame(null);
+		}
+		
+		// Menu
+		if(10.6f < x && x < 13f && 2.4f < y && y < 4.12){
+			game.setScreen(game.getLoadoutScreen());
+		}
 	}
 
 	@Override

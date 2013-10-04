@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 public interface RenderableGUI extends Renderable {
 
 	/** Called when the object was interacted with */
-	public void pressed();
+	public void pressed(float x, float y);
 
 	/** Gets the position of the GUI element */
 	public Vector2 getPosition();

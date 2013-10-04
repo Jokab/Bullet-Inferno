@@ -36,7 +36,7 @@ public class PauseIconView implements RenderableGUI {
 	}
 
 	@Override
-	public void pressed() {
+	public void pressed(float x, float y) {
 		game.pauseGame();
 	}
 

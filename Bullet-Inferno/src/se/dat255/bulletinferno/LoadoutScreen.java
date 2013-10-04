@@ -98,9 +98,7 @@ public class LoadoutScreen extends AbstractScreen {
 		weaponButton1.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				GameScreen gameScreen = myGame.getGameScreen();
-				gameScreen.createNewGame(WeaponData.MISSILE_LAUNCHER);
-				myGame.setScreen(gameScreen);
+				myGame.startGame(WeaponData.MISSILE_LAUNCHER);
 			}
 		});
 
@@ -108,9 +106,7 @@ public class LoadoutScreen extends AbstractScreen {
 		weaponButton2.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				GameScreen gameScreen = myGame.getGameScreen();
-				gameScreen.createNewGame(WeaponData.DISORDERER);
-				myGame.setScreen(gameScreen);
+				myGame.startGame(WeaponData.DISORDERER);
 			}
 		});
 		
