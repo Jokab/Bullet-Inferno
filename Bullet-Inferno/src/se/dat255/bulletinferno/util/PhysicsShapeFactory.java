@@ -28,7 +28,7 @@ public class PhysicsShapeFactory {
 	 */
 	public static Shape getRectangularShape(float width, float height) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width * 2f, height * 2f);
+		shape.setAsBox(width / 2f, height / 2f);
 		return shape;
 	}
 	
@@ -42,7 +42,7 @@ public class PhysicsShapeFactory {
 	 */
 	public static Shape getRectangularShape(float width, float height, Vector2 position) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width * 2f, height * 2f, position, 0);
+		shape.setAsBox(width / 2f, height / 2f, position, 0);
 		return shape;
 	}
 
