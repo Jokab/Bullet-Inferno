@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model.map;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Segment;
 
 import com.badlogic.gdx.math.Vector2;
 
