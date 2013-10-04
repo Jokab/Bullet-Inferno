@@ -20,9 +20,9 @@ import com.badlogic.gdx.math.Vector3;
 public class Graphics {
 
 	/** 2D world camera */
-	private static OrthographicCamera worldCamera;
+	private OrthographicCamera worldCamera;
 	/** 2D GUI camera */
-	private static OrthographicCamera guiCamera;
+	private OrthographicCamera guiCamera;
 	/** Handles efficient drawing of several images */
 	private SpriteBatch worldBatch, guiBatch;
 
@@ -33,7 +33,7 @@ public class Graphics {
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
 	
 	/** A vector that checks where the camera should be placed next update */
-	private Vector2 nextCameraPos;
+	private Vector2 nextCameraPos = new Vector2();
 
 	/** List of all objects that are to be rendered in the world */
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
@@ -152,14 +152,14 @@ public class Graphics {
 	private static final Vector3 vector = new Vector3();
 
 	/** Changes the given vector from screen to world position */
-	public static void screenToWorld(Vector2 position) {
+	public void screenToWorld(Vector2 position) {
 		vector.set(position.x, position.y, 0);
 		worldCamera.unproject(vector);
 		position.set(vector.x, vector.y);
 	}
 
 	/** Changed the given vector from world to screen position */
-	public static void worldToScreen(Vector2 position) {
+	public void worldToScreen(Vector2 position) {
 		vector.set(position.x, position.y, 0);
 		worldCamera.project(vector);
 		position.set(vector.x, vector.y);
