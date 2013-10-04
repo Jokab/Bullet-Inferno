@@ -58,11 +58,6 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public List<? extends Obstacle> getObstacles() {
-		return null;
-	}
-
-	@Override
 	public List<? extends Enemy> getEnemies() {
 		return null;
 	}

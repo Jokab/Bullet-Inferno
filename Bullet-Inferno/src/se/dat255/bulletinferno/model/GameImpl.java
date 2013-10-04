@@ -32,7 +32,6 @@ public class GameImpl implements Game {
 
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
-	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	
@@ -80,14 +79,6 @@ public class GameImpl implements Game {
 	public void bossDead(){
 		Gdx.app.log("Game","Boss dead!");
 		playerShip.restoreSpeed();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends Obstacle> getObstacles() {
-		return obstacles;
 	}
 
 	/**
