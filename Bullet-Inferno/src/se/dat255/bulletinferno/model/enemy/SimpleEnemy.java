@@ -31,6 +31,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final Game game;
 	protected Vector2 velocity;
 	protected final Weapon weapon;
+	
+	/** A flag to make sure we don't remove ourself twice */
+	private boolean flaggedForRemoval = false;
 
 	// TODO : Fix this in box2d instead
 	private boolean isAwake = false;
@@ -183,7 +186,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 * running.
 	 */
 	private void scheduleRemoveSelf() {
-		game.runLater(removeSelf);
+		if (!flaggedForRemoval) {
+			game.runLater(removeSelf);
+			flaggedForRemoval = true;
+		}
 	}
 	
 	@Override
