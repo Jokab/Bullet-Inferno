@@ -30,7 +30,7 @@ public class EnemyTypesTest {
 
 	@Test
 	public void testEnemyHealth() {
-		SimpleEnemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(mockGame, new Vector2());
+		SimpleEnemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(mockGame, new Vector2(), false);
 
 		assertTrue(EnemyType.DEFAULT_ENEMY_SHIP.getInitialHealth() == enemy.getHealth());
 	}
@@ -38,7 +38,7 @@ public class EnemyTypesTest {
 	@Test
 	public void testEnemyPosition() {
 		Vector2 position = new Vector2(1, 1);
-		SimpleEnemy enemy = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(mockGame, position);
+		SimpleEnemy enemy = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(mockGame, position, false);
 
 		assertEquals(
 				"Position that was sent to the factory should be the same as the created enemy's position. ",
