@@ -213,7 +213,7 @@ public class GameController extends SimpleController {
 
 			// Calculate the new world coordinate position (in the middle) of the viewport.
 			viewportPosition = new Vector2(0, 0);
-			Graphics.screenToWorld(viewportPosition);
+			graphics.screenToWorld(viewportPosition);
 			viewportPosition.add(0.5f * viewportDimensions.x, 0);
 			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
 
@@ -229,9 +229,9 @@ public class GameController extends SimpleController {
 
 		// Get bottom left (at zero, world origo) and top right corners for further calculation...
 		viewportPosition = new Vector2(0, height);
-		Graphics.screenToWorld(viewportPosition);
+		graphics.screenToWorld(viewportPosition);
 		viewportDimensions = new Vector2(width, 0);
-		Graphics.screenToWorld(viewportDimensions);
+		graphics.screenToWorld(viewportDimensions);
 
 		// ...adjust dimensions to bottom left corner...
 		viewportDimensions.sub(viewportPosition);

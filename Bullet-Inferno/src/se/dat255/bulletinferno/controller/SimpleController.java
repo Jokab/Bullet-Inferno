@@ -8,9 +8,9 @@ import com.badlogic.gdx.Gdx;
  */
 public abstract class SimpleController implements Controller {
 	/** If the screen this controller handles is hidden */
-	protected boolean isHidden = true;
+	protected boolean isHidden = false;
 	/** If the screen this controller handles is paused */
-	protected boolean isPaused = true;
+	protected boolean isPaused = false;
 
 	@Override
 	public void show() {

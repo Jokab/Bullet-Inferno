@@ -95,7 +95,7 @@ public class GameTouchController implements InputProcessor {
 		// Otherwise it's world input
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
-		Graphics.screenToWorld(touchVector);
+		graphics.screenToWorld(touchVector);
 
 		if (touchVector.x <= ship.getPosition().x + 8f) {
 			// Left half of the screen
@@ -124,7 +124,7 @@ public class GameTouchController implements InputProcessor {
 		if(pointer == steeringFinger) {
 			// Unproject the touch location to the virtual screen.
 			Vector2 touchVector = new Vector2(screenX, screenY);
-			Graphics.screenToWorld(touchVector);
+			graphics.screenToWorld(touchVector);
 			if (touchVector.x <= ship.getPosition().x + 8f) {
 				ship.moveY(touchVector.y - touchOrigin.y, SENSE_SCALE);
 				touchOrigin.set(touchVector);
@@ -138,7 +138,7 @@ public class GameTouchController implements InputProcessor {
 		// Same as touchDragged but for desktop
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
-		Graphics.screenToWorld(touchVector);
+		graphics.screenToWorld(touchVector);
 
 		return false;
 	}
