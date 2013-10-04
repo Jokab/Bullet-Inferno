@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-
 import com.badlogic.gdx.math.Vector2;
 
 public interface PlayerShip extends Ship, ResourceIdentifier {
@@ -11,22 +10,54 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 */
 	public void fireWeapon();
 
-	public void update(float deltaTime);
+	// TODO: javadoc this in some good way
+
 
 	/**
-	 * Sets the PlayerShip's position to the provided position.
+	 * Makes the PlayerShip move the specified distance on the y-axis
 	 * 
-	 * @param position
-	 *        The position to be set.
+	 * @param dy distance in y
 	 */
-	void setPosition(Vector2 position);
+	public void moveY(float dy);
+	
+	/**
+	 * Makes the PlayerShip move the specified distance on the y-axis, with
+	 * a specified scale. For example scale = 0.5 only moves the ship half the
+	 * distance specified, and scale = 2 twice as long
+	 * @param dy distance in y
+	 * @param scale
+	 */
+	public void moveY(float dy, float scale);
 
-	public void moveTo(float yPos);
+	/**
+	 * Returns the Weapon that is currently in the PlayerShip's Loadout.
+	 * 
+	 * @return The Weapon.
+	 */
+	public Weapon getWeapon();
 
-	public void stopMovement();
+	/**
+	 * Returns the Loadout that the PlayerShip is currently equipped with.
+	 * 
+	 * @return The Loadout
+	 */
+	public Loadout getLoadout();
 
-	public float getMovePos();
+	/**
+	 * Attaches a PassiveAbility to the PlayerShip. This ability is constantly active, and in
+	 * essence
+	 * it modifies some attribute (field) of the PlayerShip, or an attribute of one of its fields.
+	 * 
+	 * @param passiveAbility
+	 *        The PassiveAbility to be set.
+	 */
+	public void attachPassive(PassiveAbility passiveAbility);
 
-	public void setWeapon(Weapon weapon);
-
+	/**
+	 * Sets the modifier for taking damage to the specified value.
+	 * 
+	 * @param takeDamageModifier
+	 *        The modifier value.
+	 */
+	void setTakeDamageModifier(float takeDamageModifier);
 }

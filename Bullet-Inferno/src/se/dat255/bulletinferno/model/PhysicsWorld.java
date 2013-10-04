@@ -30,7 +30,7 @@ public interface PhysicsWorld extends Disposable {
 	 * Removes the specified body from the world.
 	 * <strong>Is only allowed to be called once on each body</strong>
 	 * 
-	 * @param body
+	 * @param body The body to be removed from the world.
 	 */
 	public void removeBody(PhysicsBody body);
 
@@ -44,13 +44,6 @@ public interface PhysicsWorld extends Disposable {
 	 *        the time in seconds since last call.
 	 */
 	public void update(float deltaTime);
-
-	/**
-	 * Get a physics shape factory that can help in Box2D Shape creation.
-	 * 
-	 * @return a shape factory.
-	 */
-	PhysicsShapeFactory getShapeFactory();
 
 	/**
 	 * Set the viewport for the physics world (must be set for viewport intersection detection).
@@ -77,7 +70,7 @@ public interface PhysicsWorld extends Disposable {
 	/**
 	 * Detaches the movement pattern from the specified body.
 	 * 
-	 * @param body
+	 * @param body The body that should have its movement pattern removed.
 	 */
 	public void detachMovementPattern(PhysicsBody body);
 

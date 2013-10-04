@@ -1,8 +1,8 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
-import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.util.Timerable;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -16,34 +16,30 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private float damage;
 	private Teamable source = null;
 	private final Game game;
-
-	/** An instance of a timer to help "running things later", i.e. on the next timestep. */
-	private final Timer runLater;
+	private ProjectileType projectileType;
 
 	/**
-	 * Schedule an instance of this class to a timer and it will remove this projectile when the
-	 * timer calls it. This class takes care of unregistering itself on the timer when run.
+	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
+	 * the physics world during a simulation.
 	 */
-	public class RemoveThisProjectileTimerable implements Timerable {
+	private Runnable removeSelf = new Runnable() {
 		@Override
-		public void onTimeout(Timer source, float timeSinceLast) {
+		public void run() {
 			game.disposeProjectile(ProjectileImpl.this);
-
-			source.unregisterListener(this);
 		}
-	}
+	};
 
 	/**
 	 * Constructs a new projectile
 	 * 
-	 * @param world
+	 * @param game
+	 *        the game instance.
 	 */
 	public ProjectileImpl(Game game) {
 		this.game = game;
-		runLater = game.getTimer();
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(0.1f, 0.1f);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 	}
 
@@ -51,10 +47,17 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(Vector2 origin, Vector2 velocity, float damage, Teamable source) {
+	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
+			Teamable source) {
+		projectileType = type;
 		this.damage = damage;
 		this.source = source;
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
+
+		// Check if there is a movement pattern to attach
+		if (type.getMovementPattern() != null) {
+			game.getPhysicsWorld().attachMovementPattern(type.getMovementPattern().copy(), body);
+		}
 
 		this.setVelocity(velocity);
 	}
@@ -82,20 +85,23 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public void postCollided(Collidable other) {
 		// Decrease the damage after hits, since we must let the other object that collided with us
 		// decide if they want to take our current damage (etc.) before we zero it.
-		if (damage > 0 && !(other instanceof Projectile) && other != getSource()) {
-			if (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)) {
-				damage = 0;
+		if (shouldCollide(other)) {
+			damage = 0;
 
-				// Note: Do not move this out of here - this must be called only once, and that is
-				// when
-				// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
-				if (damage <= 0) {
-					// We won't need this projectile anymore, since it is useless and can't hurt
-					// anyone.
-					game.disposeProjectile(this);
-				}
+			// Note: Do not move this out of here - this must be called only once, and that is
+			// when
+			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
+			if (damage <= 0) {
+				// We won't need this projectile anymore, since it is useless and can't hurt
+				// anyone.
+				game.disposeProjectile(this);
 			}
 		}
+	}
+
+	private boolean shouldCollide(Collidable other) {
+		return ((damage > 0 && !(other instanceof Projectile) && other != getSource())
+				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)));
 	}
 
 	/**
@@ -143,8 +149,12 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	@Override
 	public void viewportIntersectionEnd() {
 		// Run later as we are not allowed to alter the world here.
-		runLater.registerListener(new RemoveThisProjectileTimerable());
-		runLater.start();
+		game.runLater(removeSelf);
+	}
+
+	@Override
+	public ProjectileType getType() {
+		return projectileType;
 	}
 
 }

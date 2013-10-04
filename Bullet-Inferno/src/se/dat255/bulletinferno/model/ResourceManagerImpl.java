@@ -4,10 +4,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 
 
 public class ResourceManagerImpl implements ResourceManager {
@@ -17,11 +20,31 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> textures;
 	static {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("DEFAULT_SHIP", "data/enemyShip.png");
-		map.put("FAST_SHIP", "data/enemyShip2.png");
-		map.put("SLOW_SHIP", "data/enemyShip2.png");
-		map.put("PLAYER_DEFAULT", "data/ship.png");
+		map.put("DEFAULT_SHIP", "data/defaultEnemy.png");
+		map.put("FAST_SHIP", "data/defaultEnemy.png");
+		map.put("SLOW_SHIP", "data/defaultEnemy.png");
+		map.put("PLAYER_DEFAULT", "data/defaultEnemy.png");
+		map.put("MAP_MOUNTAIN", "images/game/mountain.png");
 		
+		// Enemies
+		map.put("DEFAULT_ENEMY_SHIP", "data/defaultEnemy.png");
+		map.put("SPECIAL_ENEMY_SHIP", "data/specialEnemy.png");
+		
+		// Player ship
+		map.put("PLAYER_DEFAULT", "data/playerShip.png");
+		map.put("PLAYER_EXPLOSION", "data/explosion.gif");
+		
+		//Weapons
+		map.put("MISSILE_LAUNCHER", "data/missileLauncher.png");
+		map.put("DISORDERER","data/disorderer.png");
+		
+		//Projectiles
+		map.put("RED_PROJECTILE", "data/redDotProjectile.png");
+		map.put("GREEN_PROJECTILE", "data/greenDotProjectile.png");
+		map.put("MISSILE", "data/missile.png");
+		map.put("PLASMA", "data/plasma.png");
+		
+		// Buttons
 		map.put("PAUSE_SCREEN", "images/gui/screen_pause.png");
 		textures = Collections.unmodifiableMap(map);
 	}

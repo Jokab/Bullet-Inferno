@@ -7,7 +7,7 @@ public interface PositionEntity {
 	/**
 	 * Returns a Vector2 representation of a position of the PositionEntity.
 	 * 
-	 * @return
+	 * @return The position of the PositionEntity.
 	 */
 	public Vector2 getPosition();
 

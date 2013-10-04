@@ -7,20 +7,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.map.SegmentManager;
+import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
-import se.dat255.bulletinferno.view.MockSegment;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
 /**
  * Default implementation of Game, the central type in Bullet Inferno.
  * 
  * <p>
- * Game acts as a single point of entry for the outside environment, as well as
- * central point of lookup for the inside. It handles instance-based object
- * creation and initialization (injection).
+ * Game acts as a single point of entry for the outside environment, as well as central point of
+ * lookup for the inside. It handles instance-based object creation and initialization (injection).
  */
 public class GameImpl implements Game {
 
@@ -32,20 +34,23 @@ public class GameImpl implements Game {
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	
-	//For mocking segments
-	private final List<MockSegment> segments = new ArrayList<MockSegment>();
-	
+	/** The default segment manager used to place segments in the viewport current (remove old). */
+	private final SegmentManager segmentManager = new SegmentManagerImpl(this);
 	
 	/** List of all timers */
 	private final List<Timer> timers;
 	/** List of all queued timers to be added */
-	private final List<Timer> timersAddQueue = new LinkedList<Timer>(); 
+	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
 	private boolean isIteratingOverTimers = false;
-	
+
+	/** A list of Runnables that will be run at the next update. */
+	private final List<Runnable> runLaters;
+
 	public GameImpl(PhysicsWorld world) {
 		this.world = world;
 		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
 		timers = new LinkedList<Timer>();
+		runLaters = new LinkedList<Runnable>();
 	}
 
 	public GameImpl() {
@@ -53,14 +58,13 @@ public class GameImpl implements Game {
 	}
 
 	/**
-	 *  {@inheritDoc}
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPlayerShip(PlayerShip ship){
+	public void setPlayerShip(PlayerShip ship) {
 		this.playerShip = ship;
 	}
-		
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,7 +73,6 @@ public class GameImpl implements Game {
 		// TODO Auto-generated method stub
 		return playerShip;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -94,7 +97,7 @@ public class GameImpl implements Game {
 	public void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -103,18 +106,21 @@ public class GameImpl implements Game {
 		enemies.remove(enemy);
 	}
 	
-	public void addSegment(MockSegment seg){
-		segments.add(seg);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<? extends Segment> getSegments() {
+		return segmentManager.getSegments();
 	}
 	
-	public void removeSegment(MockSegment seg){
-		segments.remove(seg);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getRemovedSegmentCount() {
+		return segmentManager.getRemovedSegmentCount();
 	}
-	
-	public List<MockSegment> getSegments(){
-		return segments;
-	}
-	
 	
 	/**
 	 * {@inheritDoc}
@@ -180,13 +186,13 @@ public class GameImpl implements Game {
 	@Override
 	public Timer getTimer() {
 		Timer t = new TimerImpl();
-		
-		if(isIteratingOverTimers) {
+
+		if (isIteratingOverTimers) {
 			timersAddQueue.add(t);
 		} else {
 			timers.add(t);
 		}
-	
+
 		return t;
 	}
 
@@ -201,15 +207,20 @@ public class GameImpl implements Game {
 		for (Timer t : timers) {
 			t.update(deltaTime);
 		}
-		// If timers are waiting to be added, add them 
-		if(!timersAddQueue.isEmpty()) {
+		// If timers are waiting to be added, add them
+		if (!timersAddQueue.isEmpty()) {
 			timers.addAll(timersAddQueue);
 			timersAddQueue.clear();
 		}
 		isIteratingOverTimers = false;
-		
+
+		// Run all runLater Runnables from the previous tick.
+		for (Runnable task : runLaters) {
+			task.run();
+		}
+		runLaters.clear();
+
 		world.update(deltaTime);
-		playerShip.update(deltaTime);
 	}
 
 	/**
@@ -226,6 +237,20 @@ public class GameImpl implements Game {
 	@Override
 	public void dispose() {
 		world.dispose();
+	}
+
+	@Override
+	public void runLater(Runnable task) {
+		runLaters.add(task);
+	}	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
+		world.setViewport(viewportPosition, viewportDimensions);
+		segmentManager.setViewport(viewportPosition, viewportDimensions);
 	}
 
 }

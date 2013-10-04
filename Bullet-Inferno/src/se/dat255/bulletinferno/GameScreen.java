@@ -4,12 +4,18 @@ import se.dat255.bulletinferno.controller.Touch;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
+import se.dat255.bulletinferno.model.Loadout;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
+import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -54,10 +60,12 @@ public class GameScreen extends AbstractScreen {
 
 	private MyGame myGame;
 	
+	private PlayerShip ship;
+	
 	static BackgroundView bgView;
 	
 	private AssetManager assetManager = new AssetManager();
-	private ResourceManagerImpl resourceManager = new ResourceManagerImpl(assetManager);
+	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -85,13 +93,18 @@ public class GameScreen extends AbstractScreen {
 		// Set up the player ship, view and add it to gfx.
 
 		game = new GameImpl();
-
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
-				weaponType.getPlayerWeaponForGame(game), ShipType.PLAYER_DEFAULT);
-		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		
+		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), null, 
+				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
+				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
+		ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
+				loadout, ShipType.PLAYER_DEFAULT);
+		game.setPlayerShip(ship);
+		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
+		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
 		
-		bgView = new BackgroundView(ship, game);
+		bgView = new BackgroundView(game, resourceManager, ship);
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
@@ -100,16 +113,12 @@ public class GameScreen extends AbstractScreen {
 		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();
 
-		// TODO: Debug test spawn enemy to draw in world coord
 		setupHardcodedEnemies();
-		
-		//TODO: Debug test segments
-		setupMockSegments();
 
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
 		// projectile.setPosition(new Vector2(5, 7));
-		ProjectileView projectileView = new ProjectileView(game);
+		ProjectileView projectileView = new ProjectileView(game, resourceManager);
 		graphics.addRenderable(projectileView);
 	}
 
@@ -133,39 +142,22 @@ public class GameScreen extends AbstractScreen {
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
 	}
-	
-	private void setupMockSegments(){
-		MockSegment mock1 = new MockSegment(3,10,"data/backgrounds/green.png");
-		MockSegment mock2 = new MockSegment(16,20,"data/backgrounds/red.png");
-		MockSegment mock3 = new MockSegment(24,40,"data/backgrounds/green.png");
-		game.addSegment(mock1);
-		game.addSegment(mock2);
-		game.addSegment(mock3);
-		
-		
-	}
 
 	private void setupHardcodedEnemies() {
 		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
 		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
 		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
 		
-		Enemy enemy = EnemyType.DEFAULT_SHIP.getEnemyShip(game, position);
-		Enemy enemy2 = EnemyType.SLOW_SHIP.getEnemyShip(game, position2);
-		Enemy enemy3 = EnemyType.FAST_SHIP.getEnemyShip(game, position3);
+		Enemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position);
+		Enemy enemy2 = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(game, position2);
+		Enemy enemy3 = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position3);
 
 		game.addEnemy(enemy);
 		game.addEnemy(enemy2);
 		game.addEnemy(enemy3);
 
 		EnemyView enemyView = new EnemyView(game, resourceManager);
-//		EnemyView enemyView2 = new EnemyView(game, enemy2, resourceManager);
-//		EnemyView enemyView3 = new EnemyView(game, enemy3, resourceManager);
-		
-
 		graphics.addRenderable(enemyView);
-//		graphics.addRenderable(enemyView2);
-//		graphics.addRenderable(enemyView3);
 	}
 
 	@Override
@@ -188,6 +180,7 @@ public class GameScreen extends AbstractScreen {
 	 */
 	@Override
 	public void render(float delta) {
+		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		super.render(delta);
 
 		// Render the game
@@ -206,7 +199,7 @@ public class GameScreen extends AbstractScreen {
 			viewportPosition.add(0.5f * viewportDimensions.x, 0);
 			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
 
-			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+			game.setViewport(viewportPosition, viewportDimensions);
 
 			game.update(delta);
 		}
@@ -228,7 +221,7 @@ public class GameScreen extends AbstractScreen {
 		// ...adjust position to being in the middle of the viewport...
 		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
 
-		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+		game.setViewport(viewportPosition, viewportDimensions);
 	}
 	
 	public static BackgroundView getBgView(){

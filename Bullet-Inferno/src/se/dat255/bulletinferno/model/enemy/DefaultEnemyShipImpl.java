@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model.enemy;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Ship;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.util.Timer;
@@ -18,10 +19,19 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 		timer.registerListener(this);
 
 	}
+	
+	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
+			int initialHealth, Weapon weapon, int score, int credits) {
+		super(game, type, position, velocity, pattern, initialHealth, weapon, score, credits);
+
+		Timer timer = weapon.getTimer();
+		timer.registerListener(this);
+
+	}
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		weapon.fire(new Vector2(getPosition().x, getPosition().y), weapon.getProjectileVelocity()
-				.cpy().nor(), this);
+		weapon.fire(new Vector2(getPosition().x, getPosition().y), velocity.cpy().nor(), this);
+	
 	}
 }
