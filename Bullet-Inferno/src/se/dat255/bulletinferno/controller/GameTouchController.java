@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.SpecialEffect;
 
@@ -10,12 +9,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * The main touch controller More info:
+ * The main touch controller<br>
+ * Information on development of LibGDX input handling:<br>
  * https://code.google.com/p/libgdx/wiki/InputEvent
- * 
- * @author Marc Jamot
- * @version 1.0
- * @since 13-09-12
  */
 public class GameTouchController implements InputProcessor {
 
@@ -43,10 +39,7 @@ public class GameTouchController implements InputProcessor {
 	/** The origin of touch down finger controlling the ship*/
 	private Vector2 touchOrigin = new Vector2();
 
-	private final Game game;
-
-	public GameTouchController(final Game game, final Graphics graphics, final PlayerShip ship) {
-		this.game = game;
+	public GameTouchController(final Graphics graphics, final PlayerShip ship) {
 		this.graphics = graphics;
 		this.ship = ship;
 	}

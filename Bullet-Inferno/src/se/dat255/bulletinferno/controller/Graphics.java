@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * The main graphics handling of the game
+ */
 public class Graphics {
 
 	/** 2D world camera */
@@ -29,7 +32,8 @@ public class Graphics {
 	public static final float GAME_WIDTH_INVERTED = 1 / GAME_WIDTH,
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
 	
-	private Vector3 nextCameraPos;
+	/** A vector that checks where the camera should be placed next update */
+	private Vector2 nextCameraPos;
 
 	/** List of all objects that are to be rendered in the world */
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
@@ -81,7 +85,7 @@ public class Graphics {
 	public void render() {
 		
 		// Update the camera position
-		worldCamera.position.set(nextCameraPos);
+		worldCamera.position.set(nextCameraPos.x, nextCameraPos.y, 0);
 		worldCamera.update();
 		worldBatch.setProjectionMatrix(worldCamera.combined);
 
@@ -178,8 +182,9 @@ public class Graphics {
 		position.set(vector.x, vector.y);
 	}
 	
+	/** Sets the next camera position */
 	public void setNewCameraPos(float x, float y){
-		nextCameraPos = new Vector3(x,y,0);
+		nextCameraPos.set(x, y);
 	}
 	
 }
