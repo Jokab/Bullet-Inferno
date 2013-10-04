@@ -26,7 +26,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int credits;
 	private final EnemyType type;
 
-	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private final Game game;
 	protected Vector2 velocity;
@@ -36,7 +35,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private boolean flaggedForRemoval = false;
 	// TODO : Fix this in box2d instead?
 	private boolean isAwake = false;
-	
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -50,9 +48,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapons, int score, int credits) {
+			int initialHealth, Weapon[] weapons, int score, int credits,
+			PhysicsBodyDefinition bodyDefinition) {
 		this.game = game;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -62,17 +60,17 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.credits = credits;
 		this.velocity = velocity;
 
-		if (bodyDefinition == null) {
-			Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
+		Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
+		bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 	}
-	
+
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapons, int score, int credits, 
-			PhysicsMovementPattern pattern) {
-		this(game, type, position, velocity, initialHealth, weapons, score, credits);
+			int initialHealth, Weapon[] weapons, int score, int credits,
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
+		this(game, type, position, velocity, initialHealth, weapons, score, credits,
+				bodyDefinition);
 		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 
 	}
@@ -140,15 +138,15 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	@Override
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
-		if(weapons!=null){
-			for(int i = 0; i<(weapons.length); i++){
+		if (weapons != null) {
+			for (int i = 0; i < (weapons.length); i++) {
 				if (weapons[i] != null) {
 					weapons[i].getTimer().stop();
 				}
-		}
+			}
 
-		body = null;
-				}
+			body = null;
+		}
 	}
 
 	@Override
@@ -196,9 +194,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			flaggedForRemoval = true;
 		}
 	}
-	
+
 	@Override
 	public Vector2 getDimensions() {
-		return new Vector2(1,1);
+		return new Vector2(1, 1);
 	}
 }

@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model.enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Ship;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
@@ -26,9 +27,9 @@ public class AngryBoss extends BossAI implements Ship, Timerable {
 	 */
 	public AngryBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			PhysicsMovementPattern pattern, int initialHealth, Weapon[] weapons, int score,
-			int credits, Vector2[] offsets) {
-		super(game, type, position, velocity, initialHealth, weapons, score, credits, offsets,
-				pattern);
+			int credits, Vector2[] offsets, PhysicsBodyDefinition bodyDefinition) {
+		super(game, type, position, velocity, initialHealth, weapons, score, credits, offsets, 
+				bodyDefinition, pattern);
 	}
 
 	/*
