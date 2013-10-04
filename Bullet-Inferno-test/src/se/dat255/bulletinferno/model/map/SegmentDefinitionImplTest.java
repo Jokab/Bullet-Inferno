@@ -2,9 +2,7 @@ package se.dat255.bulletinferno.model.map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class SegmentDefinitionImplTest {
 	public static void setUpBeforeClass() throws Exception {
 		Common.loadEssentials();
 	}
-
+	
 	private Game mockGame;
 	private Vector2 pos;
 
@@ -147,22 +145,13 @@ public class SegmentDefinitionImplTest {
 	}
 
 	/**
-	 * Uses reflection to get the private list of suitableSlices from the SegmentDefinitionImpl
+	 * Returns the suitable slices for the provided SegmentDefinitionImpl instance.
 	 * 
 	 * @param obj
 	 *        The SegmentDefinitionImpl instance whose suitableSlices field should be returned.
 	 * @return The suitableSlices field value of the provided SegmentDefinitionImpl instance.
 	 */
-	@SuppressWarnings("unchecked")
 	private List<? extends SliceDefinition> getSuitableSlices(SegmentDefinitionImpl obj) {
-		try {
-			Field f = SegmentDefinitionImpl.class.getDeclaredField("suitableSlices");
-			f.setAccessible(true);
-			return (List<? extends SliceDefinition>) f.get(obj);
-		} catch (Exception e) {
-			// TODO: ehh, handle this.
-			fail("Could not get the suitableSlices field via reflexion");
-			return null;
-		}
+		return obj.suitableSlices;
 	}
 }
