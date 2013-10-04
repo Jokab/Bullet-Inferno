@@ -168,7 +168,7 @@ public class PlayerShipImpl implements PlayerShip {
 		for (Fixture fixture : fixtures) {
 			// TODO
 		}
-		// Lämna denna som den är medans jag googlar på det
+		// TODO: Temporary solution, remove when above is working. 
 		return new Vector2(1, 1);
 	}
 
