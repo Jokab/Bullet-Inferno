@@ -1,6 +1,9 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.ProjectileType;
+import se.dat255.bulletinferno.model.ResourceIdentifier;
+import se.dat255.bulletinferno.model.Weapon;
 
 import com.badlogic.gdx.math.Vector2;
 

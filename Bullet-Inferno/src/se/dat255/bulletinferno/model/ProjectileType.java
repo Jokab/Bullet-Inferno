@@ -1,13 +1,9 @@
-package se.dat255.bulletinferno.model.weapon;
+package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.ProjectileImpl;
-import se.dat255.bulletinferno.model.ResourceIdentifier;
-import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
 
 import com.badlogic.gdx.math.Vector2;
 

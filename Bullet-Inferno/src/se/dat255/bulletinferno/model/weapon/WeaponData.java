@@ -3,10 +3,8 @@ package se.dat255.bulletinferno.model.weapon;
 import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.ProjectileImpl;
+import se.dat255.bulletinferno.model.ProjectileType;
 import se.dat255.bulletinferno.model.Weapon;
-import se.dat255.bulletinferno.model.WeaponDescription;
 
 /**
  * Enum for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}

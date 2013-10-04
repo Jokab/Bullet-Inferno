@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.Collidable;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;

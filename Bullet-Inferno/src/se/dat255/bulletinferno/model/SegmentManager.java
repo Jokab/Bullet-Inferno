@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model.map;
+package se.dat255.bulletinferno.model;
 
 import java.util.List;
 

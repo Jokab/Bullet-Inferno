@@ -2,7 +2,6 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.util.Disposable;
 

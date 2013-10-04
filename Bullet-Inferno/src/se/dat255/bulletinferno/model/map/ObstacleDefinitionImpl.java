@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;

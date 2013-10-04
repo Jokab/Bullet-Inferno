@@ -7,8 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import se.dat255.bulletinferno.model.map.Segment;
-import se.dat255.bulletinferno.model.map.SegmentManager;
 import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;

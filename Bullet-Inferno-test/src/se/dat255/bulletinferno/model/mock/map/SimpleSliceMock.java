@@ -3,7 +3,7 @@ package se.dat255.bulletinferno.model.mock.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Obstacle;
+import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.map.Slice;
 
 public class SimpleSliceMock implements Slice {

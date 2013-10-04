@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.Segment;
+import se.dat255.bulletinferno.model.SegmentManager;
 
 import com.badlogic.gdx.math.Vector2;
 

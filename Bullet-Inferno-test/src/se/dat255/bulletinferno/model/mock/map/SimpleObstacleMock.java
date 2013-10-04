@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.mock.map;
 
-import se.dat255.bulletinferno.model.Obstacle;
+import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.physics.Collidable;
 
 public class SimpleObstacleMock implements Obstacle {

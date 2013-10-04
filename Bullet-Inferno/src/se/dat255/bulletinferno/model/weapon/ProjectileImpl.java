@@ -1,14 +1,17 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.weapon;
 
 import java.awt.Dimension;
 import java.awt.geom.Dimension2D;
 
+import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.ProjectileType;
+import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
