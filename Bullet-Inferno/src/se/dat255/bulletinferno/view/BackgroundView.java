@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.ManagedTexture;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
@@ -19,7 +21,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BackgroundView implements Renderable {
 	
 	private PlayerShip ship;
-	Texture tex;
+	private ManagedTexture mTexture;
+	private Texture texture;
 	private List<SegmentView> segmentViews = Collections.emptyList();
 	private Game game;
 	
@@ -30,8 +33,9 @@ public class BackgroundView implements Renderable {
 
 	public BackgroundView(Game game, ResourceManager resourceManager, PlayerShip ship) {
 		this.ship = ship;		
-		tex = new Texture(Gdx.files.internal("images/game/background.png"));
-		this.game=game;
+		mTexture = resourceManager.getManagedTexture(TextureType.BLUE_BACKGROUND);
+		texture = mTexture.getTexture();
+		this.game = game;
 		this.resourceManager = resourceManager;
 	}
 	
@@ -83,7 +87,7 @@ public class BackgroundView implements Renderable {
 		refreshSegmentViews();
 		
 		batch.disableBlending();
-		batch.draw(tex, ship.getPosition().x, 0, 16, 9, 0, 0, 32, 1024, false, false);
+		batch.draw(texture, ship.getPosition().x, 0, 16, 9, 0, 0, 32, 1024, false, false);
 		batch.enableBlending();
 		
 		float shipLeftX = ship.getPosition().x;
@@ -109,7 +113,6 @@ public class BackgroundView implements Renderable {
 
 	@Override
 	public void dispose() {
-		tex.dispose();
-		
+		mTexture.dispose(resourceManager);
 	}
 }

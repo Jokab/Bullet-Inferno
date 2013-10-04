@@ -41,7 +41,8 @@ public class ResourceManagerImpl implements ResourceManager {
 		PLASMA("data/plasma.png"),
 		
 		// Buttons
-		PAUSE_SCREEN("images/gui/screen_pause.png");
+		PAUSE_SCREEN("images/gui/screen_pause.png"), 
+		BLUE_BACKGROUND("images/game/background.png");
 		
 		private final String path;
 
@@ -102,6 +103,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	
 	@Override
 	public void unload(String path) {
+		System.out.println("unloading" + path);
 		manager.unload(path);
 	}
 

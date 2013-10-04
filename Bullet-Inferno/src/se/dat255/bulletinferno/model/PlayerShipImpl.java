@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import se.dat255.bulletinferno.Graphics;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
@@ -25,7 +24,7 @@ public class PlayerShipImpl implements PlayerShip {
 	private final ShipType shipType;
 	private final Loadout loadout;
 	private PhysicsBody body = null;
-	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
+	private Vector2 forwardSpeed = new Vector2(1, 0); // TODO: Not hardcode?
 
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout,
 			ShipType shipType) {
