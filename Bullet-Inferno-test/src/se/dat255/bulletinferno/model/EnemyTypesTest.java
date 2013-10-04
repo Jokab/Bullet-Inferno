@@ -44,10 +44,4 @@ public class EnemyTypesTest {
 				"Position that was sent to the factory should be the same as the created enemy's position. ",
 				position, enemy.getPosition());
 	}
-
-	@Test
-	public void testEnemy() {
-		assertTrue("The fast ship should be faster than the slow ship.", EnemyType.SPECIAL_ENEMY_SHIP
-				.getVelocity().len() > EnemyType.DEFAULT_ENEMY_SHIP.getVelocity().len());
-	}
 }

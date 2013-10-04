@@ -21,8 +21,8 @@ public class EnemyView implements Renderable {
 		this.resourceManager = resourceManager;
 
 		this.sprite = new Sprite();
-		sprite.setOrigin(0, 0);
-		sprite.setSize(1, 1);
+		//sprite.setOrigin(0, 0);
+		
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class EnemyView implements Renderable {
 			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			this.sprite.setTexture(texture);
 			sprite.setRegion(texture);
-
+			sprite.setSize(enemy.getDimensions().x, enemy.getDimensions().y);
 			sprite.setPosition(enemy.getPosition().x,
 					enemy.getPosition().y - sprite.getHeight() / 2);
 			sprite.draw(batch);

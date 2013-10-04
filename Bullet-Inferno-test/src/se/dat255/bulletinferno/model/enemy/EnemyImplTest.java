@@ -29,9 +29,9 @@ public class EnemyImplTest {
 	private class EnemyMockup extends SimpleEnemy {
 		public EnemyMockup(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 				int initialHealth, Weapon weapon, int score, int credits) {
-			super(game, type, position, velocity, new SimplePhysicsMovementPatternMock(),
+			super(game, type, position, velocity,
 					initialHealth, weapon, score,
-					credits);
+					credits, new SimplePhysicsMovementPatternMock());
 		}
 
 	}
@@ -243,8 +243,9 @@ public class EnemyImplTest {
 			public AnotherEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 					int initialHealth,
 					Weapon weapon, int score, int credits) {
-				super(game, type, position, velocity, new SimplePhysicsMovementPatternMock(),
-						initialHealth, weapon, score, credits);
+				super(game, type, position, velocity,
+						initialHealth, weapon, score, credits, 
+						new SimplePhysicsMovementPatternMock());
 			}
 		}
 

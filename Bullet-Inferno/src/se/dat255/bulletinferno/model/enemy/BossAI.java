@@ -19,13 +19,13 @@ public abstract class BossAI extends SimpleEnemy implements Timerable {
 	private boolean speedSet = false;
 	private boolean shooting = false;
 	private float spreadSpeed = 0.8f;
-	private float aimSpeed = 0.1f;
+	private float aimSpeed = 20f;
 	
 
-	public BossAI(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			PhysicsMovementPattern pattern, int initialHealth, Weapon[] weapons, int score,
-			int credits, Vector2[] offsets) {
-		super(game, type, position, velocity, pattern, initialHealth, weapons, score, credits);
+	public BossAI(Game game, EnemyType type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score,
+			int credits, Vector2[] offsets,
+			PhysicsMovementPattern pattern){
+		super(game, type, position, velocity, initialHealth, weapons, score, credits, pattern);
 		
 		this.game = game;
 		this.weapons = weapons;

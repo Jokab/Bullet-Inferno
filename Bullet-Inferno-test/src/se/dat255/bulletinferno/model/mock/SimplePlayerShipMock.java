@@ -58,10 +58,6 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void update(float deltaTime) {
-	}
-
-	@Override
 	public Weapon getWeapon() {
 		// TODO Auto-generated method stub
 		return null;
@@ -100,6 +96,12 @@ public class SimplePlayerShipMock implements PlayerShip {
 	public void moveY(float dy, float scale) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

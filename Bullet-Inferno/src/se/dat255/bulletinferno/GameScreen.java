@@ -8,8 +8,8 @@ import se.dat255.bulletinferno.model.Loadout;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.view.MockSegment;
 import se.dat255.bulletinferno.model.enemy.AngryBoss;
 import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
@@ -25,6 +25,7 @@ import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.RenderableGUI;
 import se.dat255.bulletinferno.view.PlayerShipView;
+import se.dat255.bulletinferno.view.gui.GameoverScreenView;
 import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
@@ -47,19 +48,25 @@ public class GameScreen extends AbstractScreen {
 	private InputProcessor processor;
 
 	/** The current session instance of the game model. */
-	private Game game = null;
+	private Game game;
 
 	/** If the game is paused; Should not update the game */
 	private boolean gamePaused;
+	
+	/** If the player died; Should not update the game */
+	private boolean gameOver;
 
 	/** The views to use when going in or out pause */
 	private RenderableGUI pauseScreenView, pauseIconView;
 
 	/** The (center of the) current viewport position, in world coordinates */
-	private Vector2 viewportPosition = new Vector2();
+	private Vector2 viewportPosition;
 
 	/** The current viewport dimensions, in world coordinates. */
-	private Vector2 viewportDimensions = new Vector2();
+	private Vector2 viewportDimensions;
+	
+	/** Stores te weapon type for restarting the game */
+	private WeaponData weaponData;
 
 	private MyGame myGame;
 	
@@ -67,9 +74,8 @@ public class GameScreen extends AbstractScreen {
 	
 	static BackgroundView bgView;
 	
-	
 	private AssetManager assetManager = new AssetManager();
-	private ResourceManagerImpl resourceManager = new ResourceManagerImpl(assetManager);
+	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
 
 	public GameScreen(MyGame myGame) {
 		this.myGame = myGame;
@@ -81,6 +87,13 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 */
 	public void createNewGame(WeaponData weaponType) {
+		// Initiate instead of declaring statically above
+		game = null;
+		viewportPosition = new Vector2();
+		viewportDimensions = new Vector2();
+		this.weaponData = weaponType;
+		
+		// Original create new game code
 		resourceManager.load();
 		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
 
@@ -98,17 +111,17 @@ public class GameScreen extends AbstractScreen {
 
 		game = new GameImpl();
 		
-		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(game), null, 
+		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), null, 
 				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
 				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		ship = new PlayerShipImpl(game, new Vector2(0, 0), 10,
+		ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
 				loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
-		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
 		
-		bgView = new BackgroundView(ship, game);
+		bgView = new BackgroundView(game, resourceManager, ship);
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
@@ -117,11 +130,8 @@ public class GameScreen extends AbstractScreen {
 		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();
 
-		// TODO: Debug test spawn enemy to draw in world coord
-		setupHardcodedEnemies();
-		
-		//TODO: Debug test segments
-		setupMockSegments();
+		EnemyView enemyView = new EnemyView(game, resourceManager);
+		graphics.addRenderable(enemyView);
 
 		// TODO: Debug test add bullet
 		// ProjectileImpl projectile = new ProjectileImpl(null);
@@ -136,6 +146,13 @@ public class GameScreen extends AbstractScreen {
 		pauseScreenView = new PauseScreenView(this, resourceManager);
 		graphics.addRenderableGUI(pauseIconView);
 	}
+	
+	/** The player has died, the game is over */
+	public void gameOver() {
+		gameOver = true;
+		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
+		graphics.addRenderableGUI(gameOver);
+	}
 
 	/** Pauses the game */
 	public void pauseGame() {
@@ -149,44 +166,6 @@ public class GameScreen extends AbstractScreen {
 		gamePaused = false;
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
-	}
-	
-
-	
-	private void setupMockSegments(){
-		MockSegment mock1 = new MockSegment(3,10,"data/backgrounds/green.png");
-		MockSegment mock2 = new MockSegment(16,20,"data/backgrounds/red.png");
-		MockSegment mock3 = new MockSegment(24,40,"data/backgrounds/green.png");
-		game.addSegment(mock1);
-		game.addSegment(mock2);
-		game.addSegment(mock3);
-		
-		
-	}
-
-	private void setupHardcodedEnemies() {
-		Vector2 position = new Vector2(16 - 1, 9 / 3f * 1 - 2);
-		Vector2 position2 = new Vector2(16 - 1, 9 / 3f * 2 - 2);
-		Vector2 position3 = new Vector2(16 - 1, 9 / 3f * 3 - 2);
-		Vector2 position4 = new Vector2(60 - 1, 9 / 3f * 2 - 2);
-		
-				
-		Enemy boss = EnemyType.BOSS_ENEMY_SHIP.getEnemyShip(game, position4, true);
-		
-		Enemy enemy = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position, false);
-		Enemy enemy2 = EnemyType.SPECIAL_ENEMY_SHIP.getEnemyShip(game, position2, false);
-		Enemy enemy3 = EnemyType.DEFAULT_ENEMY_SHIP.getEnemyShip(game, position3, false);
-		
-		
-
-		game.addEnemy(enemy);
-		game.addEnemy(enemy2);
-		game.addEnemy(enemy3);
-		game.addEnemy(boss);
-		
-
-		EnemyView enemyView = new EnemyView(game, resourceManager);
-		graphics.addRenderable(enemyView);
 	}
 
 	@Override
@@ -209,15 +188,17 @@ public class GameScreen extends AbstractScreen {
 	 */
 	@Override
 	public void render(float delta) {
-		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
-		
-		super.render(delta);
+		graphics.setNewCameraPos(ship.getPosition().x-ship.getDimensions().x/2+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
 
 		// Render the game
 		graphics.render();
+		
+		if(!gameOver && game.getPlayerShip().isDead()){
+			gameOver();
+		}
 
 		// Only pause logics, rendering of GUI could still be needed
-		if (!gamePaused) {
+		if (!gamePaused && !gameOver) {
 			// Update models. This should be done after graphics rendering, so that
 			// graphics commands
 			// can be buffered up for being sent to the graphics pipeline.
@@ -229,7 +210,7 @@ public class GameScreen extends AbstractScreen {
 			viewportPosition.add(0.5f * viewportDimensions.x, 0);
 			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
 
-			game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+			game.setViewport(viewportPosition, viewportDimensions);
 
 			game.update(delta);
 		}
@@ -251,11 +232,16 @@ public class GameScreen extends AbstractScreen {
 		// ...adjust position to being in the middle of the viewport...
 		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
 
-		game.getPhysicsWorld().setViewport(viewportPosition, viewportDimensions);
+		game.setViewport(viewportPosition, viewportDimensions);
 	}
 	
 	public static BackgroundView getBgView(){
 		return bgView;
+	}
+	
+	/** Get method for weapon data set in create new game */
+	public WeaponData getWeaponData(){
+		return weaponData;
 	}
 
 }

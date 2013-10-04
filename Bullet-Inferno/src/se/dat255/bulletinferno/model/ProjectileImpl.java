@@ -1,7 +1,11 @@
 package se.dat255.bulletinferno.model;
 
+import java.awt.Dimension;
+import java.awt.geom.Dimension2D;
+
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -37,8 +41,8 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	public ProjectileImpl(Game game) {
 		this.game = game;
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.1f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape, false);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
+			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 	}
 
@@ -46,7 +50,8 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, Teamable source) {
+	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
+			Teamable source) {
 		projectileType = type;
 		this.damage = damage;
 		this.source = source;
@@ -85,7 +90,6 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		// decide if they want to take our current damage (etc.) before we zero it.
 		if (shouldCollide(other)) {
 			damage = 0;
-
 			// Note: Do not move this out of here - this must be called only once, and that is
 			// when
 			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
@@ -147,12 +151,25 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	@Override
 	public void viewportIntersectionEnd() {
 		// Run later as we are not allowed to alter the world here.
-		game.runLater(removeSelf);
+		// Check if the projectile has any damage left, i.e. if it has already
+		// exploded (only happens in rare cases on the same frame as collided),
+		// if so, explode and remove
+		if(damage > 0) {
+			game.runLater(removeSelf);
+			damage = 0;
+		}
 	}
 
 	@Override
 	public ProjectileType getType() {
 		return projectileType;
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		
+		//...
+		return new Vector2(0.25f,0.25f) ;
 	}
 
 }

@@ -71,4 +71,10 @@ public class SimpleMockProjectile implements Projectile {
 		return null;
 	}
 
+	@Override
+	public Vector2 getDimensions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

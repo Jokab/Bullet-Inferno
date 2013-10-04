@@ -2,13 +2,11 @@ package se.dat255.bulletinferno.model.enemy;
 
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsMovementPattern;
-import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Ship;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class AngryBoss extends BossAI implements Ship, Timerable{
@@ -17,7 +15,7 @@ public class AngryBoss extends BossAI implements Ship, Timerable{
 		
 	public AngryBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
 			int initialHealth, Weapon[] weapons, int score, int credits, Vector2[] offsets) {
-		super(game, type, position, velocity, pattern, initialHealth, weapons, score, credits, offsets);
+		super(game, type, position, velocity, initialHealth, weapons, score, credits, offsets, pattern);
 	}
 	
 	
@@ -52,11 +50,12 @@ public class AngryBoss extends BossAI implements Ship, Timerable{
 			}
 		}
 	}
-	
 
-	
 
-	
+	@Override
+	public Vector2 getDimensions() {
+		return new Vector2(2,2);
+	}
 }
 
 	

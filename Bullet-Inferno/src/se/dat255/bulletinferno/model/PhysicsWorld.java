@@ -46,13 +46,6 @@ public interface PhysicsWorld extends Disposable {
 	public void update(float deltaTime);
 
 	/**
-	 * Get a physics shape factory that can help in Box2D Shape creation.
-	 * 
-	 * @return a shape factory.
-	 */
-	PhysicsShapeFactory getShapeFactory();
-
-	/**
 	 * Set the viewport for the physics world (must be set for viewport intersection detection).
 	 * 
 	 * @param viewportPosition

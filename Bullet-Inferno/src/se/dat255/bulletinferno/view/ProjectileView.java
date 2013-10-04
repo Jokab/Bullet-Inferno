@@ -29,10 +29,10 @@ public class ProjectileView implements Renderable {
 		for (Projectile projectile : game.getProjectiles()) {
 			texture = resourceManager.getTexture(projectile.getType().getIdentifier());
 			sprite = new Sprite(texture);
-			sprite.setOrigin(0, 0);
-			sprite.setSize(0.2f, 0.2f);
-			sprite.setPosition(projectile.getPosition().x,
-					projectile.getPosition().y - sprite.getHeight() / 2);
+			//sprite.setOrigin(0, 0);
+			sprite.setSize(projectile.getDimensions().x, projectile.getDimensions().y);
+			sprite.setPosition(projectile.getPosition().x-projectile.getDimensions().x/2,
+					projectile.getPosition().y-projectile.getDimensions().y/2);
 			sprite.draw(batch);
 		}
 	}

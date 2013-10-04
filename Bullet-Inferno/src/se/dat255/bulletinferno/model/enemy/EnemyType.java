@@ -4,17 +4,15 @@ import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.Weapon;
-import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyType implements ResourceIdentifier {
 
 	// (movement pattern = null) => no movement patter
-	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, new WeaponData[]{WeaponData.DISOREDER}, 10,
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, new WeaponData[]{WeaponData.DISORDERER}, 10,
 			10),
 	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1) , 5,
 			new WeaponData[]{WeaponData.FORCE_GUN}, 10, 10),
@@ -41,17 +39,6 @@ public enum EnemyType implements ResourceIdentifier {
 		this.score = score;
 		this.credits = credits;
 	}
-	
-	/*EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth,
-			WeaponData[] weaponsData, int score, int credits) {
-		this.velocity = velocity.cpy();
-		this.pattern = pattern;
-		this.initialHealth = initialHealth;
-		this.weaponsData = weaponsData;
-		this.score = score;
-		this.credits = credits;
-	}*/
-	
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position, boolean boss) {
 		if (pattern == null && !boss) {
@@ -67,8 +54,8 @@ public enum EnemyType implements ResourceIdentifier {
 			for(int i = 0; i<wData.length; i++){
 				wData[i]=weaponsData[i].getEnemyWeaponForGame(game);
 			}
-			return new DefaultEnemyShipImpl(game, this, position, velocity, pattern, initialHealth,
-					wData, score, credits);
+			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
+					wData, score, credits, pattern);
 		} else {
 			Weapon[] wData = new Weapon[weaponsData.length];
 			offsets = new Vector2[weaponsData.length];

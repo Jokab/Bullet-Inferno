@@ -12,6 +12,7 @@ import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -29,8 +30,13 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private PhysicsBody body = null;
 	private final Game game;
 	protected Vector2 velocity;
+	protected Weapon[] weapons;
 
-	protected Weapon[] weapon;
+/** A flag to make sure we don't remove ourself twice */
+	private boolean flaggedForRemoval = false;
+// TODO : Fix this in box2d instead
+	private boolean isAwake = false;
+	
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -46,63 +52,32 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapon, int score, int credits) {
+			int initialHealth, Weapon[] weapons, int score, int credits) {
 		this.game = game;
 		this.type = type;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
-		this.weapon = weapon;
+		this.weapons = weapons;
 		this.score = score;
 		this.credits = credits;
 		this.velocity = velocity;
 
 		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
+			Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
 			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
+
 	}
 	
 	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, int score, int credits) {
-		this.game = game;
-		this.type = type;
-		this.initialHealth = initialHealth;
-		health = initialHealth;
-		this.score = score;
-		this.credits = credits;
-		this.velocity = velocity;
-
-		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
-	}
-	
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			PhysicsMovementPattern pattern,
-			int initialHealth, Weapon[] weapon, int score, int credits) {
-		this.game = game;
-		this.type = type;
-		this.initialHealth = initialHealth;
-		health = initialHealth;
-		this.weapon = weapon;
-		this.score = score;
-		this.credits = credits;
-		this.velocity = velocity;
-
-		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
+			int initialHealth, Weapon[] weapons, int score, int credits, 
+			PhysicsMovementPattern pattern) {
+		this(game, type, position, velocity, initialHealth, weapons, score, credits);
 		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 
 	}
+
 
 	@Override
 	public int getScore() {
@@ -168,9 +143,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
 		body = null;
-		if (weapon != null) {
-			for(int i = 0; i < weapon.length; i++){
-				weapon[i].getTimer().stop();
+		for(int i = 0; i<(weapons.length); i++){
+			if (weapons[i] != null) {
+				weapons[i].getTimer().stop();
 			}
 		}
 	}
@@ -216,5 +191,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	private void scheduleRemoveSelf() {
 		game.runLater(removeSelf);
+	}
+	
+	@Override
+	public Vector2 getDimensions() {
+		return new Vector2(1,1);
 	}
 }

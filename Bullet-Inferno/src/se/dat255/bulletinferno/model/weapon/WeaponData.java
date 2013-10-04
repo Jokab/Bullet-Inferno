@@ -20,26 +20,24 @@ public enum WeaponData implements WeaponDescription {
 
 	/**
 	 * Order:
-	 * reloadTime, projectile, offset, quantity, projectileVelocity
+	 * reloadTime, projectile, offset, projectileVelocity
 	 */
-	DISOREDER(0.5f, ProjectileType.YELLOW_PROJECTILE, new Vector2(), 5),
-	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(), 14),
-	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 7),
-	FORCE_GUN2(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
-	MISSILE_LAUNCHER(0.2f, ProjectileType.PINK_PROJECTILE, new Vector2(), 5),
-	
+	DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(0,0.5f), 5f),
+	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(0,1), 14),
+	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
+	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 2f),
 
 	BOSS_LAUNCHER(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 5),
-	BOSS_LAUNCHER2(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 5),
-	BOSS_LAUNCHER3(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 5),
-	BOSS_LAUNCHER4(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 5),
-	BOSS_LAUNCHER5(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 5),
+	BOSS_LAUNCHER2(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1f), 5),
+	BOSS_LAUNCHER3(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,2), 5),
+	BOSS_LAUNCHER4(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1f), 5),
+	BOSS_LAUNCHER5(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-2), 5),
 	
-	BOSS_GUN(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 5),
-	BOSS_GUN2(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 5),
-	BOSS_GUN3(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 5),
-	BOSS_GUN4(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 5),
-	BOSS_GUN5(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 5);
+	BOSS_GUN(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 0.5f),
+	BOSS_GUN2(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 0.5f),
+	BOSS_GUN3(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 0.5f),
+	BOSS_GUN4(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 0.5f),
+	BOSS_GUN5(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 0.5f);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;
@@ -84,7 +82,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getPlayerWeaponForGame(Game game) {
-		return new WeaponImpl(game, reloadingTime, projectileType, offset, projectileSpeed);
+		return new WeaponImpl(this, game, reloadingTime, projectileType, offset, projectileSpeed);
 	}
 
 	/**
@@ -92,8 +90,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	@Override
 	public Weapon getEnemyWeaponForGame(Game game) {
-		
-		return new EnemyWeaponImpl(game, reloadingTime, projectileType, offset, projectileSpeed);
+		return new EnemyWeaponImpl(this, game, reloadingTime, projectileType, offset, projectileSpeed);
 	}
 	
 	@Override

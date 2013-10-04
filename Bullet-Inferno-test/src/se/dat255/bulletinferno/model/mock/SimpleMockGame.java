@@ -1,7 +1,10 @@
 package se.dat255.bulletinferno.model.mock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
@@ -9,8 +12,8 @@ import se.dat255.bulletinferno.model.Obstacle;
 import se.dat255.bulletinferno.model.PhysicsWorld;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.view.MockSegment;
 
 public class SimpleMockGame implements Game {
 	public final Projectile mockProjectile = new SimpleMockProjectile(null);
@@ -105,26 +108,22 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public void addSegment(MockSegment seg) {
-		// TODO Auto-generated method stub
-		
+	public List<? extends Segment> getSegments() {
+		return Collections.<Segment> emptyList();
 	}
 
 	@Override
-	public void removeSegment(MockSegment seg) {
-		// TODO Auto-generated method stub
-		
+	public int getRemovedSegmentCount() {
+		return 0;
 	}
 
 	@Override
-	public List<MockSegment> getSegments() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
+		// NOP
 	}
 
 	@Override
 	public void runLater(Runnable task) {
 		runLaters.add(task);
 	}
-
 }

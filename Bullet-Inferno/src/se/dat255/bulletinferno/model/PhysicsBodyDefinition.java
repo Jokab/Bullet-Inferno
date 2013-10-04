@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
+import java.util.List;
+
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -12,9 +14,8 @@ public interface PhysicsBodyDefinition {
 	public BodyDef getBox2DBodyDefinition();
 
 	/**
-	 * @return the internal Box2D fixture definition object (currently only one
-	 *         supported).
+	 * @return the internal Box2D fixture definition objects.
 	 */
-	public FixtureDef getBox2DFixtureDefinition();
+	public List<? extends FixtureDef> getBox2DFixtureDefinition();
 
 }
