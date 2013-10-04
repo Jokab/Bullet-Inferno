@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
 
@@ -41,13 +42,6 @@ public interface Game extends Disposable {
 	 * @return The player's ship.
 	 */
 	public PlayerShip getPlayerShip();
-
-	/**
-	 * Returns a list of all the obstacles.
-	 * 
-	 * @return A list of all the obstacles.
-	 */
-	public List<? extends Obstacle> getObstacles();
 
 	/**
 	 * Returns a list of all enemies in the game

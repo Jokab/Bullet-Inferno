@@ -1,7 +1,5 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.controller.Touch;
-import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.GameImpl;
 import se.dat255.bulletinferno.model.Loadout;
@@ -10,15 +8,11 @@ import se.dat255.bulletinferno.model.PlayerShipImpl;
 import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.model.enemy.AngryBoss;
-import se.dat255.bulletinferno.model.enemy.EnemyType;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialDamageAll;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
-import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -34,7 +28,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
-public class GameScreen extends AbstractScreen {
+/**
+ * 
+ */
+public class GameController extends SimpleController {
 
 	/**
 	 * Handles all the graphics with the game.<br>
@@ -49,9 +46,6 @@ public class GameScreen extends AbstractScreen {
 
 	/** The current session instance of the game model. */
 	private Game game;
-
-	/** If the game is paused; Should not update the game */
-	private boolean gamePaused;
 	
 	/** If the player died; Should not update the game */
 	private boolean gameOver;
@@ -65,26 +59,29 @@ public class GameScreen extends AbstractScreen {
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
 	
-	/** Stores te weapon type for restarting the game */
+	/** Stores the weapon type for restarting the game */
 	private WeaponData weaponData;
 
-	private MyGame myGame;
+	/** Reference to the master controller */
+	private MasterController myGame;
 	
-	private PlayerShip ship;
-	
+	/** Reference to the background view */
 	static BackgroundView bgView;
 	
 	private AssetManager assetManager = new AssetManager();
 	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
 
-	public GameScreen(MyGame myGame) {
+	/**
+	 * Default controller to set required references
+	 * @param myGame The master controller that creates this controller
+	 */
+	public GameController(MasterController myGame) {
 		this.myGame = myGame;
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
-	 * 
 	 */
 	public void createNewGame(WeaponData weaponType) {
 		// Initiate instead of declaring statically above
@@ -95,47 +92,45 @@ public class GameScreen extends AbstractScreen {
 		
 		// Original create new game code
 		resourceManager.load();
-		Gdx.app.log("GameScreen", "createNewGame, weaponType = " + weaponType);
 
 		if (graphics != null) {
 			graphics.dispose();
 			graphics = null;
 		}
 
-		// TODO: Initialize the game
 		graphics = new Graphics();
 		graphics.create();
 
-		// TODO: should probably not be created here
-		// Set up the player ship, view and add it to gfx.
-
 		game = new GameImpl();
 		
-		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), null, 
-				new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
-				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
-				loadout, ShipType.PLAYER_DEFAULT);
+		// Create a new loadout for the ship and create the ship
+		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), 
+									null, 
+									new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
+									new PassiveAbilityImpl(new PassiveReloadingTime(0.5f))
+								);
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
+								loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
+		
 		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
-		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, 
+				Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
+		
+		
 		
 		bgView = new BackgroundView(game, resourceManager, ship);
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
-		processor = new Touch(game, graphics, ship);
+		processor = new GameTouchController(graphics, ship);
 
-		// TODO: Move the gui setup to when the player enters a level
 		setupGUI();
 
 		EnemyView enemyView = new EnemyView(game, resourceManager);
 		graphics.addRenderable(enemyView);
 
-		// TODO: Debug test add bullet
-		// ProjectileImpl projectile = new ProjectileImpl(null);
-		// projectile.setPosition(new Vector2(5, 7));
 		ProjectileView projectileView = new ProjectileView(game, resourceManager);
 		graphics.addRenderable(projectileView);
 	}
@@ -153,21 +148,30 @@ public class GameScreen extends AbstractScreen {
 		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
 		graphics.addRenderableGUI(gameOver);
 	}
+	
+	/** Pauses the game when the application loses focus */
+	@Override
+	public void pause() {
+		super.pause();
+		pauseGame();
+	}
 
 	/** Pauses the game */
 	public void pauseGame() {
-		gamePaused = true;
 		graphics.removeRenderableGUI(pauseIconView);
 		graphics.addRenderableGUI(pauseScreenView);
 	}
+	
+	/** Do nothing when application resumes, let the user resume the game. */
+	@Override
+	public void resume() {}
 
 	/** Unpauses the game */
 	public void unpauseGame() {
-		gamePaused = false;
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
 	}
-
+	
 	@Override
 	public void show() {
 		super.show();
@@ -188,7 +192,10 @@ public class GameScreen extends AbstractScreen {
 	 */
 	@Override
 	public void render(float delta) {
-		graphics.setNewCameraPos(ship.getPosition().x-ship.getDimensions().x/2+Graphics.GAME_WIDTH/2, Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(game.getPlayerShip().getPosition().x - 
+									game.getPlayerShip().getDimensions().x/2 + 
+									Graphics.GAME_WIDTH/2, 
+								Graphics.GAME_HEIGHT/2);
 
 		// Render the game
 		graphics.render();
@@ -198,7 +205,7 @@ public class GameScreen extends AbstractScreen {
 		}
 
 		// Only pause logics, rendering of GUI could still be needed
-		if (!gamePaused && !gameOver) {
+		if (!isPaused && !gameOver) {
 			// Update models. This should be done after graphics rendering, so that
 			// graphics commands
 			// can be buffered up for being sent to the graphics pipeline.

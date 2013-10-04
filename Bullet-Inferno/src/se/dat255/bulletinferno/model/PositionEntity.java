@@ -1,8 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import java.awt.Dimension;
-import java.awt.geom.Dimension2D;
-
 import com.badlogic.gdx.math.Vector2;
 
 public interface PositionEntity {

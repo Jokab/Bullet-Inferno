@@ -1,7 +1,7 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.GameScreen;
-import se.dat255.bulletinferno.MyGame;
+import se.dat255.bulletinferno.controller.GameController;
+import se.dat255.bulletinferno.controller.MasterController;
 import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
@@ -15,9 +15,9 @@ public class GameoverScreenView implements RenderableGUI {
 
 	private final Vector2 position, size;
 	private final Sprite sprite;
-	private final MyGame game;
+	private final MasterController game;
 
-	public GameoverScreenView(MyGame game, ResourceManager resourceManager) {
+	public GameoverScreenView(MasterController game, ResourceManager resourceManager) {
 		Texture texture = resourceManager.getTexture("GAMEOVER_SCREEN");
 		sprite = new Sprite(texture);
 		size = new Vector2(16.0f, 9.0f);
@@ -39,7 +39,6 @@ public class GameoverScreenView implements RenderableGUI {
 
 	@Override
 	public void pressed(float x, float y) {
-		Gdx.app.log("GameoverScreenView.pressed("+x+", "+y+")", "Key was pressed");
 		// Restart
 		if(2.6f < x && x < 6.4f && 2.44f < y && y < 4f){
 			game.startGame(null);

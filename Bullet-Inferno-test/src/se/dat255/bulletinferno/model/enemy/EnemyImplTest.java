@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.Teamable;
@@ -15,7 +14,10 @@ import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.test.Common;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -31,7 +33,9 @@ public class EnemyImplTest {
 				int initialHealth, Weapon[] weapon, int score, int credits) {
 			super(game, type, position, velocity,
 					initialHealth, weapon, score,
-					credits, new SimplePhysicsMovementPatternMock());
+					credits, 
+					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
+					new SimplePhysicsMovementPatternMock());
 		}
 
 	}
@@ -245,6 +249,8 @@ public class EnemyImplTest {
 					Weapon[] weapon, int score, int credits) {
 				super(game, type, position, velocity,
 						initialHealth, weapon, score, credits, 
+						new PhysicsBodyDefinitionImpl(
+								PhysicsShapeFactory.getRectangularShape(1, 1)), 
 						new SimplePhysicsMovementPatternMock());
 			}
 		}

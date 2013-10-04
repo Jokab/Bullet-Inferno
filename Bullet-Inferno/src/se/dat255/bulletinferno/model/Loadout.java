@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model;
 
+
 /**
  * A Loadout is a collection of equipment that the player can carry in any given game. These are
  * set prior to the level starting.

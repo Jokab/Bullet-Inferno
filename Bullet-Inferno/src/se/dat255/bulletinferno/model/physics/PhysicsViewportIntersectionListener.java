@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.physics;
 
 /**
  * A Collidable can also be a PhysicsViewportIntersectionListener, which means it is notified when

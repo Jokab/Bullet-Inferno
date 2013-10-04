@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno;
 
+import se.dat255.bulletinferno.controller.MasterController;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -19,6 +21,6 @@ public class Main {
 		cfg.width = 800;
 		cfg.height = 450;
 		
-		new LwjglApplication(new MyGame(), cfg);
+		new LwjglApplication(new MasterController(), cfg);
 	}
 }

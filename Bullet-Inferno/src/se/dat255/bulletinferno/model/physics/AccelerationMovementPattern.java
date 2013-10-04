@@ -2,8 +2,6 @@ package se.dat255.bulletinferno.model.physics;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 
 public class AccelerationMovementPattern implements PhysicsMovementPattern {
 

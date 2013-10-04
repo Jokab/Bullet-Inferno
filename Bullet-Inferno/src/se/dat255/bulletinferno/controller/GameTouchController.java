@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.Graphics;
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.SpecialEffect;
 
@@ -11,14 +9,11 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * The main touch controller More info:
+ * The main touch controller<br>
+ * Information on development of LibGDX input handling:<br>
  * https://code.google.com/p/libgdx/wiki/InputEvent
- * 
- * @author Marc Jamot
- * @version 1.0
- * @since 13-09-12
  */
-public class Touch implements InputProcessor {
+public class GameTouchController implements InputProcessor {
 
 	private final int UPKEY = 51;
 	private final int DOWNKEY = 47;
@@ -44,10 +39,7 @@ public class Touch implements InputProcessor {
 	/** The origin of touch down finger controlling the ship*/
 	private Vector2 touchOrigin = new Vector2();
 
-	private final Game game;
-
-	public Touch(final Game game, final Graphics graphics, final PlayerShip ship) {
-		this.game = game;
+	public GameTouchController(final Graphics graphics, final PlayerShip ship) {
 		this.graphics = graphics;
 		this.ship = ship;
 	}
@@ -104,8 +96,6 @@ public class Touch implements InputProcessor {
 		// Unproject the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		Graphics.screenToWorld(touchVector);
-
-		Gdx.app.log("Touch", "Down id = " + pointer);
 
 		if (touchVector.x <= ship.getPosition().x + 8f) {
 			// Left half of the screen

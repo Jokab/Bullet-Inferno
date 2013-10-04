@@ -2,9 +2,10 @@ package se.dat255.bulletinferno.model.enemy;
 
 import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.PlayerShip;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
@@ -22,10 +23,11 @@ public abstract class BossAI extends SimpleEnemy implements Timerable {
 	private float aimSpeed = 20f;
 	
 
-	public BossAI(Game game, EnemyType type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score,
-			int credits, Vector2[] offsets,
-			PhysicsMovementPattern pattern){
-		super(game, type, position, velocity, initialHealth, weapons, score, credits, pattern);
+	public BossAI(Game game, EnemyType type, Vector2 position, Vector2 velocity, int initialHealth, 
+			Weapon[] weapons, int score,int credits, Vector2[] offsets, 
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern){
+		super(game, type, position, velocity, initialHealth, weapons, score, credits, 
+				bodyDefinition, pattern);
 		
 		this.game = game;
 		this.weapons = weapons;

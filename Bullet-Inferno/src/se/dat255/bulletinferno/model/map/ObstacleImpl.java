@@ -2,11 +2,10 @@ package se.dat255.bulletinferno.model.map;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Obstacle;
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 
 /**
  * A standard implementation of an Obstacle, built by a pre-existing physics body. Use an

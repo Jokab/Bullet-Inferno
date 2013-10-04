@@ -1,8 +1,4 @@
-package se.dat255.bulletinferno;
-
-import java.awt.TextField;
-
-import javax.xml.soap.Text;
+package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
@@ -13,7 +9,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,24 +16,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class LoadoutScreen extends AbstractScreen {
+public class LoadoutController extends SimpleController {
 
-	private final static int VIRTUAL_WIDTH = 1280;
-	private final static int VIRTUAL_HEIGHT = 720;
-	private final static int VIRTUAL_MID_WIDTH = VIRTUAL_WIDTH / 2;
-	private final static int VIRTUAL_MID_HEIGHT = VIRTUAL_HEIGHT / 2;
+	/** Aspect to keep on the screen */
+	private final static int VIRTUAL_WIDTH = 1280,
+							 VIRTUAL_HEIGHT = 720;
 
 	private final Stage stage;
 	private final Skin skin;
 	private final Texture weaponTexture1;
 	private final Texture weaponTexture2;
 
-	public LoadoutScreen(final MyGame myGame) {
+	/**
+	 * Main controller used for the load out screen
+	 * @param myGame The master controller that creates this screen
+	 */
+	public LoadoutController(final MasterController myGame) {
 
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
@@ -101,7 +98,6 @@ public class LoadoutScreen extends AbstractScreen {
 				myGame.startGame(WeaponData.MISSILE_LAUNCHER);
 			}
 		});
-
 		
 		weaponButton2.addListener(new ChangeListener() {
 			@Override
@@ -109,8 +105,6 @@ public class LoadoutScreen extends AbstractScreen {
 				myGame.startGame(WeaponData.DISORDERER);
 			}
 		});
-		
-
 	}
 
 	@Override

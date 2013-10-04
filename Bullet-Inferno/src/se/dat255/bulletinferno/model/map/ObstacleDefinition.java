@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.model.map;
 import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Obstacle;
 
 /**
  * A definition of an Obstacle type.

@@ -1,7 +1,7 @@
 package se.dat255.bulletinferno.model.mock;
 
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 
 public class SimplePhysicsMovementPatternMock implements PhysicsMovementPattern {
 

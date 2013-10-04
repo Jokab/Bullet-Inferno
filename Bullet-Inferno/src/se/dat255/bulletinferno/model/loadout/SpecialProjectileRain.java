@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.ProjectileType;
 import se.dat255.bulletinferno.model.SpecialEffect;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;

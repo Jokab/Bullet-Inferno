@@ -1,6 +1,7 @@
-package se.dat255.bulletinferno;
+package se.dat255.bulletinferno.controller;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.RenderableGUI;
@@ -13,6 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * The main graphics handling of the game
+ */
 public class Graphics {
 
 	/** 2D world camera */
@@ -28,19 +32,19 @@ public class Graphics {
 	public static final float GAME_WIDTH_INVERTED = 1 / GAME_WIDTH,
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
 	
-	private Vector3 nextCameraPos;
+	/** A vector that checks where the camera should be placed next update */
+	private Vector2 nextCameraPos;
 
 	/** List of all objects that are to be rendered in the world */
-	private final HashSet<Renderable> renderables = new HashSet<Renderable>();
+	private final Set<Renderable> renderables = new HashSet<Renderable>();
 	/** List of all objects that are to be rendered as GUI elements */
-	private final HashSet<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
+	private final Set<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
 
 	/**
 	 * Initializes all the required assets
 	 */
 	public void create() {
 		Texture.setEnforcePotImages(false);
-		Gdx.app.log("Graphics", "create()");
 
 		worldCamera = new OrthographicCamera();
 		worldBatch = new SpriteBatch();
@@ -56,21 +60,14 @@ public class Graphics {
 	 * Sets the new size of the view field when the screen changes size
 	 */
 	public void resize(float w, float h) {
-		Gdx.app.log("Graphics", "resize(" + w + ", " + h + ")");
 		float width = w / h * GAME_HEIGHT;
-		Gdx.app.log("Graphics", "camera.setToOrtho(false, " + width + ", "
-				+ GAME_HEIGHT + ")");
 		worldCamera.setToOrtho(false, width, GAME_HEIGHT);
-		// guiCamera.setToOrtho(false, w, h);
-		// guiCamera.update();
-		// guiBatch.setProjectionMatrix(guiCamera.combined);
 	}
 
 	/**
 	 * Releases the assets when called
 	 */
 	public void dispose() {
-		Gdx.app.log("Graphics", "dispose()");
 		worldBatch.dispose();
 	}
 
@@ -80,7 +77,7 @@ public class Graphics {
 	public void render() {
 		
 		// Update the camera position
-		worldCamera.position.set(nextCameraPos);
+		worldCamera.position.set(nextCameraPos.x, nextCameraPos.y, 0);
 		worldCamera.update();
 		worldBatch.setProjectionMatrix(worldCamera.combined);
 
@@ -90,7 +87,7 @@ public class Graphics {
 
 		// TODO: Render world without blending
 		worldBatch.begin();
-		GameScreen.getBgView().render(worldBatch);
+		GameController.getBgView().render(worldBatch);
 		worldBatch.end();
 
 		// Render units that have alpha
@@ -110,27 +107,21 @@ public class Graphics {
 
 	/** Adds an object to be rendered in the world. Uses hashcode to separate */
 	public void addRenderable(Renderable renderable) {
-		Gdx.app.log("Graphics", "addRenderable(" + renderable.toString() + ")");
 		renderables.add(renderable);
 	}
 
 	/** Removes an object from being rendered in the world */
 	public void removeRenderable(Renderable renderable) {
-		Gdx.app.log("Graphics", "removeRenderable(" + renderable.toString()
-				+ ")");
 		renderables.remove(renderable);
 	}
 
 	/** Adds an object to be rendered in the GUI. Uses hashcode to separate */
 	public void addRenderableGUI(RenderableGUI renderable) {
-		Gdx.app.log("Graphics", "addRenderableGUI(" + renderable.toString() + ")");
 		guiRenderables.add(renderable);
 	}
 
 	/** Removes an object from being rendered in the GUI */
 	public void removeRenderableGUI(RenderableGUI renderable) {
-		Gdx.app.log("Graphics", "removeRenderableGUI(" + renderable.toString()
-				+ ")");
 		guiRenderables.remove(renderable);
 	}
 
@@ -145,7 +136,6 @@ public class Graphics {
 	 * @return If a GUI element was activated
 	 */
 	public boolean guiInput(float x, float y) {
-		Gdx.app.log("guiInput", x + ", " + y);
 		for (RenderableGUI gui : guiRenderables) {
 			Vector2 position = gui.getPosition();
 			Vector2 size = gui.getSize();
@@ -170,15 +160,14 @@ public class Graphics {
 
 	/** Changed the given vector from world to screen position */
 	public static void worldToScreen(Vector2 position) {
-		Gdx.app.log("Graphics", "worldToScreen(" + position + ")");
 		vector.set(position.x, position.y, 0);
 		worldCamera.project(vector);
-		Gdx.app.log("Graphics", "result: " + vector);
 		position.set(vector.x, vector.y);
 	}
 	
+	/** Sets the next camera position */
 	public void setNewCameraPos(float x, float y){
-		nextCameraPos = new Vector3(x,y,0);
+		nextCameraPos.set(x, y);
 	}
 	
 }

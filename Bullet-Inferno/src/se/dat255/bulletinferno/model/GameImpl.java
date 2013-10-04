@@ -10,6 +10,7 @@ import java.util.Map;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.SegmentManager;
 import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
@@ -31,7 +32,6 @@ public class GameImpl implements Game {
 
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
-	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
 	
@@ -79,14 +79,6 @@ public class GameImpl implements Game {
 	public void bossDead(){
 		Gdx.app.log("Game","Boss dead!");
 		playerShip.restoreSpeed();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<? extends Obstacle> getObstacles() {
-		return obstacles;
 	}
 
 	/**
