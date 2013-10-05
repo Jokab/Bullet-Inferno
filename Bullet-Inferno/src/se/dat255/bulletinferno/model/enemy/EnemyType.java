@@ -34,7 +34,6 @@ public enum EnemyType implements ResourceIdentifier {
 	private WeaponData[] weaponsData;
 	private final int score;
 	private final int credits;
-	private Vector2[] offsets;
 	private final PhysicsBodyDefinition bodyDefinition;
 
 	EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth,
@@ -58,17 +57,12 @@ public enum EnemyType implements ResourceIdentifier {
 		}
 
 		if (pattern == null && !boss) {
-
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 					weapons, score, credits, bodyDefinition);
-
 		} else if (!boss) {
-
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 					weapons, score, credits, bodyDefinition, pattern);
-
 		} else {
-
 			return new DefaultBoss(game, this, position, velocity, pattern, initialHealth,
 					weapons, score, credits, bodyDefinition);
 		}
