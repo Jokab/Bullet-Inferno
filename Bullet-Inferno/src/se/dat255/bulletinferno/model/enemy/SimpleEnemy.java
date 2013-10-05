@@ -60,9 +60,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.credits = credits;
 		this.velocity = velocity;
 
-		Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
-		bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
 	}
 
