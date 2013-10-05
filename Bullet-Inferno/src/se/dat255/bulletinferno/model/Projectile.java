@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model;
 
 import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
@@ -24,12 +25,13 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	 *        the projectile damage coefficient.
 	 * @param source
 	 *        the team source from which it was fired.
-	 * @param pmp
-	 *        the attached movement pattern 
+	 * @param bodyDefinition
+	 *        the size of the body (definition)
+	 *        
 	 *        
 	 */
-	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source);
-
+	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage,
+			Teamable source, PhysicsBodyDefinition bodyDefinition);
 
 	/**
 	 * Sets the velocity of the projectile

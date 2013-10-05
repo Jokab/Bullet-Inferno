@@ -47,10 +47,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	public ProjectileImpl(Game game) {
 		this.game = game;
-		if (bodyDefinition == null) {
-			Shape shape = PhysicsShapeFactory.getRectangularShape(getDimensions().x, getDimensions().y);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
+		
 	}
 
 	/**
@@ -58,7 +55,8 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	@Override
 	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
-			Teamable source) {
+			Teamable source, PhysicsBodyDefinition bodyDefinition) {
+		
 		projectileType = type;
 		this.damage = damage;
 		this.source = source;

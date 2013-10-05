@@ -5,6 +5,7 @@ import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.ProjectileType;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 
 import com.badlogic.gdx.math.Vector2;
@@ -51,7 +52,8 @@ public class SimpleMockProjectile implements Projectile {
 	}
 
 	@Override
-	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source) {
+	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source,
+			PhysicsBodyDefinition bodyDefinition) {
 		// TODO Auto-generated method stub
 		
 	}
