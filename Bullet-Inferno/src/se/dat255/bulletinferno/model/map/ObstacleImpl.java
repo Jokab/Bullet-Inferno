@@ -25,8 +25,8 @@ public class ObstacleImpl implements Obstacle {
 	 * Construct a new ObstacleImpl with a body definition and position. The Obstacle will be added
 	 * to the physics world simulation.
 	 * 
-	 * @param game the game in which the obstacle will operate.
-	 * @param bodyDefinition a body definition the obstacle will use for its body.
+	 * @param game the game in which the Obstacle will operate.
+	 * @param bodyDefinition a body definition the Obstacle will use for its body.
 	 * @param position The world-coordinates the Obstacle will be placed at in the physics world.
 	 */
 	public ObstacleImpl(Game game, PhysicsBodyDefinition bodyDefinition, Vector2 position) {

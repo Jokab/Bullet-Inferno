@@ -6,7 +6,7 @@ import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.util.Disposable;
 
 /**
- * An interface to define the properties of a slice (i.e a part)
+ * An interface to define the properties of a slice (i.e. a part)
  * in a Segment.
  * 
  */
@@ -15,7 +15,7 @@ public interface Slice extends Disposable, ResourceIdentifier {
 	 * Returns the height, measured in meters
 	 * above sea-level, for the entry point of the slide.
 	 * 
-	 * @return The entry height of this Slice (m).
+	 * @return The entry height of this Slice (meters).
 	 */
 	public float getEntryHeight();
 
@@ -23,7 +23,7 @@ public interface Slice extends Disposable, ResourceIdentifier {
 	 * Returns the height, measured in meters
 	 * above sea-level, for the exit point of the slide
 	 * 
-	 * @return The exit height of this Slice (m).
+	 * @return The exit height of this Slice (meters).
 	 */
 	public float getExitHeight();
 
@@ -37,7 +37,7 @@ public interface Slice extends Disposable, ResourceIdentifier {
 	/**
 	 * Returns the width of this slice in meters.
 	 * 
-	 * @return width (m)
+	 * @return width (meters)
 	 */
 	public float getWidth();
 }

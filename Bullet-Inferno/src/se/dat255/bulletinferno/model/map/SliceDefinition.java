@@ -5,7 +5,7 @@ import se.dat255.bulletinferno.model.Game;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * A definition of an Slice type.
+ * A definition of a Slice type.
  */
 public interface SliceDefinition {
 	/**
@@ -15,7 +15,7 @@ public interface SliceDefinition {
 	 *        The game instance.
 	 * @param position
 	 *        The world-coordinates the Slice will be placed at, in the physics world.
-	 * @return A new Slice located at the provided postion.
+	 * @return A new Slice located at the provided position.
 	 */
 	public Slice createSlice(Game game, Vector2 position);
 
@@ -23,7 +23,7 @@ public interface SliceDefinition {
 	 * Returns the entry height held by this definition.
 	 * See {@link Slice#getEntryHeight()}
 	 * 
-	 * @return The entry height (m)
+	 * @return The entry height (meters)
 	 */
 	public float getEntryHeight();
 
@@ -31,7 +31,7 @@ public interface SliceDefinition {
 	 * Returns the exit height held by this definition.
 	 * See {@link Slice#getExitHeight()}
 	 * 
-	 * @return The exit height (m)
+	 * @return The exit height (meters)
 	 */
 	public float getExitHeight();
 }

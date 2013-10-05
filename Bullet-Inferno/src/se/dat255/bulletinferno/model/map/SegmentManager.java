@@ -17,16 +17,16 @@ public interface SegmentManager {
 	public List<? extends Segment> getSegments();
 
 	/**
-	 * @return the number of segments that has been removed from the active segment list since the
-	 *         SegmentManager started. Removes only happen from the beginning of the segment list.
+	 * @return the number of segments that have been removed from the active segment list since the
+	 *         SegmentManager started. Removals only happen from the beginning of the segment list.
 	 */
 	public int getRemovedSegmentCount();
 
 	/**
-	 * Sets the viewport Segments will be inside (completely or to some extent, or at least near).
+	 * Sets the viewport. Segments will be inside (completely or to some extent, or at least near).
 	 * 
 	 * @param viewportPosition
-	 *        the center-position i world coordinates for the viewport.
+	 *        the center-position in world coordinates for the viewport.
 	 * @param viewportDimensions
 	 *        the dimensions of the viewport in world coordinates (width, height).
 	 */
