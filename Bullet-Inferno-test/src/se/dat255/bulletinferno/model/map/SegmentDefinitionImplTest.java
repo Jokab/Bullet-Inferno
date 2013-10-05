@@ -22,7 +22,7 @@ public class SegmentDefinitionImplTest {
 	public static void setUpBeforeClass() throws Exception {
 		Common.loadEssentials();
 	}
-	
+
 	private Game mockGame;
 	private Vector2 pos;
 
@@ -122,7 +122,7 @@ public class SegmentDefinitionImplTest {
 				} catch (IllegalArgumentException e) {
 					continue;
 				}
-
+				
 				// Make sure the segment created is at the right position and has the
 				// right number of slices.
 				assertEquals("The created segment should be placed at the provied postition",
@@ -135,7 +135,7 @@ public class SegmentDefinitionImplTest {
 				for (Slice slice : createdSegment.getSlices()) {
 					if (prevSlice != null) {
 						assertTrue(
-								"Each slice should have an entry height that matches the slice before it's exit height",
+								"Each slice should have an entry height that matches the exit height of the slice before it",
 								slice.getEntryHeight() == prevSlice.getExitHeight());
 					}
 					prevSlice = slice;
