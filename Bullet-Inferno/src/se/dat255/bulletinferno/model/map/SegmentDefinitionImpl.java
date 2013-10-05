@@ -20,8 +20,8 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 * A water segment.
 	 */
 	// Add when the view can handle this.
-	//WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
-	//		.asList(SliceDefinitionImpl.WATER)),
+	// WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
+	// .asList(SliceDefinitionImpl.WATER)),
 
 	/**
 	 * A mountain segment.
@@ -80,7 +80,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			slices.add(slice);
 			slicePosition.add(slice.getWidth(), 0);
 		}
-		
+
 		return new SegmentImpl(slices, position.cpy());
 	}
 
@@ -94,7 +94,15 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	private List<SliceDefinition> getSlices(int amount) {
 		// The number of slices we have to generate, entry and exit is already set.
 		int numMiddleSlices = amount - 2;
-		
+
+		// If we only want the entry and exit slice, make sure they fit together.
+		if (numMiddleSlices == 0) {
+			if (entrySlice.getExitHeight() != exitSlice.getEntryHeight()) {
+				throw new IllegalArgumentException("Couldn't find a way from specified " +
+						"entry slice to end slice " + amount);
+			}
+		}
+
 		// The final path of slices that will be returned
 		List<SliceDefinition> path = new ArrayList<SliceDefinition>(amount);
 
@@ -155,7 +163,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 				// Erase exception list on this stage because this path leads nowhere
 				// and won't be tried again
 				exceptions.get(sliceNum).clear();
-				
+
 				// Add the current slice as an exception to the past one
 				exceptions.get(sliceNum - 1).add(current);
 
