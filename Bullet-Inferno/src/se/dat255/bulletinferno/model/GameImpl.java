@@ -78,6 +78,7 @@ public class GameImpl implements Game {
 	@Override
 	public void bossDead(){
 		Gdx.app.log("Game","Boss dead!");
+		
 		playerShip.restoreSpeed();
 	}
 

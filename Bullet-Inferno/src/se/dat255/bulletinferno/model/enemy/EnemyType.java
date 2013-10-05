@@ -24,10 +24,7 @@ public enum EnemyType implements ResourceIdentifier {
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
 	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 15,
-			new WeaponData[] { WeaponData.BOSS_GUN, WeaponData.BOSS_GUN2, WeaponData.BOSS_GUN3,
-			WeaponData.BOSS_GUN4, WeaponData.BOSS_GUN5, WeaponData.BOSS_LAUNCHER,
-			WeaponData.BOSS_LAUNCHER2, WeaponData.BOSS_LAUNCHER3,
-			WeaponData.BOSS_LAUNCHER4, WeaponData.BOSS_LAUNCHER5 }, 10, 10,
+			new WeaponData[] { WeaponData.BOSS_GUN, WeaponData.BOSS_LAUNCHER }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)));
 
 	private final Vector2 velocity;
@@ -52,30 +49,28 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position, boolean boss) {
+
+		// Create "conrete" weapons from weapon data
+		
+		Weapon[] weapons = new Weapon[weaponsData.length];
+		for (int i = 0; i < weapons.length; i++) {
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
+		}
+
 		if (pattern == null && !boss) {
-			Weapon[] wData = new Weapon[weaponsData.length];
-			for (int i = 0; i < wData.length; i++) {
-				wData[i] = weaponsData[i].getEnemyWeaponForGame(game);
-			}
+
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
-					wData, score, credits, bodyDefinition);
+					weapons, score, credits, bodyDefinition);
+
 		} else if (!boss) {
 
-			Weapon[] wData = new Weapon[weaponsData.length];
-			for (int i = 0; i < wData.length; i++) {
-				wData[i] = weaponsData[i].getEnemyWeaponForGame(game);
-			}
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
-					wData, score, credits, bodyDefinition, pattern);
+					weapons, score, credits, bodyDefinition, pattern);
+
 		} else {
-			Weapon[] wData = new Weapon[weaponsData.length];
-			offsets = new Vector2[weaponsData.length];
-			for (int i = 0; i < wData.length; i++) {
-				wData[i] = weaponsData[i].getEnemyWeaponForGame(game);
-				offsets[i] = weaponsData[i].getOffset();
-			}
-			return new AngryBoss(game, this, position, velocity, pattern, initialHealth,
-					wData, score, credits, offsets, bodyDefinition);
+
+			return new DefaultBoss(game, this, position, velocity, pattern, initialHealth,
+					weapons, score, credits, bodyDefinition);
 		}
 	}
 

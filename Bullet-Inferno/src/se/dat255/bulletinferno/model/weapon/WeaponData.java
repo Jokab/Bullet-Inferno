@@ -26,16 +26,7 @@ public enum WeaponData implements WeaponDescription {
 	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 2f),
 
 	BOSS_LAUNCHER(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 5),
-	BOSS_LAUNCHER2(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1f), 5),
-	BOSS_LAUNCHER3(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,2), 5),
-	BOSS_LAUNCHER4(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1f), 5),
-	BOSS_LAUNCHER5(0.3f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-2), 5),
-	
-	BOSS_GUN(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 0.5f),
-	BOSS_GUN2(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0.5f), 0.5f),
-	BOSS_GUN3(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 0.5f),
-	BOSS_GUN4(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-0.5f), 0.5f),
-	BOSS_GUN5(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 0.5f);
+	BOSS_GUN(0.15f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 0.5f);
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;

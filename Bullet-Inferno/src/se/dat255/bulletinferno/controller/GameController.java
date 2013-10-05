@@ -109,7 +109,7 @@ public class GameController extends SimpleController {
 									new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
 									new PassiveAbilityImpl(new PassiveReloadingTime(0.5f))
 								);
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
+		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 1000000,
 								loadout, ShipType.PLAYER_DEFAULT);
 		game.setPlayerShip(ship);
 		

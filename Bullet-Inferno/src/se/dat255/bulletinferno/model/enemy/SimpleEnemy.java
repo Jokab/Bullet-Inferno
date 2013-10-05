@@ -34,7 +34,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	/** A flag to make sure we don't remove ourself twice */
 	private boolean flaggedForRemoval = false;
 	// TODO : Fix this in box2d instead?
-	private boolean isAwake = false;
+	protected boolean isAwake = false;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify

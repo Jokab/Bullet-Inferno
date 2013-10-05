@@ -18,7 +18,7 @@ public enum ProjectileType implements ResourceIdentifier {
 			0.25f, 0.25f))), // null = straight forward
 	GREEN_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-5, 0)),
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f))),
-	MISSILE(3f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
+	MISSILE(1000f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(0.25f,0.25f))),
 	PLASMA(1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
