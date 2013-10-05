@@ -63,7 +63,7 @@ public enum EnemyType implements ResourceIdentifier {
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 					weapons, score, credits, bodyDefinition, pattern);
 		} else {
-			return new DefaultBoss(game, this, position, velocity, pattern, initialHealth,
+			return new DefaultBossImpl(game, this, position, velocity, pattern, initialHealth,
 					weapons, score, credits, bodyDefinition);
 		}
 	}

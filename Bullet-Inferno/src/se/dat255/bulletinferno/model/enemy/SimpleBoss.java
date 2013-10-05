@@ -9,12 +9,11 @@ import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
-public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
+public abstract class SimpleBoss extends SimpleEnemy {
 
-	private Weapon[] weapons;
-	private Timer[] timers;
-	private PlayerShip player;
-	private Game game;
+	
+	private final PlayerShip player;
+	private final Game game;
 
 	public SimpleBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth,
@@ -24,49 +23,30 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 				bodyDefinition, pattern);
 
 		this.game = game;
-		this.weapons = weapons;
-		this.timers = new Timer[weapons.length];
+		
 		this.player = game.getPlayerShip();
-		for (int i = 0; i < weapons.length; i++) {
-			timers[i] = weapons[i].getTimer();
-			timers[i].registerListener(this);
-		}
+		
+		
 	}
 
 	public abstract void onTimeout(Timer source, float timeSinceLast);
 
-	public void fireSpread() {
-
-		for (int i = (int) weapons.length / 2; i < weapons.length; i++) {
-			weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
-		}
-
-	}
-
-	public void fireAimed() {
-		for (int i = 0; i < (int) weapons.length / 2; i++) {
-
-			weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
-
-		}
-
-	}
+	
 
 	@Override
 	public void viewportIntersectionBegin() {
 		super.viewportIntersectionBegin();
-		player.setXSpeed(0f);
+		player.halt();
 	}
 
 
 	@Override
 	public void takeDamage(float damage) {
+		
 		super.takeDamage(damage);
 
 		if (isDead()) {
-
-			game.bossDead();
-
+			game.restorePlayerShipSpeed();
 		}
 	}
 
