@@ -55,39 +55,31 @@ public class DefaultBossImpl extends SimpleBoss implements Ship, Timerable {
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-
-		fireSpread();
-
-		if (getHealth() < getInitialHealth() / 2) {
-			fireAimed();
-		}
-
+		fire(source);
 	}
 
-	public void fireSpread() {
+	// Determines how many weapon to fire and in what direction
+	public void fire(Timer source) {
 
-		for (int i = (int) weapons.length / 2; i < weapons.length; i++) {
-			weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
-		}
+		if (getHealth() > getInitialHealth() / 2) {
 
-	}
+			for (int i = 0; i < weapons.length/2; i++) {
 
-	public void fireAimed() {
-		for (int i = 0; i < (int) weapons.length / 2; i++) {
+				if (source == timers[i]) {
+					weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
+				}
+			}
 
-			weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
-					- getPosition().x, player.getPosition().y - getPosition().y).nor(), this);
+		} else {
 
-		}
+			for (int i = 0; i < weapons.length; i++) {
 
-	}
+				if (source == timers[i]) {
+					weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
+							- getPosition().x, player.getPosition().y - getPosition().y).nor(), this);
+				}
+			}
 
-	@Override
-	public void viewportIntersectionBegin() {
-		super.viewportIntersectionBegin();
-
-		for (int i = 0; i < weapons.length; i++) {
-			timers[i].start();
 		}
 
 	}

@@ -24,7 +24,7 @@ public enum EnemyType implements ResourceIdentifier {
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
 	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 15,
-			new WeaponData[] { WeaponData.BOSS_GUN, WeaponData.BOSS_LAUNCHER }, 10, 10,
+			new WeaponData[] {WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_GUN}, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)));
 
 	private final Vector2 velocity;
@@ -48,8 +48,6 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleEnemy getEnemyShip(Game game, Vector2 position, boolean boss) {
-
-		// Create "conrete" weapons from weapon data
 		
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
@@ -66,6 +64,7 @@ public enum EnemyType implements ResourceIdentifier {
 			return new DefaultBossImpl(game, this, position, velocity, pattern, initialHealth,
 					weapons, score, credits, bodyDefinition);
 		}
+		
 	}
 
 	public Vector2 getVelocity() {
