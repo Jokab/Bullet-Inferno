@@ -172,9 +172,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 
 	@Override
 	public Vector2 getDimensions() {
-		
-		//...
-		return new Vector2(0.25f,0.25f) ;
+		return body.getDimensions();
 	}
 
 }

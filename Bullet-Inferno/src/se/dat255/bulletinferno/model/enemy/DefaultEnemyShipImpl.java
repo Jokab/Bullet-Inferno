@@ -61,10 +61,4 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 			timers[i].start();
 		}
 	}
-
-	@Override
-	public Vector2 getDimensions() {
-		return new Vector2(1,1);
-	}
-
 }

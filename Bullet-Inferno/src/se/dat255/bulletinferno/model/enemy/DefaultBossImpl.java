@@ -102,9 +102,4 @@ public class DefaultBossImpl extends SimpleBoss implements Ship, Timerable {
 		}
 
 	}
-
-	@Override
-	public Vector2 getDimensions() {
-		return new Vector2(1, 1);
-	}
 }
