@@ -145,26 +145,46 @@ public class GameController extends SimpleController {
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
+
+		// Remove pause screen and pause icon from screen
+		graphics.removeRenderableGUI(pauseIconView);
+		graphics.removeRenderableGUI(pauseScreenView);
+
 		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
 		graphics.addRenderableGUI(gameOver);
 	}
-	
-	/** Pauses the game when the application loses focus */
+
+	/**
+	 * Pauses the game when the application loses focus. If game isn't over, show pause gui. If it
+	 * is over, only keep track of pause state.
+	 */
 	@Override
 	public void pause() {
-		super.pause();
-		pauseGame();
+		// Don't show pause gui, only track pause state if game is over
+		if (gameOver) {
+			super.pause();
+		} else {
+			pauseGame();
+		}
 	}
 
 	/** Pauses the game */
 	public void pauseGame() {
+		super.pause();
 		graphics.removeRenderableGUI(pauseIconView);
 		graphics.addRenderableGUI(pauseScreenView);
 	}
-	
-	/** Do nothing when application resumes, let the user resume the game. */
+
+	/**
+	 * Do nothing when application resumes, let the user resume the game. Unless the current game is
+	 * over, in which case keep track of the pause state of the app.
+	 */
 	@Override
-	public void resume() {}
+	public void resume() {
+		if (gameOver) {
+			super.resume();
+		}
+	}
 
 	/** Unpauses the game */
 	public void unpauseGame() {
