@@ -168,6 +168,7 @@ public class GameController extends SimpleController {
 
 	/** Unpauses the game */
 	public void unpauseGame() {
+		super.resume();
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
 	}
