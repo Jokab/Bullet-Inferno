@@ -18,13 +18,13 @@ public enum EnemyType implements ResourceIdentifier {
 	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, new WeaponData[] { WeaponData.DISORDERER }, 10,
 			10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
-			
+
 	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1), 5,
 			new WeaponData[] { WeaponData.FORCE_GUN }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
 	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 15,
-			new WeaponData[] {WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_GUN}, 10, 10,
+			new WeaponData[] { WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_GUN }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)));
 
 	private final Vector2 velocity;
@@ -47,24 +47,31 @@ public enum EnemyType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public SimpleEnemy getEnemyShip(Game game, Vector2 position, boolean boss) {
-		
+	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
+
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
 		}
 
-		if (pattern == null && !boss) {
+		if (pattern == null) {
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 					weapons, score, credits, bodyDefinition);
-		} else if (!boss) {
+		} else {
 			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
 					weapons, score, credits, bodyDefinition, pattern);
-		} else {
-			return new DefaultBossImpl(game, this, position, velocity, pattern, initialHealth,
-					weapons, score, credits, bodyDefinition);
 		}
-		
+	}
+
+	public SimpleBoss getBoss(Game game, Vector2 position) {
+
+		Weapon[] weapons = new Weapon[weaponsData.length];
+		for (int i = 0; i < weapons.length; i++) {
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
+		}
+
+		return new DefaultBossImpl(game, this, position, velocity, pattern, initialHealth,
+				weapons, score, credits, bodyDefinition);
 	}
 
 	public Vector2 getVelocity() {
