@@ -17,10 +17,26 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public interface ResourceManager {
 
+	/**
+	 * Returns a ManagedTexture-object containing the Texture connected
+	 * with this TextureType.
+	 * 
+	 * @param textureType
+	 *        The TextureType connected with the Texture you want.
+	 * @return The ManagedTexture-object.
+	 */
 	ManagedTexture getManagedTexture(TextureType textureType);
-	
+
+	/**
+	 * Returns a ManagedTexture-object containing the Texture connected
+	 * with this ResourceIdentifier.
+	 * 
+	 * @param identifier
+	 *        The identifier to be used for looking up the Texture.
+	 * @return The ManagedTexture-object.
+	 */
 	ManagedTexture getManagedTexture(ResourceIdentifier identifier);
-	
+
 	/**
 	 * Returns the loaded {@link Sound} that is mapped to this identifier.
 	 * 
@@ -44,6 +60,12 @@ public interface ResourceManager {
 	 */
 	void load();
 
+	/**
+	 * Uses the held AssetManager to unload the Texture that is connected with this path.
+	 * 
+	 * @param path
+	 *        The path to unload from.
+	 */
 	void unload(String path);
 
 }

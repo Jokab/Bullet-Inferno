@@ -100,6 +100,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void unload(String path) {
 		if (manager.isLoaded(path, Texture.class)) {
@@ -107,6 +110,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
@@ -116,6 +122,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ManagedTexture getManagedTexture(ResourceIdentifier identifier) {
 		for (TextureType textureType : textureTypes) {
