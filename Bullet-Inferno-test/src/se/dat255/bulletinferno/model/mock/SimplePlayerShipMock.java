@@ -59,60 +59,50 @@ public class SimplePlayerShipMock implements PlayerShip {
 
 	@Override
 	public Weapon getWeapon() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Loadout getLoadout() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void attachPassive(PassiveAbility passiveAbility) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setTakeDamageModifier(float takeDamageModifier) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean isDead() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
 	public void moveY(float dy) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void moveY(float dy, float scale) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Vector2 getDimensions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setXSpeed(float speed) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void restoreSpeed() {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -71,7 +71,6 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public PlayerShip getPlayerShip() {
-		// TODO Auto-generated method stub
 		return playerShip;
 	}
 	

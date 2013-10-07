@@ -42,19 +42,16 @@ public class SimpleMockProjectile implements Projectile {
 
 	@Override
 	public void preCollided(Collidable other) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void postCollided(Collidable other) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source,
 			PhysicsBodyDefinition bodyDefinition) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -69,13 +66,11 @@ public class SimpleMockProjectile implements Projectile {
 
 	@Override
 	public ProjectileType getType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Vector2 getDimensions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

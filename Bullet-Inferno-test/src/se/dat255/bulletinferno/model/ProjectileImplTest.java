@@ -78,7 +78,6 @@ public class ProjectileImplTest {
 			
 			@Override
 			public boolean isInMyTeam(Teamable teamMember) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
@@ -170,7 +169,6 @@ public class ProjectileImplTest {
 			
 			@Override
 			public boolean isInMyTeam(Teamable teamMember) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));

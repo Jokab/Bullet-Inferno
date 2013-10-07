@@ -61,7 +61,6 @@ public class GameTouchController implements InputProcessor {
 				effect.activate(ship);
 			}
 		}
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -72,13 +71,11 @@ public class GameTouchController implements InputProcessor {
 			System.out.println("Player health: " + ship.getHealth());
 		}
 
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -145,7 +142,6 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
