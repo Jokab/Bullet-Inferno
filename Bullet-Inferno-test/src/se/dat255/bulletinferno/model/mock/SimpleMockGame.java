@@ -121,7 +121,7 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public void bossDead() {
+	public void restorePlayerShipSpeed() {
 		// TODO Auto-generated method stub
 		
 	}
