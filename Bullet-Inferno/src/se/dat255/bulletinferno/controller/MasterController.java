@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 /**
@@ -19,7 +20,7 @@ public class MasterController extends com.badlogic.gdx.Game {
 	/** When the game is first started, we load the load out screen */
 	@Override
 	public void create() {
-		this.resourceManager = resourceManager;
+		this.resourceManager = new ResourceManagerImpl();
 		resourceManager.load();
 		loadoutScreen = new LoadoutController(this, resourceManager);
 		setScreen(loadoutScreen);

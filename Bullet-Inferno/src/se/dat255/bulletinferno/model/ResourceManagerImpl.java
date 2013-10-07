@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class ResourceManagerImpl implements ResourceManager {
 
-	private static AssetManager manager;
+	private static AssetManager manager = new AssetManager();
 
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
@@ -64,8 +63,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> music = new HashMap<String, String>();
 	private final TextureType[] textureTypes;
 
-	public ResourceManagerImpl(AssetManager assetManager) {
-		this.manager = assetManager;
+	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
 	}
 
