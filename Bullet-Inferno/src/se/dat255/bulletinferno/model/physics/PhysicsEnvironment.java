@@ -4,7 +4,7 @@ import se.dat255.bulletinferno.util.Disposable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public interface PhysicsWorld extends Disposable {
+public interface PhysicsEnvironment extends Disposable {
 
 	/**
 	 * Creates a PhysicsBody from the body definition, placing it at the

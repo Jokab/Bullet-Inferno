@@ -17,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Simulates the world dynamics and handles collision detection.
  */
-public class PhysicsWorldImpl implements PhysicsWorld {
+public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 
 	/** The discrete time step to take each update. */
 	private static float TIME_STEP = 1 / 60f;
@@ -141,7 +141,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 		/**
 		 * Adjusts the viewport, for viewport intersection events.
 		 * 
-		 * @see PhysicsWorld#setViewport(Vector2, Vector2)
+		 * @see PhysicsEnvironment#setViewport(Vector2, Vector2)
 		 */
 		public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
 			if (viewportIntersectionBody == null) {
@@ -191,7 +191,7 @@ public class PhysicsWorldImpl implements PhysicsWorld {
 	/**
 	 * Start the simulation.
 	 */
-	public PhysicsWorldImpl() {
+	public PhysicsEnvironmentImpl() {
 		// Initialize world with 0 gravity and all objects non-sleeping. They cannot sleep as we
 		// move them manually (otherwise Box2D will make them sleep, possibly with odd behavior).
 		world = new World(new Vector2(0f, 0f), false);

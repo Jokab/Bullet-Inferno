@@ -10,8 +10,8 @@ import java.util.Map;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.SegmentManager;
 import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
-import se.dat255.bulletinferno.model.physics.PhysicsWorld;
-import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 
@@ -28,7 +28,7 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class GameImpl implements Game {
 
-	private PhysicsWorld world = new PhysicsWorldImpl();
+	private PhysicsEnvironment world = new PhysicsEnvironmentImpl();
 
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
@@ -47,7 +47,7 @@ public class GameImpl implements Game {
 	/** A list of Runnables that will be run at the next update. */
 	private final List<Runnable> runLaters;
 
-	public GameImpl(PhysicsWorld world) {
+	public GameImpl(PhysicsEnvironment world) {
 		this.world = world;
 		projectilePools = new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
 		timers = new LinkedList<Timer>();
@@ -55,7 +55,7 @@ public class GameImpl implements Game {
 	}
 
 	public GameImpl() {
-		this(new PhysicsWorldImpl());
+		this(new PhysicsEnvironmentImpl());
 	}
 
 	/**
@@ -225,7 +225,7 @@ public class GameImpl implements Game {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PhysicsWorld getPhysicsWorld() {
+	public PhysicsEnvironment getPhysicsWorld() {
 		return world;
 	}
 

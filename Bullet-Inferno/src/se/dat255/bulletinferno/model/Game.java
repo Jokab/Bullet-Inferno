@@ -5,7 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.map.Segment;
-import se.dat255.bulletinferno.model.physics.PhysicsWorld;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
 
@@ -98,7 +98,7 @@ public interface Game extends Disposable {
 	 * @return the physics world (simulation object) used for the current
 	 *         physics game models.
 	 */
-	public PhysicsWorld getPhysicsWorld();
+	public PhysicsEnvironment getPhysicsWorld();
 
 	/**
 	 * @return a list of all the active segments in the world.
