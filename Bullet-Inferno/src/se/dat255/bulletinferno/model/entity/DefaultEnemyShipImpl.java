@@ -1,10 +1,9 @@
-package se.dat255.bulletinferno.model.enemy;
+package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Ship;
-import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
@@ -15,10 +14,10 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	private Weapon[] weapons;
 	private Timer[] timers;
 	
-	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapons, int score, int credits,
-			PhysicsBodyDefinition bodyDefinition) {
-		super(game, type, position, velocity, initialHealth, weapons, score, credits, 
+	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
+			EnemyType type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits, 
 				bodyDefinition);
 		this.weapons = weapons;
 		this.timers = new Timer[weapons.length];
@@ -30,10 +29,11 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 
 	}
 	
-	public DefaultEnemyShipImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapons, int score, int credits,
-			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
-		super(game, type, position, velocity, initialHealth, weapons, score, credits, 
+	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyType type, Vector2 position, Vector2 velocity, int initialHealth,
+			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition,
+			PhysicsMovementPattern pattern) {
+		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern);
 		this.weapons = weapons;
 		this.timers = new Timer[weapons.length];

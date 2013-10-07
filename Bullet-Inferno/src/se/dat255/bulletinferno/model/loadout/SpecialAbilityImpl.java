@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model.loadout;
 
-import se.dat255.bulletinferno.model.SpecialAbility;
-import se.dat255.bulletinferno.model.SpecialEffect;
 
 public class SpecialAbilityImpl implements SpecialAbility {
 	

@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model.physics;
 
 import se.dat255.bulletinferno.util.Disposable;
+import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -73,5 +74,25 @@ public interface PhysicsEnvironment extends Disposable {
 	 * @param body The body that should have its movement pattern removed.
 	 */
 	public void detachMovementPattern(PhysicsBody body);
+	
+	/**
+	 * Returns a new timer
+	 * 
+	 * @return timer
+	 */
+	public Timer getTimer();
+
+	/**
+	 * Runs a task at the next update.
+	 * 
+	 * <p>
+	 * This method could for example be used to schedule physics altering operation to after a
+	 * physics world update has been completed.
+	 * </p>
+	 * 
+	 * @param task
+	 *        The Runnable that should be run.
+	 */
+	public void runLater(Runnable task);
 
 }

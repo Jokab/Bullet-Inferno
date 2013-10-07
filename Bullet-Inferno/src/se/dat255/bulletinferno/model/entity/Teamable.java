@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.entity;
 
 /**
  * An interface to enable an entity to belong to a team.

@@ -1,11 +1,16 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.entity;
 
 import java.util.ArrayList;
 
+import se.dat255.bulletinferno.model.loadout.Loadout;
+import se.dat255.bulletinferno.model.loadout.PassiveAbility;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
@@ -26,7 +31,7 @@ public class PlayerShipImpl implements PlayerShip {
 		}
 	}
 
-	private final Game game;
+	private final PhysicsEnvironment physics;
 	private final int initialHealth;
 	private float takeDamageModifier = 1; // default
 	private int health;
@@ -54,16 +59,16 @@ public class PlayerShipImpl implements PlayerShip {
 		}
 	};
 	
-	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout,
-			ShipType shipType) {
-		this.game = game;
+	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
+			final Vector2 position, int initialHealth, Loadout loadout, ShipType shipType) {
+		this.physics = physics;
 		this.initialHealth = initialHealth;
 		this.health = initialHealth;
 		this.loadout = loadout;
 		this.shipType = shipType;
 		
 		// Set up the halt timer used to stop the ship at a specified location
-		this.haltTimer = game.getTimer();
+		this.haltTimer = physics.getTimer();
 		haltTimer.setTime(0);
 		haltTimer.setContinuous(true);
 		
@@ -76,7 +81,7 @@ public class PlayerShipImpl implements PlayerShip {
 		Shape shape = PhysicsShapeFactory.getRectangularShape(1, 1);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		body = physics.createBody(bodyDefinition, this, position);
 		body.setVelocity(forwardSpeed);
 	}
 

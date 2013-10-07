@@ -1,8 +1,7 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
@@ -40,18 +39,18 @@ public interface WeaponDescription extends ResourceIdentifier {
 	/**
 	 * Returns a new Weapon instance by using the data in the passed enum.
 	 * 
-	 * @param game The Game instance.
+	 * @deprecated
 	 * @return A new weapon instance.
 	 */
-	Weapon getPlayerWeaponForGame(Game game);
+	Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities);
 
 	/**
 	 * Returns a new Weapon instance by using the data in the passed enum, which is tailored for use
 	 * in an enemy.
 	 * 
-	 * @param game The Game instance.
+	 * @deprecated
 	 * @return A new weapon instance.
 	 */
-	Weapon getEnemyWeaponForGame(Game game);
+	Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities);
 
 }

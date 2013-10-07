@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.enemy.EnemyType;
-import se.dat255.bulletinferno.model.enemy.SimpleEnemy;
+import se.dat255.bulletinferno.model.entity.EnemyType;
+import se.dat255.bulletinferno.model.entity.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.test.Common;
 

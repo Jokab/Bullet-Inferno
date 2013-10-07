@@ -1,16 +1,13 @@
-package se.dat255.bulletinferno.model.enemy;
+package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.Destructible;
-import se.dat255.bulletinferno.model.Enemy;
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.Teamable;
-import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
+import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -24,7 +21,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final EnemyType type;
 
 	private PhysicsBody body = null;
-	private final Game game;
+	private final PhysicsEnvironment physics;
+	private final EntityEnvironment entities;
 	protected Vector2 velocity;
 	protected Weapon[] weapons;
 
@@ -40,15 +38,15 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
-			game.removeEnemy(SimpleEnemy.this);
+			entities.removeEnemy(SimpleEnemy.this);
 			dispose();
 		}
 	};
 
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapons, int score, int credits,
-			PhysicsBodyDefinition bodyDefinition) {
-		this.game = game;
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
+			int credits, PhysicsBodyDefinition bodyDefinition) {
+		this.physics = physics;
 		this.type = type;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
@@ -56,16 +54,17 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.score = score;
 		this.credits = credits;
 		this.velocity = velocity;
-
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
+		this.entities = entities;
+		
+		body = this.physics.createBody(bodyDefinition, this, position);
 	}
 
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			int initialHealth, Weapon[] weapons, int score, int credits,
-			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
-		this(game, type, position, velocity, initialHealth, weapons, score, credits,
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
+			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
+		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition);
-		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
+		physics.attachMovementPattern(pattern.copy(), body);
 
 	}
 
@@ -131,7 +130,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	@Override
 	public void dispose() {
-		game.getPhysicsWorld().removeBody(body);
+		physics.removeBody(body);
 		if (weapons != null) {
 			for (int i = 0; i < (weapons.length); i++) {
 				if (weapons[i] != null) {
@@ -184,7 +183,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	private void scheduleRemoveSelf() {
 		if (!flaggedForRemoval) {
-			game.runLater(removeSelf);
+			physics.runLater(removeSelf);
 			flaggedForRemoval = true;
 		}
 	}

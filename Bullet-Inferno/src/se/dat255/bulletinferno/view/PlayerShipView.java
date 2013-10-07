@@ -1,20 +1,17 @@
 package se.dat255.bulletinferno.view;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl;
-import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.util.Timerable;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
+import se.dat255.bulletinferno.util.Timerable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipView implements Renderable, Timerable {
@@ -39,12 +36,13 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	private static final float EXPLOSION_TIMEOUT = 1; // second
 
-	public PlayerShipView(Game game, final PlayerShip ship, ResourceManager resourceManager) {
+	public PlayerShipView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
 		this.resourceManager = resourceManager;
 		this.weapon = ship.getLoadout().getPrimaryWeapon();
 
-		this.timer = game.getTimer();
+		//this.timer = game.getTimer();
+		this.timer = new TimerImpl();
 		this.timer.setTime(EXPLOSION_TIMEOUT);
 		this.timer.registerListener(this);
 		

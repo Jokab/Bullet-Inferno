@@ -3,8 +3,9 @@ package se.dat255.bulletinferno.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.ModelEnvironment;
+import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 
@@ -15,14 +16,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class EnemyView implements Renderable {
 
-	private final Game game;
+	private final ModelEnvironment models;
 	private Texture texture;
 	private Sprite sprite;
 	private ResourceManager resourceManager;
 	private List<ManagedTexture> managedTextures;
 
-	public EnemyView(Game game, ResourceManager resourceManager) {
-		this.game = game;
+	public EnemyView(ModelEnvironment models, ResourceManager resourceManager) {
+		this.models = models;
 		this.resourceManager = resourceManager;
 		
 		this.managedTextures = new ArrayList<ManagedTexture>();
@@ -34,7 +35,7 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		for(Enemy enemy : game.getEnemies()) {
+		for(Enemy enemy : models.getEnemies()) {
 			ManagedTexture mTexture = resourceManager.getManagedTexture(enemy.getType());
 			this.texture = mTexture.getTexture();
 			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);

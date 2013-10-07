@@ -1,10 +1,12 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.weapon;
 
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.entity.Teamable;
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
-import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
@@ -33,10 +35,11 @@ public enum ProjectileType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public void releaseProjectile(Game game, Vector2 position, Vector2 offset,
+	public void releaseProjectile(PhysicsEnvironment physics, EntityEnvironment entities,
+			Vector2 position, Vector2 offset,
 			Vector2 projectileVector, Teamable source) {
 		
-		Projectile projectile = game.retrieveProjectile(ProjectileImpl.class);
+		Projectile projectile = entities.retrieveProjectile(ProjectileImpl.class);
 		projectile.init(this, position.cpy().add(offset), projectileVector,
 				damage, source, bodyDefinition);
 		

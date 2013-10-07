@@ -3,8 +3,8 @@ package se.dat255.bulletinferno.model.weapon;
 import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 
 /**
  * Enum for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
@@ -68,16 +68,18 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getPlayerWeaponForGame(Game game) {
-		return new WeaponImpl(this, game, reloadingTime, projectileType, offset, projectileSpeed);
+	public Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities) {
+		return new WeaponImpl(physics, entities, this, reloadingTime, projectileType, offset,
+				projectileSpeed);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getEnemyWeaponForGame(Game game) {
-		return new EnemyWeaponImpl(this, game, reloadingTime, projectileType, offset, projectileSpeed);
+	public Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities) {
+		return new EnemyWeaponImpl(physics, entities, this, reloadingTime, projectileType, offset,
+				projectileSpeed);
 	}
 	
 	@Override

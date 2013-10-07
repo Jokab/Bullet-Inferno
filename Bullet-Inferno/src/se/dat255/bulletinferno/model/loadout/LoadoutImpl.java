@@ -1,9 +1,6 @@
 package se.dat255.bulletinferno.model.loadout;
 
-import se.dat255.bulletinferno.model.Loadout;
-import se.dat255.bulletinferno.model.PassiveAbility;
-import se.dat255.bulletinferno.model.SpecialAbility;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 
 public class LoadoutImpl implements Loadout {
 

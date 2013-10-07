@@ -1,6 +1,6 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.enemy.EnemyType;
+import se.dat255.bulletinferno.model.physics.PositionEntity;
 import se.dat255.bulletinferno.util.Disposable;
 
 public interface Enemy extends PositionEntity, Disposable, Teamable {

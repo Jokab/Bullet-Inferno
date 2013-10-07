@@ -1,4 +1,6 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.loadout;
+
+import se.dat255.bulletinferno.model.entity.PlayerShip;
 
 /**
  * A class that is used to specify the behavior of a PassiveAbility, which is constantly active

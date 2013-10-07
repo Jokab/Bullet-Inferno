@@ -3,10 +3,10 @@ package se.dat255.bulletinferno.model.map;
 import java.util.Arrays;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
@@ -41,8 +41,8 @@ public enum ObstacleDefinitionImpl implements ObstacleDefinition {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Obstacle createObstacle(Game game, Vector2 position) {
-		return new ObstacleImpl(game, bodyDefinition, position);
+	public Obstacle createObstacle(PhysicsEnvironment physics, Vector2 position) {
+		return new ObstacleImpl(physics, bodyDefinition, position);
 	}
 
 }

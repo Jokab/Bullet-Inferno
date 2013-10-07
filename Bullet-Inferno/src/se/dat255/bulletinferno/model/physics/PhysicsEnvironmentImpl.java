@@ -1,10 +1,14 @@
 package se.dat255.bulletinferno.model.physics;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -19,6 +23,17 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 
+	/** List of all timers */
+	private final List<Timer> timers = new LinkedList<Timer>();
+	
+	/** List of all queued timers to be added */
+	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
+	
+	private boolean isIteratingOverTimers = false;
+
+	/** A list of Runnables that will be run at the next update. */
+	private final List<Runnable> runLaters = new LinkedList<Runnable>();
+	
 	/** The discrete time step to take each update. */
 	private static float TIME_STEP = 1 / 60f;
 
@@ -247,6 +262,8 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	 */
 	@Override
 	public void update(float deltaTime) {
+		updateTimers(deltaTime);
+		
 		timeStepAccumulator += deltaTime;
 
 		// Take discrete steps of TIME_STEP, sometimes even multiple of them (to keep up).
@@ -284,5 +301,45 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	public void dispose() {
 		collisionQueue.dispose();
 	}
+	
+	private void updateTimers(float deltaTime) {
+		// Update timers, set iterator flag
+		// to indicate that no one is allowed to modify list
+		isIteratingOverTimers = true;
+		for (Timer t : timers) {
+			t.update(deltaTime);
+		}
+		// If timers are waiting to be added, add them
+		if (!timersAddQueue.isEmpty()) {
+			timers.addAll(timersAddQueue);
+			timersAddQueue.clear();
+		}
+		isIteratingOverTimers = false;
 
+		// Run all runLater Runnables from the previous tick.
+		for (Runnable task : runLaters) {
+			task.run();
+		}
+		runLaters.clear();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public Timer getTimer() {
+		Timer t = new TimerImpl();
+
+		if (isIteratingOverTimers) {
+			timersAddQueue.add(t);
+		} else {
+			timers.add(t);
+		}
+
+		return t;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void runLater(Runnable task) {
+		runLaters.add(task);
+	}
 }

@@ -1,9 +1,8 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Teamable;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.entity.Teamable;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
@@ -11,23 +10,26 @@ import com.badlogic.gdx.math.Vector2;
 public class WeaponImpl implements Weapon {
 	private final Timer timer;
 
-	protected final Game game;
+	private final PhysicsEnvironment physics;
+	private final EntityEnvironment entities;
 	private final ProjectileType projectileType;
 	private final Vector2 offset;
 	private final float projectileSpeed;
 	private float reloadingTime;
 	private WeaponDescription type;
 
-	public WeaponImpl(WeaponDescription weaponData, Game game, float reloadingTime, ProjectileType projectileType,
+	public WeaponImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponDescription weaponData, float reloadingTime, ProjectileType projectileType,
 			Vector2 offset, float projectileSpeed) {
 		type = weaponData;
-		this.game = game;
+		this.physics = physics;
+		this.entities = entities;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
 		this.offset = offset;
 		this.projectileSpeed = projectileSpeed;
 
-		timer = game.getTimer();
+		timer = physics.getTimer();
 		timer.setTime(reloadingTime);
 		timer.stop();
 	}
@@ -76,7 +78,8 @@ public class WeaponImpl implements Weapon {
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releaseProjectile(game, position, getOffset(), direction.scl(projectileSpeed), source);
+			projectileType.releaseProjectile(physics, entities, position, getOffset(),
+					direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();
 		}

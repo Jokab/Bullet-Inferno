@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -69,14 +70,15 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Segment createSegment(Game game, Vector2 position, int sliceAmount) {
+	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
+			Vector2 position, int sliceAmount) {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
 
 		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
-			slice = sliceType.createSlice(game, slicePosition.cpy());
+			slice = sliceType.createSlice(physics, entities, slicePosition.cpy());
 			slices.add(slice);
 			slicePosition.add(slice.getWidth(), 0);
 		}

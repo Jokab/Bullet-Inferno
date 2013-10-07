@@ -1,11 +1,11 @@
-package se.dat255.bulletinferno.model.enemy;
+package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
@@ -47,30 +47,30 @@ public enum EnemyType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
-
+	public SimpleEnemy getEnemyShip(PhysicsEnvironment physics,
+			EntityEnvironment entities, Vector2 position) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, entities);
 		}
 
 		if (pattern == null) {
-			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
-					weapons, score, credits, bodyDefinition);
+			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity,
+					initialHealth, weapons, score, credits, bodyDefinition);
 		} else {
-			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
-					weapons, score, credits, bodyDefinition, pattern);
+			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity,
+					initialHealth, weapons, score, credits, bodyDefinition, pattern);
 		}
 	}
 
-	public SimpleBoss getBoss(Game game, Vector2 position) {
-
+	public SimpleBoss getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
+			Vector2 position) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, entities);
 		}
 
-		return new DefaultBossImpl(game, this, position, velocity, pattern, initialHealth,
+		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth,
 				weapons, score, credits, bodyDefinition);
 	}
 

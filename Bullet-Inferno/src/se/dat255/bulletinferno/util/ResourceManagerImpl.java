@@ -1,9 +1,7 @@
 package se.dat255.bulletinferno.util;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;

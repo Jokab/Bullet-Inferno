@@ -1,5 +1,8 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.model.loadout.Loadout;
+import se.dat255.bulletinferno.model.loadout.PassiveAbility;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 

@@ -9,28 +9,30 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.ModelEnvironment;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 
 public class ProjectileView implements Renderable {
 
 	private Sprite sprite;
-	private final Game game;
+	private final ModelEnvironment modelEnvironment;
 	private ResourceManager resourceManager;
 	private Texture texture;
 	private List<ManagedTexture> managedTextures;
 
-	public ProjectileView(Game game, ResourceManager resourceManager) {
+	public ProjectileView(ModelEnvironment modelEnvironment, ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
-		this.game = game;
+		this.modelEnvironment = modelEnvironment;
 		this.managedTextures = new ArrayList<ManagedTexture>();
 		
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		for (Projectile projectile : game.getProjectiles()) {
+		for (Projectile projectile : modelEnvironment.getProjectiles()) {
 			ManagedTexture mTexture = resourceManager.getManagedTexture(projectile.getType());
 			if(!managedTextures.contains(mTexture)) {
 				managedTextures.add(mTexture);

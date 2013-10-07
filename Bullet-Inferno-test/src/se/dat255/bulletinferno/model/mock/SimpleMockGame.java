@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Projectile;
+import se.dat255.bulletinferno.model.entity.Enemy;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.util.Timer;
 
 public class SimpleMockGame implements Game {

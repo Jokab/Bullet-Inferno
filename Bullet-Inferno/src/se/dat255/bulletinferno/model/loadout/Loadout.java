@@ -1,4 +1,6 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.loadout;
+
+import se.dat255.bulletinferno.model.weapon.Weapon;
 
 
 /**

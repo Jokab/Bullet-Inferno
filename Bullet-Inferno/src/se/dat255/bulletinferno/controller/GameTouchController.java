@@ -1,7 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.SpecialEffect;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.loadout.SpecialEffect;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

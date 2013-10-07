@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.enemy.EnemyType;
+import se.dat255.bulletinferno.model.entity.EnemyType;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -109,8 +110,9 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Slice createSlice(Game game, Vector2 position) {
-		return new SliceImpl(game, this, entryHeight, exitHeight, position, width,
+	public Slice createSlice(PhysicsEnvironment physics, EntityEnvironment entities,
+			Vector2 position) {
+		return new SliceImpl(physics, entities, this, entryHeight, exitHeight, position, width,
 				obstaclePlacements, enemyPlacements);
 	}
 }

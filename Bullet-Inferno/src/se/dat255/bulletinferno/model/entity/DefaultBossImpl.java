@@ -1,13 +1,10 @@
-package se.dat255.bulletinferno.model.enemy;
+package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Ship;
-import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.util.Timerable;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,7 +17,7 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	/**
 	 * Constructs a new Angry Boss
 	 * 
-	 * @param game
+	 * @param physics
 	 *        The game instance
 	 * @param type
 	 *        The enemy definition
@@ -36,13 +33,13 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 *        The credit rewarded when boss is killed
 	 * @param offsets
 	 */
-	public DefaultBossImpl(Game game, EnemyType type, Vector2 position, Vector2 velocity,
-			PhysicsMovementPattern pattern, int initialHealth, Weapon[] weapons, int score,
-			int credits, PhysicsBodyDefinition bodyDefinition) {
-		super(game, type, position, velocity, initialHealth, weapons, score, credits,
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
+			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern);
 
-		this.player = game.getPlayerShip();
+		this.player = entities.getPlayerShip();
 		this.weapons = weapons;
 		this.timers = super.getWeaponTimers();
 
