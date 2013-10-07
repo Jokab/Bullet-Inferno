@@ -102,7 +102,7 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void halt() {
+	public void halt(float distance) {
 		
 	}
 
