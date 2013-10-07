@@ -32,8 +32,7 @@ public class PlayerShipImpl implements PlayerShip {
 	private final Loadout loadout;
 	private PhysicsBody body = null;
 	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
-	private float lastSpeed;
-
+	
 	public PlayerShipImpl(Game game, final Vector2 position, int initialHealth, Loadout loadout,
 			ShipType shipType) {
 		this.game = game;
@@ -174,14 +173,13 @@ public class PlayerShipImpl implements PlayerShip {
 		return new Vector2(1, 1);
 	}
 	
-	public void setXSpeed(float speed){
-		lastSpeed = body.getVelocity().x;
-		body.setVelocity(new Vector2(speed,0));
+	public void halt(){
+		body.setVelocity(new Vector2(0,0));
 	}
 
 	@Override
 	public void restoreSpeed(){
-		body.setVelocity(new Vector2(lastSpeed,0));
+		body.setVelocity(forwardSpeed);
 	}
 	
 }

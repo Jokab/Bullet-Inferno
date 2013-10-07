@@ -18,17 +18,14 @@ public enum EnemyType implements ResourceIdentifier {
 	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, new WeaponData[] { WeaponData.DISORDERER }, 10,
 			10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
-			
+
 	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1), 5,
 			new WeaponData[] { WeaponData.FORCE_GUN }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
-	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 15,
-			new WeaponData[] { WeaponData.BOSS_GUN, WeaponData.BOSS_GUN2, WeaponData.BOSS_GUN3,
-			WeaponData.BOSS_GUN4, WeaponData.BOSS_GUN5, WeaponData.BOSS_LAUNCHER,
-			WeaponData.BOSS_LAUNCHER2, WeaponData.BOSS_LAUNCHER3,
-			WeaponData.BOSS_LAUNCHER4, WeaponData.BOSS_LAUNCHER5 }, 10, 10,
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)));
+	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 25,
+			new WeaponData[] { WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_GUN }, 10, 10,
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)));
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
@@ -37,7 +34,6 @@ public enum EnemyType implements ResourceIdentifier {
 	private WeaponData[] weaponsData;
 	private final int score;
 	private final int credits;
-	private Vector2[] offsets;
 	private final PhysicsBodyDefinition bodyDefinition;
 
 	EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth,
@@ -51,32 +47,31 @@ public enum EnemyType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public SimpleEnemy getEnemyShip(Game game, Vector2 position, boolean boss) {
-		if (pattern == null && !boss) {
-			Weapon[] wData = new Weapon[weaponsData.length];
-			for (int i = 0; i < wData.length; i++) {
-				wData[i] = weaponsData[i].getEnemyWeaponForGame(game);
-			}
-			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
-					wData, score, credits, bodyDefinition);
-		} else if (!boss) {
+	public SimpleEnemy getEnemyShip(Game game, Vector2 position) {
 
-			Weapon[] wData = new Weapon[weaponsData.length];
-			for (int i = 0; i < wData.length; i++) {
-				wData[i] = weaponsData[i].getEnemyWeaponForGame(game);
-			}
-			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
-					wData, score, credits, bodyDefinition, pattern);
-		} else {
-			Weapon[] wData = new Weapon[weaponsData.length];
-			offsets = new Vector2[weaponsData.length];
-			for (int i = 0; i < wData.length; i++) {
-				wData[i] = weaponsData[i].getEnemyWeaponForGame(game);
-				offsets[i] = weaponsData[i].getOffset();
-			}
-			return new AngryBoss(game, this, position, velocity, pattern, initialHealth,
-					wData, score, credits, offsets, bodyDefinition);
+		Weapon[] weapons = new Weapon[weaponsData.length];
+		for (int i = 0; i < weapons.length; i++) {
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
 		}
+
+		if (pattern == null) {
+			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
+					weapons, score, credits, bodyDefinition);
+		} else {
+			return new DefaultEnemyShipImpl(game, this, position, velocity, initialHealth,
+					weapons, score, credits, bodyDefinition, pattern);
+		}
+	}
+
+	public SimpleBoss getBoss(Game game, Vector2 position) {
+
+		Weapon[] weapons = new Weapon[weaponsData.length];
+		for (int i = 0; i < weapons.length; i++) {
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(game);
+		}
+
+		return new DefaultBossImpl(game, this, position, velocity, pattern, initialHealth,
+				weapons, score, credits, bodyDefinition);
 	}
 
 	public Vector2 getVelocity() {

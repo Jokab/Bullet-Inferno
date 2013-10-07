@@ -122,6 +122,9 @@ public interface Game extends Disposable {
 	 */
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
-	public void bossDead();
+	/**
+	 * Restores the player's ship to previous speed (used after boss is dead)
+	 */
+	public void restorePlayerShipSpeed();
 
 }

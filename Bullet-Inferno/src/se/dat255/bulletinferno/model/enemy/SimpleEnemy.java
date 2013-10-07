@@ -9,13 +9,10 @@ import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
-import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		PhysicsViewportIntersectionListener {
@@ -34,7 +31,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	/** A flag to make sure we don't remove ourself twice */
 	private boolean flaggedForRemoval = false;
 	// TODO : Fix this in box2d instead?
-	private boolean isAwake = false;
+	protected boolean isAwake = false;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -194,6 +191,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	@Override
 	public Vector2 getDimensions() {
-		return new Vector2(1, 1);
+		return body.getDimensions();
 	}
 }

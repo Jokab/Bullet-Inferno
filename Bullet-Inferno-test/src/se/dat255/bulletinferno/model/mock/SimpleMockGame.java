@@ -97,8 +97,7 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public void dispose() {
-		
+	public void dispose() {		
 	}
 
 	@Override
@@ -123,6 +122,7 @@ public class SimpleMockGame implements Game {
 
 	@Override
 	public void bossDead() {
+		// TODO Auto-generated method stub
 		
 	}
 }

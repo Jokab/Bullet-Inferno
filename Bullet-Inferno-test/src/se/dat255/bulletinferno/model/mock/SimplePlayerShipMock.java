@@ -97,12 +97,12 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void setXSpeed(float speed) {
+	public void restoreSpeed() {
 		
 	}
 
 	@Override
-	public void restoreSpeed() {
+	public void halt() {
 		
 	}
 
