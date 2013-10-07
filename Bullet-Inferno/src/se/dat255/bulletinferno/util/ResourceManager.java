@@ -1,6 +1,6 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.util;
 
-import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;

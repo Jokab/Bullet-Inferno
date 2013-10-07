@@ -5,8 +5,8 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ManagedTexture;
-import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.util.ManagedTexture;
+import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;

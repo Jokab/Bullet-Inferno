@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model.enemy;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.model.Weapon;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -9,6 +8,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 

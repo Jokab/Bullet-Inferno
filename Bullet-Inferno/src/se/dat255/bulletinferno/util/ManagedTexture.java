@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.util;
 
 import com.badlogic.gdx.graphics.Texture;
 

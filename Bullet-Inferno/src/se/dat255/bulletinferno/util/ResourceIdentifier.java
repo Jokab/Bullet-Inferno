@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.util;
 
 /**
  * All classes that want to be associated with a resource must implement this interface

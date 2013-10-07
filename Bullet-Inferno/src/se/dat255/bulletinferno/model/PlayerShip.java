@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.util.ResourceIdentifier;
+
 
 public interface PlayerShip extends Ship, ResourceIdentifier {
 

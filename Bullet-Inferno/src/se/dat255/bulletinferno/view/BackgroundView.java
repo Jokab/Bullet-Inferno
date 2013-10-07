@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ManagedTexture;
 import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.util.ManagedTexture;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.Gdx;
