@@ -63,11 +63,11 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	void setTakeDamageModifier(float takeDamageModifier);
 
 	/**
-	 * Sets the velocity to 0
+	 * Sets the velocity to 0 after a specified distance (meters).
 	 * 
-	 * @param speed
+	 * @param distance the distance in meters before the ship should stop.
 	 */
-	public void halt();
+	public void halt(float distance);
 	
 	
 	/**

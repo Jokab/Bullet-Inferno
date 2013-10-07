@@ -13,9 +13,13 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	
 	private final PlayerShip player;
+	
 	private final Game game;
 	private Timer[] timers;
 
+	/** Flag indicating wheter we have told player to move us on screen or not */
+	private boolean isOnScreen = false;
+	
 	public SimpleBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth,
 			Weapon[] weapons, int score, int credits,
@@ -45,7 +49,10 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			timers[i].start();
 		}
 		super.viewportIntersectionBegin();
-		player.halt();
+		if(!isOnScreen) {
+			player.halt(super.getDimensions().x);
+			isOnScreen = true;
+		}
 	}
 
 
