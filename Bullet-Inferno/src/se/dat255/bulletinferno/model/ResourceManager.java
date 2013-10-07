@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model;
 
+import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -16,13 +18,24 @@ import com.badlogic.gdx.graphics.Texture;
 public interface ResourceManager {
 
 	/**
-	 * Returns the loaded {@link Texture} that is mapped to this identifier.
+	 * Returns a ManagedTexture-object containing the Texture connected
+	 * with this TextureType.
+	 * 
+	 * @param textureType
+	 *        The TextureType connected with the Texture you want.
+	 * @return The ManagedTexture-object.
+	 */
+	ManagedTexture getManagedTexture(TextureType textureType);
+
+	/**
+	 * Returns a ManagedTexture-object containing the Texture connected
+	 * with this ResourceIdentifier.
 	 * 
 	 * @param identifier
-	 *        The identifier for this {@link Texture}.
-	 * @return The {@link Texture}.
+	 *        The identifier to be used for looking up the Texture.
+	 * @return The ManagedTexture-object.
 	 */
-	Texture getTexture(String identifier);
+	ManagedTexture getManagedTexture(ResourceIdentifier identifier);
 
 	/**
 	 * Returns the loaded {@link Sound} that is mapped to this identifier.
@@ -46,5 +59,13 @@ public interface ResourceManager {
 	 * Loads all the resources using an {@link AssetManager} to do asynchronous loading.
 	 */
 	void load();
+
+	/**
+	 * Uses the held AssetManager to unload the Texture that is connected with this path.
+	 * 
+	 * @param path
+	 *        The path to unload from.
+	 */
+	void unload(String path);
 
 }

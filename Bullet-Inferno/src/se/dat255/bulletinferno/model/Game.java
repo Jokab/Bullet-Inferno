@@ -2,9 +2,12 @@ package se.dat255.bulletinferno.model;
 
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+
+import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.view.MockSegment;
 
 public interface Game extends Disposable {
 	/**
@@ -39,13 +42,6 @@ public interface Game extends Disposable {
 	 * @return The player's ship.
 	 */
 	public PlayerShip getPlayerShip();
-
-	/**
-	 * Returns a list of all the obstacles.
-	 * 
-	 * @return A list of all the obstacles.
-	 */
-	public List<? extends Obstacle> getObstacles();
 
 	/**
 	 * Returns a list of all enemies in the game
@@ -104,10 +100,28 @@ public interface Game extends Disposable {
 	 */
 	public PhysicsWorld getPhysicsWorld();
 
-	public void addSegment(MockSegment seg);
+	/**
+	 * @return a list of all the active segments in the world.
+	 */
+	public List<? extends Segment> getSegments();
 
-	public void removeSegment(MockSegment seg);
+	/**
+	 * @return the number of segments that has been removed from the segment list since the game
+	 *         started. Removes only happen from the beginning of the segment list.
+	 */
+	public int getRemovedSegmentCount();
+	
+	/**
+	 * Sets the viewport the Game happens in. Used as an optimization to not run the game in areas
+	 * that is not within (wholly or partially), or near, the viewport.
+	 * 
+	 * @param viewportPosition
+	 *        the center-position i world coordinates for the viewport.
+	 * @param viewportDimensions
+	 *        the dimensions of the viewport in world coordinates (width, height).
+	 */
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
-	public List<MockSegment> getSegments();
+	public void bossDead();
 
 }

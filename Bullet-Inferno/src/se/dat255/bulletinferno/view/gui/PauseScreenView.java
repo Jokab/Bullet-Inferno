@@ -1,10 +1,10 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.GameScreen;
+import se.dat255.bulletinferno.controller.GameController;
 import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,10 +14,10 @@ public class PauseScreenView implements RenderableGUI {
 
 	private final Vector2 position, size;
 	private final Sprite sprite;
-	private final GameScreen game;
+	private final GameController game;
 
-	public PauseScreenView(GameScreen game, ResourceManager resourceManager) {
-		Texture texture = resourceManager.getTexture("PAUSE_SCREEN");
+	public PauseScreenView(GameController game, ResourceManager resourceManager) {
+		Texture texture = TextureType.PAUSE_SCREEN.getTexture();
 		sprite = new Sprite(texture);
 		size = new Vector2(16.0f, 9.0f);
 		sprite.setSize(size.x, size.y);
@@ -37,7 +37,7 @@ public class PauseScreenView implements RenderableGUI {
 	}
 
 	@Override
-	public void pressed() {
+	public void pressed(float x, float y) {
 		game.unpauseGame();
 	}
 

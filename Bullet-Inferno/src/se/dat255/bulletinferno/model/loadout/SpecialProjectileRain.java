@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.Graphics;
+import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.ProjectileType;
 import se.dat255.bulletinferno.model.SpecialEffect;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;
@@ -46,7 +46,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public void onTimeout(Timer source, float timeSinceLast) {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS -1);
 		if (counter < AMOUNT_BULLETS) {
-			ProjectileType.RIGHT_ACCELERATING_PROJECTILE.releaseProjectile(game,
+			ProjectileType.MISSILE.releaseProjectile(game,
 					bulletPositions.get(index), new Vector2(), new Vector2(3, 0), playerShip);
 			counter++;
 		}

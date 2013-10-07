@@ -7,11 +7,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.map.SegmentManager;
+import se.dat255.bulletinferno.model.map.SegmentManagerImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsWorld;
 import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
-import se.dat255.bulletinferno.view.MockSegment;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -27,13 +32,12 @@ public class GameImpl implements Game {
 
 	private final List<Projectile> projectiles = new ArrayList<Projectile>();
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
-	private final List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private PlayerShip playerShip;
 	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools;
-
-	// For mocking segments
-	private final List<MockSegment> segments = new ArrayList<MockSegment>();
-
+	
+	/** The default segment manager used to place segments in the viewport current (remove old). */
+	private final SegmentManager segmentManager = new SegmentManagerImpl(this);
+	
 	/** List of all timers */
 	private final List<Timer> timers;
 	/** List of all queued timers to be added */
@@ -67,16 +71,13 @@ public class GameImpl implements Game {
 	 */
 	@Override
 	public PlayerShip getPlayerShip() {
-		// TODO Auto-generated method stub
 		return playerShip;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
+	
 	@Override
-	public List<? extends Obstacle> getObstacles() {
-		return obstacles;
+	public void bossDead(){
+		Gdx.app.log("Game","Boss dead!");
+		playerShip.restoreSpeed();
 	}
 
 	/**
@@ -102,19 +103,23 @@ public class GameImpl implements Game {
 	public void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
 	}
-
-	public void addSegment(MockSegment seg) {
-		segments.add(seg);
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<? extends Segment> getSegments() {
+		return segmentManager.getSegments();
 	}
-
-	public void removeSegment(MockSegment seg) {
-		segments.remove(seg);
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getRemovedSegmentCount() {
+		return segmentManager.getRemovedSegmentCount();
 	}
-
-	public List<MockSegment> getSegments() {
-		return segments;
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -214,7 +219,6 @@ public class GameImpl implements Game {
 		runLaters.clear();
 
 		world.update(deltaTime);
-		playerShip.update(deltaTime);
 	}
 
 	/**
@@ -236,6 +240,15 @@ public class GameImpl implements Game {
 	@Override
 	public void runLater(Runnable task) {
 		runLaters.add(task);
+	}	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
+		world.setViewport(viewportPosition, viewportDimensions);
+		segmentManager.setViewport(viewportPosition, viewportDimensions);
 	}
 
 }

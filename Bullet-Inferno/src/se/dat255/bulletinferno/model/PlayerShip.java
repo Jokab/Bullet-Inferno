@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model;
 
-import com.badlogic.gdx.math.Vector2;
 
 public interface PlayerShip extends Ship, ResourceIdentifier {
 
@@ -11,35 +10,23 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	public void fireWeapon();
 
 	// TODO: javadoc this in some good way
-	public void update(float deltaTime);
+
 
 	/**
-	 * Sets the PlayerShip's position to the provided position.
+	 * Makes the PlayerShip move the specified distance on the y-axis
 	 * 
-	 * @param position
-	 *        The position to be set.
+	 * @param dy distance in y
 	 */
-	void setPosition(Vector2 position);
-
+	public void moveY(float dy);
+	
 	/**
-	 * Makes the PlayerShip move to the specified position.
-	 * 
-	 * @param yPos
-	 *        The position that the ship should move to.
+	 * Makes the PlayerShip move the specified distance on the y-axis, with
+	 * a specified scale. For example scale = 0.5 only moves the ship half the
+	 * distance specified, and scale = 2 twice as long
+	 * @param dy distance in y
+	 * @param scale
 	 */
-	public void moveTo(float yPos);
-
-	/**
-	 * Stops the PlayerShip's movement.
-	 */
-	public void stopMovement();
-
-	/**
-	 * Returns the position that the PlayerShip is currently moving to.
-	 * 
-	 * @return The position.
-	 */
-	public float getMovePos();
+	public void moveY(float dy, float scale);
 
 	/**
 	 * Returns the Weapon that is currently in the PlayerShip's Loadout.
@@ -72,4 +59,13 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 *        The modifier value.
 	 */
 	void setTakeDamageModifier(float takeDamageModifier);
+
+	public void setXSpeed(float speed);
+	
+	
+	/**
+	 * Restores speed to what it was before setXSpeed was used last
+	 * Used mainly for starting movement after defeating a boss
+	 */
+	public void restoreSpeed();
 }

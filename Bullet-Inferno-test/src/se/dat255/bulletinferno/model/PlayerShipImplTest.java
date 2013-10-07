@@ -12,8 +12,9 @@ import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponDescription;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.test.Common;
 
@@ -31,9 +32,9 @@ public class PlayerShipImplTest {
 	private class MockWeapon extends WeaponImpl {
 		private boolean hasFired = false;
 		
-		public MockWeapon(Game game, float reloadingTime, ProjectileType projectileType,
+		public MockWeapon(WeaponDescription type, Game game, float reloadingTime, ProjectileType projectileType,
 				Vector2 offset, float velocity) {
-			super(game, reloadingTime, projectileType, offset, velocity);
+			super(type, game, reloadingTime, projectileType, offset, velocity);
 		}
 		
 		@Override
@@ -68,21 +69,15 @@ public class PlayerShipImplTest {
 	}
 
 	@Test
-	public void testSetGetPosition() {
+	public void testGetPosition() {
 		// Tests the set and get position methods
 
-		Vector2 position = new Vector2(0, 0);
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Vector2 position = new Vector2(8, 9);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, loadout, ShipType.PLAYER_DEFAULT);
 
-		assertEquals("The position should be set in the constructor", position,
-				playerShip.getPosition());
-
-		Vector2 position2 = new Vector2(1, 1);
-		playerShip.setPosition(position2);
-
-		assertEquals("The setPosition should set the position", position2,
-				playerShip.getPosition());
+		assertTrue("The position should be set in the constructor", 
+				position.equals(playerShip.getPosition()));
 	}
 
 	@Test
@@ -91,7 +86,7 @@ public class PlayerShipImplTest {
 		// but doesn't reduce the initial health value
 
 		Vector2 position = new Vector2(0, 0);
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
@@ -119,7 +114,7 @@ public class PlayerShipImplTest {
 
 		// Test the constructor
 		Vector2 position = new Vector2(0, 0);
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		position.x = 20;
@@ -128,19 +123,11 @@ public class PlayerShipImplTest {
 				"Changing the vector outside the object should not affect the object",
 				playerShip.getPosition().x != position.x);
 
-		// Test the setPosition method.
-		Vector2 position2 = new Vector2(0, 0);
-		playerShip.setPosition(position2);
-		position2.x = 20;
-
-		assertTrue(
-				"Changing the vector outside the object should not affect the object",
-				playerShip.getPosition().x != position2.x);
 	}
 	
 	@Test
 	public void testFireWeapon() {
-		MockWeapon weapon = new MockWeapon(mockGame, 0, ProjectileType.DEFAULT_PROJECTILE, new Vector2(), 0);
+		MockWeapon weapon = new MockWeapon(WeaponData.MISSILE_LAUNCHER, mockGame, 0, ProjectileType.RED_PROJECTILE, new Vector2(), 0);
 		Loadout loadout = new LoadoutImpl(weapon, null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
@@ -151,7 +138,7 @@ public class PlayerShipImplTest {
 	
 	@Test
 	public void testIsInMyTeam() {
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip1 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		
@@ -174,7 +161,7 @@ public class PlayerShipImplTest {
 	
 	@Test
 	public void testPreCollided() {
-		Loadout loadout = new LoadoutImpl(WeaponData.FAST.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		

@@ -1,17 +1,18 @@
 package se.dat255.bulletinferno.model.enemy;
 
-import se.dat255.bulletinferno.model.Collidable;
 import se.dat255.bulletinferno.model.Destructible;
 import se.dat255.bulletinferno.model.Enemy;
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PhysicsBody;
-import se.dat255.bulletinferno.model.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.PhysicsViewportIntersectionListener;
-import se.dat255.bulletinferno.model.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.Projectile;
 import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -25,13 +26,16 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int credits;
 	private final EnemyType type;
 
-	private static PhysicsBodyDefinition bodyDefinition = null;
 	private PhysicsBody body = null;
 	private final Game game;
 	protected Vector2 velocity;
-	
-	protected final Weapon weapon;
-	
+	protected Weapon[] weapons;
+
+	/** A flag to make sure we don't remove ourself twice */
+	private boolean flaggedForRemoval = false;
+	// TODO : Fix this in box2d instead?
+	private boolean isAwake = false;
+
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
@@ -43,28 +47,28 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			dispose();
 		}
 	};
-	
 
-	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity, PhysicsMovementPattern pmp,
-			int initialHealth, Weapon weapon, int score, int credits) {
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			int initialHealth, Weapon[] weapons, int score, int credits,
+			PhysicsBodyDefinition bodyDefinition) {
 		this.game = game;
 		this.type = type;
 		this.initialHealth = initialHealth;
 		health = initialHealth;
-		this.weapon = weapon;
+		this.weapons = weapons;
 		this.score = score;
 		this.credits = credits;
 		this.velocity = velocity;
 
-		if (bodyDefinition == null) {
-			Shape shape = game.getPhysicsWorld().getShapeFactory().getRectangularShape(0.08f, 0.1f);
-			bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		}
 		body = game.getPhysicsWorld().createBody(bodyDefinition, this, position);
-		body.setVelocity(velocity);
-		if(pmp != null) {
-			game.getPhysicsWorld().attachMovementPattern(pmp.copy(), body);
-		}
+	}
+
+	public SimpleEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			int initialHealth, Weapon[] weapons, int score, int credits,
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
+		this(game, type, position, velocity, initialHealth, weapons, score, credits,
+				bodyDefinition);
+		game.getPhysicsWorld().attachMovementPattern(pattern.copy(), body);
 
 	}
 
@@ -83,7 +87,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (hitByOtherProjectile(other)) {
+		if (isAwake && hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
 		}
 	}
@@ -131,9 +135,14 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	@Override
 	public void dispose() {
 		game.getPhysicsWorld().removeBody(body);
-		body = null;
-		if (weapon != null) {
-			weapon.getTimer().stop();
+		if (weapons != null) {
+			for (int i = 0; i < (weapons.length); i++) {
+				if (weapons[i] != null) {
+					weapons[i].getTimer().stop();
+				}
+			}
+
+			body = null;
 		}
 	}
 
@@ -163,20 +172,28 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	@Override
 	public void viewportIntersectionBegin() {
-		// NOP
-
+		isAwake = true;
+		body.setVelocity(velocity);
 	}
 
 	@Override
 	public void viewportIntersectionEnd() {
 		scheduleRemoveSelf();
 	}
-	
+
 	/**
 	 * Removes the ship from the world using game.runLater to not modify physics world while
 	 * running.
 	 */
 	private void scheduleRemoveSelf() {
-		game.runLater(removeSelf);
+		if (!flaggedForRemoval) {
+			game.runLater(removeSelf);
+			flaggedForRemoval = true;
+		}
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		return new Vector2(1, 1);
 	}
 }
