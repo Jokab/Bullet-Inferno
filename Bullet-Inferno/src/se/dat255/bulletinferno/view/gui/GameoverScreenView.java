@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.view.gui;
 import se.dat255.bulletinferno.controller.GameController;
 import se.dat255.bulletinferno.controller.MasterController;
 import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.Gdx;
@@ -18,7 +19,7 @@ public class GameoverScreenView implements RenderableGUI {
 	private final MasterController game;
 
 	public GameoverScreenView(MasterController game, ResourceManager resourceManager) {
-		Texture texture = resourceManager.getTexture("GAMEOVER_SCREEN");
+		Texture texture = TextureType.GAMEOVER_SCREEN.getTexture();
 		sprite = new Sprite(texture);
 		size = new Vector2(16.0f, 9.0f);
 		sprite.setSize(size.x, size.y);
