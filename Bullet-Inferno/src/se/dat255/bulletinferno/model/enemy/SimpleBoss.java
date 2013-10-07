@@ -9,11 +9,12 @@ import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
-public abstract class SimpleBoss extends SimpleEnemy {
+public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	
 	private final PlayerShip player;
 	private final Game game;
+	private Timer[] timers;
 
 	public SimpleBoss(Game game, EnemyType type, Vector2 position, Vector2 velocity,
 			int initialHealth,
@@ -21,9 +22,14 @@ public abstract class SimpleBoss extends SimpleEnemy {
 			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
 		super(game, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern);
-
-		this.game = game;
 		
+		this.timers = new Timer[weapons.length];
+		for (int i = 0; i < weapons.length; i++) {
+			timers[i] = weapons[i].getTimer();
+			timers[i].registerListener(this);
+			timers[i].stop();
+		}
+		this.game = game;
 		this.player = game.getPlayerShip();
 		
 		
@@ -35,6 +41,9 @@ public abstract class SimpleBoss extends SimpleEnemy {
 
 	@Override
 	public void viewportIntersectionBegin() {
+		for (int i = 0; i < weapons.length; i++) {
+			timers[i].start();
+		}
 		super.viewportIntersectionBegin();
 		player.halt();
 	}
@@ -48,6 +57,42 @@ public abstract class SimpleBoss extends SimpleEnemy {
 		if (isDead()) {
 			game.restorePlayerShipSpeed();
 		}
+	}
+	
+	// Different firing methods determine how many weapon to fire and in what direction
+	public void fireSpread(Timer source) {
+		for (int i = 0; i < weapons.length / 2; i++) {
+
+			if (source == timers[i]) {
+				weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
+			}
+		}
+
+	}
+
+	public void fireAim(Timer source) {
+		for (int i = weapons.length / 2; i < weapons.length; i++) {
+
+			if (source == timers[i]) {
+				weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
+						- getPosition().x, player.getPosition().y - getPosition().y).nor(),
+						this);
+			}
+		}
+
+	}
+	
+	
+	public void fireAimSpread(Timer source) {
+		
+		fireSpread(source);
+
+		fireAim(source);
+	}
+	
+	
+	public Timer[] getWeaponTimers(){
+		return timers;
 	}
 
 }

@@ -11,7 +11,7 @@ import se.dat255.bulletinferno.util.Timerable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class DefaultBossImpl extends SimpleBoss implements Ship, Timerable {
+public class DefaultBossImpl extends SimpleBoss implements Ship{
 
 	private Weapon[] weapons;
 	private Timer[] timers;
@@ -44,62 +44,29 @@ public class DefaultBossImpl extends SimpleBoss implements Ship, Timerable {
 
 		this.player = game.getPlayerShip();
 		this.weapons = weapons;
-		this.timers = new Timer[weapons.length];
-		for (int i = 0; i < weapons.length; i++) {
-			timers[i] = weapons[i].getTimer();
-			timers[i].registerListener(this);
-			timers[i].stop();
-		}
+		this.timers = super.getWeaponTimers();
 
 	}
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		
-		if (getHealth() > getInitialHealth() / 2) {
+		if (getHealth() >= getInitialHealth() * 0.75f) {
 
 			fireSpread(source);
 
-		} else {
+		} else if(getHealth() < getInitialHealth() * 0.25) {
+			
+			fireAimSpread(source);
+		} else { 
 			
 			fireAim(source);
 		}
 		
 	}
 
-	// Different firing methods determine how many weapon to fire and in what direction
-	public void fireSpread(Timer source) {
-		for (int i = 0; i < weapons.length / 2; i++) {
-
-			if (source == timers[i]) {
-				weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
-			}
-		}
-
-	}
-
-	public void fireAim(Timer source) {
-		
-		fireSpread(source);
-
-		for (int i = weapons.length / 2; i < weapons.length; i++) {
-
-			if (source == timers[i]) {
-				weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
-						- getPosition().x, player.getPosition().y - getPosition().y).nor(),
-						this);
-			}
-		}
-
-	}
-
 	@Override
 	public void viewportIntersectionBegin() {
 		super.viewportIntersectionBegin();
-
-		for (int i = 0; i < weapons.length; i++) {
-			timers[i].start();
-		}
-
 	}
 }
