@@ -103,8 +103,9 @@ public class ResourceManagerImpl implements ResourceManager {
 	
 	@Override
 	public void unload(String path) {
-		System.out.println("unloading" + path);
-		manager.unload(path);
+		if(manager.isLoaded(path, Texture.class)) {
+			manager.unload(path);
+		}
 	}
 
 	@Override
