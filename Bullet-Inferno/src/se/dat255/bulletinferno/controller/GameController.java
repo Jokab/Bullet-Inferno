@@ -25,7 +25,6 @@ import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -68,15 +67,16 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 	
-	private AssetManager assetManager = new AssetManager();
-	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
+	private final ResourceManager resourceManager;
 
 	/**
 	 * Default controller to set required references
 	 * @param myGame The master controller that creates this controller
+	 * @param resourceManager2 
 	 */
-	public GameController(MasterController myGame) {
+	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
+		this.resourceManager = resourceManager;
 	}
 
 	/**

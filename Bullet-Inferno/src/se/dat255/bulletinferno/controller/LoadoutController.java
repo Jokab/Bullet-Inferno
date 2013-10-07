@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.controller;
 
+import se.dat255.bulletinferno.model.ResourceManager;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 
 import com.badlogic.gdx.Gdx;
@@ -30,13 +31,17 @@ public class LoadoutController extends SimpleController {
 	private final Skin skin;
 	private final Texture weaponTexture1;
 	private final Texture weaponTexture2;
+	
+	private final ResourceManager resourceManager;
 
 	/**
 	 * Main controller used for the load out screen
 	 * @param myGame The master controller that creates this screen
+	 * @param resourceManager 
 	 */
-	public LoadoutController(final MasterController myGame) {
-
+	public LoadoutController(final MasterController myGame, final ResourceManager resourceManager) {
+		this.resourceManager = resourceManager;
+		
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
 
