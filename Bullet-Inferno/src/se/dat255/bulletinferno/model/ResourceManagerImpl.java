@@ -4,56 +4,53 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-
 public class ResourceManagerImpl implements ResourceManager {
 
 	private static AssetManager manager;
-	
+
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
 		FAST_SHIP("data/defaultEnemy.png"),
 		SLOW_SHIP("data/defaultEnemy.png"),
 		MAP_MOUNTAIN("images/game/mountain.png"),
-		
+
 		// Enemies
 		DEFAULT_ENEMY_SHIP("data/defaultEnemy.png"),
 		SPECIAL_ENEMY_SHIP("data/specialEnemy.png"),
-		
+
 		// Player ship
 		PLAYER_DEFAULT("data/playerShip.png"),
 		PLAYER_EXPLOSION("data/explosion.gif"),
-		
-		//Weapons
+
+		// Weapons
 		MISSILE_LAUNCHER("data/missileLauncher.png"),
 		DISORDERER("data/disorderer.png"),
-		
-		//Projectiles
+
+		// Projectiles
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
 		MISSILE("data/missile.png"),
 		PLASMA("data/plasma.png"),
-		
+
 		// Buttons
-		PAUSE_SCREEN("images/gui/screen_pause.png"), 
+		PAUSE_SCREEN("images/gui/screen_pause.png"),
 		BLUE_BACKGROUND("images/game/background.png");
-		
+
 		private final String path;
 
 		TextureType(String path) {
 			this.path = path;
 		}
-		
+
 		public Texture getTexture() {
 			return manager.get(this.path, Texture.class);
 		}
-		
+
 		public String getPath() {
 			return this.path;
 		}
@@ -74,11 +71,12 @@ public class ResourceManagerImpl implements ResourceManager {
 	 */
 	public void load() {
 		loadTextures();
-		// TODO: Maybe add a loading screen/bar here of some sort? Maybe this is why my phone stutters (jakob)
+		// TODO: Maybe add a loading screen/bar here of some sort? Maybe this is why my phone
+		// stutters (jakob)
 		manager.finishLoading();
 		// TODO: Add more loading here
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -100,27 +98,35 @@ public class ResourceManagerImpl implements ResourceManager {
 			manager.load(type.path, Texture.class);
 		}
 	}
-	
+
 	@Override
 	public void unload(String path) {
-		if(manager.isLoaded(path, Texture.class)) {
+		if (manager.isLoaded(path, Texture.class)) {
 			manager.unload(path);
 		}
 	}
 
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
-		return new ManagedTextureImpl(textureType.getTexture(), textureType);
+		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
+			return new ManagedTextureImpl(textureType.getTexture(), textureType);
+		} else {
+			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
+		}
 	}
 
 	@Override
 	public ManagedTexture getManagedTexture(ResourceIdentifier identifier) {
-		for(TextureType textureType : textureTypes) {
-			if(identifier.getIdentifier().equals(textureType.name())) {
-				return new ManagedTextureImpl(textureType.getTexture(), textureType);
+		for (TextureType textureType : textureTypes) {
+			if (identifier.getIdentifier().equals(textureType.name())) {
+				if (manager.isLoaded(textureType.getPath(), Texture.class)) {
+					return new ManagedTextureImpl(textureType.getTexture(), textureType);
+				} else {
+					throw new RuntimeException("Texture " + textureType.name() + " is not loaded."); 
+				}
 			}
 		}
-		
+
 		throw new RuntimeException("Texture not found for that identifier.");
 	}
 	// TODO: Implement loading methods for sound and music
