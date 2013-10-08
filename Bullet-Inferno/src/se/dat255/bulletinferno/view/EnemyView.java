@@ -20,14 +20,11 @@ public class EnemyView implements Renderable {
 	private Texture texture;
 	private Sprite sprite;
 	private ResourceManager resourceManager;
-	private List<ManagedTexture> managedTextures;
 
 	public EnemyView(ModelEnvironment models, ResourceManager resourceManager) {
 		this.models = models;
 		this.resourceManager = resourceManager;
 		
-		this.managedTextures = new ArrayList<ManagedTexture>();
-
 		this.sprite = new Sprite();
 		//sprite.setOrigin(0, 0);
 		
@@ -37,9 +34,6 @@ public class EnemyView implements Renderable {
 	public void render(SpriteBatch batch) {
 		for(Enemy enemy : models.getEnemies()) {
 			ManagedTexture mTexture = resourceManager.getManagedTexture(enemy.getType());
-			if(!managedTextures.contains(mTexture)) {
-				managedTextures.add(mTexture);
-			}
 			this.texture = mTexture.getTexture();
 			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			this.sprite.setTexture(texture);
@@ -53,8 +47,5 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void dispose() {
-		for(ManagedTexture mTexture : managedTextures) {
-			mTexture.dispose(resourceManager);
-		}
 	}
 }
