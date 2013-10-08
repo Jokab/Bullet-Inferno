@@ -5,20 +5,26 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LoadoutController extends SimpleController {
@@ -31,18 +37,21 @@ public class LoadoutController extends SimpleController {
 	private final Skin skin;
 
 	private final ResourceManager resourceManager;
+	
+	private final MasterController masterController;
 
 	private final List<Button> primaryWeapons = new ArrayList<Button>();
 
 	/**
 	 * Main controller used for the loadout screen
 	 * 
-	 * @param myGame
+	 * @param masterController
 	 *        The master controller that creates this screen
 	 * @param resourceManager
 	 */
-	public LoadoutController(final MasterController myGame, final ResourceManager resourceManager) {
+	public LoadoutController(final MasterController masterController, final ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
+		this.masterController = masterController;
 
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
@@ -56,36 +65,25 @@ public class LoadoutController extends SimpleController {
 		// Add default font as default
 		skin.add("default", new BitmapFont());
 
-		// TextButtonStyle textButtonStyle = new TextButtonStyle();
-		// textButtonStyle.font = skin.getFont("default");
-		// textButtonStyle.fontColor = Color.BLACK;
-		// skin.add("default", textButtonStyle);
+		// Set up the start button and add its listener
+		setupStartButton();
 
-
-		// Create a table that fills the screen
-		Table table = new Table();
-		table.debug();
-		table.setFillParent(true);
-		table.setColor(new Color(Color.BLACK));
-		table.setPosition(100, 100);
+		// Set up the table for the primary weapons
+		Table primaryWeaponTable = new Table();
 		
+		// Add table to stage
+		primaryWeaponTable.debug();
+		primaryWeaponTable.setColor(new Color(Color.BLACK));
+		primaryWeaponTable.setPosition(1150,450);
+		
+		stage.addActor(primaryWeaponTable);
 		// Set up and store buttons in list
-		setupButtons();
+		setupPrimaryWeaponButtons();
 		
 		for(Button button : primaryWeapons) {
-			table.add(button).padBottom(20).row();
+			primaryWeaponTable.add(button).padBottom(20).row();
 		}
 
-		// Add table to stage
-		stage.addActor(table);
-
-		// Start button click listener
-//		weaponButton1.addListener(new ChangeListener() {
-//			@Override
-//			public void changed(ChangeEvent event, Actor actor) {
-//				myGame.startGame(WeaponData.MISSILE_LAUNCHER);
-//			}
-//		});
 //
 //		weaponButton2.addListener(new ChangeListener() {
 //			@Override
@@ -95,7 +93,33 @@ public class LoadoutController extends SimpleController {
 //		});
 	}
 
-	private void setupButtons() {
+	private void setupStartButton() {
+		Texture startButtonTexture = TextureType.LOADOUT_START_BUTTON.getTexture();
+		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
+		
+		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
+		startButtonStyle.up = new TextureRegionDrawable(startButtonRegion);
+		startButtonStyle.over = skin.newDrawable(startButtonStyle.up, Color.LIGHT_GRAY);
+		
+		ImageButton startButton = new ImageButton(startButtonStyle);
+		skin.add("startButton", startButton);
+		
+		Table startButtonTable = new Table();
+		startButtonTable.setPosition(1150,40);
+		startButtonTable.add(startButton).maxHeight(65).maxWidth(230);
+		stage.addActor(startButtonTable);
+		
+		// Start button click listener
+		startButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				masterController.startGame(WeaponData.MISSILE_LAUNCHER);
+			}
+		});
+	}
+
+	private void setupPrimaryWeaponButtons() {
 		for (int i = 0; i < 10; i++) {
 			// TODO: the line below needs changing to take into account all weapons
 			Texture texture = resourceManager.getManagedTexture(WeaponData.values()[0]).getTexture();

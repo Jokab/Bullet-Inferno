@@ -39,7 +39,8 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Buttons
 		PAUSE_SCREEN("images/gui/screen_pause.png"),
 		BLUE_BACKGROUND("images/game/background.png"),
-		GAMEOVER_SCREEN("images/gui/screen_gameover.png");
+		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
+		LOADOUT_START_BUTTON("data/startBtn.png");
 
 		private final String path;
 
