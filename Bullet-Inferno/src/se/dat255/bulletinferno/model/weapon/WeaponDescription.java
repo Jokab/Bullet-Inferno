@@ -53,4 +53,11 @@ public interface WeaponDescription extends ResourceIdentifier {
 	 */
 	Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons);
 
+	/**
+	 * Returns the dimensions of the weapon
+	 * @return The dimensions as a vector
+	 */
+	Vector2 getDimensions();
+	
+	
 }
