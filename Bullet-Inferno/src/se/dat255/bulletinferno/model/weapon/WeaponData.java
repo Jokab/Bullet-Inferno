@@ -25,6 +25,12 @@ public enum WeaponData implements WeaponDescription {
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
 	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 10f),
 	
+	// Different weapons for standard enemies
+	ENEMY_DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(), 5f),
+	ENEMY_STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(), 14),
+	ENEMY_FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 7),
+	ENEMY_MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(), 10f),
+	
 	// Different weapons for bosses. 
 	BOSS_SPR(1f, ProjectileType.RED_PROJECTILE, new Vector2(0,0), 5),
 	BOSS_SPR2(1f, ProjectileType.RED_PROJECTILE, new Vector2(0,1), 5),

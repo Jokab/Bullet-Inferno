@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 public enum SliceDefinitionImpl implements SliceDefinition {
 	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
 	MOUNTAIN_1(0, 1, 20f, Collections.<ObstaclePlacement>emptyList(), 
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
+			Arrays.asList(placeEnemy(EnemyType.SPECIAL_ENEMY_SHIP, 10, 3),
 			placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 5),
 			placeEnemy(EnemyType.HARD_BOSS_SHIP, 10, 5))),
 	MOUNTAIN_2(2, 3, 20f, Collections.<ObstaclePlacement>emptyList(), 
