@@ -21,7 +21,7 @@ public class WeaponMockEnvironment implements WeaponEnvironment {
 
 	@Override
 	public void disposeProjectile(Projectile projectile) {
-		// TODO Auto-generated method stub
+		projectile.reset();
 		
 	}
 

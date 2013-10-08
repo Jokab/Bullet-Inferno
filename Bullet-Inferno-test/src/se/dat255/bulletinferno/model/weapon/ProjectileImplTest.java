@@ -8,10 +8,14 @@ import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
 
+import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
+import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
+import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
 import se.dat255.bulletinferno.model.physics.Collidable;
@@ -34,17 +38,21 @@ public class ProjectileImplTest {
 		Common.loadEssentials();	
 	}
 	
-	SimpleMockGame mockGame;
+	PhysicsWorldImplSpy physics;
+	WeaponMockEnvironment weapons;
+	EntityMockEnvironment entities;
 
 	@Before
 	public void initialize() {
-		mockGame = new SimpleMockGame();
+		physics = new PhysicsWorldImplSpy();
+		weapons = new WeaponMockEnvironment();
+		entities = new EntityMockEnvironment(physics, weapons);
 	}
 
 	@Test
 	public void testGetDamage() {
 		// Tests that the projectileImpl has a default damage > 0.
-		ProjectileImpl projectile = new ProjectileImpl(mockGame);
+		ProjectileImpl projectile = new ProjectileImpl(physics, weapons);
 		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, null, 
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
@@ -56,12 +64,12 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testCollidedOtherProjectileNoDamageChange() {
-		Projectile projectileA = new ProjectileImpl(mockGame);
+		Projectile projectileA = new ProjectileImpl(physics, weapons);
 		projectileA.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null,
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		float initialDamage = projectileA.getDamage();
 
-		Projectile projectileB = new ProjectileImpl(mockGame);
+		Projectile projectileB = new ProjectileImpl(physics, weapons);
 		projectileB.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null,
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
@@ -79,7 +87,7 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testCollidedDamageDecreasePostCollision() {
-		Projectile projectile = new ProjectileImpl(mockGame);
+		Projectile projectile = new ProjectileImpl(physics, weapons);
 		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, new Teamable() {
 			
 			@Override
@@ -89,8 +97,9 @@ public class ProjectileImplTest {
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		float initialDamage = projectile.getDamage();
 
-		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+		WeaponLoadout loadout = new WeaponLoadoutImpl(
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
@@ -107,9 +116,11 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testCollidedWithSource() {
-		Projectile projectile = new ProjectileImpl(mockGame);
-		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.createWeapon(mockGame), null, null, null);
-		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, loadout, ShipType.PLAYER_DEFAULT);
+		Projectile projectile = new ProjectileImpl(physics, weapons);
+		WeaponLoadout loadout = new WeaponLoadoutImpl(
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+		PlayerShip sourceShip = new PlayerShipImpl(physics, entities, new Vector2(), 10, loadout, 
+				ShipType.PLAYER_DEFAULT);
 		
 		// Set the ship as the source
 		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip,
@@ -146,7 +157,7 @@ public class ProjectileImplTest {
 	}
 	@Test
 	public void testSameTeamSource() {
-		Projectile projectile = new ProjectileImpl(mockGame);
+		Projectile projectile = new ProjectileImpl(physics, weapons);
 		
 		TeamA teamA1 = new TeamA();
 		TeamA teamA2 = new TeamA();
@@ -170,7 +181,7 @@ public class ProjectileImplTest {
 	
 	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
-		Projectile projectile = new ProjectileImpl(mockGame);
+		Projectile projectile = new ProjectileImpl(physics, weapons);
 		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, new Teamable() {
 			
 			@Override
@@ -178,12 +189,13 @@ public class ProjectileImplTest {
 				return false;
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
-		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
-		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
+		WeaponLoadout loadout = new WeaponLoadoutImpl(
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
 		PhysicsBody body = null;
-		for (CreateBodyCall call : mockGame.physicsWorld.createBodyCalls) {
+		for (CreateBodyCall call : physics.createBodyCalls) {
 			if (call.collidable == projectile) {
 				body = call.returnValue;
 				break;
@@ -191,8 +203,9 @@ public class ProjectileImplTest {
 		}
 		assertTrue("Adds a physics body to the physics world upon construction", body != null);
 
+		projectile.preCollided(ship);
 		boolean projectilePresentPreCollision = false;
-		for (RemoveBodyCall call : mockGame.physicsWorld.removeBodyCalls) {
+		for (RemoveBodyCall call : physics.removeBodyCalls) {
 			if (call.body == body) {
 				projectilePresentPreCollision = true;
 				break;
@@ -201,10 +214,10 @@ public class ProjectileImplTest {
 		assertTrue("Does not remove the body from the physics world immediately",
 				!projectilePresentPreCollision);
 
-		projectile.preCollided(ship);
+		
 		projectile.postCollided(ship);
 		boolean projectileRemovedPostCollision = false;
-		for (RemoveBodyCall call : mockGame.physicsWorld.removeBodyCalls) {
+		for (RemoveBodyCall call : physics.removeBodyCalls) {
 			if (call.body == body) {
 				projectileRemovedPostCollision = true;
 				break;
