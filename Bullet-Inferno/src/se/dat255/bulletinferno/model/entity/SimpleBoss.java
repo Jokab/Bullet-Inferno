@@ -1,6 +1,8 @@
 package se.dat255.bulletinferno.model.entity;
 
 import com.badlogic.gdx.math.Vector2;
+
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
@@ -23,9 +25,9 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyType type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
-			PhysicsMovementPattern pattern) {
+			PhysicsMovementPattern pattern, ScoreController scoreController) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition, pattern);
+				bodyDefinition, pattern, scoreController);
 		
 		this.timers = new Timer[weapons.length];
 		for (int i = 0; i < weapons.length; i++) {
@@ -62,6 +64,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		super.takeDamage(damage);
 
 		if (isDead()) {
+			scoreController.addScore(getScore());
 			// TODO Restore player ship speed
 		}
 	}

@@ -35,8 +35,6 @@ public class PlayerShipImpl implements PlayerShip {
 	private final PhysicsEnvironment physics;
 	private final int initialHealth;
 	private float takeDamageModifier = 1; // default
-	/** The current score of this ship */
-	private int score;
 	private int health;
 	private final ShipType shipType;
 	private final Loadout loadout;
@@ -218,16 +216,6 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void restoreSpeed(){
 		body.setVelocity(forwardSpeed);
-	}
-	
-	@Override
-	public void addScore(int score){
-		this.score += score;
-	}
-
-	@Override
-	public int getScore() {
-		return score;
 	}
 	
 	

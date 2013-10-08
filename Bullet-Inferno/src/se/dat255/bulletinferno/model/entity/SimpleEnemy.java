@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -14,6 +15,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		PhysicsViewportIntersectionListener {
+	
+	/** Reference to the score controller */
+	protected final ScoreController scoreController;
 
 	private int health;
 	private final int initialHealth;
@@ -46,7 +50,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
-			int credits, PhysicsBodyDefinition bodyDefinition) {
+			int credits, PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
 		this.physics = physics;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -56,15 +60,17 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.credits = credits;
 		this.velocity = velocity;
 		this.entities = entities;
+		this.scoreController = scoreController;
 		
 		body = this.physics.createBody(bodyDefinition, this, position);
 	}
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
-			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
+			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
+			ScoreController scoreController) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition);
+				bodyDefinition, scoreController);
 		physics.attachMovementPattern(pattern.copy(), body);
 
 	}
@@ -113,6 +119,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			health -= damage;
 
 			if (isDead()) {
+				scoreController.addScore(getScore());
 				scheduleRemoveSelf();
 			}
 		}
