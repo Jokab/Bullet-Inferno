@@ -210,7 +210,7 @@ public class LoadoutController extends SimpleController {
 			Button button = selectionWeaponButton.getButton();
 			if (button == ((Button) actor)) {
 				selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
-						TextureType.DISORDERER_LARGE.getTexture()));
+						TextureType.DISORDERER.getTexture()));
 				selectionWeaponButton.setWeaponData(null);
 			}
 		}
@@ -220,34 +220,47 @@ public class LoadoutController extends SimpleController {
 	private class ClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
+			WeaponButton selected = null;
 			for (WeaponButton wButton : primaryWeapons) {
 				Button button = wButton.getButton();
 				if (button == ((Button) actor)) {
+					selected = wButton;
 					if (!wButton.isSelected()) {
-						wButton.toggleSelected();
-						button.getStyle().up = skin.newDrawable(button.getStyle().up,
-								Color.LIGHT_GRAY);
-
-						selectionWeaponButton.setWeaponData(wButton.getWeaponData());
-						Texture texture = resourceManager.getManagedTexture(selectionWeaponButton.getWeaponData()).getTexture();
-						selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(texture));
-						selectionWeaponButton.getWeaponData().name();
-						selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
+						wButton.toggleSelected(skin);
+						setWeaponSelectionToChosenWeapon(wButton);
 					} else {
-						selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
-								new Texture("data/frame.png")));
-						selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
-						selectionWeaponButton.setWeaponData(null);
-
-						wButton.toggleSelected();
-						button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-								TextureType.DISORDERER_LARGE.getTexture()));
+						wButton.toggleSelected(skin);
+						setWeaponSelectionToNothing();
 					}
 				}
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
+			
+			deselectOtherButtons(selected);
+		}
 
+		private void deselectOtherButtons(WeaponButton selected) {
+			for(WeaponButton wButton : primaryWeapons) {
+				if(wButton != selected && wButton.isSelected()) {
+					System.out.println(wButton.isSelected());
+					wButton.toggleSelected(skin);
+				}
+			}
+		}
+
+		private void setWeaponSelectionToChosenWeapon(WeaponButton wButton) {
+			selectionWeaponButton.setWeaponData(wButton.getWeaponData());
+			Texture texture = resourceManager.getManagedTexture(selectionWeaponButton.getWeaponData()).getTexture();
+			selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(texture));
+			selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
+		}
+
+		private void setWeaponSelectionToNothing() {
+			selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
+					new Texture("data/frame.png")));
+			selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
+			selectionWeaponButton.setWeaponData(null);
 		}
 	}
 }
