@@ -19,7 +19,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int initialHealth;
 	private final int score;
 	private final int credits;
-	private final EnemyType type;
+	private final EnemyDefinitionImpl type;
 
 	private PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
@@ -44,7 +44,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition) {
 		this.physics = physics;
@@ -60,7 +60,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		body = this.physics.createBody(bodyDefinition, this, position);
 	}
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
@@ -163,7 +163,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	@Override
-	public EnemyType getType() {
+	public EnemyDefinitionImpl getType() {
 		return this.type;
 	}
 

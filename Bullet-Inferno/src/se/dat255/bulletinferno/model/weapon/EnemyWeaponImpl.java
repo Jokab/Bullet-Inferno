@@ -14,7 +14,7 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	private final WeaponEnvironment weapons;
 
 	public EnemyWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDescription type, float reloadingTime, ProjectileType projectile, Vector2 offset,
+			WeaponDefinition type, float reloadingTime, ProjectileType projectile, Vector2 offset,
 			float projectileSpeed) {
 		super(physics, weapons, type, reloadingTime, projectile, offset, projectileSpeed);
 		this.physics = physics;

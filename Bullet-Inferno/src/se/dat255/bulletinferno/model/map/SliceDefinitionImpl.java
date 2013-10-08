@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.entity.EnemyType;
+import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
@@ -19,30 +19,30 @@ import com.badlogic.gdx.math.Vector2;
 public enum SliceDefinitionImpl implements SliceDefinition {
 	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
 	MOUNTAIN_1(0, 1, 20f, Collections.<ObstaclePlacement>emptyList(), 
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-			placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 5),
-			placeEnemy(EnemyType.BOSS_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+			placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5),
+			placeEnemy(EnemyDefinitionImpl.BOSS_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_2(2, 3, 20f, Collections.<ObstaclePlacement>emptyList(), 
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.BOSS_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.BOSS_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_3(2, 2, 20f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.BOSS_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.BOSS_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_4(1, 3, 20f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.BOSS_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.BOSS_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_5(1, 1, 20f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.BOSS_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.BOSS_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_6(3, 2, 20f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_7(3, 2, 20f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))),
 	MOUNTAIN_8(2, 0, 20f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyType.DEFAULT_ENEMY_SHIP, 10, 5))),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
+					placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))),
 	SIMPLE_GROUND(2f, 2f, 20f, Collections.<ObstaclePlacement>emptyList())
 	;
 	
@@ -87,7 +87,7 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	/**
 	 * Internal helper to create an {@link EnemyPlacement} quickly for enum definitions.
 	 */
-	private static EnemyPlacement placeEnemy(EnemyType enemyType, float x, float y) {
+	private static EnemyPlacement placeEnemy(EnemyDefinitionImpl enemyType, float x, float y) {
 		return new EnemyPlacementImpl(enemyType, x, y); 
 	}
 	

@@ -6,7 +6,7 @@ import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
-public interface WeaponDescription extends ResourceIdentifier {
+public interface WeaponDefinition extends ResourceIdentifier {
 
 	/**
 	 * Returns the time it takes to reload this weapon.
@@ -37,21 +37,12 @@ public interface WeaponDescription extends ResourceIdentifier {
 	float getProjectileSpeed();
 
 	/**
-	 * Returns a new Weapon instance by using the data in the passed enum.
+	 * Returns a new Weapon that this definition holds
 	 * 
-	 * @deprecated
+	 * 
 	 * @return A new weapon instance.
 	 */
-	Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons);
-
-	/**
-	 * Returns a new Weapon instance by using the data in the passed enum, which is tailored for use
-	 * in an enemy.
-	 * 
-	 * @deprecated
-	 * @return A new weapon instance.
-	 */
-	Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons);
+	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons);
 
 	/**
 	 * Returns the dimensions of the weapon

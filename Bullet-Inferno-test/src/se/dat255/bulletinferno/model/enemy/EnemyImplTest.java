@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.entity.Enemy;
-import se.dat255.bulletinferno.model.entity.EnemyType;
+import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
@@ -31,7 +31,7 @@ public class EnemyImplTest {
 	}
 
 	private class EnemyMockup extends SimpleEnemy {
-		public EnemyMockup(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+		public EnemyMockup(Game game, EnemyDefinitionImpl type, Vector2 position, Vector2 velocity,
 				int initialHealth, Weapon[] weapon, int score, int credits) {
 			super(game, type, position, velocity,
 					initialHealth, weapon, score,
@@ -86,7 +86,7 @@ public class EnemyImplTest {
 	public void testGetScore() {
 		// Set up a new enemy with score 99
 
-		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				0, null, 99, 0);
 		assertTrue("Enemy score should be = 99", enemy.getScore() == 99);
@@ -96,7 +96,7 @@ public class EnemyImplTest {
 	public void testGetCredits() {
 		// Set up a new enemy with credits of 65
 
-		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				0, null, 0, 65);
 		assertTrue("Enemy credits should be = 65", enemy.getCredits() == 65);
@@ -105,10 +105,10 @@ public class EnemyImplTest {
 	@Test
 	public void testPreCollided() {
 
-		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				100, null, 0, 0);
-		SimpleEnemy enemy2 = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy2 = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				100, null, 0, 0);
 		SimpleMockProjectile projectile = new ColidedTestMockProjectile();
@@ -147,7 +147,7 @@ public class EnemyImplTest {
 	public void testGetHealth() {
 		// Set up a new enemy with a health of 101
 
-		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				101, null, 0, 0);
 		assertTrue("Enemy health should be = 101", enemy.getHealth() == 101);
@@ -161,7 +161,7 @@ public class EnemyImplTest {
 		// Set up a new enemy with a health of 101
 		EnemyGameMockup game = new EnemyGameMockup();
 
-		SimpleEnemy enemy = new EnemyMockup(game, EnemyType.DEFAULT_ENEMY_SHIP, new Vector2(),
+		SimpleEnemy enemy = new EnemyMockup(game, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
 				new Vector2(),
 				101, null, 0, 0);
 
@@ -197,7 +197,7 @@ public class EnemyImplTest {
 	public void testDispose() {
 		EnemyGameMockup game = new EnemyGameMockup();
 
-		SimpleEnemy enemy = new EnemyMockup(game, EnemyType.DEFAULT_ENEMY_SHIP, new Vector2(),
+		SimpleEnemy enemy = new EnemyMockup(game, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
 				new Vector2(),
 				101, null, 0, 0);
 		enemy.dispose();
@@ -209,7 +209,7 @@ public class EnemyImplTest {
 	public void testGetInitialHealth() {
 		// Set up a new enemy with a health of 101
 
-		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 
 				98, null, 0, 0);
@@ -224,7 +224,7 @@ public class EnemyImplTest {
 	public void testGetPosition() {
 
 		Vector2 position = new Vector2(2, 3);
-		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				position, new Vector2(),
 				98, null, 0, 0);
 
@@ -240,17 +240,17 @@ public class EnemyImplTest {
 	@Test
 	public void testIsInMyTeam() {
 
-		SimpleEnemy enemy1 = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		SimpleEnemy enemy1 = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				98, null, 0, 0);
 
-		Enemy enemy2 = new EnemyMockup(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		Enemy enemy2 = new EnemyMockup(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 
 				87, null, 0, 0);
 
 		class AnotherEnemy extends SimpleEnemy {
-			public AnotherEnemy(Game game, EnemyType type, Vector2 position, Vector2 velocity,
+			public AnotherEnemy(Game game, EnemyDefinitionImpl type, Vector2 position, Vector2 velocity,
 					int initialHealth,
 					Weapon[] weapon, int score, int credits) {
 				super(game, type, position, velocity,
@@ -263,7 +263,7 @@ public class EnemyImplTest {
 
 		NonTeamMember nonTeamMember = new NonTeamMember();
 
-		Enemy otherEnemy = new AnotherEnemy(new SimpleMockGame(), EnemyType.DEFAULT_ENEMY_SHIP,
+		Enemy otherEnemy = new AnotherEnemy(new SimpleMockGame(), EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
 				98, null, 0, 0);
 

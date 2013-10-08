@@ -5,7 +5,9 @@ import java.util.List;
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.Disposable;
 
 import com.badlogic.gdx.math.Vector2;
@@ -58,5 +60,15 @@ public interface ModelEnvironment extends Disposable {
 	 * @return a list of projectiles currently in the game.
 	 */
 	public List<? extends Projectile> getProjectiles();
+	
+	/**
+	 * @return the games physics environment. Only for use by controllers!
+	 */
+	public PhysicsEnvironment getPhysicsEnvironment();
+	
+	/**
+	 * @return the games weapon environment. Only for use by controllers!
+	 */
+	public WeaponEnvironment getWeaponEnvironment();
 
 }

@@ -15,10 +15,10 @@ public class WeaponImpl implements Weapon {
 	private final Vector2 offset;
 	private final float projectileSpeed;
 	private float reloadingTime;
-	private WeaponDescription type;
+	private WeaponDefinition type;
 
 	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDescription weaponData, float reloadingTime, ProjectileType projectileType,
+			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType,
 			Vector2 offset, float projectileSpeed) {
 		type = weaponData;
 		this.physics = physics;
@@ -102,7 +102,7 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public WeaponDescription getType() {
+	public WeaponDefinition getType() {
 		return type;
 	}
 
