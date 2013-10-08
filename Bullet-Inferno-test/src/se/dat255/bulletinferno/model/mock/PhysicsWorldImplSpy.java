@@ -15,7 +15,7 @@ public class PhysicsWorldImplSpy extends PhysicsEnvironmentImpl {
 
 	public List<CreateBodyCall> createBodyCalls = new ArrayList<CreateBodyCall>();
 	public List<RemoveBodyCall> removeBodyCalls = new ArrayList<RemoveBodyCall>();
-	
+	public List<Runnable> runLaters = new ArrayList<Runnable>();
 	public Timer timer;
 	
 	public PhysicsWorldImplSpy() {
@@ -74,6 +74,18 @@ public class PhysicsWorldImplSpy extends PhysicsEnvironmentImpl {
 		this.timer = timer;
 	}
 	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		for(Runnable task : runLaters) {
+			task.run();
+		}
+	}
+	
+	@Override
+	public void runLater(Runnable task) {
+		runLaters.add(task);
+	}
 	/*@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);

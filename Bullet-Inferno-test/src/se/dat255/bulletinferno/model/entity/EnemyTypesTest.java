@@ -11,7 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.SimpleEnemy;
-import se.dat255.bulletinferno.model.mock.SimpleMockGame;
+import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
+import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
 
 public class EnemyTypesTest {
@@ -21,24 +23,22 @@ public class EnemyTypesTest {
 		Common.loadEssentials();	
 	}
 	
-	private SimpleMockGame mockGame;
+	private PhysicsWorldImplSpy physics;
+	private EntityMockEnvironment entities;
+	private WeaponMockEnvironment weapons;
 
 	@Before
 	public void initialize() {
-		mockGame = new SimpleMockGame();
-	}
-
-	@Test
-	public void testEnemyHealth() {
-		SimpleEnemy enemy = EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP.getEnemyShip(mockGame, new Vector2());
-
-		assertTrue(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP.getInitialHealth() == enemy.getHealth());
+		physics = new PhysicsWorldImplSpy();
+		weapons = new WeaponMockEnvironment();
+		entities = new EntityMockEnvironment(physics, weapons);
 	}
 
 	@Test
 	public void testEnemyPosition() {
 		Vector2 position = new Vector2(1, 1);
-		SimpleEnemy enemy = EnemyDefinitionImpl.SPECIAL_ENEMY_SHIP.getEnemyShip(mockGame, position);
+		Enemy enemy = EnemyDefinitionImpl.SPECIAL_ENEMY_SHIP.createEnemy(physics, entities, 
+				weapons, new Vector2());
 
 		assertEquals(
 				"Position that was sent to the factory should be the same as the created enemy's position. ",

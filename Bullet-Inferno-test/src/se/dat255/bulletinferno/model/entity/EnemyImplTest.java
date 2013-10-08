@@ -13,7 +13,6 @@ import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
-import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
 import se.dat255.bulletinferno.model.physics.Collidable;
