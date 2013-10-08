@@ -68,11 +68,6 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void attachPassive(PassiveAbility passiveAbility) {
-		
-	}
-
-	@Override
 	public void setTakeDamageModifier(float takeDamageModifier) {
 		
 	}

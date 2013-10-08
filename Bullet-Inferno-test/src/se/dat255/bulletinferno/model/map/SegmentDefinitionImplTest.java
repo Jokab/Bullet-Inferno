@@ -11,7 +11,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
+import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
+import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
@@ -23,12 +26,16 @@ public class SegmentDefinitionImplTest {
 		Common.loadEssentials();
 	}
 
-	private Game mockGame;
+	private PhysicsWorldImplSpy physics;
+	private EntityMockEnvironment entities;
+	private WeaponMockEnvironment weapons;
 	private Vector2 pos;
 
 	@Before
 	public void setUp() throws Exception {
-		mockGame = new SimpleMockGame();
+		physics = new PhysicsWorldImplSpy();
+		entities = new EntityMockEnvironment();
+		weapons = new WeaponMockEnvironment();
 		pos = new Vector2(10, 1);
 	}
 
@@ -77,7 +84,8 @@ public class SegmentDefinitionImplTest {
 
 			List<Segment> segments = new LinkedList<Segment>();
 			for (int i = 0; i < 25; i++) {
-				segments.add(segmentDef.createSegment(mockGame, pos, suitableSlices.size()));
+				segments.add(segmentDef.createSegment(physics, entities, weapons, pos, 
+						suitableSlices.size()));
 			}
 
 			List<? extends Slice> slicesSegA, slicesSegB;
@@ -118,7 +126,8 @@ public class SegmentDefinitionImplTest {
 			for (int numSlices = 2; numSlices < 10; numSlices++) {
 				Segment createdSegment;
 				try {
-					createdSegment = segmentDef.createSegment(mockGame, pos, numSlices);
+					createdSegment = segmentDef.createSegment(physics, entities, weapons, 
+							pos, numSlices);
 				} catch (IllegalArgumentException e) {
 					continue;
 				}
