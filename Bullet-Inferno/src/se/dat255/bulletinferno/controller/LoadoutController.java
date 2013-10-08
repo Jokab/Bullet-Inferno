@@ -209,9 +209,8 @@ public class LoadoutController extends SimpleController {
 		public void changed(ChangeEvent event, Actor actor) {
 			Button button = selectionWeaponButton.getButton();
 			if (button == ((Button) actor)) {
-				selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
-						TextureType.DISORDERER.getTexture()));
-				selectionWeaponButton.setWeaponData(null);
+				setWeaponSelectionToNothing();
+				deselectOtherButtons(null);
 			}
 		}
 
@@ -236,31 +235,34 @@ public class LoadoutController extends SimpleController {
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
-			
+
 			deselectOtherButtons(selected);
 		}
 
-		private void deselectOtherButtons(WeaponButton selected) {
-			for(WeaponButton wButton : primaryWeapons) {
-				if(wButton != selected && wButton.isSelected()) {
-					System.out.println(wButton.isSelected());
-					wButton.toggleSelected(skin);
-				}
+	}
+	
+	private void deselectOtherButtons(WeaponButton selected) {
+		for (WeaponButton wButton : primaryWeapons) {
+			if (wButton != selected && wButton.isSelected()) {
+				wButton.toggleSelected(skin);
 			}
 		}
+	}
+	
+	private void setWeaponSelectionToChosenWeapon(WeaponButton wButton) {
+		selectionWeaponButton.setWeaponData(wButton.getWeaponData());
+		Texture texture = resourceManager.getManagedTexture(
+				selectionWeaponButton.getWeaponData()).getTexture();
+		selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(texture));
+		selectionButtonStyle.over = selectionButtonStyle.up;
+		selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
+	}
 
-		private void setWeaponSelectionToChosenWeapon(WeaponButton wButton) {
-			selectionWeaponButton.setWeaponData(wButton.getWeaponData());
-			Texture texture = resourceManager.getManagedTexture(selectionWeaponButton.getWeaponData()).getTexture();
-			selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(texture));
-			selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
-		}
-
-		private void setWeaponSelectionToNothing() {
-			selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
-					new Texture("data/frame.png")));
-			selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
-			selectionWeaponButton.setWeaponData(null);
-		}
+	private void setWeaponSelectionToNothing() {
+		selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
+				new Texture("data/frame.png")));
+		selectionButtonStyle.over = selectionButtonStyle.up;
+		selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
+		selectionWeaponButton.setWeaponData(null);
 	}
 }
