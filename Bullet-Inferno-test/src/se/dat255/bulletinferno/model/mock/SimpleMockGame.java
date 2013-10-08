@@ -36,40 +36,6 @@ public class SimpleMockGame implements Game {
 		this(new SimpleMockTimer());
 	}
 
-	@Override
-	public List<? extends Projectile> getProjectiles() {
-		return null;
-	}
-
-	@Override
-	public Projectile retrieveProjectile(Class<? extends Projectile> type) {
-		numProjectilesSpawned++;
-		return this.mockProjectile;
-	}
-
-	@Override
-	public void disposeProjectile(Projectile projectile) {
-		projectile.reset(); // Emulate pool.
-	}
-
-	@Override
-	public PlayerShip getPlayerShip() {
-		return null;
-	}
-
-	@Override
-	public List<? extends Enemy> getEnemies() {
-		return null;
-	}
-
-	@Override
-	public Timer getTimer() {
-		return timer;
-	}
-
-	public void setTimer(Timer timer) {
-		this.timer = timer;
-	}
 
 	@Override
 	public void update(float delta) {
@@ -79,50 +45,13 @@ public class SimpleMockGame implements Game {
 	}
 
 	@Override
-	public PhysicsEnvironment getPhysicsWorld() {
-		return physicsWorld;
-	}
-
-	@Override
-	public void setPlayerShip(PlayerShip ship) {
-	}
-
-	@Override
-	public void addEnemy(Enemy emeny) {
-	}
-
-	@Override
-	public void removeEnemy(Enemy enemy) {
-		
-	}
-
-	@Override
-	public void dispose() {		
-	}
-
-	@Override
 	public List<? extends Segment> getSegments() {
 		return Collections.<Segment> emptyList();
 	}
 
-	@Override
-	public int getRemovedSegmentCount() {
-		return 0;
-	}
-
-	@Override
-	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
-		// NOP
-	}
 
 	@Override
 	public void runLater(Runnable task) {
 		runLaters.add(task);
-	}
-
-	@Override
-	public void restorePlayerShipSpeed() {
-		// TODO Auto-generated method stub
-		
 	}
 }
