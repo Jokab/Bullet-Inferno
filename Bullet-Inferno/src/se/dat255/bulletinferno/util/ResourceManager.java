@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 /**
  * A class that holds mappings between types of objects in the game and static resources
  * such as {@link Texture}, {@link Sound} and {@link Music}. Resources
- * are retrieved using a String identifier. To use the
- * textures, they must first be loaded with {@link #load()}, which uses the libGDX built-in
+ * are retrieved using a String identifier. <b>To use the
+ * textures, they must first be loaded with {@link #load()}</b>, which uses the libGDX built-in
  * {@link AssetManager} to do asynchronous loading.
  * 
  */

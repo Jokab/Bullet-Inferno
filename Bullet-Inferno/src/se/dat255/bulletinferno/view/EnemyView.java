@@ -37,6 +37,9 @@ public class EnemyView implements Renderable {
 	public void render(SpriteBatch batch) {
 		for(Enemy enemy : models.getEnemies()) {
 			ManagedTexture mTexture = resourceManager.getManagedTexture(enemy.getType());
+			if(!managedTextures.contains(mTexture)) {
+				managedTextures.add(mTexture);
+			}
 			this.texture = mTexture.getTexture();
 			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			this.sprite.setTexture(texture);

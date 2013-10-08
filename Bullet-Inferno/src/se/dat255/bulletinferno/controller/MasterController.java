@@ -1,8 +1,8 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl;
 
 /**
  * The master controller is called every frame. It then calls appropriate classes
@@ -14,10 +14,10 @@ public class MasterController extends com.badlogic.gdx.Game {
 	private LoadoutController loadoutScreen;
 	/** Main controller for the game screen */
 	private GameController gameScreen;
-	
+
 	private ResourceManager resourceManager;
 
-	/** When the game is first started, we load the load out screen */
+	/** When the game is first started, we load the loadout screen */
 	@Override
 	public void create() {
 		this.resourceManager = new ResourceManagerImpl();
@@ -31,15 +31,19 @@ public class MasterController extends com.badlogic.gdx.Game {
 		gameScreen.dispose();
 		loadoutScreen.dispose();
 	}
-	
+
 	/** Starts a new game and changes the screen to that game */
-	public void startGame(WeaponData weaponData){
-		if(weaponData == null){
-			if(gameScreen == null) throw new RuntimeException(
-					"MyGame.startGame(null): Can't load weapon data since game screen is null.");
+	public void startGame(WeaponData weaponData) {
+		if (weaponData == null) {
+			if (gameScreen == null) {
+				throw new RuntimeException(
+						"MyGame.startGame(null): Can't load weapon data since game screen is null.");
+			}
 			weaponData = gameScreen.getWeaponData();
 		}
-		if(gameScreen != null) gameScreen.dispose();
+		if (gameScreen != null) {
+			gameScreen.dispose();
+		}
 		gameScreen = new GameController(this, resourceManager);
 		gameScreen.createNewGame(weaponData);
 		setScreen(gameScreen);
