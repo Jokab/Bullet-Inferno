@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class ResourceManagerImpl implements ResourceManager {
 
-	private static AssetManager manager = new AssetManager();
+	private static AssetManager manager;
 
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
@@ -60,20 +60,23 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> sounds = new HashMap<String, String>();
 	private static final Map<String, String> music = new HashMap<String, String>();
 	private final TextureType[] textureTypes;
-
+	
+	
 	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
+		manager = new AssetManager();
+		Texture.setAssetManager(manager);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void load() {
+	public void startLoad(boolean blocking) {
 		loadTextures();
-		// TODO: Maybe add a loading screen/bar here of some sort? Maybe this is why my phone
-		// stutters (jakob)
-		manager.finishLoading();
-		// TODO: Add more loading here
+		
+		if(blocking) {
+			manager.finishLoading();
+		}
 	}
 
 	/**
@@ -92,6 +95,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		return manager.get(music.get(identifier), Music.class);
 	}
 
+	/**
+	 * Adds all our managed textures to the AssetManager's load queue.
+	 */
 	private void loadTextures() {
 		for (TextureType type : TextureType.values()) {
 			manager.load(type.path, Texture.class);
@@ -138,4 +144,19 @@ public class ResourceManagerImpl implements ResourceManager {
 		throw new RuntimeException("Texture not found for that identifier.");
 	}
 	// TODO: Implement loading methods for sound and music
+
+	@Override
+	public boolean loadAsync() {
+		return manager.update();
+	}
+
+	@Override
+	public float getLoadProgress() {
+		return manager.getProgress();
+	}
+
+	@Override
+	public void dispose() {
+		manager.dispose();
+	}
 }
