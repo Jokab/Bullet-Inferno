@@ -44,4 +44,11 @@ public interface WeaponDefinition extends ResourceIdentifier {
 	 */
 	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons);
 
+	/**
+	 * Returns the dimensions of the weapon
+	 * @return The dimensions as a vector
+	 */
+	Vector2 getDimensions();
+	
+	
 }

@@ -95,14 +95,14 @@ public class LoadoutController extends SimpleController {
 		weaponButton1.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myGame.startGame(WeaponDefinitionImpl.MISSILE_LAUNCHER);
+				myGame.startGame(new WeaponDefinitionImpl[] {WeaponDefinitionImpl.MISSILE_LAUNCHER, WeaponDefinitionImpl.SNIPER_RIFLE});
 			}
 		});
 		
 		weaponButton2.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myGame.startGame(WeaponDefinitionImpl.DISORDERER);
+				myGame.startGame(new WeaponDefinitionImpl[] {WeaponDefinitionImpl.DISORDERER, WeaponDefinitionImpl.SNIPER_RIFLE});
 			}
 		});
 	}

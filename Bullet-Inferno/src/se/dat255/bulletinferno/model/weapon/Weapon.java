@@ -58,4 +58,6 @@ public interface Weapon {
 	
 	public WeaponDefinition getType();
 	
+	public Vector2 getDimensions();
+	
 }

@@ -26,14 +26,15 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 	
-	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinitionImpl weaponType) {
+	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinitionImpl[] weaponType) {
 		this.physics = physics;
 		this.weapons = new WeaponEnvironmentImpl(physics);
 		
 		// TODO: Replace null with heavy weapon and move upwards in call hierarchy somehow.
 		WeaponLoadout weaponLoadout = new WeaponLoadoutImpl(
-				weaponType.createWeapon(physics, weapons),
-				null);
+				weaponType[0].createWeapon(physics, weapons),
+				weaponType[1].createWeapon(physics, weapons)
+);
 		
 		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout);
 		

@@ -106,4 +106,9 @@ public class WeaponImpl implements Weapon {
 		return type;
 	}
 
+	@Override
+	public Vector2 getDimensions() {
+		return type.getDimensions();
+	}
+
 }

@@ -35,52 +35,54 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
 	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
-	
-	/** A timer used to fire the standard weapon
+
+	/**
+	 * A timer used to fire the standard weapon
 	 */
 	private Timer weaponTimer;
-	
+
 	/** A timer used to every update check our location relative to a specified halt distance */
 	private Timer haltTimer;
 	/** The x-coordinate at which the ship should come to a stop. */
 	private float haltAtPosition;
-	
+
 	private Timerable haltShipTimerable = new Timerable() {
 		@Override
 		public void onTimeout(Timer source, float timeSinceLast) {
 			PlayerShipImpl ship = PlayerShipImpl.this;
-			
+
 			float diffX = ship.body.getPosition().x - ship.haltAtPosition;
 			if (diffX >= 0) {
 				ship.body.setVelocity(new Vector2(0, 0));
-				//ship.body.getBox2DBody().setTransform(-diffX, 0, 0);
+				// ship.body.getBox2DBody().setTransform(-diffX, 0, 0);
 				source.unregisterListener(this);
 			}
 		}
 	};
-	
-	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
+
+	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			final Vector2 position, int initialHealth, WeaponLoadout loadout, ShipType shipType) {
 		this.physics = physics;
 		this.initialHealth = initialHealth;
 		this.health = initialHealth;
 		this.weaponLoadout = loadout;
 		this.shipType = shipType;
-		
+
 		// Set up the halt timer used to stop the ship at a specified location
 		this.haltTimer = physics.getTimer();
 		haltTimer.setTime(0);
 		haltTimer.setContinuous(true);
-		
+
 		this.weaponTimer = loadout.getStandardWeapon().getTimer();
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
 
-		Shape shape = PhysicsShapeFactory.getRectangularShape(1, 1);
+		Shape shape = PhysicsShapeFactory.getRectangularShape(2.4f, 1.5f);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
+		
 
-		body = physics.createBody(bodyDefinition, this, position);
-		body.setVelocity(forwardSpeed);
+		this.body = physics.createBody(bodyDefinition, this, position);
+		this.body.setVelocity(forwardSpeed);
 	}
 
 	/**
@@ -154,7 +156,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void fireWeapon() {
-		weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		weaponLoadout.getHeavyWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
@@ -186,7 +188,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public boolean isDead() {
 		return this.health <= 0;
 	}
-	
+
 	@Override
 	public void halt(float distance) {
 		haltTimer.registerListener(haltShipTimerable);
@@ -195,23 +197,20 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	@Override
-	public void restoreSpeed(){
+	public void restoreSpeed() {
 		body.setVelocity(forwardSpeed);
 	}
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		
-		if(source==weaponTimer) {
+		if (source == weaponTimer) {
 			weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
 		}
-		
 	}
 
 	@Override
 	public Vector2 getDimensions() {
 		return body.getDimensions();
 	}
-	
-	
+
 }
