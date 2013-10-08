@@ -10,8 +10,8 @@ import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,7 +20,7 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	private final PhysicsEnvironment physics;
 	private final MapEnvironment map;
 
-	public ModelEnvironmentImpl(WeaponData weaponType) {
+	public ModelEnvironmentImpl(WeaponDefinitionImpl weaponType) {
 		physics = new PhysicsEnvironmentImpl();
 		map = new MapEnvironmentImpl(physics, weaponType);
 	}

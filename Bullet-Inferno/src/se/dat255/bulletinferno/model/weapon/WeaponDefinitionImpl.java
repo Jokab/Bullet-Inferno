@@ -1,10 +1,9 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Enum for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
@@ -14,7 +13,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
  * @author Jakob Csorgei Gustavsson
  * 
  */
-public enum WeaponData implements WeaponDescription {
+public enum WeaponDefinitionImpl implements WeaponDefinition {
 
 	/**
 	 * Order:
@@ -22,7 +21,7 @@ public enum WeaponData implements WeaponDescription {
 	 */
 	DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(0,0.5f), 5f),
 	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(0,1), 14),
-	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
+	ENEMY_FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7),
 	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 10f),
 	BOSS_LAUNCHER(1f, ProjectileType.RED_PROJECTILE, new Vector2(0,0), 5),
 	BOSS_GUN(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 15f);
@@ -32,7 +31,7 @@ public enum WeaponData implements WeaponDescription {
 	private final Vector2 offset;
 	private final float projectileSpeed;
 
-	WeaponData(float reloadTime, ProjectileType projectileType, Vector2 offset,
+	WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType, Vector2 offset,
 			float projectileSpeed) {
 		this.reloadingTime = reloadTime;
 		this.projectileType = projectileType;
@@ -68,18 +67,14 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		return new WeaponImpl(physics, weapons, this, reloadingTime, projectileType, offset,
-				projectileSpeed);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, offset,
-				projectileSpeed);
+	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+		if(this == ENEMY_FORCE_GUN || this ==  BOSS_LAUNCHER || this ==  BOSS_GUN) {
+			return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
+					offset, projectileSpeed);
+		} else {
+			return new WeaponImpl(physics, weapons, this, reloadingTime, projectileType, offset,
+					projectileSpeed);
+		}
 	}
 	
 	@Override

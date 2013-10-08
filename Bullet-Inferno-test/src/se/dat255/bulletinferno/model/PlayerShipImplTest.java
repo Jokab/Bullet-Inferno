@@ -17,8 +17,8 @@ import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
-import se.dat255.bulletinferno.model.weapon.WeaponDescription;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.test.Common;
@@ -37,7 +37,7 @@ public class PlayerShipImplTest {
 	private class MockWeapon extends WeaponImpl {
 		private boolean hasFired = false;
 		
-		public MockWeapon(WeaponDescription type, Game game, float reloadingTime, ProjectileType projectileType,
+		public MockWeapon(WeaponDefinition type, Game game, float reloadingTime, ProjectileType projectileType,
 				Vector2 offset, float velocity) {
 			super(type, game, reloadingTime, projectileType, offset, velocity);
 		}
@@ -78,7 +78,7 @@ public class PlayerShipImplTest {
 		// Tests the set and get position methods
 
 		Vector2 position = new Vector2(8, 9);
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, loadout, ShipType.PLAYER_DEFAULT);
 
 		assertTrue("The position should be set in the constructor", 
@@ -91,7 +91,7 @@ public class PlayerShipImplTest {
 		// but doesn't reduce the initial health value
 
 		Vector2 position = new Vector2(0, 0);
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
@@ -119,7 +119,7 @@ public class PlayerShipImplTest {
 
 		// Test the constructor
 		Vector2 position = new Vector2(0, 0);
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, position, 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		position.x = 20;
@@ -132,8 +132,8 @@ public class PlayerShipImplTest {
 	
 	@Test
 	public void testFireWeapon() {
-		MockWeapon weapon = new MockWeapon(WeaponData.MISSILE_LAUNCHER, mockGame, 0, ProjectileType.RED_PROJECTILE, new Vector2(), 0);
-		WeaponLoadout loadout = new WeaponLoadoutImpl(weapon, null, null, null);
+		MockWeapon weapon = new MockWeapon(WeaponDefinitionImpl.MISSILE_LAUNCHER, mockGame, 0, ProjectileType.RED_PROJECTILE, new Vector2(), 0);
+		Loadout loadout = new LoadoutImpl(weapon, null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		
@@ -143,7 +143,7 @@ public class PlayerShipImplTest {
 	
 	@Test
 	public void testIsInMyTeam() {
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip1 = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		
@@ -166,7 +166,7 @@ public class PlayerShipImplTest {
 	
 	@Test
 	public void testPreCollided() {
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(mockGame, new Vector2(), 100, 
 				loadout, ShipType.PLAYER_DEFAULT);
 		

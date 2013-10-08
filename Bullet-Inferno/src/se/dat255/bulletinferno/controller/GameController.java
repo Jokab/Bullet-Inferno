@@ -8,7 +8,7 @@ import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.BackgroundView;
@@ -56,7 +56,7 @@ public class GameController extends SimpleController {
 	private Vector2 viewportDimensions;
 	
 	/** Stores the weapon type for restarting the game */
-	private WeaponData weaponData;
+	private WeaponDefinitionImpl weaponData;
 
 	/** Reference to the master controller */
 	private MasterController myGame;
@@ -79,7 +79,7 @@ public class GameController extends SimpleController {
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponData weaponType) {
+	public void createNewGame(WeaponDefinitionImpl weaponType) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
@@ -270,7 +270,7 @@ public class GameController extends SimpleController {
 	}
 	
 	/** Get method for weapon data set in create new game */
-	public WeaponData getWeaponData(){
+	public WeaponDefinitionImpl getWeaponData(){
 		return weaponData;
 	}
 

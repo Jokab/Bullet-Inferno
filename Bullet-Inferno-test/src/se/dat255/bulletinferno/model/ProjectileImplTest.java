@@ -22,8 +22,8 @@ import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.test.Common;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
@@ -89,7 +89,7 @@ public class ProjectileImplTest {
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		float initialDamage = projectile.getDamage();
 
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
@@ -108,7 +108,7 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.createWeapon(mockGame), null, null, null);
 		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, loadout, ShipType.PLAYER_DEFAULT);
 		
 		// Set the ship as the source
@@ -178,8 +178,7 @@ public class ProjectileImplTest {
 				return false;
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
-
-		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		Loadout loadout = new LoadoutImpl(WeaponDefinitionImpl.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 

@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -95,14 +95,14 @@ public class LoadoutController extends SimpleController {
 		weaponButton1.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myGame.startGame(WeaponData.MISSILE_LAUNCHER);
+				myGame.startGame(WeaponDefinitionImpl.MISSILE_LAUNCHER);
 			}
 		});
 		
 		weaponButton2.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myGame.startGame(WeaponData.DISORDERER);
+				myGame.startGame(WeaponDefinitionImpl.DISORDERER);
 			}
 		});
 	}
