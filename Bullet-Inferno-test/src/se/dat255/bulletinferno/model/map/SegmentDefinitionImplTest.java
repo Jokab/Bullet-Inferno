@@ -13,6 +13,7 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
 
@@ -32,7 +33,7 @@ public class SegmentDefinitionImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		physics = new PhysicsWorldImplSpy();
+		physics = new PhysicsWorldImplSpy(new SimpleMockTimer());
 		entities = new EntityMockEnvironment();
 		weapons = new WeaponMockEnvironment();
 		pos = new Vector2(10, 1);

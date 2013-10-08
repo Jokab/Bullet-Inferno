@@ -13,6 +13,7 @@ import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
 
@@ -29,7 +30,7 @@ public class EnemyTypesTest {
 
 	@Before
 	public void initialize() {
-		physics = new PhysicsWorldImplSpy();
+		physics = new PhysicsWorldImplSpy(new SimpleMockTimer());
 		weapons = new WeaponMockEnvironment();
 		entities = new EntityMockEnvironment(physics, weapons);
 	}
@@ -38,10 +39,10 @@ public class EnemyTypesTest {
 	public void testEnemyPosition() {
 		Vector2 position = new Vector2(1, 1);
 		Enemy enemy = EnemyDefinitionImpl.SPECIAL_ENEMY_SHIP.createEnemy(physics, entities, 
-				weapons, new Vector2());
+				weapons, position);
 
-		assertEquals(
+		assertTrue(
 				"Position that was sent to the factory should be the same as the created enemy's position. ",
-				position, enemy.getPosition());
+				position.equals(enemy.getPosition()));
 	}
 }
