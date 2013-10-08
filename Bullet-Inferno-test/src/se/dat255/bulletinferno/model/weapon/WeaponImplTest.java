@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model;
+package se.dat255.bulletinferno.model.weapon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
