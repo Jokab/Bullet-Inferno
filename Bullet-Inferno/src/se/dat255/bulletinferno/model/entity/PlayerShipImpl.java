@@ -21,7 +21,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-public class PlayerShipImpl implements PlayerShip, Timerable {
+public class PlayerShipImpl implements PlayerShip {
 
 	public enum ShipType implements Teamable {
 		PLAYER_DEFAULT;
@@ -194,6 +194,17 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public boolean isDead() {
 		return this.health <= 0;
 	}
+
+	@Override
+	public Vector2 getDimensions() {
+		ArrayList<Fixture> fixtures = body.getBox2DBody().getFixtureList();
+		BoundingBox boundingBox = new BoundingBox();
+		for (Fixture fixture : fixtures) {
+			// TODO
+		}
+		// TODO: Temporary solution, remove when above is working. 
+		return new Vector2(1, 1);
+	}
 	
 	@Override
 	public void halt(float distance) {
@@ -205,17 +216,6 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void restoreSpeed(){
 		body.setVelocity(forwardSpeed);
-	}
-
-	@Override
-	public void onTimeout(Timer source, float timeSinceLast) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Vector2 getDimensions() {
-		return body.getDimensions();
 	}
 	
 	

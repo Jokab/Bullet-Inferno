@@ -15,7 +15,7 @@ public interface Loadout {
 	 * 
 	 * @return The primary Weapon.
 	 */
-	public Weapon getPrimaryWeapon();
+	public Weapon getStandardWeapon();
 	
 	/**
 	 * Returns the heavy Weapon that is in this Loadout.

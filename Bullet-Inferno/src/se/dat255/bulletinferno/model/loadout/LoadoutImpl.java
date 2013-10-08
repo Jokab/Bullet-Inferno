@@ -17,7 +17,7 @@ public class LoadoutImpl implements Loadout {
 	}
 	
 	@Override
-	public Weapon getPrimaryWeapon() {
+	public Weapon getStandardWeapon() {
 		return this.primaryWeapon;
 	}
 
