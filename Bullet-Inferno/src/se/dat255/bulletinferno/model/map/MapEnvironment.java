@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model.map;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -32,5 +33,12 @@ public interface MapEnvironment {
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
 	public EntityEnvironment getEntityEnvironment();
+	
+	/**
+	 * Returns a list of all projectiles in the game
+	 * 
+	 * @return a list of projectiles currently in the game.
+	 */
+	public List<? extends Projectile> getProjectiles();
 	
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import se.dat255.bulletinferno.model.entity.EnemyType;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -111,8 +112,8 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	 */
 	@Override
 	public Slice createSlice(PhysicsEnvironment physics, EntityEnvironment entities,
-			Vector2 position) {
-		return new SliceImpl(physics, entities, this, entryHeight, exitHeight, position, width,
-				obstaclePlacements, enemyPlacements);
+			WeaponEnvironment weapons, Vector2 position) {
+		return new SliceImpl(physics, entities, weapons, this, entryHeight, exitHeight, position,
+				width, obstaclePlacements, enemyPlacements);
 	}
 }

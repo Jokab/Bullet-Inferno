@@ -42,7 +42,7 @@ public interface WeaponDescription extends ResourceIdentifier {
 	 * @deprecated
 	 * @return A new weapon instance.
 	 */
-	Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities);
+	Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons);
 
 	/**
 	 * Returns a new Weapon instance by using the data in the passed enum, which is tailored for use
@@ -51,6 +51,6 @@ public interface WeaponDescription extends ResourceIdentifier {
 	 * @deprecated
 	 * @return A new weapon instance.
 	 */
-	Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities);
+	Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons);
 
 }

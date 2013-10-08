@@ -4,6 +4,7 @@ import java.util.Random;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -22,6 +23,8 @@ public class SegmentFactory {
 	 *        the {@link PhysicsEnvironment} to run against.
 	 * @param entities
 	 *        the {@link EntityEnvironment} to run against.
+	 * @param weapons
+	 *        the {@link WeaponEnvironment} to run against.
 	 * @param position
 	 *        The world-coordinates the Segment will be placed at in the physics world.
 	 * @param sliceAmount
@@ -29,10 +32,10 @@ public class SegmentFactory {
 	 * @return A random Segment at <b>position</b> built of <b>sliceAmount</b> number of slices.
 	 */
 	public Segment generateRandomSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			Vector2 position, int sliceAmount) {
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount) {
 		SegmentDefinitionImpl[] values = SegmentDefinitionImpl.values();
-		return values[random.nextInt(values.length)].createSegment(physics, entities, position,
-				sliceAmount);
+		return values[random.nextInt(values.length)].createSegment(physics, entities, weapons,
+				position, sliceAmount);
 	}
 
 	/**
@@ -43,6 +46,8 @@ public class SegmentFactory {
 	 *        the {@link PhysicsEnvironment} to run against.
 	 * @param entities
 	 *        the {@link EntityEnvironment} to run against.
+	 * @param weapons
+	 *        the {@link WeaponEnvironment} to run against.
 	 * @param position
 	 *        The world-coordinates the Segment will be placed at in the physics world.
 	 * @param minSliceLength
@@ -53,8 +58,8 @@ public class SegmentFactory {
 	 *         <b>minSliceLength</b> and <b>maxSliceLength</b> number of slices.
 	 */
 	public Segment generateRandomSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			Vector2 position, int minSliceLength, int maxSliceLength) {
-		return generateRandomSegment(physics, entities, position,
+			WeaponEnvironment weapons, Vector2 position, int minSliceLength, int maxSliceLength) {
+		return generateRandomSegment(physics, entities, weapons, position,
 				random.nextInt(maxSliceLength - minSliceLength + 1) + minSliceLength);
 	}
 }

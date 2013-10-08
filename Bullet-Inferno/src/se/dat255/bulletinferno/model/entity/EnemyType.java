@@ -7,6 +7,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
@@ -48,10 +49,10 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleEnemy getEnemyShip(PhysicsEnvironment physics,
-			EntityEnvironment entities, Vector2 position) {
+			EntityEnvironment entities, WeaponEnvironment weaponEnvironment, Vector2 position) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, entities);
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, weaponEnvironment);
 		}
 
 		if (pattern == null) {
@@ -64,10 +65,10 @@ public enum EnemyType implements ResourceIdentifier {
 	}
 
 	public SimpleBoss getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			Vector2 position) {
+			WeaponEnvironment weaponEnvironment, Vector2 position) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, entities);
+			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, weaponEnvironment);
 		}
 
 		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth,

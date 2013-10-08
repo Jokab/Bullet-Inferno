@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.controller.Graphics;
-import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.util.Timer;
@@ -16,16 +16,16 @@ import com.badlogic.gdx.math.Vector2;
 public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	private final PhysicsEnvironment physics;
-	private final EntityEnvironment entities;
+	private final WeaponEnvironment weapons;
 	private static final int AMOUNT_BULLETS = 20;
 	private final Timer timer;
 	private final List<Vector2> bulletPositions = new ArrayList<Vector2>(AMOUNT_BULLETS);
 	private int counter = 0;
 	private PlayerShip playerShip;
 
-	public SpecialProjectileRain(PhysicsEnvironment physics, EntityEnvironment entities) {
+	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
-		this.entities = entities;
+		this.weapons = weapons;
 		this.timer = physics.getTimer();
 		timer.registerListener(this);
 	}
@@ -47,7 +47,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public void onTimeout(Timer source, float timeSinceLast) {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS -1);
 		if (counter < AMOUNT_BULLETS) {
-			ProjectileType.MISSILE.releaseProjectile(physics, entities,
+			ProjectileType.MISSILE.releaseProjectile(physics, weapons,
 					bulletPositions.get(index), new Vector2(), new Vector2(3, 0), playerShip);
 			counter++;
 		}

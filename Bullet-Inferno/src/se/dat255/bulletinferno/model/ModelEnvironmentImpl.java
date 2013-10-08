@@ -86,7 +86,7 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	 */
 	@Override
 	public List<? extends Projectile> getProjectiles() {
-		return map.getEntityEnvironment().getProjectiles();
+		return map.getProjectiles();
 	}
 
 }

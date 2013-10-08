@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.Teamable;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
@@ -22,7 +21,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private final PhysicsEnvironment physics;
 	
 	/** The EntityEnvironment instance injected at construction. */
-	private final EntityEnvironment entities;
+	private final WeaponEnvironment weapons;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -31,7 +30,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
-			entities.disposeProjectile(ProjectileImpl.this);
+			weapons.disposeProjectile(ProjectileImpl.this);
 		}
 	};
 
@@ -41,9 +40,9 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * @param game
 	 *        the game instance.
 	 */
-	public ProjectileImpl(PhysicsEnvironment physics, EntityEnvironment entities) {
+	public ProjectileImpl(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
-		this.entities = entities;
+		this.weapons = weapons;
 	}
 
 	/**
@@ -97,7 +96,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 			if (damage <= 0) {
 				// We won't need this projectile anymore, since it is useless and can't hurt
 				// anyone.
-				entities.disposeProjectile(this);
+				weapons.disposeProjectile(this);
 			}
 		}
 	}

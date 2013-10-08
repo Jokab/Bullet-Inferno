@@ -68,8 +68,8 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities) {
-		return new WeaponImpl(physics, entities, this, reloadingTime, projectileType, offset,
+	public Weapon getPlayerWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+		return new WeaponImpl(physics, weapons, this, reloadingTime, projectileType, offset,
 				projectileSpeed);
 	}
 
@@ -77,8 +77,8 @@ public enum WeaponData implements WeaponDescription {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, EntityEnvironment entities) {
-		return new EnemyWeaponImpl(physics, entities, this, reloadingTime, projectileType, offset,
+	public Weapon getEnemyWeaponForGame(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+		return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, offset,
 				projectileSpeed);
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,6 +28,9 @@ public class SegmentManagerImpl implements SegmentManager {
 	/** The EntityEnvironment instance injected at construction. */
 	private final EntityEnvironment entities;
 	
+	/** The WeaponEnvironment instance injected at construction. */
+	private final WeaponEnvironment weapons;
+	
 	/**
 	 * Currently active segments on the map. Removes from this list increments removedSegmentsCount
 	 * by one one for each removed segment. Removes are only allowed from the head (beginning) and
@@ -43,9 +47,11 @@ public class SegmentManagerImpl implements SegmentManager {
 	/**
 	 * Construct a new segment manager. Segments will be available after calling set
 	 */
-	public SegmentManagerImpl(PhysicsEnvironment physics, EntityEnvironment entities) {
+	public SegmentManagerImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weapons) {
 		this.physics = physics;
 		this.entities = entities;
+		this.weapons = weapons;
 	}
 
 	/**
@@ -136,7 +142,7 @@ public class SegmentManagerImpl implements SegmentManager {
 		
 		// Add new segments until the viewport is full of them (possibly adding none).
 		while(rightmostLeftBounds < xMax) {
-			Segment segment = segmentFactory.generateRandomSegment(physics, entities,
+			Segment segment = segmentFactory.generateRandomSegment(physics, entities, weapons,
 					new Vector2(rightmostLeftBounds, 0),
 					SLICES_PER_SEGMENT_MIN, SLICES_PER_SEGMENT_MAX);
 			

@@ -8,6 +8,7 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -71,14 +72,14 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 */
 	@Override
 	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			Vector2 position, int sliceAmount) {
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount) {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
 
 		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
-			slice = sliceType.createSlice(physics, entities, slicePosition.cpy());
+			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy());
 			slices.add(slice);
 			slicePosition.add(slice.getWidth(), 0);
 		}

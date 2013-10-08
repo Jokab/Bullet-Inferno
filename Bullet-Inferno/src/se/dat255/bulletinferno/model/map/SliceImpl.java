@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.model.entity.EnemyType;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,6 +28,9 @@ public class SliceImpl implements Slice, Collidable {
 	
 	/** The EntityEnvironment instance injected at construction. */
 	private final EntityEnvironment entities;
+	
+	/** The WeaponEnvironment instance injected at construction. */
+	private final WeaponEnvironment weapons;
 
 	/** The "type of" slice, used for providing an identifier to the ResourceIdentifier. */
 	private final SliceDefinitionImpl id;
@@ -56,13 +60,15 @@ public class SliceImpl implements Slice, Collidable {
 	 * @param enemyPlacement
 	 * 		  A list of mappings to where enemies should be place in the Slice
 	 */
-	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities, SliceDefinitionImpl id, float entryHeight, float exitHeight,
+	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
 			List<? extends EnemyPlacement> enemyPlacements) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.physics = physics;
 		this.entities = entities;
+		this.weapons = weapons;
 		this.id = id;
 		this.width = width;
 
@@ -83,11 +89,11 @@ public class SliceImpl implements Slice, Collidable {
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
 			if(enemyPlacement.getContent()==EnemyType.BOSS_ENEMY_SHIP){
-				entities.addEnemy(enemyPlacement.getContent().getBoss(physics, entities,
+				entities.addEnemy(enemyPlacement.getContent().getBoss(physics, entities, weapons,
 						enemyPosition));
 			}else{
 				entities.addEnemy(enemyPlacement.getContent().getEnemyShip(physics, entities,
-						enemyPosition));
+						weapons, enemyPosition));
 			}
 			
 		}
@@ -113,17 +119,18 @@ public class SliceImpl implements Slice, Collidable {
 	 * @param obstaclePlacements
 	 *        A list of mappings to where Obstacles should be placed in the Slice.
 	 */
-	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities, SliceDefinitionImpl id
-			, float entryHeight, float exitHeight, Vector2 position, float width, 
-			List<? extends ObstaclePlacement> obstaclePlacements) {
-		this(physics, entities, id, entryHeight, exitHeight, position, width, obstaclePlacements, 
-				Collections.<EnemyPlacement>emptyList());
+	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
+			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements) {
+		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
+				obstaclePlacements, Collections.<EnemyPlacement>emptyList());
 	}
 
 	
-	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities, SliceDefinitionImpl id,
-			float entryHeight, float exitHeight, Vector2 position, float width) {
-		this(physics, entities, id, entryHeight, exitHeight, position, width,
+	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
+			Vector2 position, float width) {
+		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
 				Collections.<ObstaclePlacement> emptyList());
 	}
 
