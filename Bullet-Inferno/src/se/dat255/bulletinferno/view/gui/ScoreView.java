@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
@@ -17,8 +16,6 @@ public class ScoreView implements Renderable {
 	
 	/** Reference to the resourcemanager */
 	private final ResourceManager resourceManager;
-	/** Reference to the ship */
-	private final PlayerShip playerShip;
 	
 	/** The texture that holds the numbers */
 	private final ManagedTexture numberImage;
@@ -26,16 +23,13 @@ public class ScoreView implements Renderable {
 	private final TextureRegion[] numberRegions;
 	/** The backing array of the score */
 	private final int[] scoreArray = new int[10];
-	/** Temporary check of the score, to not set it every iteration */
-	private int score;
 	
 	/**
 	 * Loads the initial images of the score view
 	 * @param resourceManager The manager that holds the assets
 	 */
-	public ScoreView(ResourceManager resourceManager, PlayerShip playerShip) {
+	public ScoreView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
-		this.playerShip = playerShip;
 		numberImage = resourceManager.getManagedTexture(TextureType.HUD_NUMBERS);
 		Texture t = numberImage.getTexture();
 		numberRegions = new TextureRegion[]{
@@ -54,19 +48,14 @@ public class ScoreView implements Renderable {
 	
 	/** Sets the backing array of the graphic score */
 	public void setScore(int score){
-		if(score != this.score){
-			this.score = score;
-			for(int i = 9; i >= 0; i--){
-				this.scoreArray[i] = score % 10;
-				score /= 10;
-			}
+		for(int i = 9; i >= 0; i--){
+			this.scoreArray[i] = score % 10;
+			score /= 10;
 		}
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		setScore(playerShip.getScore());
-		
 		// First run i until not 0, unless last number, then 0 is ok
 		for(int i = 0; i < 10; i++){
 			batch.draw(numberRegions[scoreArray[i]], i*0.4f-8, 4f, 0.5f, 0.5f);

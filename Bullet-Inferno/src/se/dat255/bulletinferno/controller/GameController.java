@@ -125,7 +125,9 @@ public class GameController extends SimpleController {
 
 	/** Initiates the HUD components */
 	private void setupHUD(PlayerShip playerShip) {
-		graphics.addRenderableHUD(new ScoreView(resourceManager, playerShip));
+		ScoreView scoreView = new ScoreView(resourceManager);
+		graphics.addRenderableHUD(scoreView);
+		ScoreController scoreController = new ScoreController(scoreView);
 	}
 
 	/** Initiates the pause components when the player starts a level */
