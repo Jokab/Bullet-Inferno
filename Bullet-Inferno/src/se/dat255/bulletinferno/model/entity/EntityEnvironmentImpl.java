@@ -4,15 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
-import se.dat255.bulletinferno.model.loadout.Loadout;
-import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -24,15 +18,11 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 	private final WeaponEnvironment weapons;
 	
 	public EntityEnvironmentImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponData weaponType) {
+			WeaponLoadout weaponLoadout) {
 		this.physics = physics;
 		this.weapons = weapons;
-		
-		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(physics, weapons),
-				null, 
-				new SpecialAbilityImpl(new SpecialProjectileRain(physics, weapons)), 
-				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1000000, loadout,
+
+		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1000000, weaponLoadout,
 				ShipType.PLAYER_DEFAULT);
 	}
 	

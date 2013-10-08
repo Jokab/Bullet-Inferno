@@ -15,12 +15,27 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class GameTouchController implements InputProcessor {
 
+	/**
+	 * Listener for special effect requests from the user.
+	 */
+	public interface SpecialAbilityListener {
+		
+		/**
+		 * A special effect was requested by the user (needs to be validated).
+		 */
+		public void specialAbilityRequested();
+		
+	}
+	
 	private final int UPKEY = 51;
 	private final int DOWNKEY = 47;
 	private final int FIREKEY = 62;
 
 	/** Describes the sense of the point device */
 	private static final float SENSE_SCALE = 1f;
+	
+	/** @see SpecialAbilityListener */
+	private SpecialAbilityListener specialAbilityListener = null;
 	
 	/**
 	 * The game camera. This is needed to unproject x/y values to the virtual
@@ -56,10 +71,7 @@ public class GameTouchController implements InputProcessor {
 			ship.fireWeapon();
 		}
 		if (keycode == Keys.G) {
-			SpecialEffect effect = ship.getLoadout().getSpecialAbility().getEffect();
-			if (effect != null) {
-				effect.activate(ship);
-			}
+			if(specialAbilityListener != null) specialAbilityListener.specialAbilityRequested();
 		}
 		return false;
 	}
@@ -143,6 +155,10 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+	
+	public void setSpecialAbilityListener(SpecialAbilityListener specialAbilityListener) {
+		this.specialAbilityListener = specialAbilityListener;
 	}
 
 }

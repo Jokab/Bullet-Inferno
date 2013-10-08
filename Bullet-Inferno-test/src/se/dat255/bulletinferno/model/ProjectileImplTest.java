@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
-import se.dat255.bulletinferno.model.loadout.Loadout;
-import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
@@ -20,10 +18,12 @@ import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.test.Common;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
@@ -89,7 +89,7 @@ public class ProjectileImplTest {
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		float initialDamage = projectile.getDamage();
 
-		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 
@@ -108,7 +108,7 @@ public class ProjectileImplTest {
 	@Test
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(mockGame);
-		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip sourceShip = new PlayerShipImpl(mockGame, new Vector2(), 10, loadout, ShipType.PLAYER_DEFAULT);
 		
 		// Set the ship as the source
@@ -179,7 +179,7 @@ public class ProjectileImplTest {
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
-		Loadout loadout = new LoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
+		WeaponLoadout loadout = new WeaponLoadoutImpl(WeaponData.STANDARD.getPlayerWeaponForGame(mockGame), null, null, null);
 		PlayerShip ship = new PlayerShipImpl(mockGame, new Vector2(), 10, 
 				loadout, ShipType.PLAYER_DEFAULT);
 

@@ -9,6 +9,8 @@ import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironmentImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,7 +29,14 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponData weaponType) {
 		this.physics = physics;
 		this.weapons = new WeaponEnvironmentImpl(physics);
-		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponType);
+		
+		// TODO: Replace null with heavy weapon and move upwards in call hierarchy somehow.
+		WeaponLoadout weaponLoadout = new WeaponLoadoutImpl(
+				weaponType.getPlayerWeaponForGame(physics, weapons),
+				null);
+		
+		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout);
+		
 		segmentManager = new SegmentManagerImpl(physics, entities, weapons);
 	}
 
@@ -63,6 +72,11 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	@Override
 	public List<? extends Projectile> getProjectiles() {
 		return weapons.getProjectiles();
+	}
+
+	@Override
+	public WeaponEnvironment getWeaponEnvironment() {
+		return weapons;
 	}
 
 }

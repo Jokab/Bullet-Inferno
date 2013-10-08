@@ -11,6 +11,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -87,6 +88,22 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	@Override
 	public List<? extends Projectile> getProjectiles() {
 		return map.getProjectiles();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PhysicsEnvironment getPhysicsEnvironment() {
+		return physics;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public WeaponEnvironment getWeaponEnvironment() {
+		return map.getWeaponEnvironment();
 	}
 
 }

@@ -1,8 +1,7 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.loadout.Loadout;
-import se.dat255.bulletinferno.model.loadout.PassiveAbility;
 import se.dat255.bulletinferno.model.weapon.Weapon;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 
@@ -45,17 +44,7 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 * 
 	 * @return The Loadout
 	 */
-	public Loadout getLoadout();
-
-	/**
-	 * Attaches a PassiveAbility to the PlayerShip. This ability is constantly active, and in
-	 * essence
-	 * it modifies some attribute (field) of the PlayerShip, or an attribute of one of its fields.
-	 * 
-	 * @param passiveAbility
-	 *        The PassiveAbility to be set.
-	 */
-	public void attachPassive(PassiveAbility passiveAbility);
+	public WeaponLoadout getLoadout();
 
 	/**
 	 * Sets the modifier for taking damage to the specified value.

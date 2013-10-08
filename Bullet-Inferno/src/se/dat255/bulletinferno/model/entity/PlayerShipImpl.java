@@ -1,9 +1,5 @@
 package se.dat255.bulletinferno.model.entity;
 
-import java.util.ArrayList;
-
-import se.dat255.bulletinferno.model.loadout.Loadout;
-import se.dat255.bulletinferno.model.loadout.PassiveAbility;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -12,13 +8,12 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.Weapon;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 public class PlayerShipImpl implements PlayerShip, Timerable {
@@ -37,7 +32,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	private float takeDamageModifier = 1; // default
 	private int health;
 	private final ShipType shipType;
-	private final Loadout loadout;
+	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
 	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
 	
@@ -65,11 +60,11 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	};
 	
 	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
-			final Vector2 position, int initialHealth, Loadout loadout, ShipType shipType) {
+			final Vector2 position, int initialHealth, WeaponLoadout loadout, ShipType shipType) {
 		this.physics = physics;
 		this.initialHealth = initialHealth;
 		this.health = initialHealth;
-		this.loadout = loadout;
+		this.weaponLoadout = loadout;
 		this.shipType = shipType;
 		
 		// Set up the halt timer used to stop the ship at a specified location
@@ -80,12 +75,6 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		this.weaponTimer = loadout.getStandardWeapon().getTimer();
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
-		
-
-		// TODO: should probably not apply this here
-		if (loadout.getPassiveAbility() != null) {
-			loadout.getPassiveAbility().getEffect().applyEffect(this);
-		}
 
 		Shape shape = PhysicsShapeFactory.getRectangularShape(1, 1);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
@@ -165,12 +154,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void fireWeapon() {
-		loadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
 	public Weapon getWeapon() {
-		return this.loadout.getStandardWeapon();
+		return this.weaponLoadout.getStandardWeapon();
 	}
 
 	@Override
@@ -184,18 +173,13 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	@Override
-	public void attachPassive(PassiveAbility passiveAbility) {
-		passiveAbility.getEffect().applyEffect(this);
-	}
-
-	@Override
 	public void dispose() {
 		body.setVelocity(new Vector2()); // we need to stop moving
 	}
 
 	@Override
-	public Loadout getLoadout() {
-		return this.loadout;
+	public WeaponLoadout getLoadout() {
+		return this.weaponLoadout;
 	}
 
 	@Override
@@ -219,7 +203,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public void onTimeout(Timer source, float timeSinceLast) {
 		
 		if(source==weaponTimer) {
-			loadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
+			weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
 		}
 		
 	}
