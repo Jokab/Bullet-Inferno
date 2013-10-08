@@ -14,6 +14,7 @@ import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
@@ -43,7 +44,7 @@ public class ProjectileImplTest {
 
 	@Before
 	public void initialize() {
-		physics = new PhysicsWorldImplSpy();
+		physics = new PhysicsWorldImplSpy(new SimpleMockTimer());
 		weapons = new WeaponMockEnvironment();
 		entities = new EntityMockEnvironment(physics, weapons);
 	}

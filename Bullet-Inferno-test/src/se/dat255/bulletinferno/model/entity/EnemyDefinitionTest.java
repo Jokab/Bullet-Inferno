@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.model.entity;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -17,7 +18,7 @@ import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
 
-public class EnemyTypesTest {
+public class EnemyDefinitionTest {
 
 	@BeforeClass
 	public static void beforeTests() {
@@ -44,5 +45,7 @@ public class EnemyTypesTest {
 		assertTrue(
 				"Position that was sent to the factory should be the same as the created enemy's position. ",
 				position.equals(enemy.getPosition()));
+		
+		assertFalse("Check for alias problems", position == enemy.getPosition());
 	}
 }
