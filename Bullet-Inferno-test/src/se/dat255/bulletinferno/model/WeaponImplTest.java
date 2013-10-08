@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.test.Common;

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.mock.SimplePlayerShipMock;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.test.Common;
 
 public class GameImplTest {

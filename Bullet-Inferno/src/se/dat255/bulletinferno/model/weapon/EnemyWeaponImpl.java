@@ -1,18 +1,25 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Teamable;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class EnemyWeaponImpl extends WeaponImpl {
 	
+	/** The PhysicsEnvironment instance injected at construction. */
+	private final PhysicsEnvironment physics;
 	
+	/** The WeaponEnvironment instance injected at construction. */
+	private final WeaponEnvironment weapons;
 
-	public EnemyWeaponImpl(WeaponDescription type, Game game, float reloadingTime, ProjectileType projectile,
-			Vector2 offset, float projectileSpeed) {
-		super(type, game, reloadingTime, projectile, offset, projectileSpeed);
+	public EnemyWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
+			WeaponDescription type, float reloadingTime, ProjectileType projectile, Vector2 offset,
+			float projectileSpeed) {
+		super(physics, weapons, type, reloadingTime, projectile, offset, projectileSpeed);
+		this.physics = physics;
+		this.weapons = weapons;
+		
 		if (getReloadingTime() == 0) {
 			throw new RuntimeException("Enemy reloading speed must not be 0.");
 		}
@@ -28,7 +35,7 @@ public class EnemyWeaponImpl extends WeaponImpl {
 
 		if (isLoaded()) {
 
-			getProjectileType().releaseProjectile(game, position, getOffset(),
+			getProjectileType().releaseProjectile(physics, weapons, position, getOffset(),
 					direction.scl(getProjectileVelocity()), source);
 			// Start count down
 			getTimer().restart();

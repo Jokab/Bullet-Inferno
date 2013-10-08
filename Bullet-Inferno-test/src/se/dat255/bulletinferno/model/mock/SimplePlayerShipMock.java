@@ -2,12 +2,12 @@ package se.dat255.bulletinferno.model.mock;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.Loadout;
-import se.dat255.bulletinferno.model.PassiveAbility;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Teamable;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.loadout.Loadout;
+import se.dat255.bulletinferno.model.loadout.PassiveAbility;
 import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 
 public class SimplePlayerShipMock implements PlayerShip {
 
@@ -97,12 +97,12 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public void setXSpeed(float speed) {
+	public void restoreSpeed() {
 		
 	}
 
 	@Override
-	public void restoreSpeed() {
+	public void halt(float distance) {
 		
 	}
 

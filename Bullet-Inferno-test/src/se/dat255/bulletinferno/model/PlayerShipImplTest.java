@@ -8,11 +8,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
+import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.loadout.Loadout;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
 import se.dat255.bulletinferno.model.mock.SimpleMockGame;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponDescription;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;

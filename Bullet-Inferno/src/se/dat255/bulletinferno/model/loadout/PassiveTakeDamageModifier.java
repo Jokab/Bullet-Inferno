@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model.loadout;
 
-import se.dat255.bulletinferno.model.PassiveEffect;
-import se.dat255.bulletinferno.model.PlayerShip;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
 
 public class PassiveTakeDamageModifier implements PassiveEffect {
 	// TODO: bad name

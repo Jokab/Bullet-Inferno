@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.physics.PhysicsWorldImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 
-public class PhysicsWorldImplSpy extends PhysicsWorldImpl {
+public class PhysicsWorldImplSpy extends PhysicsEnvironmentImpl {
 
 	public List<CreateBodyCall> createBodyCalls = new ArrayList<CreateBodyCall>();
 	public List<RemoveBodyCall> removeBodyCalls = new ArrayList<RemoveBodyCall>();
