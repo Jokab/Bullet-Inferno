@@ -9,7 +9,7 @@ public class ScoreController {
 	private final ScoreView scoreView;
 	
 	/** The score of the player */
-	int score;
+	private int score;
 	
 	/** Sets the required references */
 	public ScoreController(ScoreView scoreView) {

@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
@@ -16,9 +17,9 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	
 	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
 			EnemyType type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
-			int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+			int score, int credits, PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits, 
-				bodyDefinition);
+				bodyDefinition, scoreController);
 		this.weapons = weapons;
 		this.timers = new Timer[weapons.length];
 		for(int i=0; i<weapons.length; i++){
@@ -32,9 +33,9 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyType type, Vector2 position, Vector2 velocity, int initialHealth,
 			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition,
-			PhysicsMovementPattern pattern) {
+			PhysicsMovementPattern pattern, ScoreController scoreController) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition, pattern);
+				bodyDefinition, pattern, scoreController);
 		this.weapons = weapons;
 		this.timers = new Timer[weapons.length];
 		for(int i=0; i< weapons.length; i++){

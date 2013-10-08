@@ -93,18 +93,21 @@ public class GameController extends SimpleController {
 		graphics = new Graphics();
 		graphics.create();
 		
+		// Initialize the HUD
+		ScoreView scoreView = new ScoreView(resourceManager);
+		graphics.addRenderableHUD(scoreView);
+		ScoreController scoreController = new ScoreController(scoreView);
+		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponType);
+		models = new ModelEnvironmentImpl(weaponType, scoreController);
 		
 		PlayerShip ship = models.getPlayerShip();
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, 
 				Graphics.GAME_HEIGHT/2);
 		graphics.addRenderable(shipView);
-		
-		
 		
 		bgView = new BackgroundView(models, resourceManager, ship);
 		//graphics.addRenderable(bgView);
@@ -114,20 +117,11 @@ public class GameController extends SimpleController {
 
 		setupGUI();
 		
-		setupHUD(ship);
-
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
 
 		ProjectileView projectileView = new ProjectileView(models, resourceManager);
 		graphics.addRenderable(projectileView);
-	}
-
-	/** Initiates the HUD components */
-	private void setupHUD(PlayerShip playerShip) {
-		ScoreView scoreView = new ScoreView(resourceManager);
-		graphics.addRenderableHUD(scoreView);
-		ScoreController scoreController = new ScoreController(scoreView);
 	}
 
 	/** Initiates the pause components when the player starts a level */

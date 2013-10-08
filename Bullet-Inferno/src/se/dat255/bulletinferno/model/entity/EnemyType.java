@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -48,8 +49,8 @@ public enum EnemyType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public SimpleEnemy getEnemyShip(PhysicsEnvironment physics,
-			EntityEnvironment entities, WeaponEnvironment weaponEnvironment, Vector2 position) {
+	public SimpleEnemy getEnemyShip(PhysicsEnvironment physics, EntityEnvironment entities, 
+			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, weaponEnvironment);
@@ -57,22 +58,22 @@ public enum EnemyType implements ResourceIdentifier {
 
 		if (pattern == null) {
 			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity,
-					initialHealth, weapons, score, credits, bodyDefinition);
+					initialHealth, weapons, score, credits, bodyDefinition, scoreController);
 		} else {
 			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity,
-					initialHealth, weapons, score, credits, bodyDefinition, pattern);
+					initialHealth, weapons, score, credits, bodyDefinition, pattern, scoreController);
 		}
 	}
 
 	public SimpleBoss getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weaponEnvironment, Vector2 position) {
+			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, weaponEnvironment);
 		}
 
 		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth,
-				weapons, score, credits, bodyDefinition);
+				weapons, score, credits, bodyDefinition, scoreController);
 	}
 
 	public Vector2 getVelocity() {

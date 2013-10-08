@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.view.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,6 +24,8 @@ public class ScoreView implements Renderable {
 	private final TextureRegion[] numberRegions;
 	/** The backing array of the score */
 	private final int[] scoreArray = new int[10];
+	/** Number of active numbers to draw */
+	int activeNumbers = 1;
 	
 	/**
 	 * Loads the initial images of the score view
@@ -52,13 +55,20 @@ public class ScoreView implements Renderable {
 			this.scoreArray[i] = score % 10;
 			score /= 10;
 		}
+		for(activeNumbers = 0; activeNumbers < 10 && scoreArray[activeNumbers] == 0; activeNumbers++)
+			;
+		if(activeNumbers == 0)
+			activeNumbers++;
+		else
+			activeNumbers = 10 - activeNumbers;
+		Gdx.app.log("ScoreView.setScore(" + score + ")", "New activeNumbers: " + activeNumbers);
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
 		// First run i until not 0, unless last number, then 0 is ok
-		for(int i = 0; i < 10; i++){
-			batch.draw(numberRegions[scoreArray[i]], i*0.4f-8, 4f, 0.5f, 0.5f);
+		for(int i = 10 - activeNumbers, j = 0; i < 10; i++, j++){
+			batch.draw(numberRegions[scoreArray[i]], j*0.4f-8, 4f, 0.5f, 0.5f);
 		}
 	}
 
