@@ -29,7 +29,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Weapons
 		MISSILE_LAUNCHER("data/missileLauncher.png"),
 		DISORDERER("data/disorderer.png"),
-
+		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
+		DISORDERER_LARGE("data/disordererLarge.png"),
+		
 		// Projectiles
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
