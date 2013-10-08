@@ -48,6 +48,8 @@ public class LoadoutController extends SimpleController {
 	private WeaponButton selectionWeaponButton;
 	private ButtonStyle selectionButtonStyle;
 
+	private Label errorMessage;
+
 	/**
 	 * Main controller used for the loadout screen
 	 * 
@@ -80,6 +82,25 @@ public class LoadoutController extends SimpleController {
 
 		setupSelectionButtons();
 
+		setupErrorMessage();
+
+	}
+
+	private void setupErrorMessage() {
+		BitmapFont font = new BitmapFont();
+		font = skin.getFont("default");
+		font.scale(0.5f);
+		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
+		errorMessage = new Label("", labelStyle);
+
+		errorMessage.setPosition((VIRTUAL_WIDTH / 2) - 250, VIRTUAL_HEIGHT - 50);
+		stage.addActor(errorMessage);
+		errorMessage.setVisible(false);
+	}
+
+	private void showErrorMessage(String equipmentMissing) {
+		errorMessage.setText("You must select " + equipmentMissing + "!");
+		errorMessage.setVisible(true);
 	}
 
 	private void setupSelectionButtons() {
@@ -120,7 +141,12 @@ public class LoadoutController extends SimpleController {
 		startButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				masterController.startGame(WeaponData.MISSILE_LAUNCHER);
+				WeaponData weapon = selectionWeaponButton.getWeaponData();
+				if (weapon == null) {
+					showErrorMessage("primary weapon");
+				} else {
+					masterController.startGame(selectionWeaponButton.getWeaponData());
+				}
 			}
 		});
 	}
@@ -240,7 +266,7 @@ public class LoadoutController extends SimpleController {
 		}
 
 	}
-	
+
 	private void deselectOtherButtons(WeaponButton selected) {
 		for (WeaponButton wButton : primaryWeapons) {
 			if (wButton != selected && wButton.isSelected()) {
@@ -248,7 +274,7 @@ public class LoadoutController extends SimpleController {
 			}
 		}
 	}
-	
+
 	private void setWeaponSelectionToChosenWeapon(WeaponButton wButton) {
 		selectionWeaponButton.setWeaponData(wButton.getWeaponData());
 		Texture texture = resourceManager.getManagedTexture(
