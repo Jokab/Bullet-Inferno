@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.entity.Teamable;
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;

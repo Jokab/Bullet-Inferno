@@ -1,10 +1,10 @@
 package se.dat255.bulletinferno.model.mock;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.entity.Teamable;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
 

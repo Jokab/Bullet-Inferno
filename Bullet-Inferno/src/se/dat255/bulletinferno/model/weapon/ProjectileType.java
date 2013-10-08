@@ -1,11 +1,11 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.entity.Teamable;
 import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 

@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
-import se.dat255.bulletinferno.model.entity.Teamable;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.loadout.Loadout;
 import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
@@ -20,6 +19,7 @@ import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;

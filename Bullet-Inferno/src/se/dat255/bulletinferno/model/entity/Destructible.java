@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.util.Disposable;
 
 public interface Destructible extends Teamable, Disposable {
