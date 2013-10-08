@@ -27,7 +27,7 @@ public class MasterController extends com.badlogic.gdx.Game {
 	}
 	
 	/** Starts a new game and changes the screen to that game */
-	public void startGame(WeaponData weaponData){
+	public void startGame(WeaponData[] weaponData){
 		if(weaponData == null){
 			if(gameScreen == null) throw new RuntimeException(
 					"MyGame.startGame(null): Can't load weapon data since game screen is null.");

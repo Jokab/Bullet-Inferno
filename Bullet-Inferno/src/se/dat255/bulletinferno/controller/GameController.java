@@ -51,8 +51,9 @@ public class GameController extends SimpleController {
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
 	
-	/** Stores the weapon type for restarting the game */
-	private WeaponData weaponData;
+	/** Stores the weapons type for restarting the game */
+	private WeaponData weaponDataStandard;
+	private WeaponData weaponDataHeavy;
 
 	/** Reference to the master controller */
 	private MasterController myGame;
@@ -62,6 +63,8 @@ public class GameController extends SimpleController {
 	
 	private AssetManager assetManager = new AssetManager();
 	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
+
+
 
 	/**
 	 * Default controller to set required references
@@ -75,11 +78,12 @@ public class GameController extends SimpleController {
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponData weaponType) {
+	public void createNewGame(WeaponData[] weaponData) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
-		this.weaponData = weaponType;
+		this.weaponDataStandard = weaponData[0];
+		this.weaponDataHeavy = weaponData[1];
 		
 		// Original create new game code
 		resourceManager.load();
@@ -95,7 +99,7 @@ public class GameController extends SimpleController {
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponType);
+		models = new ModelEnvironmentImpl(weaponData);
 		
 		PlayerShip ship = models.getPlayerShip();
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
@@ -253,8 +257,8 @@ public class GameController extends SimpleController {
 	}
 	
 	/** Get method for weapon data set in create new game */
-	public WeaponData getWeaponData(){
-		return weaponData;
+	public WeaponData[] getWeaponData(){
+		return new WeaponData[] {weaponDataStandard, weaponDataHeavy};
 	}
 
 }

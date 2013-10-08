@@ -24,12 +24,14 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 	private final WeaponEnvironment weapons;
 	
 	public EntityEnvironmentImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponData weaponType) {
+			WeaponData[] weaponData) {
 		this.physics = physics;
 		this.weapons = weapons;
+		WeaponData[] weaponTypes = weaponData;
 		
-		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(physics, weapons),
-				null, 
+		
+		Loadout loadout = new LoadoutImpl(weaponTypes[0].getPlayerWeaponForGame(physics, weapons),
+				weaponTypes[1].getPlayerWeaponForGame(physics, weapons), 
 				new SpecialAbilityImpl(new SpecialProjectileRain(physics, weapons)), 
 				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
 		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1000000, loadout,

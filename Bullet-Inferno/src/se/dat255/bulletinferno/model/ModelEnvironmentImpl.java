@@ -19,9 +19,9 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	private final PhysicsEnvironment physics;
 	private final MapEnvironment map;
 
-	public ModelEnvironmentImpl(WeaponData weaponType) {
+	public ModelEnvironmentImpl(WeaponData[] weaponData) {
 		physics = new PhysicsEnvironmentImpl();
-		map = new MapEnvironmentImpl(physics, weaponType);
+		map = new MapEnvironmentImpl(physics, weaponData);
 	}
 
 	/**

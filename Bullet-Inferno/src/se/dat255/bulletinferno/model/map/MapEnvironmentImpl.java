@@ -24,10 +24,10 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 	
-	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponData weaponType) {
+	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponData[] weaponData) {
 		this.physics = physics;
 		this.weapons = new WeaponEnvironmentImpl(physics);
-		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponType);
+		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponData);
 		segmentManager = new SegmentManagerImpl(physics, entities, weapons);
 	}
 
