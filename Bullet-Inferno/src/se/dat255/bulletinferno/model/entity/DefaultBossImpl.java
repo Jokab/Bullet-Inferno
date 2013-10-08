@@ -44,13 +44,25 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 		this.timers = super.getWeaponTimers();
 
 	}
+	
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+			Vector2 position, Vector2 velocity, int initialHealth, 
+			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
+				bodyDefinition);
+
+		this.player = entities.getPlayerShip();
+		this.weapons = weapons;
+		this.timers = super.getWeaponTimers();
+
+	}
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		
 		if (getHealth() >= getInitialHealth() * 0.75f) {
 
-			fireSpread(source);
+			fireWide(source);
 
 		} else if(getHealth() < getInitialHealth() * 0.25) {
 			

@@ -20,7 +20,8 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		DEFAULT_ENEMY_SHIP("data/defaultEnemy.png"),
 		SPECIAL_ENEMY_SHIP("data/specialEnemy.png"),
-		BOSS_ENEMY_SHIP("data/boss.png"),
+		HARD_BOSS_SHIP("data/boss.png"),
+		EASY_BOSS_SHIP("data/bossEnemy.png"),
 
 		// Player ship
 		PLAYER_DEFAULT("data/playerShip.png"),

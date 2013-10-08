@@ -88,7 +88,7 @@ public class SliceImpl implements Slice, Collidable {
 		// Create enemies from the provided definitions
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
-			if(enemyPlacement.getContent()==EnemyType.BOSS_ENEMY_SHIP){
+			if(enemyPlacement.getContent()==EnemyType.EASY_BOSS_SHIP || enemyPlacement.getContent()==EnemyType.HARD_BOSS_SHIP){
 				entities.addEnemy(enemyPlacement.getContent().getBoss(physics, entities, weapons,
 						enemyPosition));
 			}else{

@@ -23,9 +23,13 @@ public enum EnemyType implements ResourceIdentifier {
 	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1), 5,
 			new WeaponData[] { WeaponData.FORCE_GUN }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
+			
+	EASY_BOSS_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 3), 15,
+			new WeaponData[] {WeaponData.BOSS_SPR, WeaponData.BOSS_AIM}, 10, 10,
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2))),
 
-	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 25,
-			new WeaponData[] { WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_GUN }, 10, 10,
+	HARD_BOSS_SHIP(new Vector2(0, 0), null, 25,
+			new WeaponData[] { WeaponData.BOSS_SPR, WeaponData.BOSS_SPR2, WeaponData.BOSS_SPR3, WeaponData.BOSS_AIM, WeaponData.BOSS_AIM2, WeaponData.BOSS_AIM3  }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)));
 
 	private final Vector2 velocity;
@@ -69,10 +73,13 @@ public enum EnemyType implements ResourceIdentifier {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, weaponEnvironment);
+		}if (pattern == null){
+			return new DefaultBossImpl(physics, entities, this, position, velocity, initialHealth,
+					weapons, score, credits, bodyDefinition);
+		}else {
+			return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth,
+					weapons, score, credits, bodyDefinition);
 		}
-
-		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth,
-				weapons, score, credits, bodyDefinition);
 	}
 
 	public Vector2 getVelocity() {
