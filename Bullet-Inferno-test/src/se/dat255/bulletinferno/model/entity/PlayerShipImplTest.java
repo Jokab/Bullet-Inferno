@@ -140,7 +140,7 @@ public class PlayerShipImplTest {
 	public void testFireWeapon() {
 		MockWeapon weapon = new MockWeapon(WeaponDefinitionImpl.MISSILE_LAUNCHER, 0, 
 				ProjectileType.RED_PROJECTILE, new Vector2(), 0);
-		WeaponLoadout loadout = new WeaponLoadoutImpl(weapon, null);
+		WeaponLoadout loadout = new WeaponLoadoutImpl(weapon, weapon);
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
 				new Vector2(), 100, loadout, ShipType.PLAYER_DEFAULT);
 		

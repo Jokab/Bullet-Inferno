@@ -30,7 +30,9 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	SNIPER_RIFLE(3f, ProjectileType.HIGH_VELOCITY_PROJECTILE, new Vector2(0.8f, -0.7f), 20f,
 			new Vector2(2f, 0.8f)),
 	BOSS_LAUNCHER(1f, ProjectileType.RED_PROJECTILE, new Vector2(0, 0), 5, new Vector2(1f, 0.5f)),
-	BOSS_GUN(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0, 0), 15f, new Vector2(1f, 0.5f));
+	BOSS_GUN(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0, 0), 15f, new Vector2(1f, 0.5f)), 
+	//TODO : the weapon below is just copy pasted from above, should probably changed
+	ENEMY_FORCE_GUN(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0, 0), 15f, new Vector2(1f, 0.5f));
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;
@@ -77,7 +79,7 @@ WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType, Vector2 of
 	 */
 	@Override
 	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		if(this == FORCE_GUN || this ==  BOSS_LAUNCHER || this ==  BOSS_GUN) {
+		if(this == FORCE_GUN || this ==  BOSS_LAUNCHER || this ==  BOSS_GUN || this == ENEMY_FORCE_GUN) {
 			return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
 					offset, projectileSpeed);
 		} else {
