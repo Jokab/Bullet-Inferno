@@ -87,7 +87,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			loadout.getPassiveAbility().getEffect().applyEffect(this);
 		}
 
-		Shape shape = PhysicsShapeFactory.getRectangularShape(1, 1);
+		Shape shape = PhysicsShapeFactory.getRectangularShape(2.4f, 1.5f);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 
 		body = physics.createBody(bodyDefinition, this, position);
@@ -165,7 +165,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void fireWeapon() {
-		loadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		loadout.getHeavyWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
