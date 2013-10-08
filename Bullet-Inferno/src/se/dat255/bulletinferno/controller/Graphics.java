@@ -39,6 +39,8 @@ public class Graphics {
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
 	/** List of all objects that are to be rendered as GUI elements */
 	private final Set<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
+	/** List of all objects that are to be rendered as HUD elements */
+	private final Set<Renderable> hudRenderables = new HashSet<Renderable>();
 
 	/**
 	 * Initializes all the required assets
@@ -96,6 +98,13 @@ public class Graphics {
 			renderable.render(worldBatch);
 		}
 		worldBatch.end();
+		
+		// Render HUD elements
+		guiBatch.begin();
+		for (Renderable renderable : hudRenderables) {
+			renderable.render(guiBatch);
+		}
+		guiBatch.end();
 
 		// TODO: Render GUI
 		guiBatch.begin();
@@ -123,6 +132,16 @@ public class Graphics {
 	/** Removes an object from being rendered in the GUI */
 	public void removeRenderableGUI(RenderableGUI renderable) {
 		guiRenderables.remove(renderable);
+	}
+	
+	/** Adds an object to be rendered in the HUD. Uses hashcode to separate */
+	public void addRenderableHUD(Renderable renderable) {
+		hudRenderables.add(renderable);
+	}
+
+	/** Removes an object from being rendered in the HUD */
+	public void removeRenderableHUD(RenderableGUI renderable) {
+		hudRenderables.remove(renderable);
 	}
 
 	/**

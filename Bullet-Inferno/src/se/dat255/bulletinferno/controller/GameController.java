@@ -14,6 +14,7 @@ import se.dat255.bulletinferno.view.RenderableGUI;
 import se.dat255.bulletinferno.view.gui.GameoverScreenView;
 import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
+import se.dat255.bulletinferno.view.gui.ScoreView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -112,12 +113,19 @@ public class GameController extends SimpleController {
 		processor = new GameTouchController(graphics, ship);
 
 		setupGUI();
+		
+		setupHUD(ship);
 
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
 
 		ProjectileView projectileView = new ProjectileView(models, resourceManager);
 		graphics.addRenderable(projectileView);
+	}
+
+	/** Initiates the HUD components */
+	private void setupHUD(PlayerShip playerShip) {
+		graphics.addRenderableHUD(new ScoreView(resourceManager, playerShip));
 	}
 
 	/** Initiates the pause components when the player starts a level */

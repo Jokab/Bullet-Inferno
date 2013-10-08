@@ -78,4 +78,15 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 * Used mainly for starting movement after defeating a boss
 	 */
 	public void restoreSpeed();
+	
+	/**
+	 * Adds score to the ship
+	 * @param score The score to add
+	 */
+	public void addScore(int score);
+	
+	/**
+	 * @return The current score of the ship
+	 */
+	public int getScore();
 }
