@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.entity.EnemyType;
+import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
@@ -88,14 +88,8 @@ public class SliceImpl implements Slice, Collidable {
 		// Create enemies from the provided definitions
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
-			if(enemyPlacement.getContent()==EnemyType.BOSS_ENEMY_SHIP){
-				entities.addEnemy(enemyPlacement.getContent().getBoss(physics, entities, weapons,
-						enemyPosition));
-			}else{
-				entities.addEnemy(enemyPlacement.getContent().getEnemyShip(physics, entities,
-						weapons, enemyPosition));
-			}
-			
+			entities.addEnemy(enemyPlacement.getContent().createEnemy(physics, entities, weapons, 
+					enemyPosition));
 		}
 	}
 	

@@ -10,35 +10,37 @@ import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
-
 import com.badlogic.gdx.math.Vector2;
 
-public enum EnemyType implements ResourceIdentifier {
+public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), 5, new WeaponData[] { WeaponData.DISORDERER }, 10,
+			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
-	// (movement pattern = null) => no movement patter
-	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), null, 5, new WeaponData[] { WeaponData.DISORDERER }, 10,
-			10,
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
+	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 5, new WeaponData[] { WeaponData.FORCE_GUN }, 10, 10,
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)),
+			new DisorderedMovementPattern(1, 1)),
 
-	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), new DisorderedMovementPattern(1, 1), 5,
-			new WeaponData[] { WeaponData.FORCE_GUN }, 10, 10,
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
-
-	BOSS_ENEMY_SHIP(new Vector2(0, 2), new DisorderedMovementPattern(1, 4), 25,
+	BOSS_ENEMY_SHIP(new Vector2(0, 2), 25,
 			new WeaponData[] { WeaponData.BOSS_LAUNCHER, WeaponData.BOSS_GUN }, 10, 10,
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)));
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
+			new DisorderedMovementPattern(1, 4));
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
 	private final int initialHealth;
-	private WeaponData weaponData;
 	private WeaponData[] weaponsData;
 	private final int score;
 	private final int credits;
 	private final PhysicsBodyDefinition bodyDefinition;
 
-	EnemyType(Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth,
-			WeaponData[] weaponsData, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponData[] weaponsData, int score,
+			int credits, PhysicsBodyDefinition bodyDefinition) {
+		this(velocity, initialHealth, weaponsData, score, credits, bodyDefinition, null);
+	}
+
+	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponData[] weaponsData, int score,
+			int credits,
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
 		this.velocity = velocity.cpy();
 		this.pattern = pattern;
 		this.initialHealth = initialHealth;
@@ -48,7 +50,7 @@ public enum EnemyType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public SimpleEnemy getEnemyShip(PhysicsEnvironment physics,
+	private DefaultEnemyShipImpl getEnemyShip(PhysicsEnvironment physics,
 			EntityEnvironment entities, WeaponEnvironment weaponEnvironment, Vector2 position) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
@@ -64,39 +66,29 @@ public enum EnemyType implements ResourceIdentifier {
 		}
 	}
 
-	public SimpleBoss getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
+	private DefaultBossImpl getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weaponEnvironment, Vector2 position) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].getEnemyWeaponForGame(physics, weaponEnvironment);
 		}
 
-		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth,
-				weapons, score, credits, bodyDefinition);
-	}
-
-	public Vector2 getVelocity() {
-		return velocity;
-	}
-
-	public int getInitialHealth() {
-		return initialHealth;
-	}
-
-	public WeaponData getWeaponData() {
-		return weaponData;
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public int getCredits() {
-		return credits;
+		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern,
+				initialHealth, weapons, score, credits, bodyDefinition);
 	}
 
 	@Override
 	public String getIdentifier() {
 		return this.name();
+	}
+
+	@Override
+	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weaponEnvironment, Vector2 position) {
+		if (this == BOSS_ENEMY_SHIP) {
+			return getBoss(physics, entities, weaponEnvironment, position);
+		} else {
+			return getEnemyShip(physics, entities, weaponEnvironment, position);
+		}
 	}
 }
