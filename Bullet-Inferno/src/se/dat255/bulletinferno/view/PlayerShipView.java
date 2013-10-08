@@ -39,7 +39,7 @@ public class PlayerShipView implements Renderable, Timerable {
 	public PlayerShipView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
 		this.resourceManager = resourceManager;
-		this.weapon = ship.getLoadout().getPrimaryWeapon();
+		this.weapon = ship.getLoadout().getStandardWeapon();
 
 		//this.timer = game.getTimer();
 		this.timer = new TimerImpl();

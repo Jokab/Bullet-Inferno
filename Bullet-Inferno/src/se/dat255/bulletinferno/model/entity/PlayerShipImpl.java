@@ -21,7 +21,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-public class PlayerShipImpl implements PlayerShip {
+public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	public enum ShipType implements Teamable {
 		PLAYER_DEFAULT;
@@ -40,6 +40,10 @@ public class PlayerShipImpl implements PlayerShip {
 	private final Loadout loadout;
 	private PhysicsBody body = null;
 	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
+	
+	/** A timer used to fire the standard weapon
+	 */
+	private Timer weaponTimer;
 	
 	/** A timer used to every update check our location relative to a specified halt distance */
 	private Timer haltTimer;
@@ -72,6 +76,10 @@ public class PlayerShipImpl implements PlayerShip {
 		this.haltTimer = physics.getTimer();
 		haltTimer.setTime(0);
 		haltTimer.setContinuous(true);
+		
+		this.weaponTimer = loadout.getStandardWeapon().getTimer();
+		weaponTimer.setContinuous(true);
+		weaponTimer.registerListener(this);
 		
 
 		// TODO: should probably not apply this here
@@ -157,12 +165,12 @@ public class PlayerShipImpl implements PlayerShip {
 
 	@Override
 	public void fireWeapon() {
-		loadout.getPrimaryWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		loadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
 	public Weapon getWeapon() {
-		return this.loadout.getPrimaryWeapon();
+		return this.loadout.getStandardWeapon();
 	}
 
 	@Override
@@ -194,17 +202,6 @@ public class PlayerShipImpl implements PlayerShip {
 	public boolean isDead() {
 		return this.health <= 0;
 	}
-
-	@Override
-	public Vector2 getDimensions() {
-		ArrayList<Fixture> fixtures = body.getBox2DBody().getFixtureList();
-		BoundingBox boundingBox = new BoundingBox();
-		for (Fixture fixture : fixtures) {
-			// TODO
-		}
-		// TODO: Temporary solution, remove when above is working. 
-		return new Vector2(1, 1);
-	}
 	
 	@Override
 	public void halt(float distance) {
@@ -216,6 +213,20 @@ public class PlayerShipImpl implements PlayerShip {
 	@Override
 	public void restoreSpeed(){
 		body.setVelocity(forwardSpeed);
+	}
+
+	@Override
+	public void onTimeout(Timer source, float timeSinceLast) {
+		
+		if(source==weaponTimer) {
+			loadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		}
+		
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		return body.getDimensions();
 	}
 	
 	
