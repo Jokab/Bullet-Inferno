@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.Enemy;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.MapEnvironment;
 import se.dat255.bulletinferno.model.map.MapEnvironmentImpl;
@@ -10,6 +11,7 @@ import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
@@ -21,10 +23,10 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	private final MapEnvironment map;
 
 
-	public ModelEnvironmentImpl(WeaponDefinitionImpl[] weaponType) {
+	public ModelEnvironmentImpl(WeaponDefinition[] weaponData) {
 
 		physics = new PhysicsEnvironmentImpl();
-		map = new MapEnvironmentImpl(physics, weaponType);
+		map = new MapEnvironmentImpl(physics, weaponData);
 	}
 
 	/**
@@ -106,6 +108,22 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	@Override
 	public WeaponEnvironment getWeaponEnvironment() {
 		return map.getWeaponEnvironment();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MapEnvironment getMapEnvironment() {
+		return map;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public EntityEnvironment getEntityEnvironment() {
+		return map.getEntityEnvironment();
 	}
 
 }

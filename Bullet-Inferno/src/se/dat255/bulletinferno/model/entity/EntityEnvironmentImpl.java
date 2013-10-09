@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
@@ -26,7 +28,7 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 		this.weapons = weapons;
 		WeaponLoadout loadout = weaponLoadout;
 		
-		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1000000, loadout, ShipType.PLAYER_DEFAULT);
+		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1, loadout, ShipType.PLAYER_DEFAULT);
 		this.physics = physics;
 		this.weapons = weapons;
 	}

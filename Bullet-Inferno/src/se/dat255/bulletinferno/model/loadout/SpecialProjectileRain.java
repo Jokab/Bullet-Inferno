@@ -32,10 +32,10 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	@Override
 	public void activate(PlayerShip playerShip) {
+		this.playerShip = playerShip;
 		timer.setTime(0.1f);
 		timer.setContinuous(true);
 		timer.start();
-		this.playerShip = playerShip;
 		for (int i = 1; i <= AMOUNT_BULLETS; i++) {
 			float xPos = playerShip.getPosition().x;
 			float yPos = (((Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS) * i + 1);

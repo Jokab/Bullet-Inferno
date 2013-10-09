@@ -9,9 +9,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class ResourceManagerImpl implements ResourceManager {
-
-	private static AssetManager manager;
-
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
 		FAST_SHIP("data/defaultEnemy.png"),
@@ -29,6 +26,8 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Weapons
 		MISSILE_LAUNCHER("data/missileLauncher.png"),
 		DISORDERER("data/disorderer.png"),
+		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
+		DISORDERER_LARGE("data/disordererLarge.png"),
 		SNIPER_RIFLE("data/sniperRifle.png"),
 
 		// Projectiles
@@ -41,7 +40,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Buttons
 		PAUSE_SCREEN("images/gui/screen_pause.png"),
 		BLUE_BACKGROUND("images/game/background.png"),
-		GAMEOVER_SCREEN("images/gui/screen_gameover.png");
+		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
+		PROJECTILE_RAIN_MENU_ICON("data/projectileRain.png"),
+		LOADOUT_START_BUTTON("data/startBtn.png");
 
 		private final String path;
 
@@ -49,7 +50,7 @@ public class ResourceManagerImpl implements ResourceManager {
 			this.path = path;
 		}
 
-		public Texture getTexture() {
+		private Texture getTexture(AssetManager manager) {
 			return manager.get(this.path, Texture.class);
 		}
 
@@ -62,21 +63,24 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> sounds = new HashMap<String, String>();
 	private static final Map<String, String> music = new HashMap<String, String>();
 	private final TextureType[] textureTypes;
-
-	public ResourceManagerImpl(AssetManager assetManager) {
-		this.manager = assetManager;
+	
+	private AssetManager manager;
+	
+	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
+		manager = new AssetManager();
+		Texture.setAssetManager(manager);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void load() {
+	public void startLoad(boolean blocking) {
 		loadTextures();
-		// TODO: Maybe add a loading screen/bar here of some sort? Maybe this is why my phone
-		// stutters (jakob)
-		manager.finishLoading();
-		// TODO: Add more loading here
+		
+		if(blocking) {
+			manager.finishLoading();
+		}
 	}
 
 	/**
@@ -95,6 +99,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		return manager.get(music.get(identifier), Music.class);
 	}
 
+	/**
+	 * Adds all our managed textures to the AssetManager's load queue.
+	 */
 	private void loadTextures() {
 		for (TextureType type : TextureType.values()) {
 			manager.load(type.path, Texture.class);
@@ -117,7 +124,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			return new ManagedTextureImpl(textureType.getTexture(), textureType);
+			return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
 		} else {
 			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
 		}
@@ -131,7 +138,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		for (TextureType textureType : textureTypes) {
 			if (identifier.getIdentifier().equals(textureType.name())) {
 				if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-					return new ManagedTextureImpl(textureType.getTexture(), textureType);
+					return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
 				} else {
 					throw new RuntimeException("Texture " + textureType.name() + " is not loaded."); 
 				}
@@ -141,4 +148,19 @@ public class ResourceManagerImpl implements ResourceManager {
 		throw new RuntimeException("Texture not found for that identifier.");
 	}
 	// TODO: Implement loading methods for sound and music
+
+	@Override
+	public boolean loadAsync() {
+		return manager.update();
+	}
+
+	@Override
+	public float getLoadProgress() {
+		return manager.getProgress();
+	}
+
+	@Override
+	public void dispose() {
+		manager.dispose();
+	}
 }

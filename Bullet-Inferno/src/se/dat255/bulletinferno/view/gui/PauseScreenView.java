@@ -17,7 +17,7 @@ public class PauseScreenView implements RenderableGUI {
 	private final GameController game;
 
 	public PauseScreenView(GameController game, ResourceManager resourceManager) {
-		Texture texture = TextureType.PAUSE_SCREEN.getTexture();
+		Texture texture = resourceManager.getManagedTexture(TextureType.PAUSE_SCREEN).getTexture();
 		sprite = new Sprite(texture);
 		size = new Vector2(16.0f, 9.0f);
 		sprite.setSize(size.x, size.y);

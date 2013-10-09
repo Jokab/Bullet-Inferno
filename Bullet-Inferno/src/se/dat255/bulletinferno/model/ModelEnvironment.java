@@ -3,7 +3,9 @@ package se.dat255.bulletinferno.model;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.Enemy;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.map.MapEnvironment;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
@@ -62,13 +64,23 @@ public interface ModelEnvironment extends Disposable {
 	public List<? extends Projectile> getProjectiles();
 	
 	/**
-	 * @return the games physics environment. Only for use by controllers!
+	 * @return the game's physics environment. Only for use by controllers!
 	 */
 	public PhysicsEnvironment getPhysicsEnvironment();
 	
 	/**
-	 * @return the games weapon environment. Only for use by controllers!
+	 * @return the game's weapon environment. Only for use by controllers!
 	 */
 	public WeaponEnvironment getWeaponEnvironment();
+	
+	/**
+	 * @return the game's map environment. Only for use by controllers!
+	 */
+	public MapEnvironment getMapEnvironment();
+
+	/**
+	 * @return the game's entity environment. Only for use by controllers!
+	 */
+	public EntityEnvironment getEntityEnvironment();
 
 }

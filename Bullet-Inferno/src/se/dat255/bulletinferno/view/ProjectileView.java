@@ -21,22 +21,16 @@ public class ProjectileView implements Renderable {
 	private final ModelEnvironment modelEnvironment;
 	private ResourceManager resourceManager;
 	private Texture texture;
-	private List<ManagedTexture> managedTextures;
 
 	public ProjectileView(ModelEnvironment modelEnvironment, ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 		this.modelEnvironment = modelEnvironment;
-		this.managedTextures = new ArrayList<ManagedTexture>();
-		
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
 		for (Projectile projectile : modelEnvironment.getProjectiles()) {
 			ManagedTexture mTexture = resourceManager.getManagedTexture(projectile.getType());
-			if(!managedTextures.contains(mTexture)) {
-				managedTextures.add(mTexture);
-			}
 			texture = mTexture.getTexture();
 			sprite = new Sprite(texture);
 			
@@ -50,9 +44,6 @@ public class ProjectileView implements Renderable {
 
 	@Override
 	public void dispose() {
-		for(ManagedTexture mTexture : managedTextures) {
-			mTexture.dispose(resourceManager);
-		}
 	}
 
 }

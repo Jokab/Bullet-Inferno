@@ -8,9 +8,9 @@ import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.PlayerShipView;
@@ -21,7 +21,6 @@ import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -42,7 +41,7 @@ public class GameController extends SimpleController {
 
 	/** The current session instance of the game model. */
 	private ModelEnvironment models;
-	
+
 	/** If the player died; Should not update the game */
 	private boolean gameOver;
 
@@ -56,39 +55,39 @@ public class GameController extends SimpleController {
 	private Vector2 viewportDimensions;
 	
 	/** Stores the weapons type for restarting the game */
-	private WeaponDefinitionImpl[] weaponData;
+	private WeaponDefinition[] weaponData;
 
 	/** Reference to the master controller */
 	private MasterController myGame;
-	
+
 	/** Reference to the background view */
 	static BackgroundView bgView;
-	
-	private AssetManager assetManager = new AssetManager();
-	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
+
+	private final ResourceManager resourceManager;
 
 
 
 	/**
 	 * Default controller to set required references
-	 * @param myGame The master controller that creates this controller
+	 * 
+	 * @param myGame
+	 *        The master controller that creates this controller
+	 * @param resourceManager2
 	 */
-	public GameController(MasterController myGame) {
+	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
+		this.resourceManager = resourceManager;
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponDefinitionImpl[] weaponType) {
+	public void createNewGame(WeaponDefinition[] weaponData2) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
-		this.weaponData = weaponType;
-		
-		// Original create new game code
-		resourceManager.load();
+		this.weaponData = weaponData2;
 
 		if (graphics != null) {
 			graphics.dispose();
@@ -97,14 +96,11 @@ public class GameController extends SimpleController {
 
 		graphics = new Graphics();
 		graphics.create();
-		
-		if(models != null) {
+
+		if (models != null) {
 			models.dispose();
 		}
-
-		models = new ModelEnvironmentImpl(weaponData);
-		// PhysicsEnvironment physics = models.getPhysicsEnvironment();
-		// WeaponEnvironment weapons = models.getWeaponEnvironment();
+		models = new ModelEnvironmentImpl(weaponData2);
 
 		PlayerShip ship = models.getPlayerShip();
 		
@@ -115,12 +111,12 @@ public class GameController extends SimpleController {
 						models.getPhysicsEnvironment(), models.getWeaponEnvironment()));
 		
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
-		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, 
-				Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
+				Graphics.GAME_HEIGHT / 2);
 		graphics.addRenderable(shipView);
-		
+
 		bgView = new BackgroundView(models, resourceManager, ship);
-		//graphics.addRenderable(bgView);
+		// graphics.addRenderable(bgView);
 
 		// Set up input handler
 		touchController = new GameTouchController(graphics, ship);
@@ -147,7 +143,7 @@ public class GameController extends SimpleController {
 		pauseScreenView = new PauseScreenView(this, resourceManager);
 		graphics.addRenderableGUI(pauseIconView);
 	}
-	
+
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
@@ -198,7 +194,7 @@ public class GameController extends SimpleController {
 		graphics.removeRenderableGUI(pauseScreenView);
 		graphics.addRenderableGUI(pauseIconView);
 	}
-	
+
 	@Override
 	public void show() {
 		super.show();
@@ -219,15 +215,15 @@ public class GameController extends SimpleController {
 	 */
 	@Override
 	public void render(float delta) {
-		graphics.setNewCameraPos(models.getPlayerShip().getPosition().x - 
-									models.getPlayerShip().getDimensions().x/2 + 
-									Graphics.GAME_WIDTH/2, 
-								Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(models.getPlayerShip().getPosition().x -
+				models.getPlayerShip().getDimensions().x / 2 +
+				Graphics.GAME_WIDTH / 2,
+				Graphics.GAME_HEIGHT / 2);
 
 		// Render the game
 		graphics.render();
-		
-		if(!gameOver && models.getPlayerShip().isDead()){
+
+		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();
 		}
 
@@ -248,6 +244,7 @@ public class GameController extends SimpleController {
 
 			models.update(delta);
 		}
+
 	}
 
 	@Override
@@ -268,14 +265,14 @@ public class GameController extends SimpleController {
 
 		models.setViewport(viewportPosition, viewportDimensions);
 	}
-	
-	public static BackgroundView getBgView(){
+
+	public static BackgroundView getBgView() {
 		return bgView;
 	}
-	
+
 	/** Get method for weapon data set in create new game */
 
-	public WeaponDefinitionImpl[] getWeaponData(){
+	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
 	}
 
