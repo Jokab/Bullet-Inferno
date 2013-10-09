@@ -204,7 +204,7 @@ public class LoadoutController extends SimpleController {
 		this.table = new Table();
 
 		// Add table to stage
-		table.debug();
+//		table.debug();
 		table.setPosition(1100, 450);
 		table.setSize(100, 40);
 

@@ -117,10 +117,6 @@ public class GameController extends SimpleController {
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
 		final SpecialAbility specialAbility = special.getSpecialAbility(models);
 		
-		System.out.println(weaponData[0].getIdentifier());
-		System.out.println(passive.getIdentifier());
-		System.out.println(special.getIdentifier());
-		
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
 				Graphics.GAME_HEIGHT / 2);
