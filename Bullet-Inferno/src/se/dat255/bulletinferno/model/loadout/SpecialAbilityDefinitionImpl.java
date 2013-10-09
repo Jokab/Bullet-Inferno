@@ -1,12 +1,8 @@
-package se.dat255.bulletinferno.controller;
+package se.dat255.bulletinferno.model.loadout;
 
 import se.dat255.bulletinferno.model.ModelEnvironment;
-import se.dat255.bulletinferno.model.loadout.SpecialAbility;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialDamageAll;
-import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 
-public enum SpecialAbilityType {
+public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 
 	DAMAGE_ALL_ENEMIES(new SpecialInitializer() {
 		@Override
@@ -22,18 +18,24 @@ public enum SpecialAbilityType {
 	});
 	
 	private ModelEnvironment game;
-	private final SpecialAbility specialAbility;
+	private final SpecialInitializer specialInitializer;
 
-	SpecialAbilityType(SpecialInitializer initializer) {
-		this.specialAbility = initializer.initialize(game);
+	SpecialAbilityDefinitionImpl(SpecialInitializer initializer) {
+		this.specialInitializer = initializer;
 	}
 
-	public SpecialAbility getSpecialAbility() {
-		return specialAbility;
+	@Override
+	public SpecialAbility getSpecialAbility(ModelEnvironment game) {
+		return specialInitializer.initialize(game);
 	}
 	
 	public interface SpecialInitializer {
 		public SpecialAbility initialize(ModelEnvironment game);
+	}
+
+	@Override
+	public String getIdentifier() {
+		return this.name();
 	}
 	
 }

@@ -3,7 +3,11 @@ package se.dat255.bulletinferno.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.SpecialButton;
+import se.dat255.bulletinferno.util.SpecialButtonsView;
+import se.dat255.bulletinferno.util.WeaponButtonsView;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
@@ -29,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LoadoutController extends SimpleController {
@@ -40,18 +45,15 @@ public class LoadoutController extends SimpleController {
 	private final Stage stage;
 	private final Skin skin;
 
+	private final MasterController masterController;
+	private final GameController gameController;
 	private final ResourceManager resourceManager;
 
-	private final MasterController masterController;
-
-	private final List<WeaponButton> primaryWeapons = new ArrayList<WeaponButton>();
-
-	private WeaponButton selectionWeaponButton;
-	private ButtonStyle selectionButtonStyle;
-
 	private Label errorMessage;
+	private Table table;
 
-	private final GameController gameController;
+	private WeaponButtonsView weaponButtonsView;
+	private SpecialButtonsView specialButtonsView;
 
 	/**
 	 * Main controller used for the loadout screen
@@ -78,131 +80,18 @@ public class LoadoutController extends SimpleController {
 
 		// Add default font as default
 		skin.add("default", new BitmapFont());
-
+		setupTable();
+		weaponButtonsView = new WeaponButtonsView(stage, skin, table, resourceManager);
+		specialButtonsView = new SpecialButtonsView(stage, skin, table, resourceManager);
+		
 		// Set up the start button and add its listener
 		setupStartButton();
 
 		// Set up and store buttons in list
-		setupPrimaryWeaponButtons();
-
+//		weaponButtonsView.setupPrimaryWeaponButtons();
+		specialButtonsView.setupButtons();
 		setupSelectionButtons();
-
 		setupErrorMessage();
-
-	}
-
-	private void setupErrorMessage() {
-		BitmapFont font = new BitmapFont();
-		font = skin.getFont("default");
-		font.scale(0.5f);
-		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
-		errorMessage = new Label("", labelStyle);
-
-		errorMessage.setPosition((VIRTUAL_WIDTH / 2) - 250, VIRTUAL_HEIGHT - 50);
-		stage.addActor(errorMessage);
-		errorMessage.setVisible(false);
-	}
-
-	private void showErrorMessage(String equipmentMissing) {
-		errorMessage.setText("You must select " + equipmentMissing + "!");
-		errorMessage.setVisible(true);
-	}
-
-	private void setupSelectionButtons() {
-		Texture texture = new Texture("data/frame.png");
-		TextureRegion region = new TextureRegion(texture);
-
-		selectionButtonStyle = new ImageButtonStyle();
-		selectionButtonStyle.up = new TextureRegionDrawable(region);
-		selectionButtonStyle.over = skin.newDrawable(selectionButtonStyle.up, Color.LIGHT_GRAY);
-
-		selectionWeaponButton = new WeaponButton(new Button(selectionButtonStyle), null,
-				resourceManager);
-
-		selectionWeaponButton.getButton().setPosition(100, 100);
-		selectionWeaponButton.getButton().setSize(200, 120);
-
-		selectionWeaponButton.getButton().addListener(new SelectionClickedListener());
-
-		stage.addActor(selectionWeaponButton.getButton());
-
-	}
-
-	private void setupStartButton() {
-		Texture startButtonTexture = resourceManager.getManagedTexture(
-				TextureType.LOADOUT_START_BUTTON).getTexture();
-		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
-
-		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
-		startButtonStyle.up = new TextureRegionDrawable(startButtonRegion);
-		startButtonStyle.over = skin.newDrawable(startButtonStyle.up, Color.LIGHT_GRAY);
-
-		ImageButton startButton = new ImageButton(startButtonStyle);
-
-		startButton.setPosition(1040, 20);
-		startButton.setSize(230, 65);
-		stage.addActor(startButton);
-
-		// Start button click listener
-		startButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				WeaponDefinition weapon = selectionWeaponButton.getWeaponData();
-				if (weapon == null) {
-					showErrorMessage("primary weapon");
-				} else {
-					startGame(gameController, new WeaponDefinition[]{selectionWeaponButton.getWeaponData()});
-				}
-			}
-		});
-	}
-
-	private void setupPrimaryWeaponButtons() {
-		for (int i = 0; i < 5; i++) {
-			// TODO: the line below needs changing to take into account all weapons
-			WeaponDefinition weaponData = WeaponDefinitionImpl.DISORDERER;
-			Texture texture = resourceManager.getManagedTexture(weaponData).getTexture();
-			TextureRegion region = new TextureRegion(texture);
-			ButtonStyle buttonStyle = new ButtonStyle();
-			buttonStyle.up = new TextureRegionDrawable(region);
-			// buttonStyle.over = skin.newDrawable(buttonStyle.up, Color.LIGHT_GRAY);
-
-			WeaponButton weaponButton = new WeaponButton(new Button(buttonStyle), weaponData,
-					resourceManager);
-			primaryWeapons.add(weaponButton);
-
-			weaponButton.getButton().addListener(new ClickedListener());
-
-		}
-
-		// Set up the table to add these buttons to
-		setupPrimaryWeaponsTable();
-	}
-
-	private void setupPrimaryWeaponsTable() {
-		// Set up the table for the primary weapons
-		Table primaryWeaponTable = new Table();
-
-		// Add table to stage
-		primaryWeaponTable.debug();
-		primaryWeaponTable.setPosition(1100, 450);
-		primaryWeaponTable.setSize(100, 40);
-
-		BitmapFont font = new BitmapFont();
-		font = skin.getFont("default");
-		font.scale(0.4f);
-		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
-		Label label = new Label("Primary Weapon", labelStyle);
-
-		stage.addActor(primaryWeaponTable);
-
-		label.setPosition(primaryWeaponTable.getX() - 45, primaryWeaponTable.getY() + 210);
-		stage.addActor(label);
-
-		for (WeaponButton button : primaryWeapons) {
-			primaryWeaponTable.add(button.getButton()).padBottom(20).height(50).width(100).row();
-		}
 
 	}
 
@@ -235,74 +124,111 @@ public class LoadoutController extends SimpleController {
 		skin.dispose();
 	}
 
-	private class SelectionClickedListener extends ChangeListener {
+	private void setupSelectionButtons() {
+		Texture texture = new Texture("data/frame.png");
+		TextureRegion region = new TextureRegion(texture);
 
-		@Override
-		public void changed(ChangeEvent event, Actor actor) {
-			Button button = selectionWeaponButton.getButton();
-			if (button == ((Button) actor)) {
-				setWeaponSelectionToNothing();
-				deselectOtherButtons(null);
-			}
-		}
+		// Weapon button
+		ButtonStyle weaponSelectionStyle = new ImageButtonStyle();
+		weaponSelectionStyle.up = new TextureRegionDrawable(region);
+		weaponSelectionStyle.over = skin.newDrawable(weaponSelectionStyle.up, Color.LIGHT_GRAY);
 
+		WeaponButton selectionWeaponButton = new WeaponButton(new Button(weaponSelectionStyle),
+				null,
+				resourceManager);
+		selectionWeaponButton.getButton().setPosition(100, 100);
+		selectionWeaponButton.getButton().setSize(200, 120);
+		selectionWeaponButton.getButton().addListener(
+				weaponButtonsView.new SelectionClickedListener());
+		weaponButtonsView.setSelectionButton(selectionWeaponButton);
+
+		// Special button
+		ButtonStyle specialSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
+		Button specialButton = new Button(specialSelectionStyle);
+		specialButton.setPosition(200, 300);
+		specialButton.setSize(200, 120);
+		SpecialButton selectionSpecialButton = new SpecialButton(specialButton, null,
+				resourceManager);
+		specialButtonsView.setSelectionButton(selectionSpecialButton);
+		selectionSpecialButton.getButton().addListener(
+				specialButtonsView.new SelectionClickedListener());
+
+		stage.addActor(selectionWeaponButton.getButton());
+		stage.addActor(specialButton);
 	}
 
-	private class ClickedListener extends ChangeListener {
-		@Override
-		public void changed(ChangeEvent event, Actor actor) {
-			WeaponButton selected = null;
-			for (WeaponButton wButton : primaryWeapons) {
-				Button button = wButton.getButton();
-				if (button == ((Button) actor)) {
-					selected = wButton;
-					if (!wButton.isSelected()) {
-						wButton.toggleSelected(skin);
-						setWeaponSelectionToChosenWeapon(wButton);
-					} else {
-						wButton.toggleSelected(skin);
-						setWeaponSelectionToNothing();
-					}
+	private void setupStartButton() {
+		Texture startButtonTexture = resourceManager.getManagedTexture(
+				TextureType.LOADOUT_START_BUTTON).getTexture();
+		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
+
+		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
+		startButtonStyle.up = new TextureRegionDrawable(startButtonRegion);
+		startButtonStyle.over = skin.newDrawable(startButtonStyle.up, Color.LIGHT_GRAY);
+
+		ImageButton startButton = new ImageButton(startButtonStyle);
+
+		startButton.setPosition(1040, 20);
+		startButton.setSize(230, 65);
+		stage.addActor(startButton);
+
+		// Start button click listener
+		startButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				WeaponDefinition weapon = weaponButtonsView.getSelectionWeaponButton().getData();
+				if (weapon == null) {
+					showErrorMessage("primary weapon");
+				} else {
+					startGame(gameController,
+							new WeaponDefinition[] { weaponButtonsView.getSelectionWeaponButton()
+									.getData() });
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
-
-			deselectOtherButtons(selected);
-		}
-
+		});
 	}
 
-	private void deselectOtherButtons(WeaponButton selected) {
-		for (WeaponButton wButton : primaryWeapons) {
-			if (wButton != selected && wButton.isSelected()) {
-				wButton.toggleSelected(skin);
-			}
-		}
+	private void setupTable() {
+		// Set up the table for the primary weapons
+		this.table = new Table();
+
+		// Add table to stage
+		table.debug();
+		table.setPosition(1100, 450);
+		table.setSize(100, 40);
+
+		BitmapFont font = new BitmapFont();
+		font = skin.getFont("default");
+		font.scale(0.4f);
+		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
+		Label label = new Label("Primary Weapon", labelStyle);
+
+		label.setPosition(table.getX() - 45, table.getY() + 210);
+
+		stage.addActor(table);
+		stage.addActor(label);
 	}
 
-	private void setWeaponSelectionToChosenWeapon(WeaponButton wButton) {
-		selectionWeaponButton.setWeaponData(wButton.getWeaponData());
-		Texture texture = resourceManager.getManagedTexture(
-				selectionWeaponButton.getWeaponData()).getTexture();
-		selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(texture));
-		selectionButtonStyle.over = selectionButtonStyle.up;
-		selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
-	}
+	private void setupErrorMessage() {
+		BitmapFont font = new BitmapFont();
+		font = skin.getFont("default");
+		font.scale(0.5f);
+		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
+		errorMessage = new Label("", labelStyle);
 
-	private void setWeaponSelectionToNothing() {
-		selectionButtonStyle.up = new TextureRegionDrawable(new TextureRegion(
-				new Texture("data/frame.png")));
-		selectionButtonStyle.over = selectionButtonStyle.up;
-		selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
-		selectionWeaponButton.setWeaponData(null);
+		errorMessage.setPosition((VIRTUAL_WIDTH / 2) - 250, VIRTUAL_HEIGHT - 50);
+		stage.addActor(errorMessage);
+		errorMessage.setVisible(false);
 	}
 
 	public void startGame(GameController gameScreen, WeaponDefinition[] weapons) {
-		// if(gameScreen != null) {
-		// gameScreen.dispose();
-		// }
 		gameScreen = new GameController(masterController, resourceManager);
 		masterController.startGame(gameScreen, weapons, true);
+	}
+
+	private void showErrorMessage(String equipmentMissing) {
+		errorMessage.setText("You must select " + equipmentMissing + "!");
+		errorMessage.setVisible(true);
 	}
 }
