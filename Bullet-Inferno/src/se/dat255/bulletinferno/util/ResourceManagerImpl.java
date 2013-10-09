@@ -66,6 +66,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	
 	private AssetManager manager;
 	
+	private Map<TextureType, ManagedTexture> cachedManagedTextures = new HashMap<TextureType, ManagedTexture>();
+	
 	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
 		manager = new AssetManager();
@@ -124,7 +126,11 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
+			if(!cachedManagedTextures.containsKey(textureType)){
+				cachedManagedTextures.put(textureType, 
+						new ManagedTextureImpl(textureType.getTexture(manager), textureType));
+			}
+			return cachedManagedTextures.get(textureType);
 		} else {
 			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
 		}
@@ -137,11 +143,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	public ManagedTexture getManagedTexture(ResourceIdentifier identifier) {
 		for (TextureType textureType : textureTypes) {
 			if (identifier.getIdentifier().equals(textureType.name())) {
-				if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-					return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
-				} else {
-					throw new RuntimeException("Texture " + textureType.name() + " is not loaded."); 
-				}
+				return getManagedTexture(textureType);
 			}
 		}
 
