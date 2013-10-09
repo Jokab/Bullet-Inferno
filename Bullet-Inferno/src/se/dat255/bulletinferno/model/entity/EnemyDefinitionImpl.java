@@ -16,10 +16,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
-	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), 5, new WeaponDefinitionImpl[] { WeaponDefinitionImpl.DISORDERER }, 10,
+	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), 5, new WeaponDefinitionImpl[] { WeaponDefinitionImpl.ENEMY_DISORDERER }, 10,
 			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
-	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 5, new WeaponDefinitionImpl[] { WeaponDefinitionImpl.FORCE_GUN }, 10, 10,
+	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 5, new WeaponDefinitionImpl[] { WeaponDefinitionImpl.ENEMY_FORCE_GUN }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)),
 			new DisorderedMovementPattern(1, 1)),
 
