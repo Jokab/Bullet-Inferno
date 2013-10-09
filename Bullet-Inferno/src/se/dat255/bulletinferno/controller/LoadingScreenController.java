@@ -143,7 +143,6 @@ public class LoadingScreenController extends SimpleController {
 	}
 
 	public void setFinishedLoadingEventListener(FinishedLoadingEventListener finishListener) {
-		System.out.println(finishListener);
 		this.finishListener = finishListener;
 	}
 
