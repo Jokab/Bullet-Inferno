@@ -21,7 +21,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int credits;
 	private final EnemyDefinitionImpl type;
 
-	private PhysicsBody body = null;
+	protected PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
 	protected Vector2 velocity;
@@ -65,7 +65,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition);
-		physics.attachMovementPattern(pattern.copy(), body);
+		if(pattern != null){
+			physics.attachMovementPattern(pattern.copy(), body);
+		}
 
 	}
 
@@ -188,6 +190,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			flaggedForRemoval = true;
 		}
 	}
+	
+	
 
 	@Override
 	public Vector2 getDimensions() {

@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -14,6 +15,7 @@ import se.dat255.bulletinferno.util.ResourceIdentifier;
 import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
+
 	DEFAULT_ENEMY_SHIP(new Vector2(-3, 0), 5, new WeaponDefinitionImpl[] { WeaponDefinitionImpl.DISORDERER }, 10,
 			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
@@ -21,8 +23,13 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)),
 			new DisorderedMovementPattern(1, 1)),
 
-	BOSS_ENEMY_SHIP(new Vector2(0, 2), 25,
-			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.BOSS_LAUNCHER, WeaponDefinitionImpl.BOSS_GUN }, 10, 10,
+	EASY_BOSS_SHIP(new Vector2(0, 2), 10,
+			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.BOSS_SPR, WeaponDefinitionImpl.BOSS_AIM }, 10, 10,
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
+			new DisorderedMovementPattern(1, 4)),
+			
+	HARD_BOSS_SHIP(new Vector2(0, 2), 25,
+			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.BOSS_SPR, WeaponDefinitionImpl.BOSS_SPR2, WeaponDefinitionImpl.BOSS_SPR3, WeaponDefinitionImpl.BOSS_AIM, WeaponDefinitionImpl.BOSS_AIM2, WeaponDefinitionImpl.BOSS_AIM3 }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
 			new DisorderedMovementPattern(1, 4));
 
@@ -73,7 +80,6 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].createWeapon(physics, weaponEnvironment);
 		}
-
 		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern,
 				initialHealth, weapons, score, credits, bodyDefinition);
 	}
@@ -86,7 +92,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 	@Override
 	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weaponEnvironment, Vector2 position) {
-		if (this == BOSS_ENEMY_SHIP) {
+		if (this == EASY_BOSS_SHIP || this == HARD_BOSS_SHIP) {
 			return getBoss(physics, entities, weaponEnvironment, position);
 		} else {
 			return getEnemyShip(physics, entities, weaponEnvironment, position);

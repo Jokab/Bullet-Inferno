@@ -24,7 +24,7 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 		this.weapons = weapons;
 		WeaponLoadout loadout = weaponLoadout;
 		
-		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1, loadout, ShipType.PLAYER_DEFAULT);
+		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 10, loadout, ShipType.PLAYER_DEFAULT);
 		this.physics = physics;
 		this.weapons = weapons;
 	}

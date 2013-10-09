@@ -21,16 +21,25 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	 * reloadTime, projectile, offset, projectileVelocity
 	 */
 	
-	DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(1.4f, 1.2f), 5f, new Vector2(1f, 0.5f)),
-	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(0, 1), 14, new Vector2(1f, 0.5f)),
-	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0, 1), 7, new Vector2(1f, 0.5f)),
-	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(1.4f, 1.2f), 5f, new Vector2(1f, 0.5f)),
-	SNIPER_RIFLE(3f, ProjectileType.HIGH_VELOCITY_PROJECTILE, new Vector2(0.8f, -0.7f), 20f,
-			new Vector2(2f, 0.8f)),
-	BOSS_LAUNCHER(1f, ProjectileType.RED_PROJECTILE, new Vector2(0, 0), 5, new Vector2(1f, 0.5f)),
-	BOSS_GUN(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0, 0), 15f, new Vector2(1f, 0.5f)), 
-	//TODO : the weapon below is just copy pasted from above, should probably changed
-	ENEMY_FORCE_GUN(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0, 0), 15f, new Vector2(1f, 0.5f));
+	DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(0,0.5f), 5f, new Vector2(1f,0.5f)),
+	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(0,1), 14, new Vector2(1f,0.5f)),
+	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7, new Vector2(1f,0.5f)),
+	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(0,0.5f), 10f, new Vector2(1f,0.5f)),
+	
+	// Different weapons for standard enemies
+	ENEMY_DISORDERER(0.5f, ProjectileType.PLASMA, new Vector2(), 5f, new Vector2(1f,0.5f)),
+	ENEMY_STANDARD(0.05f, ProjectileType.RED_PROJECTILE, new Vector2(), 14, new Vector2(1f,0.5f)),
+	ENEMY_FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, new Vector2(), 7, new Vector2(1f,0.5f)),
+	ENEMY_MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, new Vector2(), 10f, new Vector2(1f,0.5f)),
+	
+	// Different weapons for bosses. 
+	BOSS_SPR(1f, ProjectileType.RED_PROJECTILE, new Vector2(0,0), 5, new Vector2(1f,0.5f)),
+	BOSS_SPR2(1f, ProjectileType.RED_PROJECTILE, new Vector2(0,1), 5, new Vector2(1f,0.5f)),
+	BOSS_SPR3(1f, ProjectileType.RED_PROJECTILE, new Vector2(0,-1), 5, new Vector2(1f,0.5f)),
+	
+	BOSS_AIM(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,0), 7f, new Vector2(1f,0.5f)),
+	BOSS_AIM2(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,1), 7f, new Vector2(1f,0.5f)),
+	BOSS_AIM3(0.5f, ProjectileType.GREEN_PROJECTILE, new Vector2(0,-1), 7f, new Vector2(1f,0.5f));
 
 	private float reloadingTime;
 	private final ProjectileType projectileType;
@@ -77,7 +86,8 @@ WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType, Vector2 of
 	 */
 	@Override
 	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		if(this == FORCE_GUN || this ==  BOSS_LAUNCHER || this ==  BOSS_GUN || this == ENEMY_FORCE_GUN) {
+		String s = this.getIdentifier().substring(0,5);
+		if(s.equals("ENEMY") || s.equals("BOSS_")){
 			return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
 					offset, projectileSpeed);
 		} else {
