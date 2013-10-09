@@ -84,11 +84,6 @@ public class MasterController extends com.badlogic.gdx.Game {
 		setScreen(gameScreen);
 	}
 
-	@Override
-	public void setScreen(Screen screen) {
-		super.setScreen(screen);
-	}
-
 	public GameController getGameScreen() {
 		return gameScreen;
 	}
