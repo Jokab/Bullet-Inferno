@@ -33,7 +33,7 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 *        The credit rewarded when boss is killed
 	 * @param offsets
 	 */
-	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
 			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,

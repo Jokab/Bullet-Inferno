@@ -28,12 +28,14 @@ public class ResourceManagerImpl implements ResourceManager {
 		DISORDERER("data/disorderer.png"),
 		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
 		DISORDERER_LARGE("data/disordererLarge.png"),
-		
+		SNIPER_RIFLE("data/sniperRifle.png"),
+
 		// Projectiles
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
 		MISSILE("data/missile.png"),
 		PLASMA("data/plasma.png"),
+		HIGH_VELOCITY_PROJECTILE("data/missile.png"),
 
 		// Buttons
 		PAUSE_SCREEN("images/gui/screen_pause.png"),

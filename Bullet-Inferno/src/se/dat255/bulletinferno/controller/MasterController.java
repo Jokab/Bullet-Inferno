@@ -1,11 +1,13 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.controller.LoadingScreenController.FinishedLoadingEventListener;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl;
 
 import com.badlogic.gdx.Screen;
+
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
 /**
  * The master controller is called every frame. It then calls appropriate classes
@@ -37,8 +39,6 @@ public class MasterController extends com.badlogic.gdx.Game {
 		}
 	};
 
-	private boolean firstRun = true;
-
 	@Override
 	public void create() {
 		this.resourceManager = new ResourceManagerImpl();
@@ -67,12 +67,9 @@ public class MasterController extends com.badlogic.gdx.Game {
 	}
 
 	/** Starts a new game and changes the screen to that game */
-	public void startGame(GameController gameScreen, WeaponData weaponData, boolean fromLoadout) {
-		if (weaponData == null) {
-//			if (gameScreen == null) {
-//				throw new RuntimeException(
-//						"MyGame.startGame(null): Can't load weapon data since game screen is null.");
-//			}
+	public void startGame(GameController gameScreen, WeaponDefinition[] weaponData, boolean fromLoadout){
+
+		if(weaponData == null){
 			weaponData = gameScreen.getWeaponData();
 		}
 
@@ -85,7 +82,6 @@ public class MasterController extends com.badlogic.gdx.Game {
 
 		gameScreen.createNewGame(weaponData);
 		this.gameScreen = gameScreen;
-		firstRun = false;
 
 		setScreen(gameScreen);
 	}

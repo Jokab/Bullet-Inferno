@@ -20,7 +20,7 @@ public enum SpecialAbilityType {
 		@Override
 		public SpecialAbility initialize(ModelEnvironment game) {
 //			SpecialAbilityType.this.game = game;
-			return new SpecialAbilityImpl(new SpecialProjectileRain(game, game.getPlayerShip()));
+			return new SpecialAbilityImpl(new SpecialProjectileRain(game.getPhysicsEnvironment(), game.getPlayerShip()));
 		}
 	});
 	

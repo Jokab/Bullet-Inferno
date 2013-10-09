@@ -1,23 +1,23 @@
 package se.dat255.bulletinferno.model.map;
 
 
-import se.dat255.bulletinferno.model.entity.EnemyType;
+import se.dat255.bulletinferno.model.entity.EnemyDefinition;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class EnemyPlacementImpl implements EnemyPlacement {
-	private final EnemyType content;
+	private final EnemyDefinition content;
 	private final Vector2 position;
 	
 	/**
 	 * Constructs a new enemy placement entry
-	 * @param enemyType 
+	 * @param definition enemy 
 	 * @param x position
 	 * @param y position
 	 */
-	public EnemyPlacementImpl(EnemyType enemyType, float x, float y) {
-		this.content = enemyType;
-		position = new Vector2(x,y);
+	public EnemyPlacementImpl(EnemyDefinition definition, float x, float y) {
+		this.content = definition;
+		this.position = new Vector2(x,y);
 	}
 	
 	@Override
@@ -26,7 +26,7 @@ public class EnemyPlacementImpl implements EnemyPlacement {
 	}
 
 	@Override
-	public EnemyType getContent() {
+	public EnemyDefinition getContent() {
 		return content;
 	}
 

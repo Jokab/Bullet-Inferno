@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
@@ -13,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class WeaponButton {
 
 	private final Button button;
-	private WeaponData weaponData;
+	private WeaponDefinition weaponData;
 	private boolean isSelected;
 	private ResourceManager resourceManager;
 
-	public WeaponButton(Button button, WeaponData weaponData, ResourceManager resourceManager) {
+	public WeaponButton(Button button, WeaponDefinition weaponData, ResourceManager resourceManager) {
 		this.button = button;
 		this.weaponData = weaponData;
 		this.isSelected = false;
@@ -28,7 +28,7 @@ public class WeaponButton {
 		return button;
 	}
 
-	public WeaponData getWeaponData() {
+	public WeaponDefinition getWeaponData() {
 		return weaponData;
 	}
 
@@ -47,7 +47,7 @@ public class WeaponButton {
 		}
 	}
 
-	public void setWeaponData(WeaponData weaponData) {
+	public void setWeaponData(WeaponDefinition weaponData) {
 		this.weaponData = weaponData;
 	}
 

@@ -12,20 +12,17 @@ public class WeaponImpl implements Weapon {
 	private final PhysicsEnvironment physics;
 	private final WeaponEnvironment weapons;
 	private final ProjectileType projectileType;
-	private final Vector2 offset;
 	private final float projectileSpeed;
 	private float reloadingTime;
-	private WeaponDescription type;
+	private WeaponDefinition type;
 
 	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDescription weaponData, float reloadingTime, ProjectileType projectileType,
-			Vector2 offset, float projectileSpeed) {
+			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, float projectileSpeed) {
 		type = weaponData;
 		this.physics = physics;
 		this.weapons = weapons;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
-		this.offset = offset;
 		this.projectileSpeed = projectileSpeed;
 
 		timer = physics.getTimer();
@@ -57,14 +54,6 @@ public class WeaponImpl implements Weapon {
 		return timer.isFinished();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Vector2 getOffset() {
-		return offset;
-	}
-
 	@Override
 	public float getProjectileVelocity() {
 		return projectileSpeed;
@@ -77,7 +66,7 @@ public class WeaponImpl implements Weapon {
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releaseProjectile(physics, weapons, position, getOffset(),
+			projectileType.releaseProjectile(physics, weapons, position,
 					direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();
@@ -102,8 +91,13 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public WeaponDescription getType() {
+	public WeaponDefinition getType() {
 		return type;
+	}
+
+	@Override
+	public Vector2 getDimensions() {
+		return type.getDimensions();
 	}
 
 }

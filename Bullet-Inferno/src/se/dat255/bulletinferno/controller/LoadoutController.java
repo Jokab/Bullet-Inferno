@@ -3,9 +3,10 @@ package se.dat255.bulletinferno.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -62,7 +63,7 @@ public class LoadoutController extends SimpleController {
 	public LoadoutController(final MasterController masterController,
 			final ResourceManager resourceManager) {
 		this.gameController = new GameController(masterController, resourceManager);
-		
+
 		this.resourceManager = resourceManager;
 		this.masterController = masterController;
 
@@ -115,7 +116,8 @@ public class LoadoutController extends SimpleController {
 		selectionButtonStyle.up = new TextureRegionDrawable(region);
 		selectionButtonStyle.over = skin.newDrawable(selectionButtonStyle.up, Color.LIGHT_GRAY);
 
-		selectionWeaponButton = new WeaponButton(new Button(selectionButtonStyle), null, resourceManager);
+		selectionWeaponButton = new WeaponButton(new Button(selectionButtonStyle), null,
+				resourceManager);
 
 		selectionWeaponButton.getButton().setPosition(100, 100);
 		selectionWeaponButton.getButton().setSize(200, 120);
@@ -127,7 +129,8 @@ public class LoadoutController extends SimpleController {
 	}
 
 	private void setupStartButton() {
-		Texture startButtonTexture = resourceManager.getManagedTexture(TextureType.LOADOUT_START_BUTTON).getTexture();
+		Texture startButtonTexture = resourceManager.getManagedTexture(
+				TextureType.LOADOUT_START_BUTTON).getTexture();
 		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
 
@@ -145,11 +148,11 @@ public class LoadoutController extends SimpleController {
 		startButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				WeaponData weapon = selectionWeaponButton.getWeaponData();
+				WeaponDefinition weapon = selectionWeaponButton.getWeaponData();
 				if (weapon == null) {
 					showErrorMessage("primary weapon");
 				} else {
-					startGame(gameController, selectionWeaponButton.getWeaponData());
+					startGame(gameController, new WeaponDefinition[]{selectionWeaponButton.getWeaponData()});
 				}
 			}
 		});
@@ -158,14 +161,15 @@ public class LoadoutController extends SimpleController {
 	private void setupPrimaryWeaponButtons() {
 		for (int i = 0; i < 5; i++) {
 			// TODO: the line below needs changing to take into account all weapons
-			WeaponData weaponData = WeaponData.DISORDERER;
+			WeaponDefinition weaponData = WeaponDefinitionImpl.DISORDERER;
 			Texture texture = resourceManager.getManagedTexture(weaponData).getTexture();
 			TextureRegion region = new TextureRegion(texture);
 			ButtonStyle buttonStyle = new ButtonStyle();
 			buttonStyle.up = new TextureRegionDrawable(region);
 			// buttonStyle.over = skin.newDrawable(buttonStyle.up, Color.LIGHT_GRAY);
 
-			WeaponButton weaponButton = new WeaponButton(new Button(buttonStyle), weaponData, resourceManager);
+			WeaponButton weaponButton = new WeaponButton(new Button(buttonStyle), weaponData,
+					resourceManager);
 			primaryWeapons.add(weaponButton);
 
 			weaponButton.getButton().addListener(new ClickedListener());
@@ -293,12 +297,12 @@ public class LoadoutController extends SimpleController {
 		selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
 		selectionWeaponButton.setWeaponData(null);
 	}
-	
-	public void startGame(GameController gameScreen, WeaponData weapon) {
-//		if(gameScreen != null) {
-//			gameScreen.dispose();
-//		}
+
+	public void startGame(GameController gameScreen, WeaponDefinition[] weapons) {
+		// if(gameScreen != null) {
+		// gameScreen.dispose();
+		// }
 		gameScreen = new GameController(masterController, resourceManager);
-		masterController.startGame(gameScreen, weapon, true);
+		masterController.startGame(gameScreen, weapons, true);
 	}
 }

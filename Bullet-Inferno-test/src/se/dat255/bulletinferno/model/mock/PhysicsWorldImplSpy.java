@@ -9,11 +9,22 @@ import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
+import se.dat255.bulletinferno.util.Timer;
 
 public class PhysicsWorldImplSpy extends PhysicsEnvironmentImpl {
 
 	public List<CreateBodyCall> createBodyCalls = new ArrayList<CreateBodyCall>();
 	public List<RemoveBodyCall> removeBodyCalls = new ArrayList<RemoveBodyCall>();
+	public List<Runnable> runLaters = new ArrayList<Runnable>();
+	public Timer timer;
+	
+	public PhysicsWorldImplSpy() {
+		
+	}
+	
+	public PhysicsWorldImplSpy(Timer timer) {
+		this.timer = timer;
+	}
 	
 	public class CreateBodyCall {
 		public CreateBodyCall(PhysicsBodyDefinition definition,
@@ -54,6 +65,27 @@ public class PhysicsWorldImplSpy extends PhysicsEnvironmentImpl {
 		super.removeBody(body);
 	}
 
+	@Override
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		for(Runnable task : runLaters) {
+			task.run();
+		}
+	}
+	
+	@Override
+	public void runLater(Runnable task) {
+		runLaters.add(task);
+	}
 	/*@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);

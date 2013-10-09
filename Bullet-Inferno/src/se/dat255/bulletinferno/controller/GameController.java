@@ -3,7 +3,13 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
+import se.dat255.bulletinferno.model.loadout.SpecialAbility;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -15,7 +21,6 @@ import se.dat255.bulletinferno.view.gui.PauseIconView;
 import se.dat255.bulletinferno.view.gui.PauseScreenView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -32,7 +37,7 @@ public class GameController extends SimpleController {
 	/**
 	 * The touch input handler
 	 */
-	private InputProcessor processor;
+	private GameTouchController touchController;
 
 	/** The current session instance of the game model. */
 	private ModelEnvironment models;
@@ -48,9 +53,9 @@ public class GameController extends SimpleController {
 
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
-
-	/** Stores the weapon type for restarting the game */
-	private WeaponData weaponData;
+	
+	/** Stores the weapons type for restarting the game */
+	private WeaponDefinition[] weaponData;
 
 	/** Reference to the master controller */
 	private MasterController myGame;
@@ -59,6 +64,8 @@ public class GameController extends SimpleController {
 	static BackgroundView bgView;
 
 	private final ResourceManager resourceManager;
+
+
 
 	/**
 	 * Default controller to set required references
@@ -76,11 +83,11 @@ public class GameController extends SimpleController {
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponData weaponType) {
+	public void createNewGame(WeaponDefinition[] weaponData2) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
-		this.weaponData = weaponType;
+		this.weaponData = weaponData2;
 
 		if (graphics != null) {
 			graphics.dispose();
@@ -93,9 +100,16 @@ public class GameController extends SimpleController {
 		if (models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponType);
+		models = new ModelEnvironmentImpl(weaponData2);
 
 		PlayerShip ship = models.getPlayerShip();
+		
+		// TODO: Based on user selection
+		new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)).getEffect().applyEffect(ship);
+		final SpecialAbility specialAbility = new SpecialAbilityImpl(
+				new SpecialProjectileRain(
+						models.getPhysicsEnvironment(), models.getWeaponEnvironment()));
+		
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
 				Graphics.GAME_HEIGHT / 2);
@@ -105,7 +119,14 @@ public class GameController extends SimpleController {
 		// graphics.addRenderable(bgView);
 
 		// Set up input handler
-		processor = new GameTouchController(graphics, ship);
+		touchController = new GameTouchController(graphics, ship);
+		
+		touchController.setSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
+			@Override
+			public void specialAbilityRequested() {
+				specialAbility.getEffect().activate(models.getPlayerShip());
+			}
+		});
 
 		setupGUI();
 
@@ -177,7 +198,7 @@ public class GameController extends SimpleController {
 	@Override
 	public void show() {
 		super.show();
-		Gdx.input.setInputProcessor(processor);
+		Gdx.input.setInputProcessor(touchController);
 	}
 
 	@Override
@@ -250,7 +271,8 @@ public class GameController extends SimpleController {
 	}
 
 	/** Get method for weapon data set in create new game */
-	public WeaponData getWeaponData() {
+
+	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
 	}
 
