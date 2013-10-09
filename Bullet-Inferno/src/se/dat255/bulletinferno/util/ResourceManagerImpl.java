@@ -17,7 +17,8 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		DEFAULT_ENEMY_SHIP("data/defaultEnemy.png"),
 		SPECIAL_ENEMY_SHIP("data/specialEnemy.png"),
-		BOSS_ENEMY_SHIP("data/boss.png"),
+		HARD_BOSS_SHIP("data/boss.png"),
+		EASY_BOSS_SHIP("data/bossEnemy.png"),
 
 		// Player ship
 		PLAYER_DEFAULT("data/playerShip.png"),
@@ -41,10 +42,11 @@ public class ResourceManagerImpl implements ResourceManager {
 		PAUSE_SCREEN("images/gui/screen_pause.png"),
 		BLUE_BACKGROUND("images/game/background.png"),
 		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
-		PROJECTILE_RAIN_MENU_ICON("data/projectileRain.png"),
+		PROJECTILE_RAIN("data/projectileRain.png"),
+		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
 		LOADOUT_START_BUTTON("data/startBtn.png"),
-		
-		// Particles
+
+		//Particles
 		SMOKE_PARTICLE("images/particles/smoke.png"),
 
 		;

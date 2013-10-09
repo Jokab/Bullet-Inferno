@@ -7,6 +7,11 @@ import se.dat255.bulletinferno.util.ResourceManagerImpl;
 
 import com.badlogic.gdx.Screen;
 
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
+
 /**
  * The master controller is called every frame. It then calls appropriate classes
  * depending on what currently is active in the game. It handles all sub-controllers
@@ -22,14 +27,14 @@ public class MasterController extends com.badlogic.gdx.Game {
 	private LoadingScreenController loadingScreen;
 
 	private ResourceManager resourceManager;
-	
+
 	private FinishedLoadingEventListener switchToGameOnLoaded = new FinishedLoadingEventListener() {
 		@Override
 		public void onLoaded() {
 			setScreen(getGameScreen());
 		}
 	};
-	
+
 	private FinishedLoadingEventListener switchToLoadoutOnLoaded = new FinishedLoadingEventListener() {
 		@Override
 		public void onLoaded() {
@@ -64,10 +69,16 @@ public class MasterController extends com.badlogic.gdx.Game {
 
 	}
 
-	/** Starts a new game and changes the screen to that game */
-	public void startGame(GameController gameScreen, WeaponDefinition[] weaponData, boolean fromLoadout){
+	/**
+	 * Starts a new game and changes the screen to that game
+	 * 
+	 * @param passive
+	 * @param special
+	 */
+	public void startGame(GameController gameScreen, WeaponDefinition[] weaponData,
+			SpecialAbilityDefinition special, PassiveAbilityDefinition passive, boolean fromLoadout) {
 
-		if(weaponData == null){
+		if (weaponData == null) {
 			weaponData = gameScreen.getWeaponData();
 		}
 
@@ -78,15 +89,10 @@ public class MasterController extends com.badlogic.gdx.Game {
 			gameScreen = new GameController(this, resourceManager);
 		}
 
-		gameScreen.createNewGame(weaponData);
+		gameScreen.createNewGame(weaponData, special, passive);
 		this.gameScreen = gameScreen;
 
 		setScreen(gameScreen);
-	}
-
-	@Override
-	public void setScreen(Screen screen) {
-		super.setScreen(screen);
 	}
 
 	public GameController getGameScreen() {

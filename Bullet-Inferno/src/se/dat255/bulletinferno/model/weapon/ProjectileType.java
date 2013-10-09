@@ -24,7 +24,7 @@ public enum ProjectileType implements ResourceIdentifier {
 			PhysicsShapeFactory.getRectangularShape(0.4f,0.3f))),
 	HIGH_VELOCITY_PROJECTILE(9f, new AccelerationMovementPattern(new Vector2(20, 0)), new PhysicsBodyDefinitionImpl(
 					PhysicsShapeFactory.getRectangularShape(0.8f,0.5f))),
-	PLASMA(1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
+	PLASMA(7f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
 	private float damage;
 	private final PhysicsMovementPattern pattern;
@@ -37,11 +37,11 @@ public enum ProjectileType implements ResourceIdentifier {
 	}
 
 	public void releaseProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			Vector2 position,
+			Vector2 position, Vector2 offset,
 			Vector2 projectileVector, Teamable source) {
 		
 		Projectile projectile = weapons.retrieveProjectile(ProjectileImpl.class);
-		projectile.init(this, position.cpy(), projectileVector,
+		projectile.init(this, position.cpy().add(offset), projectileVector,
 				damage, source, bodyDefinition);
 		
 	}

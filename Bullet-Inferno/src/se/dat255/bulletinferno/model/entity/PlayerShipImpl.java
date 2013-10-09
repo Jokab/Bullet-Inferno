@@ -83,6 +83,8 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		this.body = physics.createBody(bodyDefinition, this, position);
 		this.body.setVelocity(forwardSpeed);
+		
+		
 	}
 
 	/**
@@ -156,7 +158,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void fireWeapon() {
-		weaponLoadout.getHeavyWeapon().fire(getPosition().add(new Vector2(getDimensions().x/2,0)), new Vector2(1, 0), this);
+		weaponLoadout.getHeavyWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
@@ -191,9 +193,9 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void halt(float distance) {
-		haltTimer.registerListener(haltShipTimerable);
-		haltAtPosition = body.getPosition().x + distance;
-		haltTimer.start();
+//		haltTimer.registerListener(haltShipTimerable);
+//		haltAtPosition = body.getPosition().x + distance;
+//		haltTimer.start();
 	}
 
 	@Override
@@ -204,7 +206,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		if (source == weaponTimer) {
-			weaponLoadout.getStandardWeapon().fire(getPosition().add(new Vector2(getDimensions().x/2,0)), new Vector2(1, 0), this);
+			weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
 		}
 	}
 

@@ -3,9 +3,11 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
@@ -63,6 +65,10 @@ public class GameController extends SimpleController {
 	static BackgroundView bgView;
 
 	private final ResourceManager resourceManager;
+	
+	private SpecialAbilityDefinition special;
+
+	private PassiveAbilityDefinition passive;
 
 
 
@@ -81,12 +87,16 @@ public class GameController extends SimpleController {
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
+	 * @param passive 
+	 * @param special 
 	 */
-	public void createNewGame(WeaponDefinition[] weaponData2) {
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
-		this.weaponData = weaponData2;
+		this.weaponData = weaponData;
+		this.special = special;
+		this.passive = passive;
 
 		if (graphics != null) {
 			graphics.dispose();
@@ -99,15 +109,13 @@ public class GameController extends SimpleController {
 		if (models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData2);
+		models = new ModelEnvironmentImpl(weaponData);
 
 		PlayerShip ship = models.getPlayerShip();
 		
 		// TODO: Based on user selection
-		new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)).getEffect().applyEffect(ship);
-		final SpecialAbility specialAbility = new SpecialAbilityImpl(
-				new SpecialProjectileRain(
-						models.getPhysicsEnvironment(), models.getWeaponEnvironment()));
+		passive.getPassiveAbility().getEffect().applyEffect(ship);
+		final SpecialAbility specialAbility = special.getSpecialAbility(models);
 		
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
@@ -273,6 +281,14 @@ public class GameController extends SimpleController {
 
 	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
+	}
+
+	public SpecialAbilityDefinition getSpecial() {
+		return this.special;
+	}
+	
+	public PassiveAbilityDefinition getPassive() {
+		return this.passive;
 	}
 
 }
