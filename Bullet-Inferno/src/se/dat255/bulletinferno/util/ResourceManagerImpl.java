@@ -9,9 +9,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class ResourceManagerImpl implements ResourceManager {
-
-	private static AssetManager manager;
-
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
 		FAST_SHIP("data/defaultEnemy.png"),
@@ -50,7 +47,7 @@ public class ResourceManagerImpl implements ResourceManager {
 			this.path = path;
 		}
 
-		public Texture getTexture() {
+		private Texture getTexture(AssetManager manager) {
 			return manager.get(this.path, Texture.class);
 		}
 
@@ -64,6 +61,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> music = new HashMap<String, String>();
 	private final TextureType[] textureTypes;
 	
+	private AssetManager manager;
 	
 	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
@@ -123,7 +121,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			return new ManagedTextureImpl(textureType.getTexture(), textureType);
+			return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
 		} else {
 			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
 		}
@@ -137,7 +135,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		for (TextureType textureType : textureTypes) {
 			if (identifier.getIdentifier().equals(textureType.name())) {
 				if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-					return new ManagedTextureImpl(textureType.getTexture(), textureType);
+					return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
 				} else {
 					throw new RuntimeException("Texture " + textureType.name() + " is not loaded."); 
 				}
