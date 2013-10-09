@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

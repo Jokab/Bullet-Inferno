@@ -9,7 +9,6 @@ import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;

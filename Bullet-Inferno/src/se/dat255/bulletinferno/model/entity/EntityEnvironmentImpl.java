@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
-import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 
 import com.badlogic.gdx.math.Vector2;
 

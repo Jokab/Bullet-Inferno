@@ -3,13 +3,13 @@ package se.dat255.bulletinferno.model.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.util.Timer;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class PhysicsWorldImplSpy extends PhysicsEnvironmentImpl {
 

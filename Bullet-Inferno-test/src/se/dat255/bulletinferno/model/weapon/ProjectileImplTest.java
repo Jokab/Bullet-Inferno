@@ -6,30 +6,23 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.math.Vector2;
-
-import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
-import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
-import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
+import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
+import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
-import se.dat255.bulletinferno.model.weapon.Projectile;
-import se.dat255.bulletinferno.model.weapon.ProjectileImpl;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
-import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.test.Common;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class ProjectileImplTest {
 

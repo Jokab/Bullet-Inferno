@@ -9,10 +9,6 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
-import se.dat255.bulletinferno.model.weapon.EnemyWeaponImpl;
-import se.dat255.bulletinferno.model.weapon.Weapon;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
-import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.test.Common;
 
 public class WeaponDefinitionImplTest {

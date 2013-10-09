@@ -1,13 +1,14 @@
 package se.dat255.bulletinferno.model.map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
-import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Segment;
@@ -14,7 +13,6 @@ import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

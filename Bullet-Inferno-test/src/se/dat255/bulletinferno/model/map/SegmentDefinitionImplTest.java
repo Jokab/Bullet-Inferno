@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;

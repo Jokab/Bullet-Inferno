@@ -1,13 +1,12 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
-import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.test.Common;
 
 public class WeaponEnvironmentImplTest {

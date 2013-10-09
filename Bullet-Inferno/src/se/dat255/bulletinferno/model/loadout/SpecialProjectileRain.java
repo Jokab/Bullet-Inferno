@@ -5,9 +5,9 @@ import java.util.List;
 
 import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 

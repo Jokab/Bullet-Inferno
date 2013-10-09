@@ -10,6 +10,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
+
 import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {

@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model.entity;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -8,15 +7,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.math.Vector2;
-
-import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
-import se.dat255.bulletinferno.model.entity.SimpleEnemy;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class EnemyDefinitionTest {
 

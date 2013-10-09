@@ -94,7 +94,6 @@ public class PlayerShipImplTest {
 		// Tests that taking damage reduces the health
 		// but doesn't reduce the initial health value
 
-		Vector2 position = new Vector2(0, 0);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 

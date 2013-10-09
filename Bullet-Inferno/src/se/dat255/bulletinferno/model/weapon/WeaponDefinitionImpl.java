@@ -1,8 +1,6 @@
 package se.dat255.bulletinferno.model.weapon;
 
 
-import java.awt.Dimension;
-import com.badlogic.gdx.math.Vector2;
 import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 

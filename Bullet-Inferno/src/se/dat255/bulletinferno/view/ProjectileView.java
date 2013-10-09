@@ -1,19 +1,13 @@
 package se.dat255.bulletinferno.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.ModelEnvironment;
-import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ProjectileView implements Renderable {
 

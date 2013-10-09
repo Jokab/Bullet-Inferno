@@ -1,13 +1,13 @@
 package se.dat255.bulletinferno.model.entity;
 
-import com.badlogic.gdx.math.Vector2;
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
+
+import com.badlogic.gdx.math.Vector2;
 
 public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
