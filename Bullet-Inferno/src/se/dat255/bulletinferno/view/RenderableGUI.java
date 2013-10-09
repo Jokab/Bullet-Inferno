@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.view.gui.GuiEvent;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public interface RenderableGUI {
 	/** Called when the object was interacted with */
-	public void pressed(float x, float y);
+	public GuiEvent pressed(float x, float y);
 
 	/** Gets the position of the GUI element */
 	public Vector2 getPosition();

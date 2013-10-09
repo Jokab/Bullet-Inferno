@@ -3,14 +3,11 @@ package se.dat255.bulletinferno.view.gui;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.controller.GameController;
-import se.dat255.bulletinferno.controller.MasterController;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
@@ -52,7 +49,7 @@ public class HudView implements Renderable {
 	 * Loads the initial image and sets the regions
 	 * @param resourceManager The manager that holds the assets
 	 */
-	public HudView(GameController game, ResourceManager resourceManager) {
+	public HudView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 		hudTexture = resourceManager.getManagedTexture(TextureType.HUD_TEXTURE);
 		Texture t = hudTexture.getTexture();
@@ -74,8 +71,8 @@ public class HudView implements Renderable {
 				new TextureRegion(t, 372, 90, 30, 65), // 8
 				new TextureRegion(t, 420, 90, 30, 65), // 9
 		};
-		pauseScreen = new PauseScreenView(game, resourceManager);
-		pauseButton = new PauseIconView(game, new TextureRegion(t, 11, 162, 66, 64));
+		pauseScreen = new PauseScreenView(resourceManager);
+		pauseButton = new PauseIconView(new TextureRegion(t, 11, 162, 66, 64));
 		hudRegions.add(pauseButton);
 	}
 	
@@ -113,8 +110,8 @@ public class HudView implements Renderable {
 		hudRegions.add(pauseButton);
 	}
 	
-	public void gameOver(MasterController myGame){
-		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
+	public void gameOver(){
+		RenderableGUI gameOver = new GameoverScreenView(resourceManager);
 		hudRegions.clear();
 		hudRegions.add(gameOver);
 	}
@@ -129,17 +126,16 @@ public class HudView implements Renderable {
 	 *        The Y position of the GUI
 	 * @return If a GUI element was activated
 	 */
-	public boolean guiInput(float x, float y) {
+	public GuiEvent guiInput(float x, float y) {
 		for (RenderableGUI gui : hudRegions) {
 			Vector2 position = gui.getPosition();
 			Vector2 size = gui.getSize();
 			if (x > position.x && y > position.y && x < position.x + size.x
 					&& y < position.y + size.y) {
-				gui.pressed(x, y);
-				return true;
+				return gui.pressed(x, y);
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override

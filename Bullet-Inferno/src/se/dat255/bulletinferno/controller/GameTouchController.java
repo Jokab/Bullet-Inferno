@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.loadout.SpecialEffect;
+import se.dat255.bulletinferno.view.gui.GuiEvent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -33,15 +34,21 @@ public class GameTouchController implements InputProcessor {
 	 * accessed?
 	 */
 	private final PlayerShip ship;
+	
+	private final GameController gameController;
+	private final MasterController masterController;
 
 	/** The finger index controlling the position of the ship. */
 	private int steeringFinger = -1;
 	/** The origin of touch down finger controlling the ship*/
 	private Vector2 touchOrigin = new Vector2();
 
-	public GameTouchController(final Graphics graphics, final PlayerShip ship) {
+	public GameTouchController(final Graphics graphics, final PlayerShip ship, 
+			GameController gameController, MasterController masterController) {
 		this.graphics = graphics;
 		this.ship = ship;
+		this.gameController = gameController;
+		this.masterController = masterController;
 	}
 
 	@Override
@@ -86,7 +93,25 @@ public class GameTouchController implements InputProcessor {
 		float guiY = (float) screenY / (Gdx.graphics.getHeight() * 0.1111111111f); // 1 / 9
 		guiX -= 8.0f;
 		guiY = 4.5f - guiY;
-		if (graphics.getHudView().guiInput(guiX, guiY)) {
+		GuiEvent event = graphics.getHudView().guiInput(guiX, guiY);
+		if(event != null){
+			switch(event){
+			case PAUSE:
+				gameController.pauseGame();
+				break;
+			case UNPAUSE:
+				gameController.unpauseGame();
+				break;
+			case GAMEOVER:
+				gameController.gameOver();
+				break;
+			case RESTARTGAME:
+				masterController.startGame(null);
+				break;
+			case STOPGAME:
+				masterController.setScreen(masterController.getLoadoutScreen());
+				break;
+			}
 			return true;
 		}
 		

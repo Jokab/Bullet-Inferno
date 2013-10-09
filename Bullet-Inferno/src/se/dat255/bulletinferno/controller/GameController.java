@@ -84,7 +84,7 @@ public class GameController extends SimpleController {
 		}
 
 		// Initialize the HUD
-		HudView hudView = new HudView(this, resourceManager);
+		HudView hudView = new HudView(resourceManager);
 		
 		// Initialize the graphics controller
 		graphics = new Graphics(hudView);
@@ -108,7 +108,7 @@ public class GameController extends SimpleController {
 		//graphics.addRenderable(bgView);
 
 		// Set up input handler
-		processor = new GameTouchController(graphics, ship);
+		processor = new GameTouchController(graphics, ship, this, myGame);
 
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
@@ -120,7 +120,7 @@ public class GameController extends SimpleController {
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
-		graphics.getHudView().gameOver(myGame);
+		graphics.getHudView().gameOver();
 	}
 
 	/**

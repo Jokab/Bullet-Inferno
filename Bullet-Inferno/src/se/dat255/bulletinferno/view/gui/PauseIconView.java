@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.controller.GameController;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
@@ -11,13 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 public class PauseIconView implements RenderableGUI {
 
 	private final TextureRegion textureRegion;
-	private final GameController game;
 	private final Vector2 position = new Vector2(6.5f, 3f);
 	private final Vector2 size = new Vector2(1.5f, 1.5f);
 
-	public PauseIconView(GameController game, TextureRegion textureRegion) {
+	public PauseIconView(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
-		this.game = game;
 	}
 
 	@Override
@@ -31,8 +28,8 @@ public class PauseIconView implements RenderableGUI {
 	}
 
 	@Override
-	public void pressed(float x, float y) {
-		game.pauseGame();
+	public GuiEvent pressed(float x, float y) {
+		return GuiEvent.PAUSE;
 	}
 
 	@Override
