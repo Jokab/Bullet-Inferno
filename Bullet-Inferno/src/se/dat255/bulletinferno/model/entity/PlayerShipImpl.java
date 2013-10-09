@@ -34,7 +34,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	private final ShipType shipType;
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
-	private Vector2 forwardSpeed = new Vector2(30, 0); // TODO: Not hardcode?
+	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
 
 	/**
 	 * A timer used to fire the standard weapon
@@ -83,6 +83,8 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		this.body = physics.createBody(bodyDefinition, this, position);
 		this.body.setVelocity(forwardSpeed);
+		
+		
 	}
 
 	/**

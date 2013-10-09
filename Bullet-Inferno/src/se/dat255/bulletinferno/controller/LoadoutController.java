@@ -12,6 +12,7 @@ import se.dat255.bulletinferno.menu.SpecialButton;
 import se.dat255.bulletinferno.menu.SpecialButtonsView;
 import se.dat255.bulletinferno.menu.WeaponButton;
 import se.dat255.bulletinferno.menu.WeaponButtonsView;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
@@ -230,9 +231,9 @@ public class LoadoutController extends SimpleController {
 		errorMessage.setVisible(false);
 	}
 
-	public void startGame(GameController gameScreen, WeaponDefinition[] weapons) {
+	public void startGame(GameController gameScreen, WeaponDefinition[] weapons, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
 		gameScreen = new GameController(masterController, resourceManager);
-		masterController.startGame(gameScreen, weapons, true);
+		masterController.startGame(gameScreen, weapons, special, passive, true);
 	}
 
 	private void showErrorMessage(String equipmentMissing) {
@@ -245,14 +246,16 @@ public class LoadoutController extends SimpleController {
 		public void changed(ChangeEvent event, Actor actor) {
 			WeaponDefinition weapon = weaponButtonsView.getSelectionButton().getData();
 			SpecialAbilityDefinition special = specialButtonsView.getSelectionButton().getData();
+			PassiveAbilityDefinition passive = passiveButtonsView.getSelectionButton().getData();
 			if (weapon == null) {
 				showErrorMessage("primary weapon");
 			} else if (special == null) {
 				showErrorMessage("special ability");
+			} else if (passive == null) {
+				showErrorMessage("passive ability");
 			} else {
-				startGame(gameController,
-						new WeaponDefinition[] { weaponButtonsView.getSelectionButton()
-								.getData() });
+				WeaponDefinition[] weapons = new WeaponDefinition[]{weapon};
+				startGame(gameController, weapons, special, passive);
 			}
 		}
 	}

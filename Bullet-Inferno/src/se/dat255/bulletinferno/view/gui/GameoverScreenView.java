@@ -40,7 +40,7 @@ public class GameoverScreenView implements RenderableGUI {
 	public void pressed(float x, float y) {
 		// Restart
 		if(2.6f < x && x < 6.4f && 2.44f < y && y < 4f){
-			game.startGame(null, game.getGameScreen().getWeaponData(), false);
+			game.startGame(null, game.getGameScreen().getWeaponData(), game.getGameScreen().getSpecial(), game.getGameScreen().getPassive(), false);
 		}
 		
 		// Menu
