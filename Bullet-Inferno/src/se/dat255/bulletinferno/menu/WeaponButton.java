@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.controller;
+package se.dat255.bulletinferno.menu;
 
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;

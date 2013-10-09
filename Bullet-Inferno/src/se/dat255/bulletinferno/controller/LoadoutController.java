@@ -5,10 +5,11 @@ import java.util.List;
 
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.SpecialButton;
-import se.dat255.bulletinferno.util.SpecialButtonsView;
-import se.dat255.bulletinferno.util.WeaponButtonsView;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.menu.SpecialButton;
+import se.dat255.bulletinferno.menu.SpecialButtonsView;
+import se.dat255.bulletinferno.menu.WeaponButton;
+import se.dat255.bulletinferno.menu.WeaponButtonsView;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 

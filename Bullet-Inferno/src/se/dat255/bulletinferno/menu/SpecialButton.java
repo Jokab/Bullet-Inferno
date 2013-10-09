@@ -1,7 +1,7 @@
-package se.dat255.bulletinferno.util;
+package se.dat255.bulletinferno.menu;
 
-import se.dat255.bulletinferno.controller.CustomizedButton;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
+import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

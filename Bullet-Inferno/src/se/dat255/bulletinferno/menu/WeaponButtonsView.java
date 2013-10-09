@@ -1,11 +1,12 @@
-package se.dat255.bulletinferno.util;
+package se.dat255.bulletinferno.menu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.WeaponButton;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
+import se.dat255.bulletinferno.util.ResourceIdentifier;
+import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

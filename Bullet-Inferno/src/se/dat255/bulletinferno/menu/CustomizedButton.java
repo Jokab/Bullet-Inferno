@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.controller;
+package se.dat255.bulletinferno.menu;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;

@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.util;
+package se.dat255.bulletinferno.menu;
 
 public class SelectionButton {
 
