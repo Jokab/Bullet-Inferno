@@ -29,6 +29,10 @@ public class PlayerShipView implements Renderable, Timerable {
 	private Sprite explosionSprite;
 	private Timer timer;
 	private ResourceManager resourceManager;
+	
+	private static final int SMOKE_PARTICLE_COUNT = 100;
+	private final Texture smokeTexture;
+	private final SmokeTrail smokeTrail;
 
 	private final PlayerShip ship;
 	private final Weapon standardWeapon;
@@ -82,6 +86,11 @@ public class PlayerShipView implements Renderable, Timerable {
 		
 		heavyWeaponSprite = new Sprite(heavyWeaponTexture);
 		heavyWeaponSprite.setSize(heavyWeapon.getDimensions().x, heavyWeapon.getDimensions().y);
+		
+		// TODO: How should we do with managed textures? No disposal?
+		smokeTexture = resourceManager.getManagedTexture(TextureType.SMOKE_PARTICLE).getTexture();
+		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
 	}
 
 	@Override
@@ -110,6 +119,12 @@ public class PlayerShipView implements Renderable, Timerable {
 						+ heavyWeaponSprite.getHeight() / 2);
 				heavyWeaponSprite.draw(batch);
 			}
+			
+			// TODO: Fix these values to match some texture offsets (+ break out to constants).
+			smokeTrail.setSpawnPoint(
+					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
+			smokeTrail.setParticleOrigin(lastShipPosition);
+			smokeTrail.render(batch);
 		}
 	}
 
