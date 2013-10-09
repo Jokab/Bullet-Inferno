@@ -23,12 +23,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 public class SpecialButtonsView {
 
-	private ResourceManager resourceManager;
+	private final ResourceManager resourceManager;
 	private final List<SpecialButton> specialButtons = new ArrayList<SpecialButton>();
 	private SpecialButton selectionSpecialButton;
-	private Stage stage;
-	private Skin skin;
-	private Table table;
+	private final Stage stage;
+	private final Skin skin;
+	private final Table table;
 
 	public SpecialButtonsView(Stage stage, Skin skin, Table table, ResourceManager resourceManager) {
 		this.stage = stage;

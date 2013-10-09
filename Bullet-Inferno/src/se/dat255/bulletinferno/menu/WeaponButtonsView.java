@@ -24,12 +24,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 public class WeaponButtonsView {
 
-	private ResourceManager resourceManager;
+	private final ResourceManager resourceManager;
 	private final List<WeaponButton> primaryWeapons = new ArrayList<WeaponButton>();
 	private WeaponButton selectionWeaponButton;
-	private Stage stage;
-	private Skin skin;
-	private Table table;
+	private final Stage stage;
+	private final Skin skin;
+	private final Table table;
 
 	public WeaponButtonsView(Stage stage, Skin skin, Table table, ResourceManager resourceManager) {
 		this.stage = stage;
@@ -74,7 +74,7 @@ public class WeaponButtonsView {
 			WeaponButton weaponButton = new WeaponButton(getTableButton(weaponData), weaponData,
 					resourceManager);
 			primaryWeapons.add(weaponButton);
-			weaponButton.getButton().addListener(new WeaponClickedListener());
+			weaponButton.getButton().addListener(new ClickedListener());
 		}
 
 		// Set up the table to add these buttons to
@@ -122,7 +122,7 @@ public class WeaponButtonsView {
 	
 	}
 
-	public class WeaponClickedListener extends ChangeListener {
+	public class ClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			WeaponButton selected = null;
