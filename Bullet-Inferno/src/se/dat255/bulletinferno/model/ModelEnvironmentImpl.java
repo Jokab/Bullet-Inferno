@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.Enemy;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.MapEnvironment;
 import se.dat255.bulletinferno.model.map.MapEnvironmentImpl;
@@ -107,6 +108,22 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	@Override
 	public WeaponEnvironment getWeaponEnvironment() {
 		return map.getWeaponEnvironment();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MapEnvironment getMapEnvironment() {
+		return map;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public EntityEnvironment getEntityEnvironment() {
+		return map.getEntityEnvironment();
 	}
 
 }
