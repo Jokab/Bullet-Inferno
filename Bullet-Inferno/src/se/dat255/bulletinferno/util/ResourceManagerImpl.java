@@ -42,7 +42,8 @@ public class ResourceManagerImpl implements ResourceManager {
 		PAUSE_SCREEN("images/gui/screen_pause.png"),
 		BLUE_BACKGROUND("images/game/background.png"),
 		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
-		PROJECTILE_RAIN_MENU_ICON("data/projectileRain.png"),
+		PROJECTILE_RAIN("data/projectileRain.png"),
+		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
 		LOADOUT_START_BUTTON("data/startBtn.png");
 
 		private final String path;

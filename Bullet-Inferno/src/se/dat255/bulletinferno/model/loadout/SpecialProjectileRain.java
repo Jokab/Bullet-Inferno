@@ -23,6 +23,15 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	private int counter = 0;
 	private PlayerShip playerShip;
 
+	/**
+	 * Constructs a SpecialEffect which will spawn {@value #AMOUNT_BULLETS} behind the
+	 * player, firing towards the enemies.
+	 * 
+	 * @param physics
+	 *        The game's PhysicsEnvironment.
+	 * @param weapons
+	 *        The game's WeaponEnviornment.
+	 */
 	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
 		this.weapons = weapons;
@@ -32,7 +41,12 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	@Override
 	public void activate(PlayerShip playerShip) {
+		// TODO: there is something wrong with this code. the projectiles travel exponentially
+		// faster with each activation
+
 		this.playerShip = playerShip;
+		counter = 0;
+		timer.stop();
 		timer.setTime(0.1f);
 		timer.setContinuous(true);
 		timer.start();
@@ -45,7 +59,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS -1);
+		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS - 1);
 		if (counter < AMOUNT_BULLETS) {
 			ProjectileType.MISSILE.releaseProjectile(physics, weapons,
 					bulletPositions.get(index), new Vector2(), new Vector2(3, 0), playerShip);

@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.controller;
+package se.dat255.bulletinferno.menu;
 
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
@@ -10,32 +10,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class WeaponButton {
+public class WeaponButton extends CustomizedButton {
 
-	private final Button button;
 	private WeaponDefinition weaponData;
-	private boolean isSelected;
 	private ResourceManager resourceManager;
 
 	public WeaponButton(Button button, WeaponDefinition weaponData, ResourceManager resourceManager) {
-		this.button = button;
+		super(button);
 		this.weaponData = weaponData;
-		this.isSelected = false;
 		this.resourceManager = resourceManager;
 	}
 
-	public Button getButton() {
-		return button;
-	}
-
-	public WeaponDefinition getWeaponData() {
+	public WeaponDefinition getData() {
 		return weaponData;
 	}
 
-	public boolean isSelected() {
-		return this.isSelected;
-	}
-
+	@Override
 	public void toggleSelected(Skin skin) {
 		this.isSelected = !isSelected;
 		if (isSelected) {
@@ -43,11 +33,11 @@ public class WeaponButton {
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					resourceManager.getManagedTexture(TextureType.DISORDERER).getTexture()));
+					resourceManager.getManagedTexture(this.weaponData).getTexture()));
 		}
 	}
 
-	public void setWeaponData(WeaponDefinition weaponData) {
+	public void setData(WeaponDefinition weaponData) {
 		this.weaponData = weaponData;
 	}
 
