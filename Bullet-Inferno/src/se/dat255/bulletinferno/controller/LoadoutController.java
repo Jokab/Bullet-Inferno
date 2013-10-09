@@ -111,7 +111,7 @@ public class LoadoutController extends SimpleController {
 		selectionButtonStyle.up = new TextureRegionDrawable(region);
 		selectionButtonStyle.over = skin.newDrawable(selectionButtonStyle.up, Color.LIGHT_GRAY);
 
-		selectionWeaponButton = new WeaponButton(new Button(selectionButtonStyle), null);
+		selectionWeaponButton = new WeaponButton(new Button(selectionButtonStyle), null, resourceManager);
 
 		selectionWeaponButton.getButton().setPosition(100, 100);
 		selectionWeaponButton.getButton().setSize(200, 120);
@@ -123,7 +123,7 @@ public class LoadoutController extends SimpleController {
 	}
 
 	private void setupStartButton() {
-		Texture startButtonTexture = TextureType.LOADOUT_START_BUTTON.getTexture();
+		Texture startButtonTexture = resourceManager.getManagedTexture(TextureType.LOADOUT_START_BUTTON).getTexture();
 		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
 
@@ -161,7 +161,7 @@ public class LoadoutController extends SimpleController {
 			buttonStyle.up = new TextureRegionDrawable(region);
 			// buttonStyle.over = skin.newDrawable(buttonStyle.up, Color.LIGHT_GRAY);
 
-			WeaponButton weaponButton = new WeaponButton(new Button(buttonStyle), weaponData);
+			WeaponButton weaponButton = new WeaponButton(new Button(buttonStyle), weaponData, resourceManager);
 			primaryWeapons.add(weaponButton);
 
 			weaponButton.getButton().addListener(new ClickedListener());

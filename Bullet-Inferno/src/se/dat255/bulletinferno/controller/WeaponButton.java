@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 import com.badlogic.gdx.graphics.Color;
@@ -14,11 +15,13 @@ public class WeaponButton {
 	private final Button button;
 	private WeaponData weaponData;
 	private boolean isSelected;
+	private ResourceManager resourceManager;
 
-	public WeaponButton(Button button, WeaponData weaponData) {
+	public WeaponButton(Button button, WeaponData weaponData, ResourceManager resourceManager) {
 		this.button = button;
 		this.weaponData = weaponData;
 		this.isSelected = false;
+		this.resourceManager = resourceManager;
 	}
 
 	public Button getButton() {
@@ -40,7 +43,7 @@ public class WeaponButton {
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					TextureType.DISORDERER.getTexture()));
+					resourceManager.getManagedTexture(TextureType.DISORDERER).getTexture()));
 		}
 	}
 
