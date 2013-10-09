@@ -67,7 +67,7 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Keys.X) {
-			ship.takeDamage(10);
+			ship.takeDamage(1000000);
 			System.out.println("Player health: " + ship.getHealth());
 		}
 
@@ -82,10 +82,11 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// Check if GUI input was to be handled TODO: The second division can be made in prehand
-		float guiX = (float) screenX / (Gdx.graphics.getWidth() / 16);
-		float guiY = (float) screenY / (Gdx.graphics.getHeight() / 9);
-		guiY = 9 - guiY;
-		if (graphics.guiInput(guiX, guiY)) {
+		float guiX = (float) screenX / (Gdx.graphics.getWidth() * 0.0625f); // 1 / 16
+		float guiY = (float) screenY / (Gdx.graphics.getHeight() * 0.1111111111f); // 1 / 9
+		guiX -= 8.0f;
+		guiY = 4.5f - guiY;
+		if (graphics.getHudView().guiInput(guiX, guiY)) {
 			return true;
 		}
 		

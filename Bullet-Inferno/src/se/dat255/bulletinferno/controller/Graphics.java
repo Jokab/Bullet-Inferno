@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import se.dat255.bulletinferno.view.Renderable;
-import se.dat255.bulletinferno.view.RenderableGUI;
+import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -37,10 +37,14 @@ public class Graphics {
 
 	/** List of all objects that are to be rendered in the world */
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
-	/** List of all objects that are to be rendered as GUI elements */
-	private final Set<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
+	
 	/** List of all objects that are to be rendered as HUD elements */
-	private final Set<Renderable> hudRenderables = new HashSet<Renderable>();
+	private final HudView hudView;
+	
+	/** Sets required references */
+	public Graphics(HudView hudView) {
+		this.hudView = hudView;
+	}
 
 	/**
 	 * Initializes all the required assets
@@ -99,19 +103,15 @@ public class Graphics {
 		}
 		worldBatch.end();
 		
-		// Render HUD elements
+		// Render HUD and GUI elements
 		guiBatch.begin();
-		for (Renderable renderable : hudRenderables) {
-			renderable.render(guiBatch);
-		}
+		hudView.render(guiBatch);
 		guiBatch.end();
-
-		// TODO: Render GUI
-		guiBatch.begin();
-		for (RenderableGUI renderable : guiRenderables) {
-			renderable.render(guiBatch);
-		}
-		guiBatch.end();
+	}
+	
+	/** Gets hold of the HudView */
+	public HudView getHudView(){
+		return hudView;
 	}
 
 	/** Adds an object to be rendered in the world. Uses hashcode to separate */
@@ -122,49 +122,6 @@ public class Graphics {
 	/** Removes an object from being rendered in the world */
 	public void removeRenderable(Renderable renderable) {
 		renderables.remove(renderable);
-	}
-
-	/** Adds an object to be rendered in the GUI. Uses hashcode to separate */
-	public void addRenderableGUI(RenderableGUI renderable) {
-		guiRenderables.add(renderable);
-	}
-
-	/** Removes an object from being rendered in the GUI */
-	public void removeRenderableGUI(RenderableGUI renderable) {
-		guiRenderables.remove(renderable);
-	}
-	
-	/** Adds an object to be rendered in the HUD. Uses hashcode to separate */
-	public void addRenderableHUD(Renderable renderable) {
-		hudRenderables.add(renderable);
-	}
-
-	/** Removes an object from being rendered in the HUD */
-	public void removeRenderableHUD(RenderableGUI renderable) {
-		hudRenderables.remove(renderable);
-	}
-
-	/**
-	 * Checks if a GUI element was activated, also calling that
-	 * element.
-	 * 
-	 * @param x
-	 *        The X position of the GUI
-	 * @param y
-	 *        The Y position of the GUI
-	 * @return If a GUI element was activated
-	 */
-	public boolean guiInput(float x, float y) {
-		for (RenderableGUI gui : guiRenderables) {
-			Vector2 position = gui.getPosition();
-			Vector2 size = gui.getSize();
-			if (x > position.x && y > position.y && x < position.x + size.x
-					&& y < position.y + size.y) {
-				gui.pressed(x, y);
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/** Temporary local vector to prevent re-allocation every call */

@@ -42,7 +42,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
 		
 		// HUD
-		HUD_NUMBERS("images/game/numbers.png");
+		HUD_TEXTURE("images/game/hud.png");
 
 		private final String path;
 

@@ -1,19 +1,19 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.view.gui.ScoreView;
+import se.dat255.bulletinferno.view.gui.HudView;
 
 /** Handles the update of the score when
  * actions that affects the score happens */
 public class ScoreController {
 	/** Reference to the score view */
-	private final ScoreView scoreView;
+	private final HudView hudView;
 	
 	/** The score of the player */
 	private int score;
 	
 	/** Sets the required references */
-	public ScoreController(ScoreView scoreView) {
-		this.scoreView = scoreView;
+	public ScoreController(HudView hudView) {
+		this.hudView = hudView;
 	}
 	
 	/**
@@ -22,6 +22,6 @@ public class ScoreController {
 	 */
 	public void addScore(int score){
 		this.score += score;
-		scoreView.setScore(this.score);
+		hudView.setScore(this.score);
 	}
 }
