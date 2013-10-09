@@ -13,10 +13,11 @@ public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 	PROJECTILE_RAIN(new SpecialInitializer() {
 		@Override
 		public SpecialAbility initialize(ModelEnvironment game) {
-			return new SpecialAbilityImpl(new SpecialProjectileRain(game.getPhysicsEnvironment(), game.getWeaponEnvironment()));
+			return new SpecialAbilityImpl(new SpecialProjectileRain(game.getPhysicsEnvironment(),
+					game.getWeaponEnvironment()));
 		}
 	});
-	
+
 	private ModelEnvironment game;
 	private final SpecialInitializer specialInitializer;
 
@@ -24,18 +25,26 @@ public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 		this.specialInitializer = initializer;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public SpecialAbility getSpecialAbility(ModelEnvironment game) {
 		return specialInitializer.initialize(game);
 	}
-	
-	public interface SpecialInitializer {
-		public SpecialAbility initialize(ModelEnvironment game);
-	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getIdentifier() {
 		return this.name();
 	}
-	
+
+	/**
+	 * Interface for specifying the callback listener for the enum instances above.
+	 */
+	public interface SpecialInitializer {
+		public SpecialAbility initialize(ModelEnvironment game);
+	}
 }

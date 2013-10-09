@@ -14,11 +14,17 @@ public enum PassiveAbilityDefinitionImpl implements PassiveAbilityDefinition {
 		this.ability = ability;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public PassiveAbility getPassiveAbility() {
 		return this.ability;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getIdentifier() {
 		return this.name();

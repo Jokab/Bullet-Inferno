@@ -23,6 +23,13 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	private int counter = 0;
 	private PlayerShip playerShip;
 
+	/**
+	 * Constructs a SpecialEffect which will spawn {@value #AMOUNT_BULLETS} behind the 
+	 * player, firing towards the enemies.
+	 * 
+	 * @param physics The game's PhysicsEnvironment.
+	 * @param weapons The game's WeaponEnviornment.
+	 */
 	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
 		this.weapons = weapons;
@@ -33,6 +40,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	@Override
 	public void activate(PlayerShip playerShip) {
 		this.playerShip = playerShip;
+		timer.stop();
 		timer.setTime(0.1f);
 		timer.setContinuous(true);
 		timer.start();
