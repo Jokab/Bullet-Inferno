@@ -16,13 +16,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class LoadingScreenController extends SimpleController {
-	public enum FinishToScreen {
-		GameScreen, LoadoutScreen;
+
+	/** A listener for when the loading the loading screen is doing is finished */
+	public interface FinishedLoadingEventListener {
+		/**
+		 * Called when the loading the loading screen was shown for is complete. If the loading
+		 * screen is set to require a click, this event is called after that happens.
+		 */
+		public void onLoaded();
 	}
 
 	/** Aspect to keep on the screen */
-	private final static int VIRTUAL_WIDTH = 1280,
-			VIRTUAL_HEIGHT = 720;
+	private final static int VIRTUAL_WIDTH = 1280, VIRTUAL_HEIGHT = 720;
+
+	/** The resource manager this loading screen is used to display progress of */
+	private final ResourceManager resourceManager;
+
+	/** The event listener for when loading is finished */
+	FinishedLoadingEventListener finishListener;
+
+	/** Flag if we require a user input to do the switch after loading is finished */
+	private boolean clickToSwitch = true;
+
+	/** Flag indicating whether the loading of the asset manager has completed */
+	private boolean loadingFinished = false;
 
 	// GUI
 	private Stage stage;
@@ -31,26 +48,12 @@ public class LoadingScreenController extends SimpleController {
 	private Image screenBg;
 	private Label clickToStart;
 
-	private boolean shouldListenForClick = false;
 	//
 
-	/** The master screen controller */
-	private final MasterController masterController;
-
-	/** The resource manager this loading screen is used to display progress of */
-	private final ResourceManager resourceManager;
-
-	/** The screen to switch to when loading is finished */
-	private FinishToScreen onFinishedScreen = FinishToScreen.LoadoutScreen;
-
-	/** Flag if we require a user input to do the switch after loading is finished */
-	private boolean clickToSwitch = true;
-
-	public LoadingScreenController(ResourceManager resourceManager, MasterController masterController) {
+	public LoadingScreenController(ResourceManager resourceManager,
+			MasterController masterController) {
 		this.resourceManager = resourceManager;
 		resourceManager.startLoad(false);
-		
-		this.masterController = masterController;
 
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
@@ -75,7 +78,7 @@ public class LoadingScreenController extends SimpleController {
 		stage.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (shouldListenForClick) {
+				if (loadingFinished) {
 					switchToFinishedScreen();
 					return true;
 				} else {
@@ -90,18 +93,13 @@ public class LoadingScreenController extends SimpleController {
 	public void show() {
 		super.show();
 		Gdx.input.setInputProcessor(stage);
-		
-		shouldListenForClick = false;
+
+		loadingFinished = false;
 	}
 
 	private void switchToFinishedScreen() {
-		switch (onFinishedScreen) {
-		case GameScreen:
-			masterController.setScreen(masterController.getGameScreen());
-			break;
-		case LoadoutScreen:
-			masterController.setScreen(masterController.getLoadoutScreen());
-			break;
+		if (finishListener != null) {
+			finishListener.onLoaded();
 		}
 	}
 
@@ -111,9 +109,9 @@ public class LoadingScreenController extends SimpleController {
 			int percLoaded = (int) Math.floor(resourceManager.getLoadProgress() * 100);
 			clickToStart.setText("Loading... " + percLoaded + "%");
 		} else {
-			if (clickToSwitch){
-				if(!shouldListenForClick) {
-					shouldListenForClick = true;
+			if (clickToSwitch) {
+				if (!loadingFinished) {
+					loadingFinished = true;
 					clickToStart.setText("Touch to Start!");
 					clickToStart.validate();
 					clickToStart.setPosition(1280 / 2 - clickToStart.getWidth() / 2,
@@ -139,12 +137,14 @@ public class LoadingScreenController extends SimpleController {
 
 	@Override
 	public void dispose() {
+		screenBgTexture.dispose();
 		stage.dispose();
 		skin.dispose();
 	}
 
-	public void setOnFinishedScreen(FinishToScreen onFinishedScreen) {
-		this.onFinishedScreen = onFinishedScreen;
+	public void setFinishedLoadingEventListener(FinishedLoadingEventListener finishListener) {
+		System.out.println(finishListener);
+		this.finishListener = finishListener;
 	}
 
 	public void setClickToSwitch(boolean clickToSwitch) {
