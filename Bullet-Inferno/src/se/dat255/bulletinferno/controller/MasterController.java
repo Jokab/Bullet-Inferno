@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.controller.LoadingScreenController.FinishToScreen;
+import se.dat255.bulletinferno.controller.LoadingScreenController.FinishedLoadingEventListener;
 import se.dat255.bulletinferno.model.weapon.WeaponData;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl;
@@ -22,14 +22,28 @@ public class MasterController extends com.badlogic.gdx.Game {
 	private LoadingScreenController loadingScreen;
 
 	private ResourceManager resourceManager;
+	
+	private FinishedLoadingEventListener switchToGameOnLoaded = new FinishedLoadingEventListener() {
+		@Override
+		public void onLoaded() {
+			setScreen(getGameScreen());
+		}
+	};
+	
+	private FinishedLoadingEventListener switchToLoadoutOnLoaded = new FinishedLoadingEventListener() {
+		@Override
+		public void onLoaded() {
+			setScreen(getLoadoutScreen());
+		}
+	};
 
 	@Override
 	public void create() {
 		this.resourceManager = new ResourceManagerImpl();
 
 		this.loadingScreen = new LoadingScreenController(resourceManager, this);
+		loadingScreen.setFinishedLoadingEventListener(switchToLoadoutOnLoaded);
 		loadingScreen.setClickToSwitch(true);
-		loadingScreen.setOnFinishedScreen(FinishToScreen.LoadoutScreen);
 		setScreen(loadingScreen);
 	}
 
@@ -91,9 +105,9 @@ public class MasterController extends com.badlogic.gdx.Game {
 			loadingScreen.setClickToSwitch(false);
 
 			if (currentScreen == loadoutScreen) {
-				loadingScreen.setOnFinishedScreen(FinishToScreen.LoadoutScreen);
+				loadingScreen.setFinishedLoadingEventListener(switchToLoadoutOnLoaded);
 			} else if (currentScreen == gameScreen) {
-				loadingScreen.setOnFinishedScreen(FinishToScreen.GameScreen);
+				loadingScreen.setFinishedLoadingEventListener(switchToGameOnLoaded);
 			}
 
 			setScreen(loadingScreen);
