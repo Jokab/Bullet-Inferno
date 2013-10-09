@@ -15,6 +15,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private final PlayerShip player;
 	
 	private final PhysicsEnvironment physics;
+	private final EntityEnvironment entities;
 	private Timer[] timers;
 
 	/** Flag indicating wheter we have told player to move us on screen or not */
@@ -34,6 +35,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			timers[i].stop();
 		}
 		this.physics = physics;
+		this.entities = entities;
 		this.player = entities.getPlayerShip();
 		
 		
@@ -62,7 +64,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		super.takeDamage(damage);
 
 		if (isDead()) {
-			// TODO Restore player ship speed
+			entities.getPlayerShip().restoreSpeed();
 		}
 	}
 	
