@@ -1,32 +1,27 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import java.awt.Dimension;
-import java.awt.geom.Dimension2D;
-
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
-import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionListener {
-
-	private static PhysicsBodyDefinition bodyDefinition = null;
 
 	private PhysicsBody body = null;
 
 	private float damage;
 	private Teamable source = null;
-	private final Game game;
 	private ProjectileType projectileType;
+	
+	/** The PhysicsEnvironment instance injected at construction. */
+	private final PhysicsEnvironment physics;
+	
+	/** The EntityEnvironment instance injected at construction. */
+	private final WeaponEnvironment weapons;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -35,7 +30,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
-			game.disposeProjectile(ProjectileImpl.this);
+			weapons.disposeProjectile(ProjectileImpl.this);
 		}
 	};
 
@@ -45,9 +40,9 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * @param game
 	 *        the game instance.
 	 */
-	public ProjectileImpl(Game game) {
-		this.game = game;
-		
+	public ProjectileImpl(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+		this.physics = physics;
+		this.weapons = weapons;
 	}
 
 	/**
@@ -60,11 +55,11 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		projectileType = type;
 		this.damage = damage;
 		this.source = source;
-		body = game.getPhysicsWorld().createBody(bodyDefinition, this, origin);
+		body = physics.createBody(bodyDefinition, this, origin);
 
 		// Check if there is a movement pattern to attach
 		if (type.getMovementPattern() != null) {
-			game.getPhysicsWorld().attachMovementPattern(type.getMovementPattern().copy(), body);
+			physics.attachMovementPattern(type.getMovementPattern().copy(), body);
 		}
 
 		this.setVelocity(velocity);
@@ -101,7 +96,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 			if (damage <= 0) {
 				// We won't need this projectile anymore, since it is useless and can't hurt
 				// anyone.
-				game.disposeProjectile(this);
+				weapons.disposeProjectile(this);
 			}
 		}
 	}
@@ -116,7 +111,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 */
 	@Override
 	public void reset() {
-		game.getPhysicsWorld().removeBody(body);
+		physics.removeBody(body);
 		body = null;
 		source = null;
 	}
@@ -160,7 +155,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		// exploded (only happens in rare cases on the same frame as collided),
 		// if so, explode and remove
 		if(damage > 0) {
-			game.runLater(removeSelf);
+			physics.runLater(removeSelf);
 			damage = 0;
 		}
 	}

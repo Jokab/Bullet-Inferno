@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import se.dat255.bulletinferno.model.ManagedTexture;
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.Slice;
+import se.dat255.bulletinferno.util.ManagedTexture;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.Renderable;
 
 /**

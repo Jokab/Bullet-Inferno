@@ -2,8 +2,8 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
-import se.dat255.bulletinferno.model.ResourceIdentifier;
 import se.dat255.bulletinferno.util.Disposable;
+import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 /**
  * An interface to define the properties of a slice (i.e. a part)

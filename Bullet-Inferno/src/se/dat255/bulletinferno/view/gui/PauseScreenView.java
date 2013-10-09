@@ -1,8 +1,8 @@
 package se.dat255.bulletinferno.view.gui;
 
 import se.dat255.bulletinferno.controller.GameController;
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.graphics.Texture;

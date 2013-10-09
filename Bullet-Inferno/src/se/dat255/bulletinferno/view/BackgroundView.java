@@ -6,11 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ManagedTexture;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.model.ModelEnvironment;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Segment;
+import se.dat255.bulletinferno.util.ManagedTexture;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.Gdx;
@@ -24,18 +25,18 @@ public class BackgroundView implements Renderable {
 	private ManagedTexture mTexture;
 	private Texture texture;
 	private List<SegmentView> segmentViews = Collections.emptyList();
-	private Game game;
+	private ModelEnvironment models;
 	
 	private final ResourceManager resourceManager;
 	
 	/** The last Game.getRemovedSegmentCount() value, which reflects the current segmentViews. */
 	private int lastRemovedSegmentCount = 0;
 
-	public BackgroundView(Game game, ResourceManager resourceManager, PlayerShip ship) {
+	public BackgroundView(ModelEnvironment models, ResourceManager resourceManager, PlayerShip ship) {
 		this.ship = ship;		
 		mTexture = resourceManager.getManagedTexture(TextureType.BLUE_BACKGROUND);
 		texture = mTexture.getTexture();
-		this.game = game;
+		this.models = models;
 		this.resourceManager = resourceManager;
 	}
 	
@@ -43,7 +44,7 @@ public class BackgroundView implements Renderable {
 	 * Refreshes the segment views list to reflect the current game.
 	 */
 	private void refreshSegmentViews() {
-		int removedSegmentCount = game.getRemovedSegmentCount();
+		int removedSegmentCount = models.getRemovedSegmentCount();
 		int removedSegmentsSinceLast = removedSegmentCount - lastRemovedSegmentCount;
 		
 		// Note that is is possible that segmentViews.size() < removedSegmentsSinceLast!
@@ -60,7 +61,7 @@ public class BackgroundView implements Renderable {
 		// This is a safe measurement even if removedSegmentsSinceLast exceeds segmentViews.size().
 		int segmentViewsNotRemoved = segmentViews.size() - segmentViewsActuallyRemoved;
 		
-		List<? extends Segment> segments = game.getSegments();
+		List<? extends Segment> segments = models.getSegments();
 		int newSegmentCount = segments.size() - segmentViewsNotRemoved;
 		
 		// Only create a new list if something actually changed (removals, additions).

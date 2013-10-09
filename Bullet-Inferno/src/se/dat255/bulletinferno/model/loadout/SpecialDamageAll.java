@@ -1,23 +1,22 @@
 package se.dat255.bulletinferno.model.loadout;
 
-import se.dat255.bulletinferno.model.Destructible;
-import se.dat255.bulletinferno.model.Enemy;
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.SpecialEffect;
+import se.dat255.bulletinferno.model.entity.Destructible;
+import se.dat255.bulletinferno.model.entity.Enemy;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
 
 public class SpecialDamageAll implements SpecialEffect {
 
-	private final Game game;
+	private final EntityEnvironment entities;
 	private static final float DAMAGE = 5;
 
-	public SpecialDamageAll(Game game) {
-		this.game = game;
+	public SpecialDamageAll(EntityEnvironment entities) {
+		this.entities = entities;
 	}
 
 	@Override
 	public void activate(PlayerShip playerShip) {
-		for(Enemy enemy : game.getEnemies()) {
+		for(Enemy enemy : entities.getEnemies()) {
 			if(enemy instanceof Destructible) {
 				((Destructible) enemy).takeDamage(DAMAGE);
 			}

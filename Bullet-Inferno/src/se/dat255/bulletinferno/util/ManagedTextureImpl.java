@@ -1,9 +1,6 @@
 package se.dat255.bulletinferno.util;
 
-import se.dat255.bulletinferno.model.ManagedTexture;
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.model.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 import com.badlogic.gdx.graphics.Texture;
 
