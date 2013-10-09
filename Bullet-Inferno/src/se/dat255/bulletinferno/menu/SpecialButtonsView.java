@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -25,25 +26,18 @@ public class SpecialButtonsView {
 
 	private final ResourceManager resourceManager;
 	private final List<SpecialButton> specialButtons = new ArrayList<SpecialButton>();
-	private SpecialButton selectionSpecialButton;
+	private SpecialButton selectionButton;
 	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
+	private final Label label;
 
-	public SpecialButtonsView(Stage stage, Skin skin, Table table, ResourceManager resourceManager) {
+	public SpecialButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
 		this.stage = stage;
 		this.skin = skin;
 		this.table = table;
+		this.label = label;
 		this.resourceManager = resourceManager;
-	}
-
-	private Button getTableButton(ResourceIdentifier identifier) {
-		Texture texture = resourceManager.getManagedTexture(identifier).getTexture();
-		TextureRegion region = new TextureRegion(texture);
-		ButtonStyle buttonStyle = new ButtonStyle();
-		buttonStyle.up = new TextureRegionDrawable(region);
-
-		return new Button(buttonStyle);
 	}
 
 	public void populateTable() {
@@ -57,17 +51,27 @@ public class SpecialButtonsView {
 				specialButtons.add(specialButton);
 				specialButton.getButton().addListener(new ClickedListener());
 			}
-
+	
 		}
 		// Set up the table to add these buttons to
 		showTable();
 	}
 
 	private void showTable() {
-		table.clearChildren();
+		table.clear();
 		for (SpecialButton button : specialButtons) {
 			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
 		}
+		label.setText("Special abilities");
+	}
+
+	private Button getTableButton(ResourceIdentifier identifier) {
+		Texture texture = resourceManager.getManagedTexture(identifier).getTexture();
+		TextureRegion region = new TextureRegion(texture);
+		ButtonStyle buttonStyle = new ButtonStyle();
+		buttonStyle.up = new TextureRegionDrawable(region);
+
+		return new Button(buttonStyle);
 	}
 
 	private void setSelectionToNothing(ButtonStyle style) {
@@ -75,8 +79,8 @@ public class SpecialButtonsView {
 		newStyle.up = new TextureRegionDrawable(new TextureRegion(
 				new Texture("data/frame.png")));
 		newStyle.over = newStyle.up;
-		selectionSpecialButton.getButton().setStyle(newStyle);
-		selectionSpecialButton.setData(null);
+		selectionButton.getButton().setStyle(newStyle);
+		selectionButton.setData(null);
 	}
 
 	private void deselectOtherButtons(SpecialButton selected) {
@@ -89,19 +93,25 @@ public class SpecialButtonsView {
 
 	private void setSelectionToSelected(SpecialButton sButton) {
 		ButtonStyle style = sButton.getButton().getStyle();
-		selectionSpecialButton.setData(sButton.getData());
+		selectionButton.setData(sButton.getData());
 
 		Texture texture = resourceManager.getManagedTexture(
-				selectionSpecialButton.getData()).getTexture();
+				selectionButton.getData()).getTexture();
 		style.up = new TextureRegionDrawable(new TextureRegion(texture));
 		style.over = style.up;
 
-		selectionSpecialButton.getButton().setStyle(style);
+		selectionButton.getButton().setStyle(style);
+	}
+
+
+	public SpecialButton getSelectionButton() {
+		return this.selectionButton;
 	}
 
 	public void setSelectionButton(SpecialButton selectionSpecialButton) {
-		this.selectionSpecialButton = selectionSpecialButton;
+		this.selectionButton = selectionSpecialButton;
 	}
+
 
 	private class ClickedListener extends ChangeListener {
 		@Override
@@ -122,25 +132,25 @@ public class SpecialButtonsView {
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
-
+	
 			deselectOtherButtons(selected);
 		}
 	}
 
 	public class SelectionClickedListener extends ChangeListener {
-
+	
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (selectionSpecialButton.getData() == null) {
+			if (selectionButton.getData() == null) {
 				populateTable();
 			} else {
-				Button button = selectionSpecialButton.getButton();
+				Button button = selectionButton.getButton();
 				if (button == ((Button) actor)) {
 					setSelectionToNothing(button.getStyle());
 					deselectOtherButtons(new SpecialButton(null, null, null));
 				}
 			}
 		}
-
+	
 	}
 }

@@ -10,6 +10,7 @@ import se.dat255.bulletinferno.menu.SpecialButton;
 import se.dat255.bulletinferno.menu.SpecialButtonsView;
 import se.dat255.bulletinferno.menu.WeaponButton;
 import se.dat255.bulletinferno.menu.WeaponButtonsView;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
@@ -56,6 +57,8 @@ public class LoadoutController extends SimpleController {
 	private WeaponButtonsView weaponButtonsView;
 	private SpecialButtonsView specialButtonsView;
 
+	private Label label;
+
 	/**
 	 * Main controller used for the loadout screen
 	 * 
@@ -82,14 +85,14 @@ public class LoadoutController extends SimpleController {
 		// Add default font as default
 		skin.add("default", new BitmapFont());
 		setupTable();
-		weaponButtonsView = new WeaponButtonsView(stage, skin, table, resourceManager);
-		specialButtonsView = new SpecialButtonsView(stage, skin, table, resourceManager);
-		
+		weaponButtonsView = new WeaponButtonsView(stage, skin, table, label, resourceManager);
+		specialButtonsView = new SpecialButtonsView(stage, skin, table, label, resourceManager);
+
 		// Set up the start button and add its listener
 		setupStartButton();
 
 		// Set up and store buttons in list
-//		weaponButtonsView.setupPrimaryWeaponButtons();
+		// weaponButtonsView.setupPrimaryWeaponButtons();
 		specialButtonsView.populateTable();
 		setupSelectionButtons();
 		setupErrorMessage();
@@ -175,19 +178,7 @@ public class LoadoutController extends SimpleController {
 		stage.addActor(startButton);
 
 		// Start button click listener
-		startButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				WeaponDefinition weapon = weaponButtonsView.getSelectionButton().getData();
-				if (weapon == null) {
-					showErrorMessage("primary weapon");
-				} else {
-					startGame(gameController,
-							new WeaponDefinition[] { weaponButtonsView.getSelectionButton()
-									.getData() });
-				}
-			}
-		});
+		startButton.addListener(new StartButtonClickedListener());
 	}
 
 	private void setupTable() {
@@ -203,7 +194,7 @@ public class LoadoutController extends SimpleController {
 		font = skin.getFont("default");
 		font.scale(0.4f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
-		Label label = new Label("Primary Weapon", labelStyle);
+		label = new Label("Primary Weapon", labelStyle);
 
 		label.setPosition(table.getX() - 45, table.getY() + 210);
 
@@ -231,5 +222,22 @@ public class LoadoutController extends SimpleController {
 	private void showErrorMessage(String equipmentMissing) {
 		errorMessage.setText("You must select " + equipmentMissing + "!");
 		errorMessage.setVisible(true);
+	}
+
+	public class StartButtonClickedListener extends ChangeListener {
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			WeaponDefinition weapon = weaponButtonsView.getSelectionButton().getData();
+			SpecialAbilityDefinition special = specialButtonsView.getSelectionButton().getData();
+			if (weapon == null) {
+				showErrorMessage("primary weapon");
+			} else if(special == null) {
+				showErrorMessage("special ability");
+			} else {
+				startGame(gameController,
+						new WeaponDefinition[] { weaponButtonsView.getSelectionButton()
+								.getData() });
+			}
+		}
 	}
 }
