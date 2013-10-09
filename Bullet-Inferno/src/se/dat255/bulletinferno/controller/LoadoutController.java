@@ -90,7 +90,7 @@ public class LoadoutController extends SimpleController {
 
 		// Set up and store buttons in list
 //		weaponButtonsView.setupPrimaryWeaponButtons();
-		specialButtonsView.setupButtons();
+		specialButtonsView.populateTable();
 		setupSelectionButtons();
 		setupErrorMessage();
 
@@ -178,12 +178,12 @@ public class LoadoutController extends SimpleController {
 		startButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				WeaponDefinition weapon = weaponButtonsView.getSelectionWeaponButton().getData();
+				WeaponDefinition weapon = weaponButtonsView.getSelectionButton().getData();
 				if (weapon == null) {
 					showErrorMessage("primary weapon");
 				} else {
 					startGame(gameController,
-							new WeaponDefinition[] { weaponButtonsView.getSelectionWeaponButton()
+							new WeaponDefinition[] { weaponButtonsView.getSelectionButton()
 									.getData() });
 				}
 			}

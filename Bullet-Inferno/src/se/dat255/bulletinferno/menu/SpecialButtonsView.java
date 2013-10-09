@@ -46,22 +46,25 @@ public class SpecialButtonsView {
 		return new Button(buttonStyle);
 	}
 
-	public void setupButtons() {
-		for (int i = 0; i < 5; i++) {
-			// TODO: the line below needs changing to take into account all weapons
-			SpecialAbilityDefinitionImpl ability = SpecialAbilityDefinitionImpl.PROJECTILE_RAIN;
-			SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
-					resourceManager);
-			specialButtons.add(specialButton);
-			specialButton.getButton().addListener(new ClickedListener());
-		}
+	public void populateTable() {
+		if (specialButtons.size() == 0) {
+			table.clear();
+			for (int i = 0; i < 5; i++) {
+				// TODO: the line below needs changing to take into account all weapons
+				SpecialAbilityDefinitionImpl ability = SpecialAbilityDefinitionImpl.PROJECTILE_RAIN;
+				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
+						resourceManager);
+				specialButtons.add(specialButton);
+				specialButton.getButton().addListener(new ClickedListener());
+			}
 
+		}
 		// Set up the table to add these buttons to
-		setupButtonsTable();
+		showTable();
 	}
 
-	private void setupButtonsTable() {
-		table.clear();
+	private void showTable() {
+		table.clearChildren();
 		for (SpecialButton button : specialButtons) {
 			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
 		}
@@ -99,7 +102,7 @@ public class SpecialButtonsView {
 	public void setSelectionButton(SpecialButton selectionSpecialButton) {
 		this.selectionSpecialButton = selectionSpecialButton;
 	}
-	
+
 	private class ClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
@@ -119,21 +122,25 @@ public class SpecialButtonsView {
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
-	
+
 			deselectOtherButtons(selected);
 		}
 	}
 
 	public class SelectionClickedListener extends ChangeListener {
-		
+
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			Button button = selectionSpecialButton.getButton();
-			if (button == ((Button) actor)) {
-				setSelectionToNothing(button.getStyle());
-				deselectOtherButtons(new SpecialButton(null, null, null));
+			if (selectionSpecialButton.getData() == null) {
+				populateTable();
+			} else {
+				Button button = selectionSpecialButton.getButton();
+				if (button == ((Button) actor)) {
+					setSelectionToNothing(button.getStyle());
+					deselectOtherButtons(new SpecialButton(null, null, null));
+				}
 			}
 		}
-	
+
 	}
 }
