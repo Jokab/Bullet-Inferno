@@ -37,11 +37,11 @@ public enum ProjectileType implements ResourceIdentifier {
 	}
 
 	public void releaseProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			Vector2 position, Vector2 offset,
+			Vector2 position,
 			Vector2 projectileVector, Teamable source) {
 		
 		Projectile projectile = weapons.retrieveProjectile(ProjectileImpl.class);
-		projectile.init(this, position.cpy().add(offset), projectileVector,
+		projectile.init(this, position.cpy(), projectileVector,
 				damage, source, bodyDefinition);
 		
 	}

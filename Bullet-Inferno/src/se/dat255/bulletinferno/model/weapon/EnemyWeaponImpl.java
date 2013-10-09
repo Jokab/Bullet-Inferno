@@ -14,9 +14,9 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	private final WeaponEnvironment weapons;
 
 	public EnemyWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDefinition type, float reloadingTime, ProjectileType projectile, Vector2 offset,
+			WeaponDefinition type, float reloadingTime, ProjectileType projectile,
 			float projectileSpeed) {
-		super(physics, weapons, type, reloadingTime, projectile, offset, projectileSpeed);
+		super(physics, weapons, type, reloadingTime, projectile, projectileSpeed);
 		this.physics = physics;
 		this.weapons = weapons;
 		
@@ -35,18 +35,11 @@ public class EnemyWeaponImpl extends WeaponImpl {
 
 		if (isLoaded()) {
 
-			getProjectileType().releaseProjectile(physics, weapons, position, getOffset(),
+			getProjectileType().releaseProjectile(physics, weapons, position,
 					direction.scl(getProjectileVelocity()), source);
 			// Start count down
 			getTimer().restart();
 		}
 
-	}
-	
-	// Enemy weapon does not have an offset, yet.
-	@Override
-	public Vector2 getOffset() {
-		return new Vector2();
-		
 	}
 }
