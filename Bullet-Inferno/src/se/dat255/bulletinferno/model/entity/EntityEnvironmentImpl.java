@@ -32,7 +32,7 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 				null, 
 				new SpecialAbilityImpl(new SpecialProjectileRain(physics, weapons)), 
 				new PassiveAbilityImpl(new PassiveReloadingTime(0.5f)));
-		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1000000, loadout,
+		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 1, loadout,
 				ShipType.PLAYER_DEFAULT);
 	}
 	

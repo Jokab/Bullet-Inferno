@@ -50,6 +50,8 @@ public class LoadoutController extends SimpleController {
 
 	private Label errorMessage;
 
+	private final GameController gameController;
+
 	/**
 	 * Main controller used for the loadout screen
 	 * 
@@ -59,6 +61,8 @@ public class LoadoutController extends SimpleController {
 	 */
 	public LoadoutController(final MasterController masterController,
 			final ResourceManager resourceManager) {
+		this.gameController = new GameController(masterController, resourceManager);
+		
 		this.resourceManager = resourceManager;
 		this.masterController = masterController;
 
@@ -145,7 +149,7 @@ public class LoadoutController extends SimpleController {
 				if (weapon == null) {
 					showErrorMessage("primary weapon");
 				} else {
-					masterController.startGame(selectionWeaponButton.getWeaponData());
+					startGame(gameController, selectionWeaponButton.getWeaponData());
 				}
 			}
 		});
@@ -178,20 +182,18 @@ public class LoadoutController extends SimpleController {
 
 		// Add table to stage
 		primaryWeaponTable.debug();
-		primaryWeaponTable.setColor(new Color(Color.BLACK));
-		primaryWeaponTable.setOrigin(1100, 450);
 		primaryWeaponTable.setPosition(1100, 450);
 		primaryWeaponTable.setSize(100, 40);
 
 		BitmapFont font = new BitmapFont();
 		font = skin.getFont("default");
-		font.scale(0.7f);
+		font.scale(0.4f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
 		Label label = new Label("Primary Weapon", labelStyle);
 
 		stage.addActor(primaryWeaponTable);
 
-		label.setPosition(primaryWeaponTable.getX() - 45, primaryWeaponTable.getY() + 200);
+		label.setPosition(primaryWeaponTable.getX() - 45, primaryWeaponTable.getY() + 210);
 		stage.addActor(label);
 
 		for (WeaponButton button : primaryWeapons) {
@@ -290,5 +292,13 @@ public class LoadoutController extends SimpleController {
 		selectionButtonStyle.over = selectionButtonStyle.up;
 		selectionWeaponButton.getButton().setStyle(selectionButtonStyle);
 		selectionWeaponButton.setWeaponData(null);
+	}
+	
+	public void startGame(GameController gameScreen, WeaponData weapon) {
+//		if(gameScreen != null) {
+//			gameScreen.dispose();
+//		}
+		gameScreen = new GameController(masterController, resourceManager);
+		masterController.startGame(gameScreen, weapon, true);
 	}
 }

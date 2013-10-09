@@ -23,6 +23,8 @@ public class MasterController extends com.badlogic.gdx.Game {
 
 	private ResourceManager resourceManager;
 
+	private boolean firstRun = true;
+
 	@Override
 	public void create() {
 		this.resourceManager = new ResourceManagerImpl();
@@ -44,26 +46,33 @@ public class MasterController extends com.badlogic.gdx.Game {
 		if (loadoutScreen != null) {
 			loadoutScreen.dispose();
 		}
-		if(resourceManager != null) {
+		if (resourceManager != null) {
 			resourceManager.dispose();
 		}
-		
+
 	}
 
 	/** Starts a new game and changes the screen to that game */
-	public void startGame(WeaponData weaponData) {
+	public void startGame(GameController gameScreen, WeaponData weaponData, boolean fromLoadout) {
 		if (weaponData == null) {
-			if (gameScreen == null) {
-				throw new RuntimeException(
-						"MyGame.startGame(null): Can't load weapon data since game screen is null.");
-			}
+//			if (gameScreen == null) {
+//				throw new RuntimeException(
+//						"MyGame.startGame(null): Can't load weapon data since game screen is null.");
+//			}
 			weaponData = gameScreen.getWeaponData();
 		}
-		if (gameScreen != null) {
-			gameScreen.dispose();
+
+		if (!fromLoadout) {
+			if (gameScreen != null) {
+				gameScreen.dispose();
+			}
+			gameScreen = new GameController(this, resourceManager);
 		}
-		gameScreen = new GameController(this, resourceManager);
+
 		gameScreen.createNewGame(weaponData);
+		this.gameScreen = gameScreen;
+		firstRun = false;
+
 		setScreen(gameScreen);
 	}
 
@@ -71,7 +80,7 @@ public class MasterController extends com.badlogic.gdx.Game {
 	public void setScreen(Screen screen) {
 		super.setScreen(screen);
 	}
-	
+
 	public GameController getGameScreen() {
 		return gameScreen;
 	}
