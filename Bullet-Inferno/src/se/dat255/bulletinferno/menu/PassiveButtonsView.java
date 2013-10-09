@@ -3,8 +3,8 @@ package se.dat255.bulletinferno.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinitionImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
 
@@ -23,17 +23,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
-public class SpecialButtonsView {
+public class PassiveButtonsView {
 
 	private final ResourceManager resourceManager;
-	private final List<SpecialButton> specialButtons = new ArrayList<SpecialButton>();
-	private SpecialButton selectionButton;
+	private final List<PassiveButton> passiveButtons = new ArrayList<PassiveButton>();
+	private PassiveButton selectionButton;
 	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
 	private final Label label;
 
-	public SpecialButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
+	public PassiveButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
 		this.stage = stage;
 		this.skin = skin;
 		this.table = table;
@@ -42,15 +42,15 @@ public class SpecialButtonsView {
 	}
 
 	public void populateTable() {
-		if (specialButtons.size() == 0) {
+		if (passiveButtons.size() == 0) {
 			table.clear();
 			for (int i = 0; i < 5; i++) {
 				// TODO: the line below needs changing to take into account all weapons
-				SpecialAbilityDefinition ability = SpecialAbilityDefinitionImpl.PROJECTILE_RAIN;
-				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
+				PassiveAbilityDefinition ability = PassiveAbilityDefinitionImpl.TAKE_DAMAGE_MODIFIER;
+				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
 						resourceManager);
-				specialButtons.add(specialButton);
-				specialButton.getButton().addListener(new ClickedListener());
+				passiveButtons.add(passiveButton);
+				passiveButton.getButton().addListener(new ClickedListener());
 			}
 	
 		}
@@ -60,10 +60,10 @@ public class SpecialButtonsView {
 
 	private void showTable() {
 		table.clear();
-		for (SpecialButton button : specialButtons) {
+		for (PassiveButton button : passiveButtons) {
 			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
 		}
-		label.setText("Special abilities");
+		label.setText("Passive abilities");
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
@@ -84,17 +84,17 @@ public class SpecialButtonsView {
 		selectionButton.setData(null);
 	}
 
-	private void deselectOtherButtons(SpecialButton selected) {
-		for (SpecialButton sButton : specialButtons) {
-			if (sButton != selected && sButton.isSelected()) {
-				sButton.toggleSelected(skin);
+	private void deselectOtherButtons(PassiveButton selected) {
+		for (PassiveButton pButton : passiveButtons) {
+			if (pButton != selected && pButton.isSelected()) {
+				pButton.toggleSelected(skin);
 			}
 		}
 	}
 
-	private void setSelectionToSelected(SpecialButton sButton) {
-		ButtonStyle style = sButton.getButton().getStyle();
-		selectionButton.setData(sButton.getData());
+	private void setSelectionToSelected(PassiveButton pButton) {
+		ButtonStyle style = pButton.getButton().getStyle();
+		selectionButton.setData(pButton.getData());
 
 		Texture texture = resourceManager.getManagedTexture(
 				selectionButton.getData()).getTexture();
@@ -105,11 +105,11 @@ public class SpecialButtonsView {
 	}
 
 
-	public SpecialButton getSelectionButton() {
+	public PassiveButton getSelectionButton() {
 		return this.selectionButton;
 	}
 
-	public void setSelectionButton(SpecialButton selectionSpecialButton) {
+	public void setSelectionButton(PassiveButton selectionSpecialButton) {
 		this.selectionButton = selectionSpecialButton;
 	}
 
@@ -117,16 +117,16 @@ public class SpecialButtonsView {
 	private class ClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			SpecialButton selected = null;
-			for (SpecialButton sButton : specialButtons) {
-				Button button = sButton.getButton();
+			PassiveButton selected = null;
+			for (PassiveButton pButton : passiveButtons) {
+				Button button = pButton.getButton();
 				if (button == ((Button) actor)) {
-					selected = sButton;
-					if (!sButton.isSelected()) {
-						sButton.toggleSelected(skin);
-						setSelectionToSelected(sButton);
+					selected = pButton;
+					if (!pButton.isSelected()) {
+						pButton.toggleSelected(skin);
+						setSelectionToSelected(pButton);
 					} else {
-						sButton.toggleSelected(skin);
+						pButton.toggleSelected(skin);
 						setSelectionToNothing(button.getStyle());
 					}
 				}
@@ -148,7 +148,7 @@ public class SpecialButtonsView {
 				Button button = selectionButton.getButton();
 				if (button == ((Button) actor)) {
 					setSelectionToNothing(button.getStyle());
-					deselectOtherButtons(new SpecialButton(null, null, null));
+					deselectOtherButtons(new PassiveButton(null, null, null));
 				}
 			}
 		}

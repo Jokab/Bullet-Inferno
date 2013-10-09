@@ -18,4 +18,9 @@ public enum PassiveAbilityDefinitionImpl implements PassiveAbilityDefinition {
 	public PassiveAbility getSpecialAbility() {
 		return this.ability;
 	}
+
+	@Override
+	public String getIdentifier() {
+		return this.name();
+	}
 }

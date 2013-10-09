@@ -10,7 +10,8 @@ public class PassiveDamageModifier implements PassiveEffect {
 
 	/**
 	 * @param percent
-	 *        The percentage that the damage will be modified by. So 1.10 means 10% damage increase.
+	 *        The percentage that the damage dealt to enemies will be modified by. So 1.10 means 10%
+	 *        damage increase.
 	 */
 	public PassiveDamageModifier(float percent) {
 		this.percent = percent;
