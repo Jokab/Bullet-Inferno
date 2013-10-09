@@ -156,7 +156,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void fireWeapon() {
-		weaponLoadout.getHeavyWeapon().fire(getPosition().add(new Vector2(getDimensions().x/2,0)), new Vector2(1, 0), this);
+		weaponLoadout.getHeavyWeapon().fire(getPosition(), new Vector2(1, 0), this);
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		if (source == weaponTimer) {
-			weaponLoadout.getStandardWeapon().fire(getPosition().add(new Vector2(getDimensions().x/2,0)), new Vector2(1, 0), this);
+			weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
 		}
 	}
 

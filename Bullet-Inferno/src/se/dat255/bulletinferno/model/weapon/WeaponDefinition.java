@@ -22,6 +22,13 @@ public interface WeaponDefinition extends ResourceIdentifier {
 	ProjectileType getProjectileType();
 
 	/**
+	 * Returns the offset, in relation to the ship, that this weapon will fire its bullets from.
+	 * 
+	 * @return The offset.
+	 */
+	Vector2 getOffset();
+
+	/**
 	 * Returns the velocity of the projectile that is fired.
 	 * 
 	 * @return The projectile's velocity.

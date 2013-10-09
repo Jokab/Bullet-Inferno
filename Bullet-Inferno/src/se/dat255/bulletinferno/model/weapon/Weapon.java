@@ -31,6 +31,13 @@ public interface Weapon {
 	public boolean isLoaded();
 
 	/**
+	 * Returns the weapon's offset position
+	 * 
+	 * @return offset
+	 */
+	public Vector2 getOffset();
+
+	/**
 	 * Fires the weapon from the given position with the weapon's given
 	 * offset, in the given direction. The source is for determine which
 	 * team the fired projectile belongs to.
