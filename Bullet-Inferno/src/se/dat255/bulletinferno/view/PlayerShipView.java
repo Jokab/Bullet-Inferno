@@ -120,7 +120,10 @@ public class PlayerShipView implements Renderable, Timerable {
 				heavyWeaponSprite.draw(batch);
 			}
 			
-			smokeTrail.setSpawnPoint(ship.getPosition());
+			// TODO: Fix these values to match some texture offsets (+ break out to constants).
+			smokeTrail.setSpawnPoint(
+					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
+			smokeTrail.setParticleOrigin(lastShipPosition);
 			smokeTrail.render(batch);
 		}
 	}
