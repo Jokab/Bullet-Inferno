@@ -44,8 +44,13 @@ public class ResourceManagerImpl implements ResourceManager {
 		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
 		PROJECTILE_RAIN("data/projectileRain.png"),
 		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
-		LOADOUT_START_BUTTON("data/startBtn.png");
+		LOADOUT_START_BUTTON("data/startBtn.png"),
 
+		//Particles
+		SMOKE_PARTICLE("images/particles/smoke.png"),
+
+		;
+		
 		private final String path;
 
 		TextureType(String path) {
