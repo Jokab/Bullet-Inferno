@@ -62,7 +62,12 @@ public class LoadoutController extends SimpleController {
 	private SpecialButtonsView specialButtonsView;
 	private PassiveButtonsView passiveButtonsView;
 
-	private Label label;
+	private Label tableLabel;
+	
+	private Label primaryLabel;
+	private Label heavyLabel;
+	private Label specialLabel;
+	private Label passiveLabel;
 
 	/**
 	 * Main controller used for the loadout screen
@@ -90,9 +95,9 @@ public class LoadoutController extends SimpleController {
 		// Add default font as default
 		skin.add("default", new BitmapFont());
 		setupTable();
-		weaponButtonsView = new WeaponButtonsView(stage, skin, table, label, resourceManager);
-		specialButtonsView = new SpecialButtonsView(stage, skin, table, label, resourceManager);
-		passiveButtonsView = new PassiveButtonsView(stage, skin, table, label, resourceManager);
+		weaponButtonsView = new WeaponButtonsView(stage, skin, table, tableLabel, resourceManager);
+		specialButtonsView = new SpecialButtonsView(stage, skin, table, tableLabel, resourceManager);
+		passiveButtonsView = new PassiveButtonsView(stage, skin, table, tableLabel, resourceManager);
 
 		// Set up the start button and add its listener
 		setupStartButton();
@@ -102,7 +107,14 @@ public class LoadoutController extends SimpleController {
 		// Initially populate a table with a kind of equipment
 		weaponButtonsView.populateTable("standard");
 
+		// BELOW IS FOR TESTING ONLY
+		weaponButtonsView.populateTable("heavy");
+		specialButtonsView.populateTable();
+		passiveButtonsView.populateTable();
+		
 		setupErrorMessage();
+		
+		
 	}
 
 	@Override
@@ -235,12 +247,12 @@ public class LoadoutController extends SimpleController {
 		font = skin.getFont("default");
 		font.scale(0.4f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
-		label = new Label("Primary Weapon", labelStyle);
+		tableLabel = new Label("Primary Weapon", labelStyle);
 
-		label.setPosition(table.getX() - 45, table.getY() + 210);
+		tableLabel.setPosition(table.getX() - 45, table.getY() + 210);
 
 		stage.addActor(table);
-		stage.addActor(label);
+		stage.addActor(tableLabel);
 	}
 
 	private void setupErrorMessage() {
