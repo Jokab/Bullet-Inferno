@@ -29,7 +29,6 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
 	private Timer[] timers;
-	private Vector2[] offsets;
 	private String weaponId;
 	private DisorderedBossMovementPattern dmp;
 	private FollowingMovementPattern fmp;
@@ -42,12 +41,12 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2[] weaponPositionModifier,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition) {
-		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+		super(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition);
 		
 		this.timers = new Timer[weapons.length];
-		this.offsets = new Vector2[weapons.length];
 		this.entities = entities;		
 		this.physics = physics;
 		this.player = entities.getPlayerShip();
@@ -55,7 +54,6 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			timers[i] = weapons[i].getTimer();
 			timers[i].registerListener(this);
 			timers[i].stop();
-			offsets[i] = weapons[i].getOffset();
 		}
 	
 		this.fmp = new FollowingMovementPattern(player);
@@ -66,10 +64,11 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	}
 		
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
+			Vector2[] weaponPositionModifier,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
 			PhysicsMovementPattern pattern) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition);
 
 		if(pattern instanceof DisorderedBossMovementPattern){
@@ -127,7 +126,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		for (int i = 0; i < weapons.length; i++) {
 			weaponId = weapons[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_SPR")) {
-				weapons[i].fire(this.getPosition(), new Vector2(-1,offsets[i].y).nor(),
+				weapons[i].fire(this.getPosition(), new Vector2(-1,weapons[i].getOffset().y).nor(),
 						this);
 			}
 		}
@@ -154,7 +153,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			weaponId = weapons[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_AIM")) {
 				weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
-						- getPosition().x, player.getPosition().y - getPosition().y + offsets[i].y).nor(),
+						- getPosition().x, player.getPosition().y - getPosition().y + weapons[i].getOffset().y).nor(),
 						this);
 			}
 		}
@@ -167,7 +166,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			weaponId = weapons[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_AIM")) {
 				weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
-						- getPosition().x, player.getPosition().y - getPosition().y - offsets[i].y).nor(),
+						- getPosition().x, player.getPosition().y - getPosition().y -  weapons[i].getOffset().y).nor(),
 						this);
 			}
 		}

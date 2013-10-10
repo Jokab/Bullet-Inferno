@@ -13,15 +13,12 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 	
-	private Vector2 offset;
-
 	public EnemyWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDefinition type, float reloadingTime, ProjectileType projectile, Vector2 offset,
+			WeaponDefinition type, float reloadingTime, ProjectileType projectile,
 			float projectileSpeed) {
-		super(physics, weapons, type, reloadingTime, projectile, offset, projectileSpeed);
+		super(physics, weapons, type, reloadingTime, projectile, projectileSpeed);
 		this.physics = physics;
 		this.weapons = weapons;
-		this.offset = offset;
 		
 		if (getReloadingTime() == 0) {
 			throw new RuntimeException("Enemy reloading speed must not be 0.");
@@ -38,22 +35,11 @@ public class EnemyWeaponImpl extends WeaponImpl {
 
 		if (isLoaded()) {
 
-			getProjectileType().releaseProjectile(physics, weapons, position, getOffset(),
+			getProjectileType().releaseProjectile(physics, weapons, position.add(getOffset()),
 					direction.scl(getProjectileVelocity()), source);
 			// Start count down
 			getTimer().restart();
 		}
 
-	}
-	
-
-	@Override
-	public Vector2 getOffset() {
-		return offset;
-		
-	}
-	
-	public void setOffset(Vector2 offs){
-		this.offset = offs;
 	}
 }

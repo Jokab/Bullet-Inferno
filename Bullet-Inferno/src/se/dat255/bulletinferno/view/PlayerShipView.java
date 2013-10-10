@@ -100,13 +100,13 @@ public class PlayerShipView implements Renderable, Timerable {
 			shipSprite.draw(batch);
 
 			if (standardWeaponSprite != null) {
-				standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x, y + standardWeapon.getOffset().y
+				standardWeaponSprite.setPosition(x, y
 						+ standardWeaponSprite.getHeight() / 2);
 				standardWeaponSprite.draw(batch);
 			}
 			
 			if (heavyWeaponSprite != null) {
-				heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x, y + heavyWeapon.getOffset().y
+				heavyWeaponSprite.setPosition(x, y
 						+ heavyWeaponSprite.getHeight() / 2);
 				heavyWeaponSprite.draw(batch);
 			}

@@ -51,7 +51,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		timer.setContinuous(true);
 		timer.start();
 		for (int i = 1; i <= AMOUNT_BULLETS; i++) {
-			float xPos = playerShip.getWeapon().getOffset().x;
+			float xPos = playerShip.getPosition().x;
 			float yPos = (((Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS) * i + 1);
 			bulletPositions.add(new Vector2(xPos, yPos));
 		}
@@ -62,7 +62,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS - 1);
 		if (counter < AMOUNT_BULLETS) {
 			ProjectileType.MISSILE.releaseProjectile(physics, weapons,
-					bulletPositions.get(index), new Vector2(), new Vector2(3, 0), playerShip);
+					bulletPositions.get(index), new Vector2(3, 0), playerShip);
 			counter++;
 		}
 	}

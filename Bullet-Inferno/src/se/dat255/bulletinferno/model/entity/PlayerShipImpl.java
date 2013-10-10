@@ -19,7 +19,17 @@ import com.badlogic.gdx.physics.box2d.Shape;
 public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	public enum ShipType implements Teamable {
-		PLAYER_DEFAULT;
+		PLAYER_DEFAULT(new Vector2[] { new Vector2(1 / 2f, 1 / 2f), new Vector2(1 / 2f, -1 / 2f) });
+
+		private final Vector2[] weaponPositionModifier;
+
+		ShipType(Vector2[] weaponPositionModifier) {
+			this.weaponPositionModifier = weaponPositionModifier;
+		}
+
+		public Vector2[] getWeaponPosisitionModifier() {
+			return weaponPositionModifier;
+		}
 
 		@Override
 		public boolean isInMyTeam(Teamable teamMember) {
@@ -35,6 +45,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
 	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
+	private final Vector2[] weaponPositionModifier;
 
 	/**
 	 * A timer used to fire the standard weapon
@@ -67,7 +78,8 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		this.health = initialHealth;
 		this.weaponLoadout = loadout;
 		this.shipType = shipType;
-
+		this.weaponPositionModifier = shipType.getWeaponPosisitionModifier();
+		
 		// Set up the halt timer used to stop the ship at a specified location
 		this.haltTimer = physics.getTimer();
 		haltTimer.setTime(0);
@@ -80,9 +92,15 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		Shape shape = PhysicsShapeFactory.getRectangularShape(2.4f, 1.5f);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
 		
-
 		this.body = physics.createBody(bodyDefinition, this, position);
 		this.body.setVelocity(forwardSpeed);
+		
+		// Sets correct offsets based on ship type
+		// Needs to be done after the body creation, i.e. getDimensions()
+		weaponLoadout.getStandardWeapon().setOffset(
+				getDimensions().cpy().scl(weaponPositionModifier[0]));
+		weaponLoadout.getHeavyWeapon().setOffset(
+				getDimensions().cpy().scl(weaponPositionModifier[1]));
 		
 		
 	}
@@ -205,8 +223,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
+
+		Weapon standardWeapon = weaponLoadout.getStandardWeapon();
+
 		if (source == weaponTimer) {
-			weaponLoadout.getStandardWeapon().fire(getPosition(), new Vector2(1, 0), this);
+			standardWeapon.fire(getPosition(), new Vector2(1, 0),
+					this);
 		}
 	}
 

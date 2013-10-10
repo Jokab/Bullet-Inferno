@@ -42,8 +42,8 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 */
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
-			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
-		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition, pattern);
 
 		this.player = entities.getPlayerShip();
@@ -54,8 +54,8 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, int initialHealth, 
-			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
-		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition);
 
 		this.player = entities.getPlayerShip();
