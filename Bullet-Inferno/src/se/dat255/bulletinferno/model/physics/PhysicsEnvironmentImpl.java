@@ -30,6 +30,9 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	/** List of all queued timers to be added */
 	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
 	
+	/** List of all queued timers to be removed */
+	private final List<Timer> timersRemoveQueue = new LinkedList<Timer>();
+	
 	private boolean isIteratingOverTimers = false;
 
 	/** A list of Runnables that will be run at the next update. */
@@ -315,6 +318,11 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 			timers.addAll(timersAddQueue);
 			timersAddQueue.clear();
 		}
+		// If timers are waiting to be removed, remove them
+		for(Timer timer : timersRemoveQueue){
+			timers.remove(timer);
+		}
+		timersRemoveQueue.clear();
 		isIteratingOverTimers = false;
 
 		// Run all runLater Runnables from the previous tick.
@@ -342,5 +350,14 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	@Override
 	public void runLater(Runnable task) {
 		runLaters.add(task);
+	}
+
+	@Override
+	public void removeTimer(Timer timer) {
+		if(isIteratingOverTimers) {
+			timersRemoveQueue.add(timer);
+		} else {
+			timers.remove(timer);
+		}
 	}
 }

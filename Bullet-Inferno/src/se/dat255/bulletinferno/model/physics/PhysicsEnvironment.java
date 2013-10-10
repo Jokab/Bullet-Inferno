@@ -81,6 +81,12 @@ public interface PhysicsEnvironment extends Disposable {
 	 * @return timer
 	 */
 	public Timer getTimer();
+	
+	/**
+	 * Removes a timer from the list of timers.
+	 * @param timer the timer instance to be removed
+	 */
+	public void removeTimer(Timer timer);
 
 	/**
 	 * Runs a task at the next update.
