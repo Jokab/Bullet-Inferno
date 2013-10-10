@@ -38,7 +38,7 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
         cooldownTimer.start();
 
         firingRateTimer = physics.getTimer();
-        firingRateTimer.setTime(0.2f); // very high firing rate, but needs to be limited
+        firingRateTimer.setTime(0.1f); // very high firing rate, but needs to be limited
         firingRateTimer.stop(); // Set it to finished
 
     }
@@ -50,7 +50,7 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
             if (usedAmmo < fullAmmo) {
                 usedAmmo = usedAmmo + 1;
-                projectileType.releaseProjectile(physics, weapons, position,
+                projectileType.releaseProjectile(physics, weapons,  position.add(getOffset()),
                         direction.scl(projectileSpeed), source);
 
             }

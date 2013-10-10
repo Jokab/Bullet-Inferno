@@ -29,6 +29,8 @@ public class LoadoutView implements Renderable {
 
 	private ResourceManager resourceManager;
 	private final PlayerShip ship;
+	
+	private Vector2 lastShipPosition;
 
 	public LoadoutView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
@@ -58,31 +60,20 @@ public class LoadoutView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		if (ship.isDead()) {
-			standardWeaponSprite = null;
-			heavyWeaponSprite = null;
-			mStandardWeapon.dispose(resourceManager);
-			mHeavyWeapon.dispose(resourceManager);
-		} else {
-
-			Vector2 lastShipPosition = ship.getPosition();
+		if (!ship.isDead()) {
+			lastShipPosition = ship.getPosition();
 			float x = lastShipPosition.x - ship.getDimensions().x / 2;
 			float y = lastShipPosition.y - ship.getDimensions().y / 2;
 
-			// weapons, check if ship is dead
-			if (standardWeaponSprite != null) {
-				standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x, y
-						+ standardWeapon.getOffset().y
-						+ standardWeaponSprite.getHeight());
-				standardWeaponSprite.draw(batch);
-			}
+			standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x, y
+					+ standardWeapon.getOffset().y
+					+ standardWeaponSprite.getHeight());
+			standardWeaponSprite.draw(batch);
 
-			if (heavyWeaponSprite != null) {
-				heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x,
-						y + heavyWeapon.getOffset().y
-								+ heavyWeaponSprite.getHeight());
-				heavyWeaponSprite.draw(batch);
-			}
+			heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x,
+					y + heavyWeapon.getOffset().y
+							+ heavyWeaponSprite.getHeight());
+			heavyWeaponSprite.draw(batch);
 
 		}
 	}

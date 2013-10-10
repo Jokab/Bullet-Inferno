@@ -54,6 +54,8 @@ public class PassiveButtonsView {
 			}
 	
 		}
+		
+		setSelectionToSelected(passiveButtons.get(0));
 		// Set up the table to add these buttons to
 		showTable();
 	}

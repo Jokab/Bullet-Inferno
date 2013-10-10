@@ -193,14 +193,12 @@ public class SmokeTrail implements Renderable {
 				.replace("%DISTANCE_DECAY%", DISTANCE_DECAY);
 
 		final String fragmentShader = (""
-				/*
-				 * + "#ifdef GL_ES\n"
-				 * + "#define LOWP lowp\n"
-				 * + "precision mediump float;\n"
-				 * + "#else\n"
-				 * + "#define LOWP \n"
-				 * + "#endif\n"
-				 */
+				+ "#ifdef GL_ES\n"
+				+ "#define LOWP lowp\n"
+				+ "precision mediump float;\n"
+				+ "#else\n"
+				+ "#define LOWP \n"
+				+ "#endif\n"
 
 				+ "varying vec2 v_texCoords;\n"
 				+ "varying float v_alpha;\n"
