@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -95,9 +96,9 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.start();
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
-		shapes.add(PhysicsShapeFactory.getRectangularShape(2.4f, 0.3f));
-		shapes.add(PhysicsShapeFactory.getRectangularShape(0.5f, 1.5f, new Vector2(
-				(2.4f / 2 - 0.5f / 2), 0)));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(2f, 0.3f));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 1f, new Vector2(
+				(2f / 2 - 0.4f / 2), 0)));
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shapes,
 				BodyType.DYNAMIC);
 
@@ -121,6 +122,9 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
 		} else if (collidedWithSomethingElse(other)) {
+			// TODO: Should be some constant or dynamic value.
+			takeDamage(20);
+		} else if (other instanceof Obstacle) {
 			// TODO: Should be some constant or dynamic value.
 			takeDamage(20);
 		}

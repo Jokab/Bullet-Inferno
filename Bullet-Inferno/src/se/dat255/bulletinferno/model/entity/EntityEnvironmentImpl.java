@@ -23,7 +23,8 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 		this.physics = physics;
 		this.weapons = weapons;
 		
-		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 0), 10, weaponLoadout, ShipType.PLAYER_DEFAULT);
+		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 8), 10, weaponLoadout, 
+				ShipType.PLAYER_DEFAULT);
 		this.physics = physics;
 		this.weapons = weapons;
 	}
