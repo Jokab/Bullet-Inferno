@@ -64,7 +64,7 @@ public class LoadoutController extends SimpleController {
 
 	private Label tableLabel;
 	
-	private Label primaryLabel;
+	private Label standardLabel;
 	private Label heavyLabel;
 	private Label specialLabel;
 	private Label passiveLabel;
@@ -91,10 +91,13 @@ public class LoadoutController extends SimpleController {
 		pixmap.setColor(Color.GRAY);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
+		
+		BitmapFont font = new BitmapFont();
+		font.scale(0.8f);
+		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
 
 		// Add default font as default
-		skin.add("default", new BitmapFont());
-		setupTable();
+		setupTable(labelStyle);
 		weaponButtonsView = new WeaponButtonsView(stage, skin, table, tableLabel, resourceManager);
 		specialButtonsView = new SpecialButtonsView(stage, skin, table, tableLabel, resourceManager);
 		passiveButtonsView = new PassiveButtonsView(stage, skin, table, tableLabel, resourceManager);
@@ -114,7 +117,36 @@ public class LoadoutController extends SimpleController {
 		
 		setupErrorMessage();
 		
+		setupLabelsForSelectionButtons(labelStyle);
 		
+
+	}
+
+	private void setupLabelsForSelectionButtons(LabelStyle labelStyle) {
+		standardLabel = new Label("Standard weapon", labelStyle);
+		Button standardButton = weaponButtonsView.getStandardSelectionButton().getButton();
+		setSelectionLabelPositions(standardLabel, standardButton);
+		
+		heavyLabel = new Label("Heavy Weapon", labelStyle);
+		Button heavyButton = weaponButtonsView.getHeavySelectionButton().getButton();
+		setSelectionLabelPositions(heavyLabel, heavyButton);
+		
+		specialLabel = new Label("Special Ability", labelStyle);
+		Button specialButton = specialButtonsView.getSelectionButton().getButton();
+		setSelectionLabelPositions(specialLabel, specialButton);
+		
+		passiveLabel = new Label("Passive Ability", labelStyle);
+		Button passiveButton = passiveButtonsView.getSelectionButton().getButton();
+		setSelectionLabelPositions(passiveLabel, passiveButton);
+		
+		stage.addActor(standardLabel);
+		stage.addActor(heavyLabel);
+		stage.addActor(specialLabel);
+		stage.addActor(passiveLabel);
+	}
+	
+	private void setSelectionLabelPositions(Label label, Button button) {
+		label.setPosition(button.getX() + 15, button.getY() + button.getHeight() + 20);
 	}
 
 	@Override
@@ -179,32 +211,19 @@ public class LoadoutController extends SimpleController {
 		WeaponButton selectionButton = new WeaponButton(weaponButton, null, resourceManager);
 		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(selectionButton, list, type));
 		if(type.equals("standard")) {
-			weaponButton.setPosition(100, 100);
+			weaponButton.setPosition(100, 540);
 			weaponButtonsView.setStandardSelectionButton(selectionButton);
 		} else if(type.equals("heavy")) {
-			weaponButton.setPosition(400, 100);
+			weaponButton.setPosition(100, 360);
 			weaponButtonsView.setHeavySelectionButton(selectionButton);
 		}
 		return weaponButton;
 	}
 
-	private Button setupPassiveSelectionButton(ButtonStyle weaponSelectionStyle) {
-		ButtonStyle passiveSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
-		Button passiveButton = new Button(passiveSelectionStyle);
-		passiveButton.setPosition(100, 450);
-		passiveButton.setSize(200, 120);
-		PassiveButton selectionPassiveButton = new PassiveButton(passiveButton, null,
-				resourceManager);
-		passiveButtonsView.setSelectionButton(selectionPassiveButton);
-		selectionPassiveButton.getButton().addListener(
-				passiveButtonsView.new SelectionClickedListener());
-		return passiveButton;
-	}
-
 	private Button setupSpecialSelectionButton(ButtonStyle weaponSelectionStyle) {
 		ButtonStyle specialSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
 		Button specialButton = new Button(specialSelectionStyle);
-		specialButton.setPosition(200, 300);
+		specialButton.setPosition(100, 180);
 		specialButton.setSize(200, 120);
 		SpecialButton selectionSpecialButton = new SpecialButton(specialButton, null,
 				resourceManager);
@@ -212,6 +231,19 @@ public class LoadoutController extends SimpleController {
 		selectionSpecialButton.getButton().addListener(
 				specialButtonsView.new SelectionClickedListener());
 		return specialButton;
+	}
+	
+	private Button setupPassiveSelectionButton(ButtonStyle weaponSelectionStyle) {
+		ButtonStyle passiveSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
+		Button passiveButton = new Button(passiveSelectionStyle);
+		passiveButton.setPosition(100, 0);
+		passiveButton.setSize(200, 120);
+		PassiveButton selectionPassiveButton = new PassiveButton(passiveButton, null,
+				resourceManager);
+		passiveButtonsView.setSelectionButton(selectionPassiveButton);
+		selectionPassiveButton.getButton().addListener(
+				passiveButtonsView.new SelectionClickedListener());
+		return passiveButton;
 	}
 
 	private void setupStartButton() {
@@ -234,7 +266,7 @@ public class LoadoutController extends SimpleController {
 		startButton.addListener(new StartButtonClickedListener());
 	}
 
-	private void setupTable() {
+	private void setupTable(LabelStyle labelStyle) {
 		// Set up the table for the primary weapons
 		this.table = new Table();
 
@@ -243,13 +275,9 @@ public class LoadoutController extends SimpleController {
 		table.setPosition(1050, 450);
 		table.setSize(100, 40);
 
-		BitmapFont font = new BitmapFont();
-		font = skin.getFont("default");
-		font.scale(0.4f);
-		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
 		tableLabel = new Label("Primary Weapon", labelStyle);
 
-		tableLabel.setPosition(table.getX() - 45, table.getY() + 210);
+		tableLabel.setPosition(table.getX() - 40, table.getY() + 210);
 
 		stage.addActor(table);
 		stage.addActor(tableLabel);
@@ -257,8 +285,7 @@ public class LoadoutController extends SimpleController {
 
 	private void setupErrorMessage() {
 		BitmapFont font = new BitmapFont();
-		font = skin.getFont("default");
-		font.scale(0.5f);
+		font.scale(0.7f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
 		errorMessage = new Label("", labelStyle);
 
