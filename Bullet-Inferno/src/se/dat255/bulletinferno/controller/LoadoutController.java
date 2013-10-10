@@ -97,12 +97,12 @@ public class LoadoutController extends SimpleController {
 		// Set up the start button and add its listener
 		setupStartButton();
 
-		// Set up and store buttons in list
-		// weaponButtonsView.setupPrimaryWeaponButtons();
-		specialButtonsView.populateTable();
 		setupSelectionButtons();
-		setupErrorMessage();
+		
+		// Initially populate a table with a kind of equipment
+		weaponButtonsView.populateTable("standard");
 
+		setupErrorMessage();
 	}
 
 	@Override
@@ -138,32 +138,45 @@ public class LoadoutController extends SimpleController {
 		Texture texture = new Texture("data/frame.png");
 		TextureRegion region = new TextureRegion(texture);
 
-		// Weapon button
+		// This is left here because the buttons will share style
 		ButtonStyle weaponSelectionStyle = new ImageButtonStyle();
 		weaponSelectionStyle.up = new TextureRegionDrawable(region);
 		weaponSelectionStyle.over = skin.newDrawable(weaponSelectionStyle.up, Color.LIGHT_GRAY);
 
-		Button weaponButton = new Button(weaponSelectionStyle);
-		weaponButton.setPosition(100, 100);
-		weaponButton.setSize(200, 120);
-		WeaponButton selectionWeaponButton = new WeaponButton(weaponButton, null,
-				resourceManager);
-		weaponButton.addListener(
-				weaponButtonsView.new SelectionClickedListener());
-		weaponButtonsView.setSelectionButton(selectionWeaponButton);
+		// Standard weapon button
+		Button standardButton = setupWeaponSelectionButton(weaponSelectionStyle, weaponButtonsView.getStandardWeapons(), "standard");
+		
+		// Heavy weapon button
+		Button heavyButton = setupWeaponSelectionButton(weaponSelectionStyle, weaponButtonsView.getHeavyWeapons(), "heavy");
 
 		// Special button
-		ButtonStyle specialSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
-		Button specialButton = new Button(specialSelectionStyle);
-		specialButton.setPosition(200, 300);
-		specialButton.setSize(200, 120);
-		SpecialButton selectionSpecialButton = new SpecialButton(specialButton, null,
-				resourceManager);
-		specialButtonsView.setSelectionButton(selectionSpecialButton);
-		selectionSpecialButton.getButton().addListener(
-				specialButtonsView.new SelectionClickedListener());
+		Button specialButton = setupSpecialSelectionButton(weaponSelectionStyle);
 
 		// Passive button
+		Button passiveButton = setupPassiveSelectionButton(weaponSelectionStyle);
+
+		stage.addActor(standardButton);
+		stage.addActor(heavyButton);
+		stage.addActor(specialButton);
+		stage.addActor(passiveButton);
+	}
+	
+	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, List<WeaponButton> list, String type) {
+		Button weaponButton = new Button(weaponSelectionStyle);
+		weaponButton.setSize(200, 120);
+		WeaponButton selectionButton = new WeaponButton(weaponButton, null, resourceManager);
+		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(selectionButton, list, type));
+		if(type.equals("standard")) {
+			weaponButton.setPosition(100, 100);
+			weaponButtonsView.setStandardSelectionButton(selectionButton);
+		} else if(type.equals("heavy")) {
+			weaponButton.setPosition(400, 100);
+			weaponButtonsView.setHeavySelectionButton(selectionButton);
+		}
+		return weaponButton;
+	}
+
+	private Button setupPassiveSelectionButton(ButtonStyle weaponSelectionStyle) {
 		ButtonStyle passiveSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
 		Button passiveButton = new Button(passiveSelectionStyle);
 		passiveButton.setPosition(100, 450);
@@ -173,10 +186,20 @@ public class LoadoutController extends SimpleController {
 		passiveButtonsView.setSelectionButton(selectionPassiveButton);
 		selectionPassiveButton.getButton().addListener(
 				passiveButtonsView.new SelectionClickedListener());
+		return passiveButton;
+	}
 
-		stage.addActor(weaponButton);
-		stage.addActor(specialButton);
-		stage.addActor(passiveButton);
+	private Button setupSpecialSelectionButton(ButtonStyle weaponSelectionStyle) {
+		ButtonStyle specialSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
+		Button specialButton = new Button(specialSelectionStyle);
+		specialButton.setPosition(200, 300);
+		specialButton.setSize(200, 120);
+		SpecialButton selectionSpecialButton = new SpecialButton(specialButton, null,
+				resourceManager);
+		specialButtonsView.setSelectionButton(selectionSpecialButton);
+		selectionSpecialButton.getButton().addListener(
+				specialButtonsView.new SelectionClickedListener());
+		return specialButton;
 	}
 
 	private void setupStartButton() {
@@ -205,7 +228,7 @@ public class LoadoutController extends SimpleController {
 
 		// Add table to stage
 //		table.debug();
-		table.setPosition(1100, 450);
+		table.setPosition(1050, 450);
 		table.setSize(100, 40);
 
 		BitmapFont font = new BitmapFont();
@@ -245,17 +268,20 @@ public class LoadoutController extends SimpleController {
 	public class StartButtonClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			WeaponDefinition weapon = weaponButtonsView.getSelectionButton().getData();
+			WeaponDefinition standardWeapon = weaponButtonsView.getStandardSelectionButton().getData();
+			WeaponDefinition heavyWeapon = weaponButtonsView.getHeavySelectionButton().getData();
 			SpecialAbilityDefinition special = specialButtonsView.getSelectionButton().getData();
 			PassiveAbilityDefinition passive = passiveButtonsView.getSelectionButton().getData();
-			if (weapon == null) {
+			if (standardWeapon == null) {
 				showErrorMessage("primary weapon");
+			} else if (heavyWeapon == null) {
+				showErrorMessage("heavy weapon");
 			} else if (special == null) {
 				showErrorMessage("special ability");
 			} else if (passive == null) {
 				showErrorMessage("passive ability");
 			} else {
-				WeaponDefinition[] weapons = new WeaponDefinition[]{weapon};
+				WeaponDefinition[] weapons = new WeaponDefinition[]{standardWeapon, heavyWeapon};
 				startGame(gameController, weapons, special, passive);
 			}
 		}
