@@ -5,7 +5,7 @@ import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class EnemyWeaponImpl extends WeaponImpl {
+public class AutomaticWeaponImpl extends WeaponImpl {
 	
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
@@ -13,7 +13,7 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 	
-	public EnemyWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
+	public AutomaticWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			WeaponDefinition type, float reloadingTime, ProjectileType projectile,
 			float projectileSpeed) {
 		super(physics, weapons, type, reloadingTime, projectile, projectileSpeed);

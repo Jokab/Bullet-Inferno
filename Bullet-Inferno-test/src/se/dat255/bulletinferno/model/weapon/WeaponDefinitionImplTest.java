@@ -39,11 +39,11 @@ public class WeaponDefinitionImplTest {
 
 	@Test
 	public void testIsSTANDARDEnemyWeapon() {
-		Weapon weapon = WeaponDefinitionImpl.ENEMY_FORCE_GUN.createWeapon(physics, weapons);
+		Weapon weapon = WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons);
 
 		assertTrue(
 				"When you retrieve an enemy weapon, it should be an enemy weapon.",
-				weapon.getClass() == EnemyWeaponImpl.class);
+				weapon.getClass() == AutomaticWeaponImpl.class);
 	}
 	
 	@Test
