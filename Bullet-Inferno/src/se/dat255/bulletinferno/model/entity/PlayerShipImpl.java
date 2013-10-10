@@ -44,7 +44,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	private final ShipType shipType;
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
-	private Vector2 forwardSpeed = new Vector2(2, 0); // TODO: Not hardcode?
+	private Vector2 forwardSpeed = new Vector2(4, 0); // TODO: Not hardcode?
 	private final Vector2[] weaponPositionModifier;
 
 	/**

@@ -27,7 +27,7 @@ public class SliceView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		batch.draw(textureRegion, positionX, 0, 20, 9);
+		batch.draw(textureRegion, positionX, 0, 16, 9);
 	}
 
 	@Override

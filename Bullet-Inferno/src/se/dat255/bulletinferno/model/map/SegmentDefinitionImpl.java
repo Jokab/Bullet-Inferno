@@ -76,7 +76,6 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
-
 		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
 			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy());
@@ -84,7 +83,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			slicePosition.add(slice.getWidth(), 0);
 		}
 
-		return new SegmentImpl(slices, position.cpy());
+		return new SegmentImpl(slices, slicePosition.cpy());
 	}
 
 	/**

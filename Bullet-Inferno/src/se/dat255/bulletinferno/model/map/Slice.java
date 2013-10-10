@@ -2,6 +2,8 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
@@ -40,4 +42,10 @@ public interface Slice extends Disposable, ResourceIdentifier {
 	 * @return width (meters)
 	 */
 	public float getWidth();
+	
+	/**
+	 * Returns the position of the sprite in world coordinates
+	 * @return
+	 */
+	public Vector2 getPosition();
 }

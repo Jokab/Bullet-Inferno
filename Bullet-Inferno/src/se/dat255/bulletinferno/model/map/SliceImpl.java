@@ -12,7 +12,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import com.badlogic.gdx.math.Vector2;
 
 public class SliceImpl implements Slice, Collidable {
-
+	
 	/** The entry height of this slice */
 	private final float entryHeight;
 
@@ -36,7 +36,10 @@ public class SliceImpl implements Slice, Collidable {
 
 	/** The obstacles present in this slice. */
 	private final List<? extends Obstacle> obstacles;
-
+	
+	/** The position o f the slice*/
+	private final Vector2 position;
+	
 	/**
 	 * Creates a new Slice in the Game instance provided.
 	 * 
@@ -70,6 +73,7 @@ public class SliceImpl implements Slice, Collidable {
 		this.weapons = weapons;
 		this.id = id;
 		this.width = width;
+		this.position = position;
 
 		// Create obstacles from the provided definitions.
 		List<Obstacle> obstacles = new ArrayList<Obstacle>(obstaclePlacements.size());
@@ -193,4 +197,11 @@ public class SliceImpl implements Slice, Collidable {
 		return width;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Vector2 getPosition() {
+		return position;
+	}
 }
