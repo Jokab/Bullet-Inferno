@@ -1,9 +1,13 @@
 package se.dat255.bulletinferno.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
@@ -79,7 +83,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		this.weaponLoadout = loadout;
 		this.shipType = shipType;
 		this.weaponPositionModifier = shipType.getWeaponPosisitionModifier();
-		
+
 		// Set up the halt timer used to stop the ship at a specified location
 		this.haltTimer = physics.getTimer();
 		haltTimer.setTime(0);
@@ -90,20 +94,23 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.registerListener(this);
 		weaponTimer.start();
 
-		Shape shape = PhysicsShapeFactory.getRectangularShape(2.4f, 1.5f);
-		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
-		
+		List<Shape> shapes = new ArrayList<Shape>(2);
+		shapes.add(PhysicsShapeFactory.getRectangularShape(2.4f, 0.3f));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.5f, 1.5f, new Vector2(
+				(2.4f / 2 - 0.5f / 2), 0)));
+		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shapes,
+				BodyType.DYNAMIC);
+
 		this.body = physics.createBody(bodyDefinition, this, position);
 		this.body.setVelocity(forwardSpeed);
-		
+
 		// Sets correct offsets based on ship type
 		// Needs to be done after the body creation, i.e. getDimensions()
 		weaponLoadout.getStandardWeapon().setOffset(
 				getDimensions().cpy().scl(weaponPositionModifier[0]));
 		weaponLoadout.getHeavyWeapon().setOffset(
 				getDimensions().cpy().scl(weaponPositionModifier[1]));
-		
-		
+
 	}
 
 	/**
@@ -240,5 +247,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public Vector2 getDimensions() {
 		return body.getDimensions();
 	}
+
+	// TODO: DEBUG
+	/*
+	 * public Body getBody() {
+	 * return body.getBox2DBody();
+	 * }
+	 */
 
 }
