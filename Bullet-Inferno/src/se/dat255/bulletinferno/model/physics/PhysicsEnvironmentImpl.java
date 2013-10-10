@@ -55,7 +55,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	private float timeStepAccumulator = 0f;
 
 	/** Holds the Box2D world. */
-	private final World world;
+	public static World world;
 
 	/**
 	 * A collision queue but with filtering and internal usage of special bodies.

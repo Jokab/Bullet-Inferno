@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.controller;
 import java.util.HashSet;
 import java.util.Set;
 
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
@@ -13,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 /**
  * The main graphics handling of the game
@@ -26,6 +29,8 @@ public class Graphics {
 	/** Handles efficient drawing of several images */
 	private SpriteBatch worldBatch, guiBatch;
 
+	private Box2DDebugRenderer debugRenderer;
+	
 	/** The size, in meters, of the visible area. */
 	public static final float GAME_WIDTH = 16f, GAME_HEIGHT = 9f;
 	/** Inverted size, multiplication is faster than division */
@@ -48,7 +53,9 @@ public class Graphics {
 
 		worldCamera = new OrthographicCamera();
 		worldBatch = new SpriteBatch();
-
+		debugRenderer = new Box2DDebugRenderer();
+		debugRenderer.setDrawBodies(true);
+		
 		guiCamera = new OrthographicCamera(16, 9);
 		guiBatch = new SpriteBatch();
 		guiBatch.setProjectionMatrix(guiCamera.combined);
@@ -103,6 +110,8 @@ public class Graphics {
 			renderable.render(guiBatch);
 		}
 		guiBatch.end();
+		
+		debugRenderer.render(PhysicsEnvironmentImpl.world, worldCamera.combined);
 	}
 
 	/** Adds an object to be rendered in the world. Uses hashcode to separate */
