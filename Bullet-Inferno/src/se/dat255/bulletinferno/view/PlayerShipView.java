@@ -17,22 +17,23 @@ import com.badlogic.gdx.math.Vector2;
 public class PlayerShipView implements Renderable, Timerable {
 	private final Texture shipTexture;
 	private final ManagedTexture mShipTexture;
-	private final ManagedTexture mStandardWeapon;
-	private final ManagedTexture mHeavyWeapon;
+	
+	
 	private final ManagedTexture mExplosion;
-	private final Texture standardWeaponTexture;
-	private final Texture heavyWeaponTexture;
+	
 	private final Texture explosion;
-	private Sprite standardWeaponSprite;
-	private Sprite heavyWeaponSprite;
+	
 	private Sprite shipSprite;
 	private Sprite explosionSprite;
 	private Timer timer;
 	private ResourceManager resourceManager;
+	
+	private static final int SMOKE_PARTICLE_COUNT = 100;
+	private final Texture smokeTexture;
+	private final SmokeTrail smokeTrail;
 
 	private final PlayerShip ship;
-	private final Weapon standardWeapon;
-	private final Weapon heavyWeapon;
+	
 	
 	private final Vector2 shipDimensions;
 	
@@ -43,8 +44,7 @@ public class PlayerShipView implements Renderable, Timerable {
 	public PlayerShipView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
 		this.resourceManager = resourceManager;
-		this.standardWeapon = ship.getLoadout().getStandardWeapon();
-		this.heavyWeapon = ship.getLoadout().getHeavyWeapon();
+		
 
 		//this.timer = game.getTimer();
 		this.timer = new TimerImpl();
@@ -57,13 +57,7 @@ public class PlayerShipView implements Renderable, Timerable {
 		shipTexture = mShipTexture.getTexture();
 		shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-		mStandardWeapon = resourceManager.getManagedTexture(standardWeapon.getType());
-		standardWeaponTexture = mStandardWeapon.getTexture();
-		standardWeaponTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-
-		mHeavyWeapon = resourceManager.getManagedTexture(heavyWeapon.getType());
-		heavyWeaponTexture = mHeavyWeapon.getTexture();
-		heavyWeaponTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		
 		
 		mExplosion = resourceManager.getManagedTexture(TextureType.PLAYER_EXPLOSION);
 		explosion = mExplosion.getTexture();
@@ -76,12 +70,11 @@ public class PlayerShipView implements Renderable, Timerable {
 		explosionSprite = new Sprite(explosion);
 		explosionSprite.setSize(shipDimensions.x, shipDimensions.y);
 
-		standardWeaponSprite = new Sprite(standardWeaponTexture);
-		standardWeaponSprite.setSize(standardWeapon.getDimensions().x,
-				standardWeapon.getDimensions().y);
 		
-		heavyWeaponSprite = new Sprite(heavyWeaponTexture);
-		heavyWeaponSprite.setSize(heavyWeapon.getDimensions().x, heavyWeapon.getDimensions().y);
+		// TODO: How should we do with managed textures? No disposal?
+		smokeTexture = resourceManager.getManagedTexture(TextureType.SMOKE_PARTICLE).getTexture();
+		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
 	}
 
 	@Override
@@ -90,7 +83,6 @@ public class PlayerShipView implements Renderable, Timerable {
 		if (ship.isDead()) {
 			shipSprite = null;
 			drawExplosion(batch, lastShipPosition);
-			removeWeapons();
 		} else if (shipSprite != null) {
 			lastShipPosition = ship.getPosition();
 			float x = lastShipPosition.x - shipDimensions.x/2;
@@ -98,24 +90,13 @@ public class PlayerShipView implements Renderable, Timerable {
 
 			shipSprite.setPosition(x, y);
 			shipSprite.draw(batch);
-
-			if (standardWeaponSprite != null) {
-				standardWeaponSprite.setPosition(x, y 
-						+ standardWeaponSprite.getHeight() / 2);
-				standardWeaponSprite.draw(batch);
-			}
 			
-			if (heavyWeaponSprite != null) {
-				heavyWeaponSprite.setPosition(x, y
-						+ heavyWeaponSprite.getHeight() / 2);
-				heavyWeaponSprite.draw(batch);
-			}
+			// TODO: Fix these values to match some texture offsets (+ break out to constants).
+			smokeTrail.setSpawnPoint(
+					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
+			smokeTrail.setParticleOrigin(lastShipPosition);
+			smokeTrail.render(batch);
 		}
-	}
-
-	private void removeWeapons() {
-		standardWeaponSprite = null;
-		heavyWeaponSprite = null;
 	}
 
 	private void drawExplosion(SpriteBatch batch, Vector2 pos) {
@@ -132,8 +113,6 @@ public class PlayerShipView implements Renderable, Timerable {
 	@Override
 	public void dispose() {
 		mExplosion.dispose(resourceManager);
-		mStandardWeapon.dispose(resourceManager);
-		mHeavyWeapon.dispose(resourceManager);
 		mShipTexture.dispose(resourceManager);
 	}
 

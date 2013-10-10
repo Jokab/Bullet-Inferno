@@ -12,7 +12,7 @@ public class EnemyWeaponImpl extends WeaponImpl {
 	
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
-
+	
 	public EnemyWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			WeaponDefinition type, float reloadingTime, ProjectileType projectile,
 			float projectileSpeed) {
@@ -35,7 +35,7 @@ public class EnemyWeaponImpl extends WeaponImpl {
 
 		if (isLoaded()) {
 
-			getProjectileType().releaseProjectile(physics, weapons, position,
+			getProjectileType().releaseProjectile(physics, weapons, position.add(getOffset()),
 					direction.scl(getProjectileVelocity()), source);
 			// Start count down
 			getTimer().restart();

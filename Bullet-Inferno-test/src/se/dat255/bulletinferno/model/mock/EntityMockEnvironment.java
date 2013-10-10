@@ -5,12 +5,10 @@ import java.util.List;
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 public class EntityMockEnvironment implements EntityEnvironment {
-	private final PhysicsWorldImplSpy physics;
-	private final WeaponMockEnvironment weapons;
+	public final PhysicsWorldImplSpy physics;
+	public final WeaponMockEnvironment weapons;
 	
 	public EntityMockEnvironment() {
 		this(new PhysicsWorldImplSpy() , new WeaponMockEnvironment());

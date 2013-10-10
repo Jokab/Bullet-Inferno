@@ -15,6 +15,7 @@ public class WeaponImpl implements Weapon {
 	private final float projectileSpeed;
 	private float reloadingTime;
 	private WeaponDefinition type;
+	private Vector2 offset;
 
 	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, float projectileSpeed) {
@@ -66,7 +67,7 @@ public class WeaponImpl implements Weapon {
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releaseProjectile(physics, weapons, position,
+			projectileType.releaseProjectile(physics, weapons, position.add(getOffset()),
 					direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();
@@ -100,4 +101,14 @@ public class WeaponImpl implements Weapon {
 		return type.getDimensions();
 	}
 
+	@Override
+	public Vector2 getOffset() {
+		return offset;
+	}
+
+	@Override
+	public void setOffset(Vector2 offset) {
+		this.offset = offset;
+
+	}
 }

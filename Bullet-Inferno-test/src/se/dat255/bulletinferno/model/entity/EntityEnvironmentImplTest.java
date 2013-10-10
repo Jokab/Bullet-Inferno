@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -25,9 +25,9 @@ public class EntityEnvironmentImplTest {
 
 	private class EnemyMockup extends SimpleEnemy {
 		public EnemyMockup(EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
-				int initialHealth, Weapon[] weapon, int score, int credits) {
+				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
 			super(physics, entities, type, position, velocity,
-					initialHealth, weapon, score,
+					initialHealth, weapon, weaponPositionModifier, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
 					new SimplePhysicsMovementPatternMock());
@@ -55,7 +55,7 @@ public class EntityEnvironmentImplTest {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, 0, 65);
+				new Vector2(), 0, null, null, 0, 65);
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
 				weapons, loadout);
 		entities.addEnemy(enemy);
@@ -65,7 +65,7 @@ public class EntityEnvironmentImplTest {
 				entities.getEnemies().size() == 1);
 		
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, 0, 65);
+				new Vector2(), 0, null, null, 0, 65);
 		// Add another one
 		entities.addEnemy(enemy2);
 		assertTrue("Check so that the first enemy is still in the list when another one gets added", 
@@ -77,9 +77,9 @@ public class EntityEnvironmentImplTest {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, 0, 65);
+				new Vector2(), 0, null, null, 0, 65);
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, 0, 65);
+				new Vector2(), 0, null, null, 0, 65);
 		
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
 				weapons, loadout);

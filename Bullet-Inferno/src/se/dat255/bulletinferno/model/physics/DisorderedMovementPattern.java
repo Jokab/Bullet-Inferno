@@ -1,8 +1,6 @@
 package se.dat255.bulletinferno.model.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-
 
 public class DisorderedMovementPattern implements PhysicsMovementPattern {
 	private float time = 0;
@@ -17,7 +15,6 @@ public class DisorderedMovementPattern implements PhysicsMovementPattern {
 
 	@Override
 	public void update(float timeDelta, PhysicsBody body) {
-		Body box2dBody = body.getBox2DBody();
 		time += timeDelta;
 
 		if (time > frequency) {

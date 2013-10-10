@@ -17,7 +17,8 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		DEFAULT_ENEMY_SHIP("data/defaultEnemy.png"),
 		SPECIAL_ENEMY_SHIP("data/specialEnemy.png"),
-		BOSS_ENEMY_SHIP("data/boss.png"),
+		HARD_BOSS_SHIP("data/boss.png"),
+		EASY_BOSS_SHIP("data/bossEnemy.png"),
 
 		// Player ship
 		PLAYER_DEFAULT("data/playerShip.png"),
@@ -43,8 +44,13 @@ public class ResourceManagerImpl implements ResourceManager {
 		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
 		PROJECTILE_RAIN("data/projectileRain.png"),
 		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
-		LOADOUT_START_BUTTON("data/startBtn.png");
+		LOADOUT_START_BUTTON("data/startBtn.png"),
 
+		//Particles
+		SMOKE_PARTICLE("images/particles/smoke.png"),
+
+		;
+		
 		private final String path;
 
 		TextureType(String path) {
@@ -66,6 +72,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	private final TextureType[] textureTypes;
 	
 	private AssetManager manager;
+	
+	private Map<TextureType, ManagedTexture> cachedManagedTextures = new HashMap<TextureType, ManagedTexture>();
 	
 	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
@@ -125,7 +133,11 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
+			if(!cachedManagedTextures.containsKey(textureType)){
+				cachedManagedTextures.put(textureType, 
+						new ManagedTextureImpl(textureType.getTexture(manager), textureType));
+			}
+			return cachedManagedTextures.get(textureType);
 		} else {
 			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
 		}
@@ -138,11 +150,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	public ManagedTexture getManagedTexture(ResourceIdentifier identifier) {
 		for (TextureType textureType : textureTypes) {
 			if (identifier.getIdentifier().equals(textureType.name())) {
-				if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-					return new ManagedTextureImpl(textureType.getTexture(manager), textureType);
-				} else {
-					throw new RuntimeException("Texture " + textureType.name() + " is not loaded."); 
-				}
+				return getManagedTexture(textureType);
 			}
 		}
 

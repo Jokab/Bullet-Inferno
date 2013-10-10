@@ -1,19 +1,13 @@
 package se.dat255.bulletinferno.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.ModelEnvironment;
-import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ProjectileView implements Renderable {
 
@@ -25,6 +19,7 @@ public class ProjectileView implements Renderable {
 	public ProjectileView(ModelEnvironment modelEnvironment, ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 		this.modelEnvironment = modelEnvironment;
+		this.sprite = new Sprite();
 	}
 
 	@Override
@@ -32,12 +27,14 @@ public class ProjectileView implements Renderable {
 		for (Projectile projectile : modelEnvironment.getProjectiles()) {
 			ManagedTexture mTexture = resourceManager.getManagedTexture(projectile.getType());
 			texture = mTexture.getTexture();
-			sprite = new Sprite(texture);
-			
+
 			sprite.setTexture(texture);
+			sprite.setRegion(texture);
+			
 			sprite.setSize(projectile.getDimensions().x, projectile.getDimensions().y);
 			sprite.setPosition(projectile.getPosition().x-projectile.getDimensions().x/2,
 					projectile.getPosition().y-projectile.getDimensions().y/2);
+			
 			sprite.draw(batch);
 		}
 	}

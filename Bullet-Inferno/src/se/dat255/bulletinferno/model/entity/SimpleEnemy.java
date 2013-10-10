@@ -21,7 +21,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int credits;
 	private final EnemyDefinitionImpl type;
 
-	private PhysicsBody body = null;
+	protected PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
 	protected Vector2 velocity;
@@ -44,9 +44,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type,
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2[] weaponPositionModifier, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition) {
+		
 		this.physics = physics;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -58,14 +61,23 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.entities = entities;
 		
 		body = this.physics.createBody(bodyDefinition, this, position);
+		
+		// Sets all the weapons' offset with position modifier
+		for(int i = 0; i < weapons.length; i++) {
+			weapons[i].setOffset(
+				getDimensions().cpy().scl(weaponPositionModifier[i]));
+		}
 	}
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2[] weaponPositionModifier, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition);
-		physics.attachMovementPattern(pattern.copy(), body);
+		if(pattern != null){
+			physics.attachMovementPattern(pattern.copy(), body);
+		}
 
 	}
 
@@ -188,6 +200,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			flaggedForRemoval = true;
 		}
 	}
+	
+	
 
 	@Override
 	public Vector2 getDimensions() {

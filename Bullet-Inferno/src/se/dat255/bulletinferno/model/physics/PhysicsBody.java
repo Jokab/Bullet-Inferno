@@ -44,4 +44,10 @@ public interface PhysicsBody {
 	 */
 	public Vector2 getDimensions();
 
+	/**
+	 * Used to force a calculation of the body's dimensions. This should only be called if the
+	 * body's fixtures has been altered.
+	 */
+	void calculateDimensions();
+
 }

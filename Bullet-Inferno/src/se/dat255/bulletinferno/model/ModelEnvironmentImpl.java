@@ -13,7 +13,6 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
 import com.badlogic.gdx.math.Vector2;
 

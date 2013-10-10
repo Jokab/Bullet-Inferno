@@ -8,6 +8,13 @@ import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Default implementation of a boss
+ * 
+ * @author Simon Österberg
+ *
+ */
+
 public class DefaultBossImpl extends SimpleBoss implements Ship{
 
 	private Weapon[] weapons;
@@ -35,9 +42,21 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 */
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
-			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
-		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition, pattern);
+
+		this.player = entities.getPlayerShip();
+		this.weapons = weapons;
+		this.timers = super.getWeaponTimers();
+
+	}
+	
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
+			Vector2 position, Vector2 velocity, int initialHealth, 
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+				bodyDefinition);
 
 		this.player = entities.getPlayerShip();
 		this.weapons = weapons;
@@ -48,16 +67,21 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		
-		if (getHealth() >= getInitialHealth() * 0.75f) {
-
+		if (getHealth() == getInitialHealth()){
+			
+		}else if (getHealth() >= getInitialHealth() * 0.75f) {
+			changeToDisorderedMovement();
 			fireSpread(source);
 
 		} else if(getHealth() < getInitialHealth() * 0.25) {
-			
-			fireAimSpread(source);
-		} else { 
+			changeToDisorderedMovement();
 			
 			fireAim(source);
+			fireWide(source);
+			
+		} else { 
+			changeToFollowingMovement();
+			fireSpreadAim(source);
 		}
 		
 	}

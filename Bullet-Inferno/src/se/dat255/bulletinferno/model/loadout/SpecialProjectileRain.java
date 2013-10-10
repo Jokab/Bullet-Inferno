@@ -5,9 +5,9 @@ import java.util.List;
 
 import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 
@@ -62,7 +62,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS - 1);
 		if (counter < AMOUNT_BULLETS) {
 			ProjectileType.MISSILE.releaseProjectile(physics, weapons,
-					bulletPositions.get(index), new Vector2(), playerShip);
+					bulletPositions.get(index), new Vector2(3, 0), playerShip);
 			counter++;
 		}
 	}

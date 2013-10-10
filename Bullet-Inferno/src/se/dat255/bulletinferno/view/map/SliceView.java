@@ -1,9 +1,9 @@
 package se.dat255.bulletinferno.view.map;
 
+import se.dat255.bulletinferno.view.Renderable;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import se.dat255.bulletinferno.view.Renderable;
 
 /**
  * Renders a single slice

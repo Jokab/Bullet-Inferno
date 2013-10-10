@@ -16,21 +16,22 @@ import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -203,7 +204,7 @@ public class LoadoutController extends SimpleController {
 		this.table = new Table();
 
 		// Add table to stage
-		table.debug();
+//		table.debug();
 		table.setPosition(1100, 450);
 		table.setSize(100, 40);
 

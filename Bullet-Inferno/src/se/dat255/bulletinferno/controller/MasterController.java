@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.controller.LoadingScreenController.FinishedLoadingEventListener;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl;
 
@@ -92,11 +93,6 @@ public class MasterController extends com.badlogic.gdx.Game {
 		this.gameScreen = gameScreen;
 
 		setScreen(gameScreen);
-	}
-
-	@Override
-	public void setScreen(Screen screen) {
-		super.setScreen(screen);
 	}
 
 	public GameController getGameScreen() {

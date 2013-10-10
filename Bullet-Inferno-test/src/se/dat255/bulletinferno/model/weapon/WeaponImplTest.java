@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model.weapon;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -9,6 +11,9 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
@@ -63,21 +68,21 @@ public class WeaponImplTest {
 				weapon.isLoaded());
 	}
 
-	/*@Test
+	@Test
 	public void testGetOffset() {
 		// Tests that the offset is always set, and if
 		// provided in the constructor is set to that value
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, new Vector2(), 0);
+				20, ProjectileType.RED_PROJECTILE, 0);
 		assertNotNull("The offset should always exist", weapon.getOffset());
 
 		Vector2 offset = new Vector2();
 		WeaponImpl weapon1 = new WeaponImpl(physics, weapons, WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, offset, 0);
+				20, ProjectileType.RED_PROJECTILE, 0);
 		assertEquals("The offset should be set in the constructor",
 				weapon1.getOffset(), offset);
-	}*/
+	}
 
 	@Test
 	public void testFire() {

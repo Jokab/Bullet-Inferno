@@ -1,9 +1,5 @@
 package se.dat255.bulletinferno.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.util.ManagedTexture;

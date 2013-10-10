@@ -11,10 +11,10 @@ import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
+import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.RenderableGUI;
@@ -118,14 +118,12 @@ public class GameController extends SimpleController {
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
 		final SpecialAbility specialAbility = special.getSpecialAbility(models);
 		
-		System.out.println(weaponData[0].getIdentifier());
-		System.out.println(passive.getIdentifier());
-		System.out.println(special.getIdentifier());
-		
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		LoadoutView loadoutView = new LoadoutView(ship, resourceManager);
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
 				Graphics.GAME_HEIGHT / 2);
 		graphics.addRenderable(shipView);
+		graphics.addRenderable(loadoutView);
 
 		bgView = new BackgroundView(models, resourceManager, ship);
 		// graphics.addRenderable(bgView);

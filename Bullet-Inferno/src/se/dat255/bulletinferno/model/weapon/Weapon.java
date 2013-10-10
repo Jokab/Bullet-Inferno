@@ -53,4 +53,8 @@ public interface Weapon {
 	
 	public Vector2 getDimensions();
 	
+	public Vector2 getOffset();
+	
+	public void setOffset(Vector2 offset);
+
 }

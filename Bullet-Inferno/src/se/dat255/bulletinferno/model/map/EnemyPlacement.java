@@ -1,6 +1,8 @@
 package se.dat255.bulletinferno.model.map;
 
 import se.dat255.bulletinferno.model.entity.EnemyDefinition;
+import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
+
 import com.badlogic.gdx.math.Vector2;
 
 
