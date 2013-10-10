@@ -45,6 +45,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		// faster with each activation
 
 		this.playerShip = playerShip;
+		bulletPositions.clear();
 		counter = 0;
 		timer.stop();
 		timer.setTime(0.1f);
