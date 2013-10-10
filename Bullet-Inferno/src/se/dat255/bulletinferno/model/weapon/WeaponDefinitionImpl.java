@@ -71,8 +71,8 @@ WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType,
 	 */
 	@Override
 	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		String s = this.getIdentifier().substring(0,5);
-		if(s.equals("ENEMY") || s.equals("BOSS_")){
+		String pre = this.name().substring(0,5);
+		if(pre.equals("ENEMY") || pre.equals("BOSS_")){
 			return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
 					 projectileSpeed);
 		} else {
