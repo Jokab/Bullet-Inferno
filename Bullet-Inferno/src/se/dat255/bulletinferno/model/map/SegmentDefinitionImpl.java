@@ -34,7 +34,8 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			SliceDefinitionImpl.MOUNTAIN_4,
 			SliceDefinitionImpl.MOUNTAIN_5,
 			SliceDefinitionImpl.MOUNTAIN_6,
-			SliceDefinitionImpl.MOUNTAIN_7));
+			SliceDefinitionImpl.MOUNTAIN_7
+			));
 
 	/**
 	 * The entry (i.e. the first) slice of the segment.

@@ -18,31 +18,48 @@ import com.badlogic.gdx.math.Vector2;
  */
 public enum SliceDefinitionImpl implements SliceDefinition {
 	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
-	MOUNTAIN_1(0, 1.75f, 16f, Collections.<ObstaclePlacement>emptyList(), 
+	
+	MOUNTAIN_1(0, 1.75f, 16f, Arrays.asList(
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_1_GROUND, 0, 0),
+			placeObstacle(ObstacleDefinitionImpl.DEFAULT_TREE, 11.37f, 1.7f)), 
 			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-			placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5),
-			placeEnemy(EnemyDefinitionImpl.EASY_BOSS_SHIP, 13, 5))),
-	MOUNTAIN_2(1.75f, 3.8f, 16f, Collections.<ObstaclePlacement>emptyList(), 
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.HARD_BOSS_SHIP, 10, 5))),
-	MOUNTAIN_3(1.75f, 3.8f, 16f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.EASY_BOSS_SHIP, 10, 5))),
-	MOUNTAIN_4(3.8f, 1.75f, 16f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.HARD_BOSS_SHIP, 10, 5))),
-	MOUNTAIN_5(1.75f, 1.75f, 16f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.EASY_BOSS_SHIP, 10, 5))),
-	MOUNTAIN_6(1.75f, 1.75f, 16f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))),
-	MOUNTAIN_7(3.8f, 1.75f, 16f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))),
-	MOUNTAIN_8(1.75f, 0, 16f, Collections.<ObstaclePlacement>emptyList(),
-			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3),
-					placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))),
+			placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 5))
+		),
+	
+	MOUNTAIN_2(1.75f, 3.8f, 16f, Arrays.asList(
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_2_GROUND, 0, 0)), 
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
+	MOUNTAIN_3(1.75f, 3.8f, 16f, Arrays.asList(placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_3_GROUND, 0, 0)),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
+	
+	MOUNTAIN_4(3.8f, 1.75f, 16f, Arrays.asList(
+				placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_4_GROUND, 0, 0),
+				placeObstacle(ObstacleDefinitionImpl.FLOATING_ROCK, 10f, 2.85f),
+				placeObstacle(ObstacleDefinitionImpl.SMALL_TREE, 2.38f, 4.81f)),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
+	MOUNTAIN_5(1.75f, 1.75f, 16f, Arrays.asList(
+				placeObstacle(ObstacleDefinitionImpl.FLAT_GROUND, 0, 1.75f)),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
+	
+	MOUNTAIN_6(1.75f, 1.75f, 16f, Arrays.asList(
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_6_GROUND, 0, 0)),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
+	
+	MOUNTAIN_7(3.8f, 1.75f, 16f, Arrays.asList(
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_7_GROUND, 0, 0)),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
+	
+	MOUNTAIN_8(1.75f, 0, 16f, Arrays.asList(
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_8_GROUND, 0, 0),
+			placeObstacle(ObstacleDefinitionImpl.DEFAULT_TREE, 4.63f, 1.7f)),
+			Arrays.asList(placeEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 10, 3))
+		),
 	SIMPLE_GROUND(2f, 2f, 16f, Collections.<ObstaclePlacement>emptyList())
 	;
 	
