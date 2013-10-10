@@ -110,10 +110,13 @@ public class Graphics {
 			renderable.render(guiBatch);
 		}
 		guiBatch.end();
-		
-		debugRenderer.render(PhysicsEnvironmentImpl.world, worldCamera.combined);
 	}
 
+	public void renderWithDebug(PhysicsEnvironment physics) {
+		render();
+		debugRenderer.render(physics.getWorld(), worldCamera.combined);
+	}
+	
 	/** Adds an object to be rendered in the world. Uses hashcode to separate */
 	public void addRenderable(Renderable renderable) {
 		renderables.add(renderable);

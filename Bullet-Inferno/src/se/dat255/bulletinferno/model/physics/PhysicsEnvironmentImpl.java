@@ -55,7 +55,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	private float timeStepAccumulator = 0f;
 
 	/** Holds the Box2D world. */
-	public static World world;
+	private World world;
 
 	/**
 	 * A collision queue but with filtering and internal usage of special bodies.
@@ -342,5 +342,10 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	@Override
 	public void runLater(Runnable task) {
 		runLaters.add(task);
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
 	}
 }

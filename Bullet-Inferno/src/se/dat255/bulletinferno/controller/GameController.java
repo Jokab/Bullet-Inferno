@@ -111,7 +111,7 @@ public class GameController extends SimpleController {
 			models.dispose();
 		}
 		models = new ModelEnvironmentImpl(weaponData);
-
+		
 		PlayerShip ship = models.getPlayerShip();
 		
 		// TODO: Based on user selection
@@ -232,7 +232,10 @@ public class GameController extends SimpleController {
 
 		// Render the game
 		graphics.render();
-
+		
+		// Debug render 
+		//graphics.renderWithDebug(models.getPhysicsEnvironment());
+		
 		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();
 		}

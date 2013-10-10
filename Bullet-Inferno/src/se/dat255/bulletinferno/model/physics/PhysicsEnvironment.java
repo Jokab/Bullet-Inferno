@@ -4,6 +4,7 @@ import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 public interface PhysicsEnvironment extends Disposable {
 
@@ -94,5 +95,11 @@ public interface PhysicsEnvironment extends Disposable {
 	 *        The Runnable that should be run.
 	 */
 	public void runLater(Runnable task);
-
+	
+	/**
+	 * Returns the box2d world instance currently running 
+	 * the game. <strong>To be handled with care</strong>
+	 * @return world
+	 */
+	public World getWorld();
 }
