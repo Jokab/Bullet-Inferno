@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.model.entity.Enemy;
+import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
+import se.dat255.bulletinferno.model.entity.EntityEnvironmentImplTest.EnemyMockup;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
@@ -93,6 +97,9 @@ public class WeaponImplTest {
 		WeaponImpl weapon = new WeaponImpl(physics, weapons, 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER, 20, ProjectileType.RED_PROJECTILE, 1);
 
+		Enemy enemy = new Enemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
+		
 		Vector2 origin = new Vector2(1, 1);
 		weapon.fire(origin, new Vector2(), null);
 
