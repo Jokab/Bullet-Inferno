@@ -88,6 +88,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		this.weaponTimer = loadout.getStandardWeapon().getTimer();
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
+		weaponTimer.start();
 
 		Shape shape = PhysicsShapeFactory.getRectangularShape(2.4f, 1.5f);
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shape);
