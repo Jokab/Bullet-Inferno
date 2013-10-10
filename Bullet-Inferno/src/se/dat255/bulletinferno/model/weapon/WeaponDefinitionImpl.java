@@ -24,7 +24,7 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	DISORDERER(0.5f, ProjectileType.PLASMA, 5f, new Vector2(1f,0.5f)),
 	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, 14, new Vector2(1f,0.5f)),
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, 7, new Vector2(1f,0.5f)),
-	MISSILE_LAUNCHER(0.5f, ProjectileType.MISSILE, 10f, new Vector2(1f,0.5f)),
+	MISSILE_LAUNCHER(2f, ProjectileType.MISSILE, 10f, new Vector2(1f,0.5f)),
 	
 	// Different weapons for standard enemies
 	ENEMY_DISORDERER(0.5f, ProjectileType.PLASMA, 5f, new Vector2(1f,0.5f)),
@@ -71,16 +71,19 @@ WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType,
 	 */
 	@Override
 	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		String pre = this.name().substring(0,5);
-		if(pre.equals("ENEMY") || pre.equals("BOSS_")){
-			return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
-					 projectileSpeed);
+		String pre = this.name().substring(0, 5);
+		if (pre.equals("ENEMY") || pre.equals("BOSS_")) {
+			return new EnemyWeaponImpl(physics, weapons, this, reloadingTime, projectileType,
+					projectileSpeed);
+		} else if (this == MISSILE_LAUNCHER) {
+			return new CooldownWeaponImpl(physics, weapons, this, reloadingTime, projectileType, projectileSpeed);
+
 		} else {
 			return new WeaponImpl(physics, weapons, this, reloadingTime, projectileType,
 					projectileSpeed);
 		}
 	}
-	
+
 	@Override
 	public String getIdentifier() {
 		return this.name();
