@@ -64,7 +64,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 			float diffX = ship.body.getPosition().x - ship.haltAtPosition;
 			if (diffX >= 0) {
-				ship.body.setVelocity(new Vector2(0, 0));
+				ship.body.setVelocity(Vector2.Zero);
 				// ship.body.getBox2DBody().setTransform(-diffX, 0, 0);
 				source.unregisterListener(this);
 			}
@@ -114,7 +114,8 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
 		} else if (collidedWithSomethingElse(other)) {
-			System.out.println("You crashed!!!");
+			// TODO: Should be some constant or dynamic value.
+			takeDamage(20);
 		}
 	}
 
@@ -212,13 +213,15 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void halt(float distance) {
-//		haltTimer.registerListener(haltShipTimerable);
-//		haltAtPosition = body.getPosition().x + distance;
-//		haltTimer.start();
+		haltTimer.registerListener(haltShipTimerable);
+		haltAtPosition = body.getPosition().x + distance;
+		haltTimer.start();
 	}
 
 	@Override
 	public void restoreSpeed() {
+		haltTimer.stop();
+		haltTimer.unregisterListener(haltShipTimerable);
 		body.setVelocity(forwardSpeed);
 	}
 
