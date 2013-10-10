@@ -27,13 +27,16 @@ public class WeaponButtonsView {
 
 	private final ResourceManager resourceManager;
 	private final List<WeaponButton> standardWeapons = new ArrayList<WeaponButton>();
-	private WeaponButton selectionButton;
+	private final List<WeaponButton> heavyWeapons = new ArrayList<WeaponButton>();
+	private WeaponButton standardSelectionButton;
+	private WeaponButton heavySelectionButton;
 	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
 	private final Label label;
 
-	public WeaponButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
+	public WeaponButtonsView(Stage stage, Skin skin, Table table, Label label,
+			ResourceManager resourceManager) {
 		this.stage = stage;
 		this.skin = skin;
 		this.table = table;
@@ -41,7 +44,34 @@ public class WeaponButtonsView {
 		this.resourceManager = resourceManager;
 	}
 
-	public void populateTable() {
+	public void populateTable(String type) {
+		if (type.equals("standard")) {
+			populateTableWithStandard();
+		} else if (type.equals("heavy")) {
+			populateTableWithHeavy();
+		}
+	}
+
+	private void populateTableWithHeavy() {
+		if (heavyWeapons.size() == 0) {
+			for (int i = 0; i < 5; i++) {
+				// TODO: the line below needs changing to take into account all weapons
+				WeaponDefinition weaponData = WeaponDefinitionImpl.MISSILE_LAUNCHER;
+				WeaponButton weaponButton = new WeaponButton(getTableButton(weaponData),
+						weaponData,
+						resourceManager);
+				heavyWeapons.add(weaponButton);
+
+				weaponButton.getButton().addListener(
+						new TableElementClickedListener(heavySelectionButton, heavyWeapons));
+			}
+		}
+
+		// Set up the table to add these buttons to
+		showTable(heavyWeapons, "Heavy Weapons");
+	}
+
+	private void populateTableWithStandard() {
 		if (standardWeapons.size() == 0) {
 			for (int i = 0; i < 5; i++) {
 				// TODO: the line below needs changing to take into account all weapons
@@ -50,24 +80,25 @@ public class WeaponButtonsView {
 						weaponData,
 						resourceManager);
 				standardWeapons.add(weaponButton);
-	
-				weaponButton.getButton().addListener(new ClickedListener());
+
+				weaponButton.getButton().addListener(
+						new TableElementClickedListener(standardSelectionButton, standardWeapons));
 			}
 		}
-	
+
 		// Set up the table to add these buttons to
-		showTable();
+		showTable(standardWeapons, "Standard Weapons");
 	}
 
-	private void showTable() {
+	private void showTable(List<WeaponButton> weaponList, String labelText) {
 		table.clear();
-		for (WeaponButton button : standardWeapons) {
+		for (WeaponButton button : weaponList) {
 			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
 		}
-		label.setText("Primary weapons");
+		label.setText(labelText);
 	}
 
-	public void setSelectionToClicked(WeaponButton wButton) {
+	public void setSelectionToClicked(WeaponButton wButton, WeaponButton selectionButton) {
 		selectionButton.setData(wButton.getData());
 		ButtonStyle style = new ButtonStyle(wButton.getButton().getStyle());
 
@@ -79,7 +110,7 @@ public class WeaponButtonsView {
 		selectionButton.getButton().setStyle(style);
 	}
 
-	public void setSelectionToNothing(ButtonStyle style) {
+	public void setSelectionToNothing(ButtonStyle style, WeaponButton selectionButton) {
 		ButtonStyle newStyle = new ButtonStyle(style);
 		newStyle.up = new TextureRegionDrawable(new TextureRegion(
 				new Texture("data/frame.png")));
@@ -88,8 +119,8 @@ public class WeaponButtonsView {
 		selectionButton.setData(null);
 	}
 
-	private void deselectOtherButtons(WeaponButton selected) {
-		for (WeaponButton wButton : standardWeapons) {
+	private void deselectOtherButtons(WeaponButton selected, List<WeaponButton> weaponList) {
+		for (WeaponButton wButton : weaponList) {
 			if (wButton != selected && wButton.isSelected()) {
 				wButton.toggleSelected(skin);
 			}
@@ -105,56 +136,88 @@ public class WeaponButtonsView {
 		return new Button(buttonStyle);
 	}
 
-	public WeaponButton getSelectionButton() {
-		return selectionButton;
+	public WeaponButton getStandardSelectionButton() {
+		return standardSelectionButton;
 	}
 
-	public void setSelectionButton(WeaponButton selectionWeaponButton) {
-		this.selectionButton = selectionWeaponButton;
+	public void setStandardSelectionButton(WeaponButton selectionWeaponButton) {
+		this.standardSelectionButton = selectionWeaponButton;
 	}
 
 	public List<WeaponButton> getStandardWeapons() {
 		return standardWeapons;
 	}
 
-	public class SelectionClickedListener extends ChangeListener {
-
-		@Override
-		public void changed(ChangeEvent event, Actor actor) {
-			if (selectionButton.getData() == null) {
-				populateTable();
-			} else {
-				Button button = selectionButton.getButton();
-				if (button == ((Button) actor)) {
-					setSelectionToNothing(button.getStyle());
-					deselectOtherButtons(new WeaponButton(null, null, null));
-				}
-			}
-		}
-
+	public WeaponButton getHeavySelectionButton() {
+		return heavySelectionButton;
 	}
 
-	public class ClickedListener extends ChangeListener {
+	public void setHeavySelectionButton(WeaponButton heavySelectionButton) {
+		this.heavySelectionButton = heavySelectionButton;
+	}
+
+	public List<WeaponButton> getHeavyWeapons() {
+		return heavyWeapons;
+	}
+
+	public class TableElementClickedListener extends ChangeListener {
+
+		private final WeaponButton selectionButton;
+		private final List<WeaponButton> list;
+
+		public TableElementClickedListener(WeaponButton selectionButton, List<WeaponButton> list) {
+			this.selectionButton = selectionButton;
+			this.list = list;
+		}
+
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			WeaponButton selected = null;
-			for (WeaponButton wButton : standardWeapons) {
+			for (WeaponButton wButton : list) {
 				Button button = wButton.getButton();
 				if (button == ((Button) actor)) {
 					selected = wButton;
 					if (!wButton.isSelected()) {
 						wButton.toggleSelected(skin);
-						setSelectionToClicked(wButton);
+						setSelectionToClicked(wButton, selectionButton);
 					} else {
 						wButton.toggleSelected(skin);
-						setSelectionToNothing(button.getStyle());
+						setSelectionToNothing(button.getStyle(), selectionButton);
 					}
 				}
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
 
-			deselectOtherButtons(selected);
+			deselectOtherButtons(selected, list);
 		}
+	}
+
+	public class SelectionClickedListener extends ChangeListener {
+
+		private final WeaponButton selectionButton;
+		private final List<WeaponButton> list;
+		private final String type;
+
+		public SelectionClickedListener(WeaponButton selectionButton, List<WeaponButton> list,
+				String type) {
+			this.selectionButton = selectionButton;
+			this.list = list;
+			this.type = type;
+		}
+
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			if (selectionButton.getData() == null) {
+				populateTable(type);
+			} else {
+				Button button = selectionButton.getButton();
+				if (button == ((Button) actor)) {
+					setSelectionToNothing(button.getStyle(), selectionButton);
+					deselectOtherButtons(new WeaponButton(null, null, null), list);
+				}
+			}
+		}
+
 	}
 }
