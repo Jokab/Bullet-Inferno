@@ -30,18 +30,18 @@ public class EnemyImplTest {
 
 	private class EnemyMockup extends SimpleEnemy {
 		public EnemyMockup(EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
-				int initialHealth, Weapon[] weapon, int score, int credits) {
+				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
 			super(new PhysicsWorldImplSpy(), new EntityMockEnvironment(), type, position, velocity,
-					initialHealth, weapon, score,
+					initialHealth, weapon, weaponPositionModifier, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
 					new SimplePhysicsMovementPatternMock());
 		}
 		public EnemyMockup(PhysicsEnvironment physics, EntityEnvironment entities, 
 				EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
-				int initialHealth, Weapon[] weapon, int score, int credits) {
+				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
 			super(physics, entities, type, position, velocity,
-					initialHealth, weapon, score,
+					initialHealth, weapon, weaponPositionModifier, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
 					new SimplePhysicsMovementPatternMock());
@@ -95,7 +95,7 @@ public class EnemyImplTest {
 		// Set up a new enemy with score 99
 
 		SimpleEnemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, 99, 0);
+				new Vector2(), 0, null, null, 99, 0);
 		assertTrue("Enemy score should be = 99", enemy.getScore() == 99);
 	}
 
@@ -103,18 +103,18 @@ public class EnemyImplTest {
 	public void testGetCredits() {
 		// Set up a new enemy with credits of 65
 
-		SimpleEnemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, 0, 65);
+		SimpleEnemy enemy = new EnemyMockup(null, null, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+				new Vector2(), 0, null, null, 0, 65);
 		assertTrue("Enemy credits should be = 65", enemy.getCredits() == 65);
 	}
 
 	@Test
 	public void testPreCollided() {
 
-		SimpleEnemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
-				new Vector2(), 100, null, 0, 0);
-		SimpleEnemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 100, null, 0, 0);
+		SimpleEnemy enemy = new EnemyMockup(null, null, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
+				new Vector2(), 100, null, null, 0, 0);
+		SimpleEnemy enemy2 = new EnemyMockup(null, null, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+				new Vector2(), 100, null, null, 0, 0);
 		SimpleMockProjectile projectile = new ColidedTestMockProjectile();
 
 		// Set another enemy as source and check that friendly fire is't enabled
@@ -152,7 +152,7 @@ public class EnemyImplTest {
 		// Set up a new enemy with a health of 101
 
 		SimpleEnemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 101, null, 0, 0);
+				new Vector2(), 101, null, null, 0, 0);
 		assertTrue("Enemy health should be = 101", enemy.getHealth() == 101);
 
 		enemy.takeDamage(10);
@@ -165,7 +165,7 @@ public class EnemyImplTest {
 		PhysicsWorldImplSpy physics = new PhysicsWorldImplSpy();
 		EemyEntityEnvironmentMockup entities = new EemyEntityEnvironmentMockup();
 		SimpleEnemy enemy = new EnemyMockup(physics, entities, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 
-				new Vector2(),new Vector2(), 101, null, 0, 0);
+				new Vector2(),new Vector2(), 101, null, null, 0, 0);
 
 		// Take 61 damage
 		enemy.takeDamage(61);
@@ -200,7 +200,7 @@ public class EnemyImplTest {
 		PhysicsWorldImplSpy physics = new PhysicsWorldImplSpy();
 		EemyEntityEnvironmentMockup entities = new EemyEntityEnvironmentMockup();
 		SimpleEnemy enemy = new EnemyMockup(physics, entities, 
-				EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), new Vector2(), 101, null, 0, 
+				EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), new Vector2(), 101, null, null, 0, 
 				0);
 		enemy.dispose();
 		assertEquals("Enemy should do remove body once",
@@ -212,7 +212,7 @@ public class EnemyImplTest {
 		// Set up a new enemy with a health of 101
 
 		SimpleEnemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
-				new Vector2(), 98, null, 0, 0);
+				new Vector2(), 98, null, null, 0, 0);
 		assertTrue("Enemy initial health should be = 98", enemy.getInitialHealth() == 98);
 
 		enemy.takeDamage(10);
@@ -225,7 +225,7 @@ public class EnemyImplTest {
 
 		Vector2 position = new Vector2(2, 3);
 		SimpleEnemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, position,
-				new Vector2(), 98, null, 0, 0);
+				new Vector2(), 98, null, null, 0, 0);
 
 		assertTrue("Check that position is equal enemy's position",
 				position.equals(enemy.getPosition()));
@@ -240,17 +240,17 @@ public class EnemyImplTest {
 	public void testIsInMyTeam() {
 
 		SimpleEnemy enemy1 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
-				new Vector2(), 98, null, 0, 0);
+				new Vector2(), 98, null, null, 0, 0);
 
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(),
-				new Vector2(), 87, null, 0, 0);
+				new Vector2(), 87, null, null, 0, 0);
 
 		class AnotherEnemy extends SimpleEnemy {
 			public AnotherEnemy(EnemyDefinitionImpl type, Vector2 position, Vector2 velocity,
 					int initialHealth,
-					Weapon[] weapon, int score, int credits) {
+					Weapon[] weapon,Vector2[] weaponPositionModifier ,int score, int credits) {
 				super(new PhysicsWorldImplSpy(), new EntityMockEnvironment(), type, position, 
-						velocity, initialHealth, weapon, score, credits, 
+						velocity, initialHealth, weapon, weaponPositionModifier, score, credits, 
 						new PhysicsBodyDefinitionImpl(
 								PhysicsShapeFactory.getRectangularShape(1, 1)), 
 						new SimplePhysicsMovementPatternMock());
@@ -261,7 +261,7 @@ public class EnemyImplTest {
 
 		Enemy otherEnemy = new AnotherEnemy(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP,
 				new Vector2(), new Vector2(),
-				98, null, 0, 0);
+				98, null, null, 0, 0);
 
 		assertTrue("Check if two enemies of the same class is in the same team",
 				enemy1.isInMyTeam(enemy2));

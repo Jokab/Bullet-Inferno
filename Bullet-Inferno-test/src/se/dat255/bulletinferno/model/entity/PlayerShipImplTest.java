@@ -38,9 +38,8 @@ public class PlayerShipImplTest {
 	private class MockWeapon extends WeaponImpl {
 		private boolean hasFired = false;
 		
-		public MockWeapon(WeaponDefinition type, float reloadingTime, ProjectileType projectileType,
-				Vector2 offset, float velocity) {
-			super(physics, weapons, type, reloadingTime, projectileType, offset, velocity);
+		public MockWeapon(WeaponDefinition type, float reloadingTime, ProjectileType projectileType, float velocity) {
+			super(physics, weapons, type, reloadingTime, projectileType, velocity);
 		}
 		
 		@Override
@@ -138,7 +137,7 @@ public class PlayerShipImplTest {
 	@Test
 	public void testFireWeapon() {
 		MockWeapon weapon = new MockWeapon(WeaponDefinitionImpl.MISSILE_LAUNCHER, 0, 
-				ProjectileType.RED_PROJECTILE, new Vector2(), 0);
+				ProjectileType.RED_PROJECTILE, 0);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(weapon, weapon);
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
 				new Vector2(), 100, loadout, ShipType.PLAYER_DEFAULT);
