@@ -31,6 +31,7 @@ public class ObstacleImpl implements Obstacle {
 	 */
 	public ObstacleImpl(PhysicsEnvironment physics, PhysicsBodyDefinition bodyDefinition, Vector2 position) {
 		this.physics = physics;
+		System.out.println(position);
 		body = physics.createBody(bodyDefinition, this, position);
 	}
 

@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.model.mock.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.map.Slice;
 
@@ -67,6 +69,11 @@ public class SimpleSliceMock implements Slice {
 	@Override
 	public float getWidth() {
 		return width;
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return null;
 	}
 
 }
