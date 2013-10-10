@@ -46,7 +46,6 @@ public class SegmentView implements Renderable {
 		int i = 0; // TODO : Fix iteration
 		for (Slice slice : slices) {
 			// TODO: Determine where on Texture the slice image is
-			// TODO: Create TextureRegion of that part and pass to constructor below
 			TextureRegion textureRegion = null;
 			if (slice.getIdentifier().equals("MOUNTAIN_1")) {
 				textureRegion = new TextureRegion(texture, 0, 0, 448, 252);
@@ -69,7 +68,7 @@ public class SegmentView implements Renderable {
 				throw new RuntimeException((texture == null) + " or " + (textureRegion == null));
 			}
 
-			SliceView sliceView = new SliceView(textureRegion, slice.getPosition().x);
+			SliceView sliceView = new SliceView(slice, textureRegion);
 			this.slices[i] = sliceView;
 			i++;
 		}
