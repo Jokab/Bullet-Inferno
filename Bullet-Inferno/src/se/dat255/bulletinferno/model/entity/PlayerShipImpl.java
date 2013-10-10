@@ -19,7 +19,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	public enum ShipType implements Teamable {
-		PLAYER_DEFAULT(new Vector2[] { new Vector2(1 / 2f, 1 / 2f), new Vector2(1 / 2f, -1 / 2f) });
+		PLAYER_DEFAULT(new Vector2[] { new Vector2(1 / 2f, 2 / 3f), new Vector2(1 / 2f, -2 / 5f) });
 
 		private final Vector2[] weaponPositionModifier;
 
