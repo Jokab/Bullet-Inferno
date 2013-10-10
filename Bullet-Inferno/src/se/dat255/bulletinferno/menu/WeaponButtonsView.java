@@ -68,6 +68,7 @@ public class WeaponButtonsView {
 		}
 
 		// Set up the table to add these buttons to
+		setSelectionToClicked(heavyWeapons.get(0), heavySelectionButton);
 		showTable(heavyWeapons, "Heavy Weapons");
 	}
 
@@ -86,6 +87,7 @@ public class WeaponButtonsView {
 			}
 		}
 
+		setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
 		// Set up the table to add these buttons to
 		showTable(standardWeapons, "Standard Weapons");
 	}
