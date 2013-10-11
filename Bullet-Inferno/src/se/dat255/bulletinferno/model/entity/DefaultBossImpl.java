@@ -71,6 +71,7 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	public void onTimeout(Timer source, float timeSinceLast) {
 		
 		if (getHealth() == getInitialHealth()){
+			changeToFollowingMovement();
 			
 		}else if (getHealth() >= getInitialHealth() * 0.75f) {
 			changeToDisorderedMovement();

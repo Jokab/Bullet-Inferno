@@ -174,6 +174,14 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void setVelocity(Vector2 velocity) {
 		body.setVelocity(velocity);
 	}
+	
+	public Vector2 getVelocity(){
+		return body.getVelocity();
+	}
+	
+	public Weapon[] getWeapons(){
+		return weapons;
+	}
 
 	@Override
 	public boolean isInMyTeam(Teamable teamMember) {
