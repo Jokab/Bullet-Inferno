@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import se.dat255.bulletinferno.model.gui.Listener;
+
 /**
  * Displays the score of the game
  */
@@ -106,8 +108,8 @@ public class HudView implements Renderable {
 		hudRegions.add(pauseButton);
 	}
 	
-	public void gameOver(){
-		RenderableGUI gameOver = new GameoverScreenView(resourceManager);
+	public void gameOver(int score){
+		RenderableGUI gameOver = new GameoverScreenView(resourceManager, score);
 		hudRegions.clear();
 		hudRegions.add(gameOver);
 	}

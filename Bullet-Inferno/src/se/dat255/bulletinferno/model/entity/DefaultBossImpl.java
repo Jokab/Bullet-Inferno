@@ -42,7 +42,7 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 * @param offsets
 	 */
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
+			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, float initialHealth, 
 			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
 			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
@@ -55,7 +55,7 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	}
 	
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, 
 			Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition,
 			Listener<Integer> scoreListener) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,

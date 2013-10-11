@@ -4,6 +4,7 @@ import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
@@ -13,6 +14,9 @@ import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.TimerImpl;
+import se.dat255.bulletinferno.util.Timerable;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.LoadoutView;
@@ -65,6 +69,8 @@ public class GameController extends SimpleController {
 	private SpecialAbilityDefinition special;
 
 	private PassiveAbilityDefinition passive;
+	
+	private ScoreListener scoreListener;
 
 
 
@@ -107,19 +113,26 @@ public class GameController extends SimpleController {
 		graphics.create();
 		
 		// Initialize the score listener
-		Listener<Integer> scoreListener = new Listener<Integer>(){
-			private int score = 0;
+		scoreListener = new ScoreListener(){
 			@Override
-			public void call(Integer e) {
-				score += e;
+			public void updateHudWithScore(int score) {
 				hudView.setScore(score);
+			}
+		};
+
+		
+		// Update life when ship changes life
+		Listener<Float> healthListener = new Listener<Float>(){
+			@Override
+			public void call(Float life) {
+				hudView.setLife(life);
 			}
 		};
 		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData, scoreListener);
+		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener);
 		
 		PlayerShip ship = models.getPlayerShip();
 		
@@ -158,7 +171,7 @@ public class GameController extends SimpleController {
 	public void gameOver() {
 		gameOver = true;
 		touchController.setSuppressKeyboard(true);
-		graphics.getHudView().gameOver();
+		graphics.getHudView().gameOver(scoreListener.getScore());
 	}
 
 	/**
@@ -251,6 +264,8 @@ public class GameController extends SimpleController {
 			models.setViewport(viewportPosition, viewportDimensions);
 
 			models.update(delta);
+			
+			scoreListener.update(delta);
 		}
 
 	}
