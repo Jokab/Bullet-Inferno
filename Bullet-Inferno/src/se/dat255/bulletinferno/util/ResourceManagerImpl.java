@@ -66,10 +66,21 @@ public class ResourceManagerImpl implements ResourceManager {
 			return this.path;
 		}
 	}
+	
+	public enum SoundEffectType {
+		DEFAULT_ENEMY_SHIP("data/explosion.mp3");
+		
+		private final String src;
+		
+		private SoundEffectType(String src) {
+			this.src = src;
+		}
+		
+		public String getSource() {
+			return src;
+		}
+	}
 
-	// TODO: Define these maps
-	private static final Map<String, String> sounds = new HashMap<String, String>();
-	private static final Map<String, String> music = new HashMap<String, String>();
 	private final TextureType[] textureTypes;
 	
 	private AssetManager manager;
@@ -87,7 +98,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	 */
 	public void startLoad(boolean blocking) {
 		loadTextures();
-		
+		loadSoundEffects();
 		if(blocking) {
 			manager.finishLoading();
 		}
@@ -97,8 +108,14 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Sound getSound(String identifier) {
-		return manager.get(sounds.get(identifier), Sound.class);
+	public Sound getSound(ResourceIdentifier identifier) {
+		for (SoundEffectType soundEffectType : SoundEffectType.values()) {
+			if (identifier.getIdentifier().equals(soundEffectType.name())) {
+				return manager.get(soundEffectType.src, Sound.class);
+			}
+		}
+		
+		throw new RuntimeException("Sound not found for that identifier.");
 	}
 
 	/**
@@ -106,7 +123,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	 */
 	@Override
 	public Music getMusic(String identifier) {
-		return manager.get(music.get(identifier), Music.class);
+		return null;
+		//return manager.get(music.get(identifier), Music.class);
 	}
 
 	/**
@@ -115,6 +133,12 @@ public class ResourceManagerImpl implements ResourceManager {
 	private void loadTextures() {
 		for (TextureType type : TextureType.values()) {
 			manager.load(type.path, Texture.class);
+		}
+	}
+	
+	private void loadSoundEffects() {
+		for (SoundEffectType type : SoundEffectType.values()) {
+			manager.load(type.getSource(), Sound.class);
 		}
 	}
 

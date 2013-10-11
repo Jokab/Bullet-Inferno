@@ -44,7 +44,7 @@ public interface ResourceManager extends Disposable {
 	 *        The identifier for this {@link Sound}.
 	 * @return The {@link Sound}.
 	 */
-	Sound getSound(String identifier);
+	Sound getSound(ResourceIdentifier identifier);
 
 	/**
 	 * Returns the loaded {@link Music} that is mapped to this identifier.
@@ -98,5 +98,4 @@ public interface ResourceManager extends Disposable {
 	 *        The path to unload from.
 	 */
 	void unload(String path);
-
 }
