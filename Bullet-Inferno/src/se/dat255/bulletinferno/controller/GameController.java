@@ -63,7 +63,7 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
-	private AudioPlayer audiPlayer = new AudioPlayerImpl();
+	private AudioPlayer audiPlayer;
 	
 	private final ResourceManager resourceManager;
 	
@@ -83,6 +83,7 @@ public class GameController extends SimpleController {
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
 		this.resourceManager = resourceManager;
+		this.audiPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**

@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.IdentityMap.Entry;
 
 public class ResourceManagerImpl implements ResourceManager {
 	public enum TextureType {
@@ -68,16 +69,18 @@ public class ResourceManagerImpl implements ResourceManager {
 	}
 	
 	public enum SoundEffectType {
-		DEFAULT_ENEMY_SHIP("data/explosion.mp3");
+		DEFAULT_ENEMY_SHIP(new HashMap<String, String>() {{ 
+					put("DIED", "data/explosion.mp3");
+				}});
 		
-		private final String src;
+		private final Map<String, String> mapping;
 		
-		private SoundEffectType(String src) {
-			this.src = src;
+		private SoundEffectType(Map<String, String> mapping) {
+			this.mapping = mapping;
 		}
 		
-		public String getSource() {
-			return src;
+		public String getSource(String key) {
+			return mapping.get(key);
 		}
 	}
 
@@ -108,10 +111,10 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Sound getSound(ResourceIdentifier identifier) {
+	public Sound getSound(ResourceIdentifier identifier, GameAction action) {
 		for (SoundEffectType soundEffectType : SoundEffectType.values()) {
 			if (identifier.getIdentifier().equals(soundEffectType.name())) {
-				return manager.get(soundEffectType.src, Sound.class);
+				return manager.get(soundEffectType.getSource(action.getAction()), Sound.class);
 			}
 		}
 		
@@ -138,7 +141,9 @@ public class ResourceManagerImpl implements ResourceManager {
 	
 	private void loadSoundEffects() {
 		for (SoundEffectType type : SoundEffectType.values()) {
-			manager.load(type.getSource(), Sound.class);
+			for(String src : type.mapping.values()) {
+				manager.load(src, Sound.class);
+			}
 		}
 	}
 
