@@ -20,6 +20,11 @@ public class WeaponPlacementImpl implements WeaponPlacement {
 		this.offset = new Vector2(x,y);
 	}
 	
+	public WeaponPlacementImpl() {
+		content = WeaponDefinitionImpl.DISORDERER;
+		offset = new Vector2(0, 0);
+	}
+	
 	@Override
 	public WeaponDefinition getContent() {
 		return content;

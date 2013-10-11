@@ -73,22 +73,6 @@ public class WeaponImplTest {
 	}
 
 	@Test
-	public void testGetOffset() {
-		// Tests that the offset is always set, and if
-		// provided in the constructor is set to that value
-
-		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
-
-		Vector2 offset = new Vector2();
-		WeaponImpl weapon1 = new WeaponImpl(physics, weapons, WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
-		weapon1.setOffset(offset);
-		assertTrue("The offset should be the same as the set",
-				weapon1.getOffset().equals(offset));
-	}
-
-	@Test
 	public void testFire() {
 		// Tests that the fire method adds a projectile to the world
 		// at the provided origin position "+" the offset,
