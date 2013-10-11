@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
@@ -67,7 +67,7 @@ public class SliceImpl implements Slice, Collidable {
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
-			List<? extends EnemyPlacement> enemyPlacements, ScoreController scoreController) {
+			List<? extends EnemyPlacement> enemyPlacements, Listener<Integer> scoreListener) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.physics = physics;
@@ -94,7 +94,7 @@ public class SliceImpl implements Slice, Collidable {
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
 			entities.addEnemy(enemyPlacement.getContent().createEnemy(physics, entities, weapons, 
-					enemyPosition, scoreController));
+					enemyPosition, scoreListener));
 		}
 	}
 	
@@ -121,17 +121,17 @@ public class SliceImpl implements Slice, Collidable {
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
-			ScoreController scoreController) {
+			Listener<Integer> scoreListener) {
 		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
-				obstaclePlacements, Collections.<EnemyPlacement>emptyList(), scoreController);
+				obstaclePlacements, Collections.<EnemyPlacement>emptyList(), scoreListener);
 	}
 
 	
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
-			Vector2 position, float width, ScoreController scoreController) {
+			Vector2 position, float width, Listener<Integer> scoreListener) {
 		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
-				Collections.<ObstaclePlacement> emptyList(), scoreController);
+				Collections.<ObstaclePlacement> emptyList(), scoreListener);
 	}
 
 	/**

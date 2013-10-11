@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.controller.ScoreController;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
@@ -44,9 +44,9 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
 			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
-			PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
+			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition, pattern, scoreController);
+				bodyDefinition, pattern, scoreListener);
 
 		this.player = entities.getPlayerShip();
 		this.weapons = weapons;
@@ -57,9 +57,9 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
 			Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition,
-			ScoreController scoreController) {
+			Listener<Integer> scoreListener) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition, scoreController);
+				bodyDefinition, scoreListener);
 
 		this.player = entities.getPlayerShip();
 		this.weapons = weapons;

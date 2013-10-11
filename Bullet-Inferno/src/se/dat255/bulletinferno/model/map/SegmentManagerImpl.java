@@ -3,8 +3,8 @@ package se.dat255.bulletinferno.model.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
@@ -42,7 +42,7 @@ public class SegmentManagerImpl implements SegmentManager {
 	/** The number of segments that have been removed from the (beginning of) segments so far. */
 	private int removedSegmentCount = 0;
 	
-	private final ScoreController scoreController;
+	private final Listener<Integer> scoreListener;
 	
 	/** Segment factory instance. */
 	private SegmentFactory segmentFactory = new SegmentFactory();
@@ -51,11 +51,11 @@ public class SegmentManagerImpl implements SegmentManager {
 	 * Construct a new segment manager. Segments will be available after calling set
 	 */
 	public SegmentManagerImpl(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, ScoreController scoreController) {
+			WeaponEnvironment weapons, Listener<Integer> scoreListener) {
 		this.physics = physics;
 		this.entities = entities;
 		this.weapons = weapons;
-		this.scoreController = scoreController;
+		this.scoreListener = scoreListener;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class SegmentManagerImpl implements SegmentManager {
 		while(rightmostLeftBounds < xMax) {
 			Segment segment = segmentFactory.generateRandomSegment(physics, entities, weapons,
 					new Vector2(rightmostLeftBounds, 0),
-					SLICES_PER_SEGMENT_MIN, SLICES_PER_SEGMENT_MAX, scoreController);
+					SLICES_PER_SEGMENT_MIN, SLICES_PER_SEGMENT_MAX, scoreListener);
 			
 			float width = segment.getWidth();
 			if(width <= 0) {
