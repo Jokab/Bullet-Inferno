@@ -105,7 +105,12 @@ public class GameTouchController implements InputProcessor {
 				gameController.gameOver();
 				break;
 			case RESTARTGAME:
-				masterController.startGame(null);
+				masterController.startGame(null, 
+						masterController.getGameScreen().getWeaponData(), 
+						masterController.getGameScreen().getSpecial(), 
+						masterController.getGameScreen().getPassive(), 
+						false
+					);
 				break;
 			case STOPGAME:
 				masterController.setScreen(masterController.getLoadoutScreen());

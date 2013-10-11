@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -48,7 +49,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			EnemyDefinitionImpl type,
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
 			Vector2[] weaponPositionModifier, int score,
-			int credits, PhysicsBodyDefinition bodyDefinition) {
+			int credits, PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
 		
 		this.physics = physics;
 		this.type = type;
@@ -72,9 +73,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
 			Vector2[] weaponPositionModifier, int score, 
-			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
+			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
+			ScoreController scoreController) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition);
+				bodyDefinition, scoreController);
 		if(pattern != null){
 			physics.attachMovementPattern(pattern.copy(), body);
 		}

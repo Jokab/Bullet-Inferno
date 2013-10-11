@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.model;
 
 import java.util.List;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
@@ -25,7 +26,7 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	public ModelEnvironmentImpl(WeaponDefinition[] weaponData, ScoreController scoreController) {
 
 		physics = new PhysicsEnvironmentImpl();
-		map = new MapEnvironmentImpl(physics, weaponData);
+		map = new MapEnvironmentImpl(physics, weaponData, scoreController);
 	}
 
 	/**

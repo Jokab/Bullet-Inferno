@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -71,30 +72,30 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		this(velocity, initialHealth, weaponsData, score, credits, bodyDefinition, weaponPositionModifier,  null);
 	}
 
-	private DefaultEnemyShipImpl getEnemyShip(PhysicsEnvironment physics,
-			EntityEnvironment entities, WeaponEnvironment weaponEnvironment, Vector2 position) {
+	private DefaultEnemyShipImpl getEnemyShip(PhysicsEnvironment physics, EntityEnvironment entities, 
+			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].createWeapon(physics, weaponEnvironment);
 		}
 
 		if (pattern == null) {
-			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity,
-					initialHealth, weapons, weaponPositionModifier, score, credits, bodyDefinition);
+			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity, initialHealth, 
+					weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreController);
 		} else {
-			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity,
-					initialHealth, weapons, weaponPositionModifier, score, credits, bodyDefinition, pattern);
+			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity, initialHealth, 
+					weapons, weaponPositionModifier, score, credits, bodyDefinition, pattern, scoreController);
 		}
 	}
 
 	private DefaultBossImpl getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weaponEnvironment, Vector2 position) {
+			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].createWeapon(physics, weaponEnvironment);
 		}
-		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern,
-				initialHealth, weapons, weaponPositionModifier, score, credits, bodyDefinition);
+		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth, 
+				weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreController);
 	}
 
 	@Override
@@ -104,11 +105,11 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
 	@Override
 	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weaponEnvironment, Vector2 position) {
+			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
 		if (this == EASY_BOSS_SHIP || this == HARD_BOSS_SHIP) {
-			return getBoss(physics, entities, weaponEnvironment, position);
+			return getBoss(physics, entities, weaponEnvironment, position, scoreController);
 		} else {
-			return getEnemyShip(physics, entities, weaponEnvironment, position);
+			return getEnemyShip(physics, entities, weaponEnvironment, position, scoreController);
 		}
 	}
 }

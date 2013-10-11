@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.model.entity;
 
 import com.badlogic.gdx.math.Vector2;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
@@ -41,10 +42,10 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier,
-			int score, int credits, PhysicsBodyDefinition bodyDefinition) {
+			Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition);
+				bodyDefinition, scoreController);
 		
 		this.timers = new Timer[weapons.length];
 		this.entities = entities;		
@@ -67,9 +68,9 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
 			Vector2[] weaponPositionModifier,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
-			PhysicsMovementPattern pattern) {
+			PhysicsMovementPattern pattern, ScoreController scoreController) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition);
+				bodyDefinition, scoreController);
 
 		if(pattern instanceof DisorderedBossMovementPattern){
 			currentPattern = "dmp";
