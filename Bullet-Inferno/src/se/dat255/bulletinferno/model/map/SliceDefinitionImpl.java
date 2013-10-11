@@ -141,8 +141,8 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	 */
 	@Override
 	public Slice createSlice(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, Vector2 position) {
+			WeaponEnvironment weapons, Vector2 position, ScoreController scoreController) {
 		return new SliceImpl(physics, entities, weapons, this, entryHeight, exitHeight, position,
-				width, obstaclePlacements, enemyPlacements);
+				width, obstaclePlacements, enemyPlacements, scoreController);
 	}
 }

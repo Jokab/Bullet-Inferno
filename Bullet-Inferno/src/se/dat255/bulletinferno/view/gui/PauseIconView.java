@@ -1,43 +1,35 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.controller.GameController;
+import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class PauseIconView implements RenderableGUI {
 
-	private final Vector2 position, size;
-	private final Sprite sprite;
-	private final GameController game;
+	private final TextureRegion textureRegion;
+	private final Vector2 position = new Vector2(6.5f, 3f);
+	private final Vector2 size = new Vector2(1.5f, 1.5f);
 
-	public PauseIconView(GameController game) {
-		Texture texture = new Texture(Gdx.files.internal("images/gui/icon_pause.png"));
-		sprite = new Sprite(texture);
-		size = new Vector2(1.0f, 1.0f);
-		sprite.setSize(size.x, size.y);
-		position = new Vector2(15.0f, 8.0f);
-		sprite.setPosition(position.x - 8.0f, position.y - 4.5f);
-		this.game = game;
+	public PauseIconView(TextureRegion textureRegion) {
+		this.textureRegion = textureRegion;
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		sprite.draw(batch);
+		batch.draw(textureRegion, position.x, position.y, size.x, size.y);
+	}
+
+	/** Disposed by HudView */
+	@Override @Deprecated
+	public void dispose(ResourceManager resourceManager) {
 	}
 
 	@Override
-	public void dispose() {
-		sprite.getTexture().dispose();
-	}
-
-	@Override
-	public void pressed(float x, float y) {
-		game.pauseGame();
+	public GuiEvent pressed(float x, float y) {
+		return GuiEvent.PAUSE;
 	}
 
 	@Override
@@ -49,5 +41,4 @@ public class PauseIconView implements RenderableGUI {
 	public Vector2 getSize() {
 		return size;
 	}
-
 }

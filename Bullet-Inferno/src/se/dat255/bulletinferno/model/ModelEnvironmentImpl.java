@@ -22,7 +22,7 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	private final MapEnvironment map;
 
 
-	public ModelEnvironmentImpl(WeaponDefinition[] weaponData) {
+	public ModelEnvironmentImpl(WeaponDefinition[] weaponData, ScoreController scoreController) {
 
 		physics = new PhysicsEnvironmentImpl();
 		map = new MapEnvironmentImpl(physics, weaponData);

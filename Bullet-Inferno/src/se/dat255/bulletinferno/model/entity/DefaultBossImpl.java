@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Default implementation of a boss
  * 
- * @author Simon Ã–sterberg
+ * @author Simon Österberg
  *
  */
 

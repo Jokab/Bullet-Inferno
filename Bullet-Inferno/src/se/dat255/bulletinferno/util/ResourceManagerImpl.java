@@ -45,6 +45,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		PROJECTILE_RAIN("data/projectileRain.png"),
 		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
 		LOADOUT_START_BUTTON("data/startBtn.png"),
+		HUD_TEXTURE("images/game/hud.png"),
 
 		//Particles
 		SMOKE_PARTICLE("images/particles/smoke.png"),

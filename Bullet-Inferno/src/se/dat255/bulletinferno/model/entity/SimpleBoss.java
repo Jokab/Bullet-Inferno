@@ -17,7 +17,7 @@ import se.dat255.bulletinferno.util.Timerable;
  * Implements some methods to be user by subclass to differentiate
  * boss behaviour
  * 
- * @author Simon Ã–sterberg
+ * @author Simon Österberg
  * 
  */
 
