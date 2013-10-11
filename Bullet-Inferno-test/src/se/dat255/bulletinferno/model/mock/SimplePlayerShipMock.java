@@ -23,12 +23,12 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public int getHealth() {
+	public float getHealth() {
 		return 0;
 	}
 
 	@Override
-	public int getInitialHealth() {
+	public float getInitialHealth() {
 		return 0;
 	}
 

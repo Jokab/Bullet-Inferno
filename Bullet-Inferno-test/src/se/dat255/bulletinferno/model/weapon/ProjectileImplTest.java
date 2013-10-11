@@ -92,8 +92,8 @@ public class ProjectileImplTest {
 
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
-		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 10, 
-				loadout, ShipType.PLAYER_DEFAULT);
+		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 
+				loadout, ShipType.PLAYER_DEFAULT, null);
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -112,8 +112,8 @@ public class ProjectileImplTest {
 		Projectile projectile = new ProjectileImpl(physics, weapons);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
-		PlayerShip sourceShip = new PlayerShipImpl(physics, entities, new Vector2(), 10, loadout, 
-				ShipType.PLAYER_DEFAULT);
+		PlayerShip sourceShip = new PlayerShipImpl(physics, entities, new Vector2(), loadout, 
+				ShipType.PLAYER_DEFAULT, null);
 		
 		// Set the ship as the source
 		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip,
@@ -184,8 +184,8 @@ public class ProjectileImplTest {
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
-		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 10, 
-				loadout, ShipType.PLAYER_DEFAULT);
+		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 
+				loadout, ShipType.PLAYER_DEFAULT, null);
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : physics.createBodyCalls) {

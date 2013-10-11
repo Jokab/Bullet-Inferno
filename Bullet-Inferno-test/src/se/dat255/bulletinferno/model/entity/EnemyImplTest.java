@@ -122,7 +122,7 @@ public class EnemyImplTest {
 
 		// Set another enemy as source and check that friendly fire is't enabled
 		projectile.setSource(enemy2);
-		int preCollisionHealth = enemy.getHealth();
+		float preCollisionHealth = enemy.getHealth();
 
 		// Simulate colliding with a projectile
 		enemy.preCollided(projectile);

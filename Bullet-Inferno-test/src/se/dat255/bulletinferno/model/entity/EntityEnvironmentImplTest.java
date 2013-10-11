@@ -59,7 +59,7 @@ public class EntityEnvironmentImplTest {
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
-				weapons, loadout);
+				weapons, loadout, null);
 		entities.addEnemy(enemy);
 		
 		assertTrue("Check so that the enemy gets added", entities.getEnemies().contains(enemy));
@@ -84,7 +84,7 @@ public class EntityEnvironmentImplTest {
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
-				weapons, loadout);
+				weapons, loadout, null);
 		entities.addEnemy(enemy);
 		entities.addEnemy(enemy2);
 		
