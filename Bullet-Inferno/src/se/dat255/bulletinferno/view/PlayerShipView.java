@@ -62,7 +62,7 @@ public class PlayerShipView implements Renderable, Timerable {
 		shipSprite.setOrigin(shipSprite.getWidth() / 2, shipSprite.getHeight() / 2);
 
 		explosionSprite = new Sprite(explosion);
-		explosionSprite.setSize(shipDimensions.x, shipDimensions.y);
+		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
 
 		// TODO: How should we do with managed textures? No disposal?
 		smokeTexture = resourceManager.getManagedTexture(TextureType.SMOKE_PARTICLE).getTexture();
