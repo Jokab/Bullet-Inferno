@@ -12,6 +12,7 @@ import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
@@ -116,10 +117,18 @@ public class GameController extends SimpleController {
 			}
 		};
 		
+		// Initialize the action listener
+		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
+			@Override
+			public void call(GameActionEvent e) {
+				System.out.println("hej");
+			}
+		};
+		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData, scoreListener);
+		models = new ModelEnvironmentImpl(weaponData, scoreListener, actionListener);
 		
 		PlayerShip ship = models.getPlayerShip();
 		

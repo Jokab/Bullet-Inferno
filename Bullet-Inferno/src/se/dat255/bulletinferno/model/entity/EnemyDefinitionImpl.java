@@ -15,7 +15,7 @@ import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
-public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
+public enum EnemyDefinitionImpl implements EnemyDefinition {
 
 	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 5,
 			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.DISORDERER }, 10,
@@ -97,12 +97,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth, 
 				weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
 	}
-
-	@Override
-	public String getIdentifier() {
-		return this.name();
-	}
-
+	
 	@Override
 	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {

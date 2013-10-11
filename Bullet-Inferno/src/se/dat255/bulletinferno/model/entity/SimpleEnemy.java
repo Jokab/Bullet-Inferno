@@ -10,6 +10,11 @@ import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.Weapon;
+import se.dat255.bulletinferno.util.GameAction;
+import se.dat255.bulletinferno.util.GameActionEvent;
+import se.dat255.bulletinferno.util.GameActionEventImpl;
+import se.dat255.bulletinferno.util.GameActionImpl;
+import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -21,7 +26,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int score;
 	private final int credits;
 	private final EnemyDefinitionImpl type;
-
+	private Listener<GameActionEvent> actionListener;
+	
 	protected PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
@@ -52,7 +58,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
 			Vector2[] weaponPositionModifier, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
-		
 		this.physics = physics;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -78,8 +83,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			Vector2[] weaponPositionModifier, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
 			Listener<Integer> scoreListener) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition, scoreListener);
+		this(physics, entities, type, position, velocity, initialHealth, weapons, 
+				weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
 		if(pattern != null){
 			physics.attachMovementPattern(pattern.copy(), body);
 		}
@@ -131,6 +136,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 			if (isDead()) {
 				scoreListener.call(getScore());
+				if(actionListener != null) {
+					actionListener.call(new GameActionEventImpl(this, GameActionImpl.DIED));
+				}
 				scheduleRemoveSelf();
 			}
 		}
@@ -189,11 +197,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	@Override
-	public EnemyDefinitionImpl getType() {
-		return this.type;
-	}
-
-	@Override
 	public void viewportIntersectionBegin() {
 		isAwake = true;
 		body.setVelocity(velocity);
@@ -202,6 +205,11 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	@Override
 	public void viewportIntersectionEnd() {
 		scheduleRemoveSelf();
+	}
+	
+	@Override
+	public String getIdentifier() {
+		return type.name();
 	}
 
 	/**
@@ -215,7 +223,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	}
 	
-	
+	public void setActionListener(Listener<GameActionEvent> actionListener) {
+		this.actionListener = actionListener;
+	}
 
 	@Override
 	public Vector2 getDimensions() {

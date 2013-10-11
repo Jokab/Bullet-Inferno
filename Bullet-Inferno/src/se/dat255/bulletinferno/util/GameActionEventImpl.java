@@ -2,9 +2,11 @@ package se.dat255.bulletinferno.util;
 
 public class GameActionEventImpl implements GameActionEvent {
 	private final ResourceIdentifier source;
+	private final GameAction action;
 	
-	public GameActionEventImpl(ResourceIdentifier source) {
+	public GameActionEventImpl(ResourceIdentifier source, GameAction action) {
 		this.source = source;
+		this.action = action;
 	}
 	
 	@Override
@@ -13,9 +15,8 @@ public class GameActionEventImpl implements GameActionEvent {
 	}
 
 	@Override
-	public void getAction() {
-		// TODO Auto-generated method stub
-		
+	public GameAction getAction() {
+		return action;
 	}
 	
 }

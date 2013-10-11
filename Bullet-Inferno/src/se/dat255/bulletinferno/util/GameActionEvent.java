@@ -9,5 +9,5 @@ public interface GameActionEvent {
 	public ResourceIdentifier getSource();
 	
 
-	public void getAction();
+	public GameAction getAction();
 }

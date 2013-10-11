@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+import se.dat255.bulletinferno.util.GameActionEvent;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,9 +18,9 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 	private PlayerShip playerShip;
 	private PhysicsEnvironment physics;
 	private WeaponEnvironment weapons;
+	private Listener<GameActionEvent> actionListener;
 	
 	public EntityEnvironmentImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-
 			WeaponLoadout weaponLoadout) {
 		this.physics = physics;
 		this.weapons = weapons;
@@ -29,12 +31,21 @@ public class EntityEnvironmentImpl implements EntityEnvironment {
 		this.weapons = weapons;
 	}
 	
+	public EntityEnvironmentImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
+			WeaponLoadout weaponLoadout, Listener<GameActionEvent> actionListener) {
+		this(physics, weapons, weaponLoadout);
+		this.actionListener = actionListener;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
+		if(actionListener != null) {
+			enemy.setActionListener(actionListener);
+		}
 	}
 
 	/**
