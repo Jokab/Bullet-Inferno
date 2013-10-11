@@ -22,15 +22,15 @@ import com.badlogic.gdx.math.Vector2;
 public enum EnemyDefinitionImpl implements EnemyDefinition {
 
 	
-	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 5,
+	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 0.5f,
 			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.DISORDERER, 0, 0)}, 10,
 			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
 
-	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 5,
+	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 0.5f,
 			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.FORCE_GUN, 0, 0) }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), new DisorderedMovementPattern(1, 1)),
 
-	EASY_BOSS_SHIP(new Vector2(0, 2), 10,
+	EASY_BOSS_SHIP(new Vector2(0, 2), 0.10f,
 			new WeaponPlacementImpl[] { new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0 , 0),
 					new WeaponPlacementImpl (WeaponDefinitionImpl.BOSS_AIM, 0, 0) }, 10, 10,
 
@@ -52,7 +52,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
 
-	private final int initialHealth;
+	private final float initialHealth;
 	private WeaponPlacement[] weaponsData;
 
 	private final int score;
@@ -61,7 +61,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 	private final PhysicsBodyDefinition bodyDefinition;
 
 
-	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponPlacement[] weaponsData, int score,
+	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponPlacement[] weaponsData, int score,
 			int credits,
 			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
 
@@ -75,7 +75,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 	}
 	
 
-	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponPlacement[] weaponsData, int score,
+	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponPlacement[] weaponsData, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition) {
 		this(velocity, initialHealth, weaponsData, score, credits, bodyDefinition,  null);
 	}
@@ -98,8 +98,8 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			
-			weapons[i] = weaponsData[i].getContent().createWeapon(physics, weaponEnvironment);
-			weapons[i].setOffset(weaponsData[i].getOffset());
+			weapons[i] = weaponsData[i].getContent().createWeapon(physics, weaponEnvironment,
+					weaponsData[i].getOffset());
 		}
 
 		if (pattern == null) {
@@ -117,8 +117,8 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
-			weapons[i] = weaponsData[i].getContent().createWeapon(physics, weaponEnvironment);
-			weapons[i].setOffset(new Vector2(weaponsData[i].getOffset()));
+			weapons[i] = weaponsData[i].getContent().createWeapon(physics, weaponEnvironment,
+					weaponsData[i].getOffset());
 		}
 		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth, 
 

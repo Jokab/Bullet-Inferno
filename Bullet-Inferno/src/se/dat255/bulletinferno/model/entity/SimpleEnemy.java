@@ -56,7 +56,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type,
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
 			int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 
@@ -78,9 +78,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type,
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score,
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
-
 			Listener<Integer> scoreListener) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);

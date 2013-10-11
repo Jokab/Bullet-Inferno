@@ -17,18 +17,35 @@ public class WeaponImpl implements Weapon {
 	private WeaponDefinition type;
 	private Vector2 offset;
 
-	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, WeaponDefinition weaponData, 
-			float reloadingTime, ProjectileType projectileType, float projectileSpeed) {
+	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, 
+			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, 
+			float projectileSpeed, Vector2 offset) {
 		type = weaponData;
 		this.physics = physics;
 		this.weapons = weapons;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
 		this.projectileSpeed = projectileSpeed;
-
+		this.offset = offset;
 		timer = physics.getTimer();
 		timer.setTime(reloadingTime);
 		timer.stop();
+	}
+	
+	/**
+	 * Constructs a new weapon with no offset
+	 * @param physics
+	 * @param weapons
+	 * @param weaponData
+	 * @param reloadingTime
+	 * @param projectileType
+	 * @param projectileSpeed
+	 */
+	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, 
+			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, 
+			float projectileSpeed) {
+		this(physics, weapons, weaponData, reloadingTime, projectileType, projectileSpeed,
+				new Vector2());
 	}
 
 	/**

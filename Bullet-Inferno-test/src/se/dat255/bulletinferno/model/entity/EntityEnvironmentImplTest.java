@@ -57,8 +57,8 @@ public class EntityEnvironmentImplTest {
 	@Test
 	public void testAddEnemy() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
-				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
@@ -71,7 +71,8 @@ public class EntityEnvironmentImplTest {
 		
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, 
-				new Weapon[] {WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons)}, 
+				new Weapon[] {WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons,
+						new Vector2())}, 
 				new Vector2[] {new Vector2()}, 0, 65);
 		// Add another one
 		entities.addEnemy(enemy2);
@@ -82,8 +83,8 @@ public class EntityEnvironmentImplTest {
 	@Test
 	public void testRemoveEnemy() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
-				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 

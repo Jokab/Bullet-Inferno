@@ -38,7 +38,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
 
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
 
 			Weapon[] weapons, int score, int credits, 
 
@@ -66,7 +66,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		
 
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
 	PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
 		
