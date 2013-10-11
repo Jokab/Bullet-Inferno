@@ -1,53 +1,50 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.controller.GameController;
-import se.dat255.bulletinferno.controller.MasterController;
-import se.dat255.bulletinferno.model.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Displays a game over screen and the score of the player
+ */
 public class GameoverScreenView implements RenderableGUI {
 
-	private final Vector2 position, size;
-	private final Sprite sprite;
-	private final MasterController game;
+	private final Vector2 position = new Vector2(-8.0f, -4.5f);
+	private final Vector2 size = new Vector2(16.0f, 9.0f);
+	private final Texture texture;
+	private final int score;
 
-	public GameoverScreenView(MasterController game, ResourceManager resourceManager) {
-		Texture texture = resourceManager.getTexture("GAMEOVER_SCREEN");
-		sprite = new Sprite(texture);
-		size = new Vector2(16.0f, 9.0f);
-		sprite.setSize(size.x, size.y);
-		position = new Vector2(0.0f, 0.0f);
-		sprite.setPosition(position.x - 8.0f, position.y - 4.5f);
-		this.game = game;
+	public GameoverScreenView(ResourceManager resourceManager, int score) {
+		texture = resourceManager.getTexture(TextureType.GAMEOVER_SCREEN);
+		this.score = score;
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		sprite.draw(batch);
+		batch.draw(texture, position.x, position.y, size.x, size.y);
 	}
 
 	@Override
-	public void dispose() {
-		sprite.getTexture().dispose();
+	public void dispose(ResourceManager resourceManager) {
 	}
 
 	@Override
-	public void pressed(float x, float y) {
+	public GuiEvent pressed(float x, float y) {
 		// Restart
-		if(2.6f < x && x < 6.4f && 2.44f < y && y < 4f){
-			game.startGame(null);
+		if(-5.4f < x && x < -1.46f && -2.1f < y && y < -0.5f){
+			return GuiEvent.RESTARTGAME;
 		}
 		
 		// Menu
-		if(10.6f < x && x < 13f && 2.4f < y && y < 4.12){
-			game.setScreen(game.getLoadoutScreen());
+		if(2.6f < x && x < 5.14f && -2.12f < y && y < -0.32){
+			return GuiEvent.STOPGAME;
 		}
+		
+		return null;
 	}
 
 	@Override

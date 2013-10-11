@@ -20,7 +20,12 @@ public class MainActivity extends AndroidApplication {
         super.onCreate(savedInstanceState);
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
+        cfg.useAccelerometer = false;
+        cfg.useCompass = false;
         cfg.useGL20 = true;
+        cfg.useWakelock = true;
+        cfg.getTouchEventsForLiveWallpaper = false;
+        cfg.hideStatusBar = true;
         
         initialize(new MasterController(), cfg);
     }

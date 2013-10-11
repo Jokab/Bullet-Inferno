@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,8 +23,8 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 * A water segment.
 	 */
 	// Add when the view can handle this.
-	//WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
-	//		.asList(SliceDefinitionImpl.WATER)),
+	// WATER(SliceDefinitionImpl.WATER, SliceDefinitionImpl.WATER, Arrays
+	// .asList(SliceDefinitionImpl.WATER)),
 
 	/**
 	 * A mountain segment.
@@ -32,7 +35,8 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			SliceDefinitionImpl.MOUNTAIN_4,
 			SliceDefinitionImpl.MOUNTAIN_5,
 			SliceDefinitionImpl.MOUNTAIN_6,
-			SliceDefinitionImpl.MOUNTAIN_7));
+			SliceDefinitionImpl.MOUNTAIN_7
+			));
 
 	/**
 	 * The entry (i.e. the first) slice of the segment.
@@ -69,19 +73,19 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Segment createSegment(Game game, Vector2 position, int sliceAmount) {
+	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount, Listener<Integer> scoreListener) {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
-
 		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
-			slice = sliceType.createSlice(game, slicePosition.cpy());
+			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy(), scoreListener);
 			slices.add(slice);
 			slicePosition.add(slice.getWidth(), 0);
 		}
-		
-		return new SegmentImpl(slices, position.cpy());
+
+		return new SegmentImpl(slices, position);
 	}
 
 	/**
@@ -94,7 +98,15 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	private List<SliceDefinition> getSlices(int amount) {
 		// The number of slices we have to generate, entry and exit is already set.
 		int numMiddleSlices = amount - 2;
-		
+
+		// If we only want the entry and exit slice, make sure they fit together.
+		if (numMiddleSlices == 0) {
+			if (entrySlice.getExitHeight() != exitSlice.getEntryHeight()) {
+				throw new IllegalArgumentException("Couldn't find a way from specified " +
+						"entry slice to end slice " + amount);
+			}
+		}
+
 		// The final path of slices that will be returned
 		List<SliceDefinition> path = new ArrayList<SliceDefinition>(amount);
 
@@ -155,7 +167,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 				// Erase exception list on this stage because this path leads nowhere
 				// and won't be tried again
 				exceptions.get(sliceNum).clear();
-				
+
 				// Add the current slice as an exception to the past one
 				exceptions.get(sliceNum - 1).add(current);
 

@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.util;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
@@ -43,6 +44,12 @@ public class PhysicsShapeFactory {
 	public static Shape getRectangularShape(float width, float height, Vector2 position) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width / 2f, height / 2f, position, 0);
+		return shape;
+	}
+	
+	public static Shape getChainShape(Vector2[] vertices) {
+		ChainShape shape = new ChainShape();
+		shape.createChain(vertices);
 		return shape;
 	}
 

@@ -1,24 +1,26 @@
 package se.dat255.bulletinferno.model.mock;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.Projectile;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Teamable;
 import se.dat255.bulletinferno.model.physics.Collidable;
-import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
 public class SimpleMockProjectile implements Projectile {
-	public Game game;
+	public PhysicsEnvironment physics;
+	public WeaponEnvironment weapons;
 	private Teamable source;
 	
 	public SimpleMockProjectile() {
-		this(null);
 	}
 
-	public SimpleMockProjectile(Game game) {
-		this.game = game;
+	public SimpleMockProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+		this.physics = physics;
+		this.weapons = weapons;
 	}
 
 	@Override
@@ -41,18 +43,16 @@ public class SimpleMockProjectile implements Projectile {
 
 	@Override
 	public void preCollided(Collidable other) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void postCollided(Collidable other) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source) {
-		// TODO Auto-generated method stub
+	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source,
+			PhysicsBodyDefinition bodyDefinition) {
 		
 	}
 
@@ -67,13 +67,11 @@ public class SimpleMockProjectile implements Projectile {
 
 	@Override
 	public ProjectileType getType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Vector2 getDimensions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

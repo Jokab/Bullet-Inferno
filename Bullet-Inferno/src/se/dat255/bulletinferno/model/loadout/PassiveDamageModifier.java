@@ -1,8 +1,7 @@
 package se.dat255.bulletinferno.model.loadout;
 
-import se.dat255.bulletinferno.model.PassiveEffect;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.weapon.Weapon;
 
 public class PassiveDamageModifier implements PassiveEffect {
 
@@ -11,7 +10,8 @@ public class PassiveDamageModifier implements PassiveEffect {
 
 	/**
 	 * @param percent
-	 *        The percentage that the damage will be modified by. So 1.10 means 10% damage increase.
+	 *        The percentage that the damage dealt to enemies will be modified by. So 1.10 means 10%
+	 *        damage increase.
 	 */
 	public PassiveDamageModifier(float percent) {
 		this.percent = percent;

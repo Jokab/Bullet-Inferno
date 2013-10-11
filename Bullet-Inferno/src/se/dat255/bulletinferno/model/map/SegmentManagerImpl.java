@@ -3,7 +3,10 @@ package se.dat255.bulletinferno.model.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.Game;
+import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,8 +23,14 @@ public class SegmentManagerImpl implements SegmentManager {
 	/** The maximum number of slices per segment when randomizing slices in segments. */
 	private static final int SLICES_PER_SEGMENT_MAX = 20;
 
-	/** The Game instance injected at construction. */
-	private final Game game;
+	/** The PhysicsEnvironment instance injected at construction. */
+	private final PhysicsEnvironment physics;
+	
+	/** The EntityEnvironment instance injected at construction. */
+	private final EntityEnvironment entities;
+	
+	/** The WeaponEnvironment instance injected at construction. */
+	private final WeaponEnvironment weapons;
 	
 	/**
 	 * Currently active segments on the map. Removes from this list increments removedSegmentsCount
@@ -33,14 +42,20 @@ public class SegmentManagerImpl implements SegmentManager {
 	/** The number of segments that have been removed from the (beginning of) segments so far. */
 	private int removedSegmentCount = 0;
 	
+	private final Listener<Integer> scoreListener;
+	
 	/** Segment factory instance. */
 	private SegmentFactory segmentFactory = new SegmentFactory();
 
 	/**
 	 * Construct a new segment manager. Segments will be available after calling set
 	 */
-	public SegmentManagerImpl(Game game) {
-		this.game = game;
+	public SegmentManagerImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			WeaponEnvironment weapons, Listener<Integer> scoreListener) {
+		this.physics = physics;
+		this.entities = entities;
+		this.weapons = weapons;
+		this.scoreListener = scoreListener;
 	}
 
 	/**
@@ -131,9 +146,9 @@ public class SegmentManagerImpl implements SegmentManager {
 		
 		// Add new segments until the viewport is full of them (possibly adding none).
 		while(rightmostLeftBounds < xMax) {
-			Segment segment = segmentFactory.generateRandomSegment(game,
+			Segment segment = segmentFactory.generateRandomSegment(physics, entities, weapons,
 					new Vector2(rightmostLeftBounds, 0),
-					SLICES_PER_SEGMENT_MIN, SLICES_PER_SEGMENT_MAX);
+					SLICES_PER_SEGMENT_MIN, SLICES_PER_SEGMENT_MAX, scoreListener);
 			
 			float width = segment.getWidth();
 			if(width <= 0) {

@@ -33,5 +33,21 @@ public interface PhysicsBody {
 	 * @return Box2D body
 	 */
 	public Body getBox2DBody();
+	
+	/**
+	 * Returns the dimensions of the the box surrounding the body.
+	 * For example: 
+	 * 		If the body is in the shape of a circle with the radius 2
+	 * 		this method returns the box around the circle. This box will have a
+	 * 		width and a height of 4. (The diameter in each direction).
+	 * @return dimension of body
+	 */
+	public Vector2 getDimensions();
+
+	/**
+	 * Used to force a calculation of the body's dimensions. This should only be called if the
+	 * body's fixtures has been altered.
+	 */
+	void calculateDimensions();
 
 }

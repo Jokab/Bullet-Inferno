@@ -1,9 +1,7 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.ProjectileType;
-import se.dat255.bulletinferno.model.Teamable;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
@@ -11,23 +9,24 @@ import com.badlogic.gdx.math.Vector2;
 public class WeaponImpl implements Weapon {
 	private final Timer timer;
 
-	protected final Game game;
+	private final PhysicsEnvironment physics;
+	private final WeaponEnvironment weapons;
 	private final ProjectileType projectileType;
-	private final Vector2 offset;
 	private final float projectileSpeed;
 	private float reloadingTime;
-	private WeaponDescription type;
+	private WeaponDefinition type;
+	private Vector2 offset;
 
-	public WeaponImpl(WeaponDescription weaponData, Game game, float reloadingTime, ProjectileType projectileType,
-			Vector2 offset, float projectileSpeed) {
+	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, WeaponDefinition weaponData, 
+			float reloadingTime, ProjectileType projectileType, float projectileSpeed) {
 		type = weaponData;
-		this.game = game;
+		this.physics = physics;
+		this.weapons = weapons;
 		this.reloadingTime = reloadingTime;
 		this.projectileType = projectileType;
-		this.offset = offset;
 		this.projectileSpeed = projectileSpeed;
 
-		timer = game.getTimer();
+		timer = physics.getTimer();
 		timer.setTime(reloadingTime);
 		timer.stop();
 	}
@@ -56,14 +55,6 @@ public class WeaponImpl implements Weapon {
 		return timer.isFinished();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Vector2 getOffset() {
-		return offset;
-	}
-
 	@Override
 	public float getProjectileVelocity() {
 		return projectileSpeed;
@@ -76,7 +67,8 @@ public class WeaponImpl implements Weapon {
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releaseProjectile(game, position, getOffset(), direction.scl(projectileSpeed), source);
+			projectileType.releaseProjectile(physics, weapons, position.add(getOffset()),
+					direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();
 		}
@@ -100,8 +92,23 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public WeaponDescription getType() {
+	public WeaponDefinition getType() {
 		return type;
 	}
 
+	@Override
+	public Vector2 getDimensions() {
+		return type.getDimensions();
+	}
+
+	@Override
+	public Vector2 getOffset() {
+		return offset;
+	}
+
+	@Override
+	public void setOffset(Vector2 offset) {
+		this.offset = offset;
+
+	}
 }

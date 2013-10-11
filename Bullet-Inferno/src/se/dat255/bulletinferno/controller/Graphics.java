@@ -3,8 +3,9 @@ package se.dat255.bulletinferno.controller;
 import java.util.HashSet;
 import java.util.Set;
 
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.view.Renderable;
-import se.dat255.bulletinferno.view.RenderableGUI;
+import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 /**
  * The main graphics handling of the game
@@ -26,6 +28,8 @@ public class Graphics {
 	/** Handles efficient drawing of several images */
 	private SpriteBatch worldBatch, guiBatch;
 
+	private Box2DDebugRenderer debugRenderer;
+	
 	/** The size, in meters, of the visible area. */
 	public static final float GAME_WIDTH = 16f, GAME_HEIGHT = 9f;
 	/** Inverted size, multiplication is faster than division */
@@ -37,8 +41,14 @@ public class Graphics {
 
 	/** List of all objects that are to be rendered in the world */
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
-	/** List of all objects that are to be rendered as GUI elements */
-	private final Set<RenderableGUI> guiRenderables = new HashSet<RenderableGUI>();
+	
+	/** List of all objects that are to be rendered as HUD elements */
+	private final HudView hudView;
+	
+	/** Sets required references */
+	public Graphics(HudView hudView) {
+		this.hudView = hudView;
+	}
 
 	/**
 	 * Initializes all the required assets
@@ -48,7 +58,9 @@ public class Graphics {
 
 		worldCamera = new OrthographicCamera();
 		worldBatch = new SpriteBatch();
-
+		debugRenderer = new Box2DDebugRenderer();
+		debugRenderer.setDrawBodies(true);
+		
 		guiCamera = new OrthographicCamera(16, 9);
 		guiBatch = new SpriteBatch();
 		guiBatch.setProjectionMatrix(guiCamera.combined);
@@ -87,24 +99,32 @@ public class Graphics {
 
 		// TODO: Render world without blending
 		worldBatch.begin();
-		GameController.getBgView().render(worldBatch);
+		GameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();
 
 		// Render units that have alpha
 		worldBatch.begin();
 		for (Renderable renderable : renderables) {
-			renderable.render(worldBatch);
+			renderable.render(worldBatch, worldCamera);
 		}
 		worldBatch.end();
-
-		// TODO: Render GUI
+		
+		// Render HUD and GUI elements
 		guiBatch.begin();
-		for (RenderableGUI renderable : guiRenderables) {
-			renderable.render(guiBatch);
-		}
+		hudView.render(guiBatch, null);
 		guiBatch.end();
 	}
+	
+	/** Gets hold of the HudView */
+	public HudView getHudView(){
+		return hudView;
+	}
 
+	public void renderWithDebug(PhysicsEnvironment physics) {
+		render();
+		debugRenderer.render(physics.getWorld(), worldCamera.combined);
+	}
+	
 	/** Adds an object to be rendered in the world. Uses hashcode to separate */
 	public void addRenderable(Renderable renderable) {
 		renderables.add(renderable);
@@ -113,39 +133,6 @@ public class Graphics {
 	/** Removes an object from being rendered in the world */
 	public void removeRenderable(Renderable renderable) {
 		renderables.remove(renderable);
-	}
-
-	/** Adds an object to be rendered in the GUI. Uses hashcode to separate */
-	public void addRenderableGUI(RenderableGUI renderable) {
-		guiRenderables.add(renderable);
-	}
-
-	/** Removes an object from being rendered in the GUI */
-	public void removeRenderableGUI(RenderableGUI renderable) {
-		guiRenderables.remove(renderable);
-	}
-
-	/**
-	 * Checks if a GUI element was activated, also calling that
-	 * element.
-	 * 
-	 * @param x
-	 *        The X position of the GUI
-	 * @param y
-	 *        The Y position of the GUI
-	 * @return If a GUI element was activated
-	 */
-	public boolean guiInput(float x, float y) {
-		for (RenderableGUI gui : guiRenderables) {
-			Vector2 position = gui.getPosition();
-			Vector2 size = gui.getSize();
-			if (x > position.x && y > position.y && x < position.x + size.x
-					&& y < position.y + size.y) {
-				gui.pressed(x, y);
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/** Temporary local vector to prevent re-allocation every call */

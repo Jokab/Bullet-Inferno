@@ -1,13 +1,12 @@
 package se.dat255.bulletinferno.model.mock;
 
-import com.badlogic.gdx.math.Vector2;
-
-import se.dat255.bulletinferno.model.Loadout;
-import se.dat255.bulletinferno.model.PassiveAbility;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.Teamable;
-import se.dat255.bulletinferno.model.Weapon;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.physics.Collidable;
+import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.model.weapon.Weapon;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class SimplePlayerShipMock implements PlayerShip {
 
@@ -24,12 +23,12 @@ public class SimplePlayerShipMock implements PlayerShip {
 	}
 
 	@Override
-	public int getHealth() {
+	public float getHealth() {
 		return 0;
 	}
 
 	@Override
-	public int getInitialHealth() {
+	public float getInitialHealth() {
 		return 0;
 	}
 
@@ -59,60 +58,45 @@ public class SimplePlayerShipMock implements PlayerShip {
 
 	@Override
 	public Weapon getWeapon() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Loadout getLoadout() {
-		// TODO Auto-generated method stub
+	public WeaponLoadout getLoadout() {
 		return null;
-	}
-
-	@Override
-	public void attachPassive(PassiveAbility passiveAbility) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setTakeDamageModifier(float takeDamageModifier) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean isDead() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
 	public void moveY(float dy) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void moveY(float dy, float scale) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Vector2 getDimensions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setXSpeed(float speed) {
-		// TODO Auto-generated method stub
+	public void restoreSpeed() {
 		
 	}
 
 	@Override
-	public void restoreSpeed() {
-		// TODO Auto-generated method stub
+	public void halt(float distance) {
 		
 	}
 

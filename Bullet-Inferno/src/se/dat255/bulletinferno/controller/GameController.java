@@ -1,35 +1,30 @@
 package se.dat255.bulletinferno.controller;
 
-import se.dat255.bulletinferno.model.Game;
-import se.dat255.bulletinferno.model.GameImpl;
-import se.dat255.bulletinferno.model.Loadout;
-import se.dat255.bulletinferno.model.PlayerShip;
-import se.dat255.bulletinferno.model.PlayerShipImpl;
-import se.dat255.bulletinferno.model.PlayerShipImpl.ShipType;
-import se.dat255.bulletinferno.model.ResourceManager;
-import se.dat255.bulletinferno.model.ResourceManagerImpl;
-import se.dat255.bulletinferno.model.loadout.LoadoutImpl;
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.ModelEnvironment;
+import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
+import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.gui.ScoreListener;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.SpecialAbility;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.util.GameActionEvent;
+import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
-import se.dat255.bulletinferno.view.ProjectileView;
-import se.dat255.bulletinferno.view.RenderableGUI;
+import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
-import se.dat255.bulletinferno.view.gui.GameoverScreenView;
-import se.dat255.bulletinferno.view.gui.PauseIconView;
-import se.dat255.bulletinferno.view.gui.PauseScreenView;
+import se.dat255.bulletinferno.view.ProjectileView;
+import se.dat255.bulletinferno.view.audio.AudioPlayer;
+import se.dat255.bulletinferno.view.audio.AudioPlayerImpl;
+import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * 
+ * The main controller of the game, handles main initiation and update of time
  */
 public class GameController extends SimpleController {
 
@@ -42,16 +37,13 @@ public class GameController extends SimpleController {
 	/**
 	 * The touch input handler
 	 */
-	private InputProcessor processor;
+	private GameTouchController touchController;
 
 	/** The current session instance of the game model. */
-	private Game game;
-	
+	private ModelEnvironment models;
+
 	/** If the player died; Should not update the game */
 	private boolean gameOver;
-
-	/** The views to use when going in or out pause */
-	private RenderableGUI pauseScreenView, pauseIconView;
 
 	/** The (center of the) current viewport position, in world coordinates */
 	private Vector2 viewportPosition;
@@ -59,131 +51,189 @@ public class GameController extends SimpleController {
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
 	
-	/** Stores the weapon type for restarting the game */
-	private WeaponData weaponData;
+	/** Stores the weapons type for restarting the game */
+	private WeaponDefinition[] weaponData;
 
 	/** Reference to the master controller */
 	private MasterController myGame;
-	
+
 	/** Reference to the background view */
 	static BackgroundView bgView;
+
+	private AudioPlayer audiPlayer;
 	
-	private AssetManager assetManager = new AssetManager();
-	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
+	/** Reference to the main resource manager of the game */
+	private final ResourceManager resourceManager;
+	
+	/** Reference to the shared special ability definition */
+	private SpecialAbilityDefinition special;
+	/** Reference to the shared passive ability definition */
+	private PassiveAbilityDefinition passive;
+	/** Reference to the shared score listener which handles the score of the game */
+	private ScoreListener scoreListener;
+
+
 
 	/**
 	 * Default controller to set required references
-	 * @param myGame The master controller that creates this controller
+	 * 
+	 * @param myGame
+	 *        The master controller that creates this controller
+	 * @param resourceManager2
 	 */
-	public GameController(MasterController myGame) {
+	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
+		this.resourceManager = resourceManager;
+		this.audiPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponData weaponType) {
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, 
+			PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
-		game = null;
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
-		this.weaponData = weaponType;
-		
-		// Original create new game code
-		resourceManager.load();
+		this.weaponData = weaponData;
+		this.special = special;
+		this.passive = passive;
 
 		if (graphics != null) {
 			graphics.dispose();
 			graphics = null;
 		}
 
-		graphics = new Graphics();
+		// Initialize the HUD
+		final HudView hudView = new HudView(resourceManager);
+		
+		// Initialize the graphics controller
+		graphics = new Graphics(hudView);
 		graphics.create();
+		
+		// Initialize the score listener
+		scoreListener = new ScoreListener(){
+			@Override
+			public void updateHudWithScore(int score) {
+				hudView.setScore(score);
+			}
+		};
 
-		game = new GameImpl();
 		
-		// Create a new loadout for the ship and create the ship
-		Loadout loadout = new LoadoutImpl(weaponType.getPlayerWeaponForGame(game), 
-									null, 
-									new SpecialAbilityImpl(new SpecialProjectileRain(game)), 
-									new PassiveAbilityImpl(new PassiveReloadingTime(0.5f))
-								);
-		PlayerShip ship = new PlayerShipImpl(game, new Vector2(0, 0), 1,
-								loadout, ShipType.PLAYER_DEFAULT);
-		game.setPlayerShip(ship);
+		// Update life when ship changes life
+		Listener<Float> healthListener = new Listener<Float>(){
+			@Override
+			public void call(Float life) {
+				hudView.setLife(life);
+			}
+		};
 		
-		PlayerShipView shipView = new PlayerShipView(game, ship, resourceManager);
-		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, 
-				Graphics.GAME_HEIGHT/2);
+		// Initialize the action listener
+		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
+			@Override
+			public void call(GameActionEvent e) {
+				audiPlayer.playSoundEffect(e);
+			}
+		};
+		
+		if(models != null) {
+			models.dispose();
+		}
+
+		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
+		
+		PlayerShip ship = models.getPlayerShip();
+		
+		// TODO: Based on user selection
+		passive.getPassiveAbility().getEffect().applyEffect(ship);
+		final SpecialAbility specialAbility = special.getSpecialAbility(models);
+		
+		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		LoadoutView loadoutView = new LoadoutView(ship, resourceManager);
+		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
+				Graphics.GAME_HEIGHT / 2);
 		graphics.addRenderable(shipView);
-		
-		
-		
-		bgView = new BackgroundView(game, resourceManager, ship);
-		//graphics.addRenderable(bgView);
+		graphics.addRenderable(loadoutView);
+
+		bgView = new BackgroundView(models, resourceManager, ship);
+		// graphics.addRenderable(bgView);
 
 		// Set up input handler
-		processor = new GameTouchController(graphics, ship);
+		touchController = new GameTouchController(graphics, ship, this, myGame);
+		
+		touchController.setSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
+			@Override
+			public void specialAbilityRequested() {
+				specialAbility.getEffect().activate(models.getPlayerShip());
+			}
+		});
 
-		setupGUI();
-
-		EnemyView enemyView = new EnemyView(game, resourceManager);
+		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
 
-		ProjectileView projectileView = new ProjectileView(game, resourceManager);
+		ProjectileView projectileView = new ProjectileView(models, resourceManager);
 		graphics.addRenderable(projectileView);
 	}
 
-	/** Initiates the pause components when the player starts a level */
-	private void setupGUI() {
-		pauseIconView = new PauseIconView(this);
-		pauseScreenView = new PauseScreenView(this, resourceManager);
-		graphics.addRenderableGUI(pauseIconView);
-	}
-	
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
-		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
-		graphics.addRenderableGUI(gameOver);
+		touchController.setSuppressKeyboard(true);
+		graphics.getHudView().gameOver(scoreListener.getScore());
 	}
-	
-	/** Pauses the game when the application loses focus */
+
+	/**
+	 * Pauses the game when the application loses focus. If game isn't over, show pause gui. If it
+	 * is over, only keep track of pause state.
+	 */
 	@Override
 	public void pause() {
-		super.pause();
-		pauseGame();
+		// Don't show pause gui, only track pause state if game is over
+		if (gameOver) {
+			super.pause();
+		} else {
+			pauseGame();
+		}
 	}
 
 	/** Pauses the game */
 	public void pauseGame() {
-		graphics.removeRenderableGUI(pauseIconView);
-		graphics.addRenderableGUI(pauseScreenView);
+		super.pause();
+		touchController.setSuppressKeyboard(true);
+		graphics.getHudView().pause();
 	}
-	
-	/** Do nothing when application resumes, let the user resume the game. */
+
+	/**
+	 * Do nothing when application resumes, let the user resume the game. Unless the current game is
+	 * over, in which case keep track of the pause state of the app.
+	 */
 	@Override
-	public void resume() {}
+	public void resume() {
+		if (gameOver) {
+			super.resume();
+		}
+	}
 
 	/** Unpauses the game */
 	public void unpauseGame() {
-		graphics.removeRenderableGUI(pauseScreenView);
-		graphics.addRenderableGUI(pauseIconView);
+		super.resume();
+		touchController.setSuppressKeyboard(false);
+		graphics.getHudView().unpause();
 	}
-	
+
 	@Override
 	public void show() {
 		super.show();
-		Gdx.input.setInputProcessor(processor);
+		Gdx.input.setInputProcessor(touchController);
 	}
 
 	@Override
 	public void dispose() {
 		graphics.dispose();
 
-		if (game != null) {
-			game.dispose();
+		if (models != null) {
+			models.dispose();
 		}
 	}
 
@@ -192,15 +242,18 @@ public class GameController extends SimpleController {
 	 */
 	@Override
 	public void render(float delta) {
-		graphics.setNewCameraPos(game.getPlayerShip().getPosition().x - 
-									game.getPlayerShip().getDimensions().x/2 + 
-									Graphics.GAME_WIDTH/2, 
-								Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(models.getPlayerShip().getPosition().x -
+				models.getPlayerShip().getDimensions().x / 2 +
+				Graphics.GAME_WIDTH / 2,
+				Graphics.GAME_HEIGHT / 2);
 
 		// Render the game
 		graphics.render();
 		
-		if(!gameOver && game.getPlayerShip().isDead()){
+		// Debug render 
+		//graphics.renderWithDebug(models.getPhysicsEnvironment());
+		
+		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();
 		}
 
@@ -217,10 +270,13 @@ public class GameController extends SimpleController {
 			viewportPosition.add(0.5f * viewportDimensions.x, 0);
 			viewportPosition.sub(0, 0.5f * viewportDimensions.y);
 
-			game.setViewport(viewportPosition, viewportDimensions);
+			models.setViewport(viewportPosition, viewportDimensions);
 
-			game.update(delta);
+			models.update(delta);
+			
+			scoreListener.update(delta);
 		}
+
 	}
 
 	@Override
@@ -239,16 +295,25 @@ public class GameController extends SimpleController {
 		// ...adjust position to being in the middle of the viewport...
 		viewportPosition.add(0.5f * viewportDimensions.x, 0.5f * viewportDimensions.y);
 
-		game.setViewport(viewportPosition, viewportDimensions);
+		models.setViewport(viewportPosition, viewportDimensions);
 	}
-	
-	public static BackgroundView getBgView(){
+
+	/** Gets the game background view */
+	public static BackgroundView getBgView() {
 		return bgView;
 	}
-	
+
 	/** Get method for weapon data set in create new game */
-	public WeaponData getWeaponData(){
+	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
+	}
+	/** Get method for data set in create new game */
+	public SpecialAbilityDefinition getSpecial() {
+		return this.special;
+	}
+	/** Get method for data set in create new game */
+	public PassiveAbilityDefinition getPassive() {
+		return this.passive;
 	}
 
 }
