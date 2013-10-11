@@ -42,7 +42,7 @@ public class EnemyView implements Renderable {
 			bounds.set(minBounds, maxBounds);
 
 			if(viewport.frustum.boundsInFrustum(bounds)) {
-				this.texture = resourceManager.getTexture(enemy.getType());
+				this.texture = resourceManager.getTexture(enemy);
 				texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				this.sprite.setTexture(texture);
 				sprite.setRegion(texture);

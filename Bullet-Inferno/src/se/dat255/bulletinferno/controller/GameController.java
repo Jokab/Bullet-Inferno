@@ -9,12 +9,15 @@ import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
+import se.dat255.bulletinferno.view.audio.AudioPlayer;
+import se.dat255.bulletinferno.view.audio.AudioPlayerImpl;
 import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
@@ -57,6 +60,8 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
+	private AudioPlayer audiPlayer;
+	
 	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
 	
@@ -79,6 +84,7 @@ public class GameController extends SimpleController {
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
 		this.resourceManager = resourceManager;
+		this.audiPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**
@@ -123,10 +129,19 @@ public class GameController extends SimpleController {
 			}
 		};
 		
+		// Initialize the action listener
+		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
+			@Override
+			public void call(GameActionEvent e) {
+				audiPlayer.playSoundEffect(e);
+			}
+		};
+		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener);
+
+		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
 		
 		PlayerShip ship = models.getPlayerShip();
 		

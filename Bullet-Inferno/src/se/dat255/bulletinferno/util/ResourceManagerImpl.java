@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.IdentityMap.Entry;
 
 /**
  * Definition of all the assets that should be handled by the resource manager
@@ -69,11 +70,23 @@ public class ResourceManagerImpl implements ResourceManager {
 			return this.path;
 		}
 	}
-
-	// TODO: Define these maps
-	private static final Map<String, String> sounds = new HashMap<String, String>();
-	private static final Map<String, String> music = new HashMap<String, String>();
-
+	
+	public enum SoundEffectType {
+		DEFAULT_ENEMY_SHIP(new HashMap<String, String>() {{ 
+					put("DIED", "data/explosion.mp3");
+				}});
+		
+		private final Map<String, String> mapping;
+		
+		private SoundEffectType(Map<String, String> mapping) {
+			this.mapping = mapping;
+		}
+		
+		public String getSource(String key) {
+			return mapping.get(key);
+		}
+	}
+	
 	private AssetManager manager;
 
 	public ResourceManagerImpl() {
@@ -86,8 +99,9 @@ public class ResourceManagerImpl implements ResourceManager {
 	 */
 	public void startLoad(boolean blocking) {
 		loadTextures();
-
-		if (blocking) {
+		loadSoundEffects();
+		
+		if(blocking) {
 			manager.finishLoading();
 		}
 	}
@@ -96,8 +110,14 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Sound getSound(String identifier) {
-		return manager.get(sounds.get(identifier), Sound.class);
+	public Sound getSound(ResourceIdentifier identifier, GameAction action) {
+		for (SoundEffectType soundEffectType : SoundEffectType.values()) {
+			if (identifier.getIdentifier().equals(soundEffectType.name())) {
+				return manager.get(soundEffectType.getSource(action.getAction()), Sound.class);
+			}
+		}
+		
+		throw new RuntimeException("Sound not found for that identifier.");
 	}
 
 	/**
@@ -105,7 +125,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	 */
 	@Override
 	public Music getMusic(String identifier) {
-		return manager.get(music.get(identifier), Music.class);
+		return null;
+		//return manager.get(music.get(identifier), Music.class);
 	}
 
 	/**
@@ -114,6 +135,14 @@ public class ResourceManagerImpl implements ResourceManager {
 	private void loadTextures() {
 		for (TextureType type : TextureType.values()) {
 			manager.load(type.path, Texture.class);
+		}
+	}
+	
+	private void loadSoundEffects() {
+		for (SoundEffectType type : SoundEffectType.values()) {
+			for(String src : type.mapping.values()) {
+				manager.load(src, Sound.class);
+			}
 		}
 	}
 
