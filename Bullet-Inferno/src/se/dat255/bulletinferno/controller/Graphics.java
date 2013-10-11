@@ -94,20 +94,20 @@ public class Graphics {
 
 		// TODO: Render world without blending
 		worldBatch.begin();
-		GameController.getBgView().render(worldBatch);
+		GameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();
 
 		// Render units that have alpha
 		worldBatch.begin();
 		for (Renderable renderable : renderables) {
-			renderable.render(worldBatch);
+			renderable.render(worldBatch, worldCamera);
 		}
 		worldBatch.end();
 
 		// TODO: Render GUI
 		guiBatch.begin();
 		for (RenderableGUI renderable : guiRenderables) {
-			renderable.render(guiBatch);
+			renderable.render(guiBatch, null);
 		}
 		guiBatch.end();
 	}

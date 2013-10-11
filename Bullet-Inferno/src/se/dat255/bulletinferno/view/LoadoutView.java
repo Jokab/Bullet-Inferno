@@ -5,6 +5,7 @@ import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -59,7 +60,7 @@ public class LoadoutView implements Renderable {
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		if (!ship.isDead()) {
 			lastShipPosition = ship.getPosition();
 			float x = lastShipPosition.x - ship.getDimensions().x / 2;
