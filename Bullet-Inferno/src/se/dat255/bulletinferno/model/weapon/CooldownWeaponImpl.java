@@ -20,8 +20,8 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
     public CooldownWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
             WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType,
-            float projectileSpeed) {
-        super(physics, weapons, weaponData, reloadingTime, projectileType, projectileSpeed);
+            float projectileSpeed, Vector2 offset) {
+        super(physics, weapons, weaponData, reloadingTime, projectileType, projectileSpeed, offset);
 
         this.projectileType = projectileType;
         this.physics = physics;

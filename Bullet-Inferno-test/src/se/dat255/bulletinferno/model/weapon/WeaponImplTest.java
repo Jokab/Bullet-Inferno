@@ -1,23 +1,15 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.dat255.bulletinferno.model.entity.Enemy;
-import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.SimplePlayerShipMock;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
-import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
-import se.dat255.bulletinferno.model.weapon.WeaponImpl;
 import se.dat255.bulletinferno.test.Common;
 
 import com.badlogic.gdx.math.Vector2;
@@ -73,22 +65,6 @@ public class WeaponImplTest {
 	}
 
 	@Test
-	public void testGetOffset() {
-		// Tests that the offset is always set, and if
-		// provided in the constructor is set to that value
-
-		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
-
-		Vector2 offset = new Vector2();
-		WeaponImpl weapon1 = new WeaponImpl(physics, weapons, WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
-		weapon1.setOffset(offset);
-		assertTrue("The offset should be the same as the set",
-				weapon1.getOffset().equals(offset));
-	}
-
-	@Test
 	public void testFire() {
 		// Tests that the fire method adds a projectile to the world
 		// at the provided origin position "+" the offset,
@@ -96,7 +72,6 @@ public class WeaponImplTest {
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons, 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER, 20, ProjectileType.RED_PROJECTILE, 1);
-		weapon.setOffset(new Vector2());
 		Vector2 origin = new Vector2(1, 1);
 		weapon.fire(origin, new Vector2(), new SimplePlayerShipMock());
 
@@ -113,9 +88,7 @@ public class WeaponImplTest {
 		// Tests that the weapon reloads
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
-		weapon.setOffset(new Vector2());
-		
+				20, ProjectileType.RED_PROJECTILE, 0);		
 		assertTrue(weapon.isLoaded());
 		weapon.fire(new Vector2(), new Vector2(), null);
 		

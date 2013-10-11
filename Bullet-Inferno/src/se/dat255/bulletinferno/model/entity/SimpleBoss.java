@@ -37,11 +37,14 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private boolean isOnScreen = false;
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
+
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
-			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
+
+			Weapon[] weapons, int score, int credits, 
+
 			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, 
-				weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
+				 score, credits, bodyDefinition, scoreListener);
 		
 		this.timers = new Timer[weapons.length];
 		this.entities = entities;		
@@ -61,13 +64,16 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		this.scoreListener = scoreListener;
 	}
 		
-	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
-			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
-			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern, 
-			Listener<Integer> scoreListener) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, 
-				weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
+
+	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
+			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
+	PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
+		
+		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+				bodyDefinition, scoreListener);
+
+
 
 		if(pattern instanceof DisorderedBossMovementPattern){
 			currentPattern = "dmp";

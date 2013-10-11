@@ -15,8 +15,8 @@ public class AutomaticWeaponImpl extends WeaponImpl {
 	
 	public AutomaticWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			WeaponDefinition type, float reloadingTime, ProjectileType projectile,
-			float projectileSpeed) {
-		super(physics, weapons, type, reloadingTime, projectile, projectileSpeed);
+			float projectileSpeed, Vector2 offset) {
+		super(physics, weapons, type, reloadingTime, projectile, projectileSpeed, offset);
 		this.physics = physics;
 		this.weapons = weapons;
 		

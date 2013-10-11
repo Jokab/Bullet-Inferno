@@ -37,8 +37,8 @@ public class MapEnvironmentImpl implements MapEnvironment {
 		
 		// TODO: Replace null with heavy weapon and move upwards in call hierarchy somehow.
 		WeaponLoadout weaponLoadout = new WeaponLoadoutImpl(
-				weaponData[0].createWeapon(physics, weapons),
-				weaponData[1].createWeapon(physics, weapons));
+				weaponData[0].createWeapon(physics, weapons, new Vector2()),
+				weaponData[1].createWeapon(physics, weapons, new Vector2()));
 		
 		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout, healthListener, actionListener);
 		

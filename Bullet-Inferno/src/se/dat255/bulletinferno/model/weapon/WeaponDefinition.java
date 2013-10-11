@@ -30,11 +30,13 @@ public interface WeaponDefinition extends ResourceIdentifier {
 
 	/**
 	 * Returns a new Weapon that this definition holds
-	 * 
-	 * 
+	 * @param physics
+	 * @param weapons
+	 * @param offset
 	 * @return A new weapon instance.
 	 */
-	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons);
+	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons, 
+			Vector2 offset);
 
 	/**
 	 * Returns the dimensions of the weapon

@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.model.map.ObstacleDefinitionImpl;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
@@ -31,7 +33,7 @@ public class WeaponDefinitionImplTest {
 	@Test
 	public void testReloadingTime() {
 		for (WeaponDefinitionImpl weaponDefinition : WeaponDefinitionImpl.values()) {
-			Weapon weapon = weaponDefinition.createWeapon(physics, weapons);
+			Weapon weapon = weaponDefinition.createWeapon(physics, weapons, new Vector2());
 
 			assertTrue(
 					"The reloading time of the slow weapon should be the same as the weapon's " +
@@ -42,7 +44,7 @@ public class WeaponDefinitionImplTest {
 
 	@Test
 	public void testAutomaticWeapon() {
-		Weapon weapon = WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons);
+		Weapon weapon = WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons, new Vector2());
 
 		assertTrue(
 				"When you retrieve a force gun weapon, it should be an automatic weapon.",
@@ -52,7 +54,8 @@ public class WeaponDefinitionImplTest {
 	@Test
 	public void testCooldownWeapon() {
 		// Get an automatic weapon
-		Weapon weapon = WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons);
+		Weapon weapon = WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons,
+				new Vector2());
 
 		assertTrue(
 				"When you retrieve a missile lanucher weapon, it should be cooldown weapon.",

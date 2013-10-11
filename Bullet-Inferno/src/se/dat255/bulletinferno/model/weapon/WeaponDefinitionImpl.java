@@ -64,13 +64,15 @@ WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons, 
+			Vector2 offset) {
 		if (this == MISSILE_LAUNCHER) {
-			return new CooldownWeaponImpl(physics, weapons, this, reloadingTime, projectileType, projectileSpeed);
+			return new CooldownWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
+					projectileSpeed, offset);
 
 		} else {
 			return new AutomaticWeaponImpl(physics, weapons, this, reloadingTime, projectileType,
-					projectileSpeed);
+					projectileSpeed, offset);
 		}
 	}
 

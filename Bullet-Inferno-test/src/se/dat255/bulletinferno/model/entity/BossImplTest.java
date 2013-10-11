@@ -32,7 +32,7 @@ public class BossImplTest {
 		public BossMockup(EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
 				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
 			super(new PhysicsWorldImplSpy(), new EntityMockEnvironment(), type, position, velocity,
-					initialHealth, weapon, weaponPositionModifier, score,
+					initialHealth, weapon, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
 					new SimplePhysicsMovementPatternMock(),
@@ -42,7 +42,7 @@ public class BossImplTest {
 				EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
 				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
 			super(physics, entities, type, position, velocity,
-					initialHealth, weapon, weaponPositionModifier, score,
+					initialHealth, weapon, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
 					new SimplePhysicsMovementPatternMock(),

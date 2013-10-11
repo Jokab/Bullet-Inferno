@@ -33,7 +33,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final EntityEnvironment entities;
 	protected Vector2 velocity;
 	protected Weapon[] weapons;
-	
+
 	private final Listener<Integer> scoreListener;
 
 	/** A flag to make sure we don't remove ourself twice */
@@ -53,10 +53,14 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type,
+
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type,
 			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score, int credits, 
-			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+			int score,
+			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+
+
 		this.physics = physics;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -67,24 +71,21 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.velocity = velocity;
 		this.entities = entities;
 		this.scoreListener = scoreListener;
-		
+
 		body = this.physics.createBody(bodyDefinition, this, position);
-		
-		// Sets all the weapons' offset with position modifier
-		for(int i = 0; i < weapons.length; i++) {
-			weapons[i].setOffset(
-				getDimensions().cpy().scl(weaponPositionModifier[i]));
-		}
 	}
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score, int credits, 
-			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern, 
+
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type,
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, int score,
+			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
 			Listener<Integer> scoreListener) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, 
-				weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
-		if(pattern != null){
+		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+				bodyDefinition, scoreListener);
+
+		if (pattern != null) {
+
 			physics.attachMovementPattern(pattern.copy(), body);
 		}
 
@@ -181,12 +182,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void setVelocity(Vector2 velocity) {
 		body.setVelocity(velocity);
 	}
-	
-	public Vector2 getVelocity(){
+
+	public Vector2 getVelocity() {
 		return body.getVelocity();
 	}
-	
-	public Weapon[] getWeapons(){
+
+	public Weapon[] getWeapons() {
 		return weapons;
 	}
 
@@ -221,10 +222,11 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			flaggedForRemoval = true;
 		}
 	}
-	
+
 	public void setActionListener(Listener<GameActionEvent> actionListener) {
 		this.actionListener = actionListener;
 	}
+
 
 	@Override
 	public Vector2 getDimensions() {

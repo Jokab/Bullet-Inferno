@@ -92,8 +92,8 @@ public class ProjectileImplTest {
 		float initialDamage = projectile.getDamage();
 
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
-				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 
 				loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 
@@ -113,8 +113,8 @@ public class ProjectileImplTest {
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(physics, weapons);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
-				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		PlayerShip sourceShip = new PlayerShipImpl(physics, entities, new Vector2(), loadout, 
 				ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
@@ -186,8 +186,8 @@ public class ProjectileImplTest {
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
-				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 
 				loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 
