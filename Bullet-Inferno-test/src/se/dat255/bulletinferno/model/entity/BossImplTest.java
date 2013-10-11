@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
@@ -9,17 +7,13 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
-import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
-import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Weapon;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.test.Common;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
@@ -53,8 +47,7 @@ public class BossImplTest {
 		}
 		@Override
 		public void onTimeout(Timer source, float timeSinceLast) {
-			// TODO Auto-generated method stub
-			
+		
 		}
 
 	}
@@ -74,6 +67,4 @@ public class BossImplTest {
 		assertTrue("Movement pattern should be Evading", boss.getMovementPattern() instanceof EvadingMovementPattern);
 
 	}
-
-
 }
