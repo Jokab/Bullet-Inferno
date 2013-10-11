@@ -121,16 +121,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public void preCollided(Collidable other) {
 		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
-		} else if (collidedWithSomethingElse(other)) {
-			// TODO: Should be some constant or dynamic value.
-			takeDamage(20);
-		} else if (other instanceof Obstacle) {
-			// TODO: Should be some constant or dynamic value.
-			takeDamage(20);
+		} else if (collidedWithNonTeammember(other)) {
+			die();
 		}
 	}
 
-	private boolean collidedWithSomethingElse(Collidable other) {
+	private boolean collidedWithNonTeammember(Collidable other) {
 		return other instanceof Teamable && !isInMyTeam((Teamable) other);
 	}
 
@@ -222,6 +218,11 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		return this.health <= 0;
 	}
 
+	private void die() {
+		health = 0;
+		dispose();
+	}
+	
 	@Override
 	public void halt(float distance) {
 		haltTimer.registerListener(haltShipTimerable);
@@ -251,12 +252,4 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public Vector2 getDimensions() {
 		return body.getDimensions();
 	}
-
-	// TODO: DEBUG
-	/*
-	 * public Body getBody() {
-	 * return body.getBox2DBody();
-	 * }
-	 */
-
 }
