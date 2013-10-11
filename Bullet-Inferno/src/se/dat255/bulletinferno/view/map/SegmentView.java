@@ -9,6 +9,7 @@ import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.Renderable;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -75,11 +76,11 @@ public class SegmentView implements Renderable {
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		// TODO: Check if on screen, if it should be rendered
 		for (SliceView slice : slices) {
 			if (true /* Should be rendered */) {
-				slice.render(batch);
+				slice.render(batch, viewport);
 			}
 		}
 	}
