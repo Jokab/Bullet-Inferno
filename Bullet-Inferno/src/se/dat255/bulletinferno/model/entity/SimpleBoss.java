@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model.entity;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.controller.ScoreController;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
@@ -16,7 +16,7 @@ import se.dat255.bulletinferno.util.Timerable;
 /**
  * Abstract superclass for different implementation of bosses. 
  * Implements some methods to be user by subclass to differentiate
- * boss behaviour
+ * boss behavior
  * 
  * @author Simon Österberg
  * 
@@ -35,7 +35,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private FollowingMovementPattern fmp;
 	private EvadingMovementPattern emp;
 	private String currentPattern;
-	private final ScoreController scoreController;
+	private final Listener<Integer> scoreListener;
 	
 
 	/** Flag indicating whether we have told player to move us on screen or not */
@@ -43,10 +43,11 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, 
+
 			Weapon[] weapons, int score, int credits, 
-			PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
-		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition, scoreController);
+			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+		super(physics, entities, type, position, velocity, initialHealth, weapons, 
+				 score, credits, bodyDefinition, scoreListener);
 		
 		this.timers = new Timer[weapons.length];
 		this.entities = entities;		
@@ -63,15 +64,17 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		this.emp = new EvadingMovementPattern(player);
 		currentPattern = "none";
 		
-		this.scoreController = scoreController;
+		this.scoreListener = scoreListener;
 	}
 		
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
-			PhysicsMovementPattern pattern, ScoreController scoreController) {
+	PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
+		
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition, scoreController);
+				bodyDefinition, scoreListener);
+
 
 		if(pattern instanceof DisorderedBossMovementPattern){
 			currentPattern = "dmp";
@@ -116,7 +119,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		super.takeDamage(damage);
 
 		if (isDead()) {
-			scoreController.addScore(getScore());
+			scoreListener.call(getScore());
 			entities.getPlayerShip().restoreSpeed();
 		}
 	}
@@ -178,11 +181,15 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Methods to change the movement of the boss
 	
+	public void prepareMovementChange(){
+		body.setVelocity(new Vector2(body.getVelocity().x,0));
+		physics.detachMovementPattern(body);
+	}
+	
 	// Gives the boss a basic up-down movement
 	public void changeToDisorderedMovement(){
+		prepareMovementChange();
 		if(!currentPattern.equals("dmp")){
-			body.setVelocity(new Vector2(body.getVelocity().x,0));
-			physics.detachMovementPattern(body);
 			physics.attachMovementPattern(dmp.copy(), body);
 			currentPattern = "dmp";
 		}
@@ -190,26 +197,29 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Makes the boss try to match the players y-position
 	public void changeToFollowingMovement(){
+		prepareMovementChange();
 		if(!currentPattern.equals("fmp")){
-			body.setVelocity(new Vector2(body.getVelocity().x,0));
-			physics.detachMovementPattern(body);
 			physics.attachMovementPattern(fmp.copy(), body);
 			currentPattern = "fmp";
 		}
 	}
 	
+	// Makes the boss avoid the player
 	public void changeToEvadingMovement(){
+		prepareMovementChange();
 		if(!currentPattern.equals("emp")){
-			body.setVelocity(new Vector2(body.getVelocity().x,0));
-			physics.detachMovementPattern(body);
 			physics.attachMovementPattern(emp.copy(), body);
-			currentPattern = "fmp";
+			currentPattern = "emp";
 		}
 	}
-	
 	
 	public Timer[] getWeaponTimers(){
 		return timers;
 	}
+	
+	public PhysicsMovementPattern getMovementPattern(){
+		return physics.getMovementPattern(body);
+	}
+
 
 }

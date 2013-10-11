@@ -30,15 +30,21 @@ public class ObstacleDefinitionImplTest {
 
 	@Test
 	public void testCreateObstacle() {
+		int bodyCallsSize = 0;
 		for (ObstacleDefinitionImpl obstacleDef : ObstacleDefinitionImpl.values()) {
+			// Change position
+			pos.set(bodyCallsSize, bodyCallsSize);
 			Obstacle obstacle = obstacleDef.createObstacle(physics, pos);
 			assertNotNull("createObstacle should always return an obstacle instance", obstacle);
-
+			
+			// An obstacle should've added a body to the world
+			bodyCallsSize++;
+			
 			assertTrue("createObstacle should add an obstacle to the physics world",
-					physics.createBodyCalls.size() == 1);
-
+					physics.createBodyCalls.size() == bodyCallsSize);
+			
 			assertEquals("createObstacle should add the obstacle at the provided position",
-					physics.createBodyCalls.get(0).position, pos);
+					physics.createBodyCalls.get(bodyCallsSize-1).position, pos);
 		}
 	}
 }

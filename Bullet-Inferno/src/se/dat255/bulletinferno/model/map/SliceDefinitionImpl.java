@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
@@ -142,8 +142,8 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	 */
 	@Override
 	public Slice createSlice(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, Vector2 position, ScoreController scoreController) {
+			WeaponEnvironment weapons, Vector2 position, Listener<Integer> scoreListener) {
 		return new SliceImpl(physics, entities, weapons, this, entryHeight, exitHeight, position,
-				width, obstaclePlacements, enemyPlacements, scoreController);
+				width, obstaclePlacements, enemyPlacements, scoreListener);
 	}
 }

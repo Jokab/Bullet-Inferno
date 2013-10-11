@@ -10,6 +10,7 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
+import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -32,19 +33,21 @@ public class EnemyImplTest {
 		public EnemyMockup(EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
 				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
 			super(new PhysicsWorldImplSpy(), new EntityMockEnvironment(), type, position, velocity,
-					initialHealth, weapon, weaponPositionModifier, score,
+					initialHealth, weapon, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
-					new SimplePhysicsMovementPatternMock());
+					new SimplePhysicsMovementPatternMock(),
+					new SimpleMockScoreListener());
 		}
 		public EnemyMockup(PhysicsEnvironment physics, EntityEnvironment entities, 
 				EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
-				int initialHealth, Weapon[] weapon, Vector2[] weaponPositionModifier, int score, int credits) {
+				int initialHealth, Weapon[] weapon, int score, int credits) {
 			super(physics, entities, type, position, velocity,
-					initialHealth, weapon, weaponPositionModifier, score,
+					initialHealth, weapon, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
-					new SimplePhysicsMovementPatternMock());
+					new SimplePhysicsMovementPatternMock(),
+					new SimpleMockScoreListener());
 		}
 
 	}
@@ -165,7 +168,7 @@ public class EnemyImplTest {
 		PhysicsWorldImplSpy physics = new PhysicsWorldImplSpy();
 		EemyEntityEnvironmentMockup entities = new EemyEntityEnvironmentMockup();
 		SimpleEnemy enemy = new EnemyMockup(physics, entities, EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, 
-				new Vector2(),new Vector2(), 101, new Weapon[] {}, new Vector2[] {}, 0, 0);
+				new Vector2(),new Vector2(), 101, new Weapon[] {}, 0, 0);
 
 		// Take 61 damage
 		enemy.takeDamage(61);
@@ -200,7 +203,7 @@ public class EnemyImplTest {
 		PhysicsWorldImplSpy physics = new PhysicsWorldImplSpy();
 		EemyEntityEnvironmentMockup entities = new EemyEntityEnvironmentMockup();
 		SimpleEnemy enemy = new EnemyMockup(physics, entities, 
-				EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), new Vector2(), 101, new Weapon[] {}, new Vector2[] {}, 0, 0);
+				EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), new Vector2(), 101, new Weapon[] {}, 0, 0);
 		enemy.dispose();
 		assertEquals("Enemy should do remove body once",
 				physics.removeBodyCalls.size(), 1);
@@ -249,10 +252,11 @@ public class EnemyImplTest {
 					int initialHealth,
 					Weapon[] weapon,Vector2[] weaponPositionModifier ,int score, int credits) {
 				super(new PhysicsWorldImplSpy(), new EntityMockEnvironment(), type, position, 
-						velocity, initialHealth, weapon, weaponPositionModifier, score, credits, 
+						velocity, initialHealth, weapon, score, credits, 
 						new PhysicsBodyDefinitionImpl(
 								PhysicsShapeFactory.getRectangularShape(1, 1)), 
-						new SimplePhysicsMovementPatternMock());
+						new SimplePhysicsMovementPatternMock(),
+						new SimpleMockScoreListener());
 			}
 		}
 

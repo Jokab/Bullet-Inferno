@@ -7,8 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
@@ -25,19 +27,21 @@ public class EnemyDefinitionTest {
 	private PhysicsWorldImplSpy physics;
 	private EntityMockEnvironment entities;
 	private WeaponMockEnvironment weapons;
+	private Listener<Integer> scoreListener;
 
 	@Before
 	public void initialize() {
 		physics = new PhysicsWorldImplSpy(new SimpleMockTimer());
 		weapons = new WeaponMockEnvironment();
 		entities = new EntityMockEnvironment(physics, weapons);
+		scoreListener = new SimpleMockScoreListener();
 	}
 
 	@Test
 	public void testEnemyPosition() {
 		Vector2 position = new Vector2(1, 1);
 		Enemy enemy = EnemyDefinitionImpl.SPECIAL_ENEMY_SHIP.createEnemy(physics, entities, 
-				weapons, position);
+				weapons, position, scoreListener);
 
 		assertTrue(
 				"Position that was sent to the factory should be the same as the created enemy's position. ",

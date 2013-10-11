@@ -77,6 +77,14 @@ public interface PhysicsEnvironment extends Disposable {
 	public void detachMovementPattern(PhysicsBody body);
 	
 	/**
+	 * Returns the currently attached movement pattern for the specified body
+	 * 
+	 * @param body The body whose movement pattern should be checked
+	 * @return The currently attached movement pattern
+	 */
+	public PhysicsMovementPattern getMovementPattern(PhysicsBody body);
+	
+	/**
 	 * Returns a new timer
 	 * 
 	 * @return timer
