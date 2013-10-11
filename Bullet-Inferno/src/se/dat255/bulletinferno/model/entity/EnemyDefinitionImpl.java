@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
 import se.dat255.bulletinferno.model.gui.Listener;
-import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -17,8 +16,12 @@ import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
-public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
+/**
+ * Definitions of all the enemies and their stats
+ */
+public enum EnemyDefinitionImpl implements EnemyDefinition {
 
+	
 	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 5,
 			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.DISORDERER, 0, 0)}, 10,
 			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
@@ -30,8 +33,10 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 	EASY_BOSS_SHIP(new Vector2(0, 2), 10,
 			new WeaponPlacementImpl[] { new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0 , 0),
 					new WeaponPlacementImpl (WeaponDefinitionImpl.BOSS_AIM, 0, 0) }, 10, 10,
+
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
 			new DisorderedMovementPattern(1, 4)),
+
 
 	HARD_BOSS_SHIP(new Vector2(0, 2), 25,
 
@@ -40,20 +45,26 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, 1/2f),
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0),
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, -1/2f) }, 10, 10,
+
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
 			new DisorderedMovementPattern(1, 4));
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
+
 	private final int initialHealth;
 	private WeaponPlacement[] weaponsData;
+
 	private final int score;
+	/** The credits the enemy awards the player on death */
 	private final int credits;
 	private final PhysicsBodyDefinition bodyDefinition;
+
 
 	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponPlacement[] weaponsData, int score,
 			int credits,
 			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern) {
+
 		this.velocity = velocity.cpy();
 		this.pattern = pattern;
 		this.initialHealth = initialHealth;
@@ -63,6 +74,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 	
+
 	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponPlacement[] weaponsData, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition) {
 		this(velocity, initialHealth, weaponsData, score, credits, bodyDefinition,  null);
@@ -76,6 +88,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		} else {
 			return getEnemyShip(physics, entities, weaponEnvironment, position, scoreListener);
 		}
+
 	}
 
 	private DefaultEnemyShipImpl getEnemyShip(PhysicsEnvironment physics, EntityEnvironment entities, 
@@ -113,9 +126,5 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
 	}
 
-	@Override
-	public String getIdentifier() {
-		return this.name();
-	}
-
 }
+

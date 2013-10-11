@@ -1,24 +1,21 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipView implements Renderable, Timerable {
+
 	private final Texture shipTexture;
-	private final ManagedTexture mShipTexture;
-
-	private final ManagedTexture mExplosion;
-
 	private final Texture explosion;
 
 	private Sprite shipSprite;
@@ -49,12 +46,10 @@ public class PlayerShipView implements Renderable, Timerable {
 
 		this.shipDimensions = ship.getDimensions();
 
-		mShipTexture = resourceManager.getManagedTexture(ship);
-		shipTexture = mShipTexture.getTexture();
+		shipTexture = resourceManager.getTexture(ship);
 		shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-		mExplosion = resourceManager.getManagedTexture(TextureType.PLAYER_EXPLOSION);
-		explosion = mExplosion.getTexture();
+		explosion = resourceManager.getTexture(TextureType.PLAYER_EXPLOSION);
 		explosion.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 		shipSprite = new Sprite(shipTexture);
@@ -62,16 +57,16 @@ public class PlayerShipView implements Renderable, Timerable {
 		shipSprite.setOrigin(shipSprite.getWidth() / 2, shipSprite.getHeight() / 2);
 
 		explosionSprite = new Sprite(explosion);
-		explosionSprite.setSize(shipDimensions.x, shipDimensions.y);
+		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
 
 		// TODO: How should we do with managed textures? No disposal?
-		smokeTexture = resourceManager.getManagedTexture(TextureType.SMOKE_PARTICLE).getTexture();
+		smokeTexture = resourceManager.getTexture(TextureType.SMOKE_PARTICLE);
 		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		// TODO: this is quite a messy program flow. you can ask me if it seems messed up (jakob)
 		if (ship.isDead()) {
 			drawExplosion(batch, lastShipPosition);
@@ -87,7 +82,7 @@ public class PlayerShipView implements Renderable, Timerable {
 			smokeTrail.setSpawnPoint(
 					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
 			smokeTrail.setParticleOrigin(lastShipPosition);
-			smokeTrail.render(batch);
+			smokeTrail.render(batch, viewport);
 
 		}
 	}
@@ -137,8 +132,6 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	@Override
 	public void dispose() {
-		mExplosion.dispose(resourceManager);
-		mShipTexture.dispose(resourceManager);
 	}
 
 	@Override

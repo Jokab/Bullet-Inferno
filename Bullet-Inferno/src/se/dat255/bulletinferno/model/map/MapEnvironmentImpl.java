@@ -5,6 +5,7 @@ import java.util.List;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
 import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
@@ -12,6 +13,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
+import se.dat255.bulletinferno.util.GameActionEvent;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,7 +29,9 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 	
-	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinition[] weaponData, Listener<Integer> scoreListener) {
+	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinition[] weaponData, 
+			Listener<Integer> scoreListener, Listener<Float> healthListener, 
+			Listener<GameActionEvent> actionListener) {
 		this.physics = physics;
 		this.weapons = new WeaponEnvironmentImpl(physics);
 		
@@ -36,7 +40,7 @@ public class MapEnvironmentImpl implements MapEnvironment {
 				weaponData[0].createWeapon(physics, weapons),
 				weaponData[1].createWeapon(physics, weapons));
 		
-		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout);
+		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout, healthListener, actionListener);
 		
 		segmentManager = new SegmentManagerImpl(physics, entities, weapons, scoreListener);
 	}

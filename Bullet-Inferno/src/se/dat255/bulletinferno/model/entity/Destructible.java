@@ -17,7 +17,7 @@ public interface Destructible extends Teamable, Disposable {
 	 * 
 	 * @return The current health.
 	 */
-	public int getHealth();
+	public float getHealth();
 
 	/**
 	 * Returns the object's initial health. That is, the health that the object
@@ -25,7 +25,7 @@ public interface Destructible extends Teamable, Disposable {
 	 * 
 	 * @return The initial health.
 	 */
-	public int getInitialHealth();
+	public float getInitialHealth();
 	
 	/**
 	 * Returns true if the enemy's health is below or equal to 0.

@@ -15,6 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * A screen that handles loading and allocation of all assets that are required in the game.
+ *  This is to prevent the game from slowing down due to resource loading which could take time
+ *  depending on the speed of the secondary memory.
+ */
 public class LoadingScreenController extends SimpleController {
 
 	/** A listener for when the loading the loading screen is doing is finished */
@@ -41,15 +46,15 @@ public class LoadingScreenController extends SimpleController {
 	/** Flag indicating whether the loading of the asset manager has completed */
 	private boolean loadingFinished = false;
 
-	// GUI
 	private Stage stage;
 	private Skin skin;
 	private Texture screenBgTexture;
 	private Image screenBg;
 	private Label clickToStart;
 
-	//
-
+	/**
+	 * Initiates the screen with the correct size and sets up the elements displayed
+	 */
 	public LoadingScreenController(ResourceManager resourceManager,
 			MasterController masterController) {
 		this.resourceManager = resourceManager;
@@ -61,6 +66,9 @@ public class LoadingScreenController extends SimpleController {
 		setupScreenElements();
 	}
 
+	/**
+	 * Loads and initializes all the elements to be displayed
+	 */
 	private void setupScreenElements() {
 		screenBgTexture = new Texture("data/loadingScreenBg.png");
 		screenBg = new Image(screenBgTexture);

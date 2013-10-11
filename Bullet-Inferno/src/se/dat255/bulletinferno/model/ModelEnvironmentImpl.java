@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.map.MapEnvironment;
 import se.dat255.bulletinferno.model.map.MapEnvironmentImpl;
 import se.dat255.bulletinferno.model.map.Segment;
@@ -14,6 +15,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
+import se.dat255.bulletinferno.util.GameActionEvent;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -23,10 +25,12 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	private final MapEnvironment map;
 
 
-	public ModelEnvironmentImpl(WeaponDefinition[] weaponData, Listener<Integer> scoreListener) {
-
+	public ModelEnvironmentImpl(WeaponDefinition[] weaponData, 
+			ScoreListener scoreListener, Listener<Float> healthListener, 
+			Listener<GameActionEvent> actionListener) {
 		physics = new PhysicsEnvironmentImpl();
-		map = new MapEnvironmentImpl(physics, weaponData, scoreListener);
+		map = new MapEnvironmentImpl(physics, weaponData, scoreListener, healthListener, 
+				actionListener);
 	}
 
 	/**

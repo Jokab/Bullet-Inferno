@@ -11,12 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Default implementation of a boss
- * 
- * @author Simon Österberg
- *
  */
-
-public class DefaultBossImpl extends SimpleBoss implements Ship{
+public class DefaultBossImpl extends SimpleBoss implements Ship {
 
 	private Weapon[] weapons;
 	private Timer[] timers;
@@ -42,9 +38,11 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 * @param offsets
 	 */
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
+
 			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
 
 			Weapon[] weapons, int score, int credits, 
+
 			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern, scoreListener);
@@ -57,8 +55,10 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 
+
 			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
 			 int score, int credits, PhysicsBodyDefinition bodyDefinition,
+
 			Listener<Integer> scoreListener) {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);

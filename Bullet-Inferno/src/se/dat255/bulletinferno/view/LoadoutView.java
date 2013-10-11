@@ -2,9 +2,9 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.weapon.Weapon;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,8 +18,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class LoadoutView implements Renderable {
 
-	private final ManagedTexture mStandardWeapon;
-	private final ManagedTexture mHeavyWeapon;
 	private final Texture standardWeaponTexture;
 	private final Texture heavyWeaponTexture;
 	private Sprite standardWeaponSprite;
@@ -41,11 +39,9 @@ public class LoadoutView implements Renderable {
 		this.heavyWeapon = ship.getLoadout().getHeavyWeapon();
 
 		// Weapons
-		mStandardWeapon = resourceManager.getManagedTexture(standardWeapon.getType());
-		standardWeaponTexture = mStandardWeapon.getTexture();
+		standardWeaponTexture = resourceManager.getTexture(standardWeapon.getType());
 		standardWeaponTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		mHeavyWeapon = resourceManager.getManagedTexture(heavyWeapon.getType());
-		heavyWeaponTexture = mHeavyWeapon.getTexture();
+		heavyWeaponTexture = resourceManager.getTexture(heavyWeapon.getType());
 		heavyWeaponTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 		// Weapons
@@ -59,7 +55,7 @@ public class LoadoutView implements Renderable {
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		if (!ship.isDead()) {
 			lastShipPosition = ship.getPosition();
 			float x = lastShipPosition.x - ship.getDimensions().x / 2;
@@ -80,8 +76,6 @@ public class LoadoutView implements Renderable {
 
 	@Override
 	public void dispose() {
-		mStandardWeapon.dispose(resourceManager);
-		mHeavyWeapon.dispose(resourceManager);
 	}
 
 }

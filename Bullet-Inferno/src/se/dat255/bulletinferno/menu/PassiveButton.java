@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Button for selecting passive abilities
+ */
 public class PassiveButton extends CustomizedButton {
 
 	private PassiveAbilityDefinition ability;
@@ -28,7 +31,7 @@ public class PassiveButton extends CustomizedButton {
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					resourceManager.getManagedTexture(this.ability).getTexture()));
+					resourceManager.getTexture(this.ability)));
 		}
 	}
 

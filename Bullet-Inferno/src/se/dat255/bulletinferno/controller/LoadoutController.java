@@ -1,9 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.menu.PassiveButton;
@@ -15,10 +13,6 @@ import se.dat255.bulletinferno.menu.WeaponButtonsView;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
-import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -39,7 +33,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LoadoutController extends SimpleController {
@@ -247,8 +240,8 @@ public class LoadoutController extends SimpleController {
 	}
 
 	private void setupStartButton() {
-		Texture startButtonTexture = resourceManager.getManagedTexture(
-				TextureType.LOADOUT_START_BUTTON).getTexture();
+		Texture startButtonTexture = resourceManager.getTexture(
+				TextureType.LOADOUT_START_BUTTON);
 		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
 

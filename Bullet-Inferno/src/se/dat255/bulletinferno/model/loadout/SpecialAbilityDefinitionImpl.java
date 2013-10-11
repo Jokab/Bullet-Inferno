@@ -2,6 +2,9 @@ package se.dat255.bulletinferno.model.loadout;
 
 import se.dat255.bulletinferno.model.ModelEnvironment;
 
+/**
+ * Defines the different special abilities
+ */
 public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 
 	DAMAGE_ALL_ENEMIES(new SpecialInitializer() {

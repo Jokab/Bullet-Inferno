@@ -4,27 +4,27 @@ import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
+import se.dat255.bulletinferno.view.audio.AudioPlayer;
+import se.dat255.bulletinferno.view.audio.AudioPlayerImpl;
 import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * 
+ * The main controller of the game, handles main initiation and update of time
  */
 public class GameController extends SimpleController {
 
@@ -60,11 +60,17 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
+	private AudioPlayer audiPlayer;
+	
+	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
 	
+	/** Reference to the shared special ability definition */
 	private SpecialAbilityDefinition special;
-
+	/** Reference to the shared passive ability definition */
 	private PassiveAbilityDefinition passive;
+	/** Reference to the shared score listener which handles the score of the game */
+	private ScoreListener scoreListener;
 
 
 
@@ -78,15 +84,15 @@ public class GameController extends SimpleController {
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
 		this.resourceManager = resourceManager;
+		this.audiPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
-	 * @param passive 
-	 * @param special 
 	 */
-	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, 
+			PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
@@ -107,19 +113,35 @@ public class GameController extends SimpleController {
 		graphics.create();
 		
 		// Initialize the score listener
-		Listener<Integer> scoreListener = new Listener<Integer>(){
-			private int score = 0;
+		scoreListener = new ScoreListener(){
 			@Override
-			public void call(Integer e) {
-				score += e;
+			public void updateHudWithScore(int score) {
 				hudView.setScore(score);
+			}
+		};
+
+		
+		// Update life when ship changes life
+		Listener<Float> healthListener = new Listener<Float>(){
+			@Override
+			public void call(Float life) {
+				hudView.setLife(life);
+			}
+		};
+		
+		// Initialize the action listener
+		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
+			@Override
+			public void call(GameActionEvent e) {
+				audiPlayer.playSoundEffect(e);
 			}
 		};
 		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData, scoreListener);
+
+		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
 		
 		PlayerShip ship = models.getPlayerShip();
 		
@@ -157,7 +179,8 @@ public class GameController extends SimpleController {
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
-		graphics.getHudView().gameOver();
+		touchController.setSuppressKeyboard(true);
+		graphics.getHudView().gameOver(scoreListener.getScore());
 	}
 
 	/**
@@ -177,6 +200,7 @@ public class GameController extends SimpleController {
 	/** Pauses the game */
 	public void pauseGame() {
 		super.pause();
+		touchController.setSuppressKeyboard(true);
 		graphics.getHudView().pause();
 	}
 
@@ -194,6 +218,7 @@ public class GameController extends SimpleController {
 	/** Unpauses the game */
 	public void unpauseGame() {
 		super.resume();
+		touchController.setSuppressKeyboard(false);
 		graphics.getHudView().unpause();
 	}
 
@@ -248,6 +273,8 @@ public class GameController extends SimpleController {
 			models.setViewport(viewportPosition, viewportDimensions);
 
 			models.update(delta);
+			
+			scoreListener.update(delta);
 		}
 
 	}
@@ -271,20 +298,20 @@ public class GameController extends SimpleController {
 		models.setViewport(viewportPosition, viewportDimensions);
 	}
 
+	/** Gets the game background view */
 	public static BackgroundView getBgView() {
 		return bgView;
 	}
 
 	/** Get method for weapon data set in create new game */
-
 	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
 	}
-
+	/** Get method for data set in create new game */
 	public SpecialAbilityDefinition getSpecial() {
 		return this.special;
 	}
-	
+	/** Get method for data set in create new game */
 	public PassiveAbilityDefinition getPassive() {
 		return this.passive;
 	}

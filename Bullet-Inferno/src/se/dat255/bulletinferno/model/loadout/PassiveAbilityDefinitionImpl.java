@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model.loadout;
 
-import se.dat255.bulletinferno.model.ModelEnvironment;
-
 public enum PassiveAbilityDefinitionImpl implements PassiveAbilityDefinition {
 
 	RELOADING_TIME(new PassiveAbilityImpl(new PassiveReloadingTime(0.75f))),

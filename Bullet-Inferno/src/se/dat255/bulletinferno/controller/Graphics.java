@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.gui.HudView;
 
@@ -100,19 +99,19 @@ public class Graphics {
 
 		// TODO: Render world without blending
 		worldBatch.begin();
-		GameController.getBgView().render(worldBatch);
+		GameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();
 
 		// Render units that have alpha
 		worldBatch.begin();
 		for (Renderable renderable : renderables) {
-			renderable.render(worldBatch);
+			renderable.render(worldBatch, worldCamera);
 		}
 		worldBatch.end();
 		
 		// Render HUD and GUI elements
 		guiBatch.begin();
-		hudView.render(guiBatch);
+		hudView.render(guiBatch, null);
 		guiBatch.end();
 	}
 	

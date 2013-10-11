@@ -55,6 +55,9 @@ public class GameTouchController implements InputProcessor {
 	private int steeringFinger = -1;
 	/** The origin of touch down finger controlling the ship*/
 	private Vector2 touchOrigin = new Vector2();
+	
+	/** Flag indicating that keyboard presses should be ignored */
+	private boolean suppressKeyboard;
 
 	public GameTouchController(final Graphics graphics, final PlayerShip ship, 
 			GameController gameController, MasterController masterController) {
@@ -66,6 +69,9 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if(suppressKeyboard) {
+			return true;
+		}
 		if (keycode == FIREKEY) {
 			ship.fireWeapon();
 		}
@@ -77,19 +83,28 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		if(suppressKeyboard) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
+		if(suppressKeyboard) {
+			return true;
+		}
 		return false;
 	}
 
+	/** Pre-calculated values to increase speed */
+	private static float INVERTER_WIDTH = 1.0f / 16.0f,
+			             INVERTER_HEIGHT = 1.0f / 9.0f;
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// Check if GUI input was to be handled TODO: The second division can be made in prehand
-		float guiX = (float) screenX / (Gdx.graphics.getWidth() * 0.0625f); // 1 / 16
-		float guiY = (float) screenY / (Gdx.graphics.getHeight() * 0.1111111111f); // 1 / 9
+		// Check if GUI input was to be handled
+		float guiX = (float) screenX / (Gdx.graphics.getWidth() * INVERTER_WIDTH);
+		float guiY = (float) screenY / (Gdx.graphics.getHeight() * INVERTER_HEIGHT);
 		guiX -= 8.0f;
 		guiY = 4.5f - guiY;
 		GuiEvent event = graphics.getHudView().guiInput(guiX, guiY);
@@ -176,6 +191,10 @@ public class GameTouchController implements InputProcessor {
 	
 	public void setSpecialAbilityListener(SpecialAbilityListener specialAbilityListener) {
 		this.specialAbilityListener = specialAbilityListener;
+	}
+	
+	public void setSuppressKeyboard(boolean suppressKeyboard) {
+		this.suppressKeyboard = suppressKeyboard;
 	}
 
 }
