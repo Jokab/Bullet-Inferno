@@ -185,7 +185,9 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void fireWeapon() {
-		weaponLoadout.getHeavyWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		if (!isDead()) {
+			weaponLoadout.getHeavyWeapon().fire(getPosition(), new Vector2(1, 0), this);
+		}
 	}
 
 	@Override
