@@ -35,14 +35,15 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private FollowingMovementPattern fmp;
 	private EvadingMovementPattern emp;
 	private String currentPattern;
+	private final ScoreController scoreController;
 	
 
 	/** Flag indicating whether we have told player to move us on screen or not */
 	private boolean isOnScreen = false;
 	
-	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score, int credits, 
+	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, 
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
 			PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
 				bodyDefinition, scoreController);
@@ -61,7 +62,8 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		this.dmp = new DisorderedBossMovementPattern(3f,3);
 		this.emp = new EvadingMovementPattern(player);
 		currentPattern = "none";
-			
+		
+		this.scoreController = scoreController;
 	}
 		
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
@@ -115,6 +117,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		super.takeDamage(damage);
 
 		if (isDead()) {
+			scoreController.addScore(getScore());
 			entities.getPlayerShip().restoreSpeed();
 		}
 	}

@@ -27,6 +27,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final EntityEnvironment entities;
 	protected Vector2 velocity;
 	protected Weapon[] weapons;
+	
+	private final ScoreController scoreController;
 
 	/** A flag to make sure we don't remove ourself twice */
 	private boolean flaggedForRemoval = false;
@@ -60,6 +62,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.credits = credits;
 		this.velocity = velocity;
 		this.entities = entities;
+		this.scoreController = scoreController;
 		
 		body = this.physics.createBody(bodyDefinition, this, position);
 		
@@ -127,6 +130,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			health -= damage;
 
 			if (isDead()) {
+				scoreController.addScore(getScore());
 				scheduleRemoveSelf();
 			}
 		}
