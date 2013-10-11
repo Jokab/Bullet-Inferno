@@ -8,6 +8,7 @@ import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -71,7 +72,7 @@ public class PlayerShipView implements Renderable, Timerable {
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		// TODO: this is quite a messy program flow. you can ask me if it seems messed up (jakob)
 		if (ship.isDead()) {
 			drawExplosion(batch, lastShipPosition);
@@ -87,7 +88,7 @@ public class PlayerShipView implements Renderable, Timerable {
 			smokeTrail.setSpawnPoint(
 					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
 			smokeTrail.setParticleOrigin(lastShipPosition);
-			smokeTrail.render(batch);
+			smokeTrail.render(batch, viewport);
 
 		}
 	}

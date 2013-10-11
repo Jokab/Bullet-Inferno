@@ -13,6 +13,7 @@ import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -82,7 +83,7 @@ public class BackgroundView implements Renderable {
 	}
 	
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		refreshSegmentViews();
 		
 		batch.disableBlending();
@@ -95,7 +96,7 @@ public class BackgroundView implements Renderable {
 			float startX = segmentView.segment.getPosition().x;
 			float endX = startX + segmentView.segment.getWidth();
 			if(shipLeftX <= startX || startX < shipRightX){
-				segmentView.render(batch);
+				segmentView.render(batch, viewport);
 				//batch.draw(s.getEndTexture(), startX, 9, 0, 0, 2, Graphics.GAME_HEIGHT, 1, 1, 180);
 				//batch.draw(s.getTexture(), startX, 0, 0, 0, (endX-startX-2), Graphics.GAME_HEIGHT, 1, 1, 0);
 				//batch.draw(s.getEndTexture(), endX-2, 0, 0, 0, 2, Graphics.GAME_HEIGHT, 1, 1, 0);

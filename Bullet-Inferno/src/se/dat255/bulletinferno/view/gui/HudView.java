@@ -3,16 +3,17 @@ package se.dat255.bulletinferno.view.gui;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.RenderableGUI;
+
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Displays the score of the game
@@ -139,7 +140,7 @@ public class HudView implements Renderable {
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Camera viewport) {
 		batch.draw(lifeRegion, -1.5f, 4f, lifeWidth, 0.5f);
 		for(int i = 10 - activeScoreNumbers, j = 0; i < 10; i++, j++){
 			batch.draw(numberRegions[scoreArray[i]], j*0.4f-8, 4f, 0.5f, 0.5f);
