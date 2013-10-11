@@ -59,10 +59,9 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	/** A timer used to every update check our location relative to a specified halt distance */
 	private Timer haltTimer;
-	
-	
+
 	private Timer smoothStop;
-	
+
 	/** The x-coordinate at which the ship should come to a stop. */
 	private float haltAtPosition;
 
@@ -98,7 +97,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
 		weaponTimer.start();
-		
+
 		this.smoothStop = physics.getTimer();
 		smoothStop.setContinuous(true);
 		smoothStop.setTime(0.1f);
@@ -187,30 +186,47 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void moveY(float dy) {
-		
+
 		smoothStop.start();
-		
-		
+
 	}
 
 	@Override
 	public void moveY(float dy, float scale) {
 		if (!isDead()) {
-			
-		
-				
-				if(dy<0) {
-					dy = dy - 1;
-					
+
+			if (dy < 0) {
+				dy = dy - 1;
+
+			} else {
+				dy = dy + 1;
+			}
+
+			if (Math.abs(getVelocity().y) > 10f) {
+
+				if (getVelocity().y < 0) {
+
+					body.setVelocity(new Vector2(getVelocity().x, -10));
+
 				} else {
-					dy = dy + 1;
+
+					body.setVelocity(new Vector2(getVelocity().x, 10));
 				}
+
+			} else {
 				
-				body.getBox2DBody().applyForce(new Vector2(0,scale*dy*18), getPosition(), true);
-			
-				smoothStop.restart();
+				
+					body.getBox2DBody()
+					.applyForce(new Vector2(0, scale * 20/dy), getPosition(), true);
+					
+				
+				
+				
+			}
+
+			smoothStop.restart();
 		}
-		
+
 	}
 
 	@Override
@@ -270,20 +286,20 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		if (source == weaponTimer) {
 			standardWeapon.fire(getPosition(), new Vector2(1, 0),
 					this);
-		} 
-		
-		if(source == smoothStop) {
+		}
+
+		if (source == smoothStop) {
 
 			if (getVelocity().y > 1.5f) {
-				body.getBox2DBody().applyForce(new Vector2(0, -150f), getPosition(), true);
+				body.getBox2DBody().applyForce(new Vector2(0, -100f), getPosition(), true);
 			} else if (getVelocity().y < -1.5f) {
-				body.getBox2DBody().applyForce(new Vector2(0, 150f), getPosition(), true);
+				body.getBox2DBody().applyForce(new Vector2(0, 100f), getPosition(), true);
 			} else {
 				body.setVelocity(new Vector2(getVelocity().x, 0));
 				smoothStop.stop();
 			}
 		}
-	
+
 	}
 
 	@Override
