@@ -10,6 +10,7 @@ import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
+import se.dat255.bulletinferno.model.mock.HealthMockListener;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.CreateBodyCall;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy.RemoveBodyCall;
@@ -91,9 +92,10 @@ public class ProjectileImplTest {
 		float initialDamage = projectile.getDamage();
 
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 
-				loadout, ShipType.PLAYER_DEFAULT, null);
+				loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 
 		// If your change fails this test: think again! The order of collision pairs is not defined!
 		projectile.preCollided(ship);
@@ -111,9 +113,10 @@ public class ProjectileImplTest {
 	public void testCollidedWithSource() {
 		Projectile projectile = new ProjectileImpl(physics, weapons);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShip sourceShip = new PlayerShipImpl(physics, entities, new Vector2(), loadout, 
-				ShipType.PLAYER_DEFAULT, null);
+				ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
 		// Set the ship as the source
 		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip,
@@ -183,9 +186,10 @@ public class ProjectileImplTest {
 			}
 		}, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShip ship = new PlayerShipImpl(physics, entities, new Vector2(), 
-				loadout, ShipType.PLAYER_DEFAULT, null);
+				loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 
 		PhysicsBody body = null;
 		for (CreateBodyCall call : physics.createBodyCalls) {

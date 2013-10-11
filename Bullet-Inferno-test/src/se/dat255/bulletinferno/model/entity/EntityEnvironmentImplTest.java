@@ -7,7 +7,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
+import se.dat255.bulletinferno.model.mock.HealthMockListener;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.ScoreMockListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
@@ -55,11 +57,12 @@ public class EntityEnvironmentImplTest {
 	@Test
 	public void testAddEnemy() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
-				weapons, loadout, null);
+				weapons, loadout, new HealthMockListener());
 		entities.addEnemy(enemy);
 		
 		assertTrue("Check so that the enemy gets added", entities.getEnemies().contains(enemy));
@@ -67,7 +70,9 @@ public class EntityEnvironmentImplTest {
 				entities.getEnemies().size() == 1);
 		
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, null, 0, 65);
+				new Vector2(), 0, 
+				new Weapon[] {WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons)}, 
+				new Vector2[] {new Vector2()}, 0, 65);
 		// Add another one
 		entities.addEnemy(enemy2);
 		assertTrue("Check so that the first enemy is still in the list when another one gets added", 
@@ -77,14 +82,15 @@ public class EntityEnvironmentImplTest {
 	@Test
 	public void testRemoveEnemy() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
-				weapons, loadout, null);
+				weapons, loadout, new HealthMockListener());
 		entities.addEnemy(enemy);
 		entities.addEnemy(enemy2);
 		
