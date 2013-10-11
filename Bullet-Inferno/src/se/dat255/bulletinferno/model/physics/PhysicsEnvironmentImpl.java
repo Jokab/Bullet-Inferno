@@ -251,6 +251,13 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	public void detachMovementPattern(PhysicsBody body) {
 		movementPatterns.remove(body);
 	}
+	
+	/**
+	 *  {@inheritDoc}
+	 * 	 */
+	public PhysicsMovementPattern getMovementPattern(PhysicsBody body){
+		return movementPatterns.get(body);
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -15,7 +15,7 @@ import se.dat255.bulletinferno.util.Timerable;
 /**
  * Abstract superclass for different implementation of bosses. 
  * Implements some methods to be user by subclass to differentiate
- * boss behaviour
+ * boss behavior
  * 
  * @author Simon Österberg
  * 
@@ -175,11 +175,15 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Methods to change the movement of the boss
 	
+	public void prepareMovementChange(){
+		body.setVelocity(new Vector2(body.getVelocity().x,0));
+		physics.detachMovementPattern(body);
+	}
+	
 	// Gives the boss a basic up-down movement
 	public void changeToDisorderedMovement(){
+		prepareMovementChange();
 		if(!currentPattern.equals("dmp")){
-			body.setVelocity(new Vector2(body.getVelocity().x,0));
-			physics.detachMovementPattern(body);
 			physics.attachMovementPattern(dmp.copy(), body);
 			currentPattern = "dmp";
 		}
@@ -187,26 +191,29 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Makes the boss try to match the players y-position
 	public void changeToFollowingMovement(){
+		prepareMovementChange();
 		if(!currentPattern.equals("fmp")){
-			body.setVelocity(new Vector2(body.getVelocity().x,0));
-			physics.detachMovementPattern(body);
 			physics.attachMovementPattern(fmp.copy(), body);
 			currentPattern = "fmp";
 		}
 	}
 	
+	// Makes the boss avoid the player
 	public void changeToEvadingMovement(){
+		prepareMovementChange();
 		if(!currentPattern.equals("emp")){
-			body.setVelocity(new Vector2(body.getVelocity().x,0));
-			physics.detachMovementPattern(body);
 			physics.attachMovementPattern(emp.copy(), body);
-			currentPattern = "fmp";
+			currentPattern = "emp";
 		}
 	}
-	
 	
 	public Timer[] getWeaponTimers(){
 		return timers;
 	}
+	
+	public PhysicsMovementPattern getMovementPattern(){
+		return physics.getMovementPattern(body);
+	}
+
 
 }
