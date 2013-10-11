@@ -43,9 +43,9 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, 
-			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
+			Weapon[] weapons, int score, int credits, 
 			PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
-		super(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreController);
 		
 		this.timers = new Timer[weapons.length];
@@ -67,11 +67,10 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	}
 		
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
-			Vector2[] weaponPositionModifier,
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
 			PhysicsMovementPattern pattern, ScoreController scoreController) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreController);
 
 		if(pattern instanceof DisorderedBossMovementPattern){

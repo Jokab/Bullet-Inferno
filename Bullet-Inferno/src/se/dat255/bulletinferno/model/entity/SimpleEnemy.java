@@ -49,8 +49,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type,
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score,
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
 		
 		this.physics = physics;
@@ -65,20 +64,13 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.scoreController = scoreController;
 		
 		body = this.physics.createBody(bodyDefinition, this, position);
-		
-		// Sets all the weapons' offset with position modifier
-		for(int i = 0; i < weapons.length; i++) {
-			weapons[i].setOffset(
-				getDimensions().cpy().scl(weaponPositionModifier[i]));
-		}
 	}
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score, 
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
 			ScoreController scoreController) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+		this(physics, entities, type, position, velocity, initialHealth, weapons,score, credits,
 				bodyDefinition, scoreController);
 		if(pattern != null){
 			physics.attachMovementPattern(pattern.copy(), body);
