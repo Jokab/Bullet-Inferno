@@ -81,6 +81,7 @@ public class PlayerShipView implements Renderable, Timerable {
 			float y = lastShipPosition.y - shipDimensions.y / 2;
 
 			shipSprite.setPosition(x, y);
+			shipSprite.setRotation(ship.getVelocity().y*2f);
 			shipSprite.draw(batch);
 
 			// TODO: Fix these values to match some texture offsets (+ break out to constants).

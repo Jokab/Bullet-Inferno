@@ -52,9 +52,12 @@ public class LoadoutView implements Renderable {
 		standardWeaponSprite = new Sprite(standardWeaponTexture);
 		standardWeaponSprite.setSize(standardWeapon.getDimensions().x,
 				standardWeapon.getDimensions().y);
+		standardWeaponSprite.setOrigin(standardWeaponSprite.getWidth() / 2, standardWeaponSprite.getHeight() / 2);
 
 		heavyWeaponSprite = new Sprite(heavyWeaponTexture);
 		heavyWeaponSprite.setSize(heavyWeapon.getDimensions().x, heavyWeapon.getDimensions().y);
+		heavyWeaponSprite.setOrigin(heavyWeaponSprite.getWidth() / 2, heavyWeaponSprite.getHeight() / 2);
+
 
 	}
 
@@ -62,17 +65,21 @@ public class LoadoutView implements Renderable {
 	public void render(SpriteBatch batch) {
 		if (!ship.isDead()) {
 			lastShipPosition = ship.getPosition();
-			float x = lastShipPosition.x - ship.getDimensions().x / 2;
-			float y = lastShipPosition.y - ship.getDimensions().y / 2;
+			float x = lastShipPosition.x;
+			float y = lastShipPosition.y;
 
-			standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x, y
-					+ standardWeapon.getOffset().y
-					+ standardWeaponSprite.getHeight());
+			standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x
+					- standardWeaponSprite.getWidth() / 2, y
+					+ standardWeapon.getOffset().y - standardWeaponSprite.getHeight() / 2
+					);
+			standardWeaponSprite.setRotation(ship.getVelocity().y * 2f);
 			standardWeaponSprite.draw(batch);
 
-			heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x,
+			heavyWeaponSprite.setPosition(
+					x + heavyWeapon.getOffset().x - heavyWeaponSprite.getWidth() / 2,
 					y + heavyWeapon.getOffset().y
-							+ heavyWeaponSprite.getHeight());
+							- heavyWeaponSprite.getHeight() / 2);
+			heavyWeaponSprite.setRotation(ship.getVelocity().y * 2f);
 			heavyWeaponSprite.draw(batch);
 
 		}

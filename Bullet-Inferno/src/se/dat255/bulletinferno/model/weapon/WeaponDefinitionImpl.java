@@ -21,7 +21,7 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	 * reloadTime, projectile, offset, projectileVelocity
 	 */
 	
-	DISORDERER(0.5f, ProjectileType.PLASMA, 10f, new Vector2(1f,0.5f)),
+	DISORDERER(0.5f, ProjectileType.PLASMA, 10f, new Vector2(0.5f,0.25f)),
 	STANDARD(0.05f, ProjectileType.RED_PROJECTILE, 14, new Vector2(1f,0.5f)),
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, 7, new Vector2(1f,0.5f)),
 	MISSILE_LAUNCHER(2f, ProjectileType.MISSILE, 10f, new Vector2(1f,0.5f)),

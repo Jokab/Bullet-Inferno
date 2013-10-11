@@ -24,7 +24,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	public enum ShipType implements Teamable {
-		PLAYER_DEFAULT(new Vector2[] { new Vector2(1 / 2f, 2 / 3f), new Vector2(1 / 2f, -2 / 5f) });
+		PLAYER_DEFAULT(new Vector2[] { new Vector2(2 / 7f, 5 / 7f), new Vector2(2 / 7f, -1 / 3f) });
 
 		private final Vector2[] weaponPositionModifier;
 
@@ -56,8 +56,6 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	 * A timer used to fire the standard weapon
 	 */
 	private Timer weaponTimer;
-	
-	private Timer stop;
 
 	/** A timer used to every update check our location relative to a specified halt distance */
 	private Timer haltTimer;
@@ -96,11 +94,6 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
 		weaponTimer.start();
-		
-		this.stop = physics.getTimer();
-		stop.setTime(0.03f);
-		stop.stop();
-		stop.registerListener(this);
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
 		shapes.add(PhysicsShapeFactory.getRectangularShape(2f, 0.3f));
@@ -185,7 +178,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void moveY(float dy) {
 		if(dy==0) {
-			body.setVelocity(new Vector2(body.getVelocity().x, 0));
+			
+			System.out.println(getVelocity().y);
+			
+			//body.getBox2DBody().applyForce(new Vector2(0,-getVelocity().y*50), getPosition(), true);
+			
+			//body.setVelocity(new Vector2(body.getVelocity().x, 0));
 		}
 		//moveY(dy, 1);
 	}
@@ -194,12 +192,19 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public void moveY(float dy, float scale) {
 		if (!isDead()) {
 			
-			if(getPosition().y<9f) {
-				body.getBox2DBody().applyForce(new Vector2(0,scale*dy*250), getPosition(), true);
-			}
+		
+				
+				if(dy<0) {
+					dy = dy - 1;
+					
+				} else {
+					dy = dy + 1;
+				}
+				
+				body.getBox2DBody().applyForce(new Vector2(0,scale*dy*25), getPosition(), true);
+			
 		}
 		
-		stop.restart();
 	}
 
 	@Override
@@ -260,16 +265,17 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			standardWeapon.fire(getPosition(), new Vector2(1, 0),
 					this);
 		} 
-		
-		if(source == stop) {
-			System.out.println("Stop");
-			body.setVelocity(new Vector2(body.getVelocity().x, 0));
-		}
+	
 	}
 
 	@Override
 	public Vector2 getDimensions() {
 		return body.getDimensions();
+	}
+
+	@Override
+	public Vector2 getVelocity() {
+		return body.getVelocity().cpy();
 	}
 
 	// TODO: DEBUG

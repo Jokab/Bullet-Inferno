@@ -1,5 +1,7 @@
 package se.dat255.bulletinferno.model.entity;
 
+import com.badlogic.gdx.math.Vector2;
+
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
@@ -67,4 +69,6 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 * Used mainly for starting movement after defeating a boss
 	 */
 	public void restoreSpeed();
+	
+	public Vector2 getVelocity();
 }
