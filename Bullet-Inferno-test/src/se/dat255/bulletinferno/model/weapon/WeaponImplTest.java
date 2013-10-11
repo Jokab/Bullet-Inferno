@@ -12,6 +12,7 @@ import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
+import se.dat255.bulletinferno.model.mock.SimplePlayerShipMock;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.ProjectileType;
@@ -97,7 +98,7 @@ public class WeaponImplTest {
 				WeaponDefinitionImpl.MISSILE_LAUNCHER, 20, ProjectileType.RED_PROJECTILE, 1);
 
 		Vector2 origin = new Vector2(1, 1);
-		weapon.fire(origin, new Vector2(), null);
+		weapon.fire(origin, new Vector2(), new SimplePlayerShipMock());
 
 		assertTrue("Firing a weapon should add a projectile to the game",
 				weapons.retrievedProjectiles.size() == 1);

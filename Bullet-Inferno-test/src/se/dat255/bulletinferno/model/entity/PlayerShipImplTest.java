@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
+import se.dat255.bulletinferno.model.mock.HealthMockListener;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockProjectile;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
@@ -35,6 +36,8 @@ public class PlayerShipImplTest {
 	
 	PhysicsEnvironment physics;
 	WeaponMockEnvironment weapons;
+	EntityEnvironment entityEnvironment;
+	
 	private class MockWeapon extends WeaponImpl {
 		private boolean hasFired = false;
 		
@@ -72,6 +75,7 @@ public class PlayerShipImplTest {
 	public void initialize() {
 		physics = new PhysicsWorldImplSpy(new SimpleMockTimer());
 		weapons = new WeaponMockEnvironment();
+		
 	}
 
 	@Test
@@ -80,9 +84,10 @@ public class PlayerShipImplTest {
 
 		Vector2 position = new Vector2(8, 9);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				position, loadout, ShipType.PLAYER_DEFAULT, null);
+				position, loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 
 		assertTrue("The position should be set in the constructor", 
 				position.equals(playerShip.getPosition()));
@@ -94,15 +99,16 @@ public class PlayerShipImplTest {
 		// but doesn't reduce the initial health value
 
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 
 		float health = playerShip.getHealth();
 		float initialHealth = playerShip.getInitialHealth();
 		
 		assertTrue("Check that given health parameter in construct is equal to" + 
-				" get health", health == 100);
+				" get health", health == 1);
 		
 		assertTrue("Check that get health is equal to initial health" + 
 				" get health", health == initialHealth);
@@ -123,9 +129,10 @@ public class PlayerShipImplTest {
 		// Test the constructor
 		Vector2 position = new Vector2(0, 0);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		position.x = 20;
 
 		assertTrue(
@@ -140,7 +147,7 @@ public class PlayerShipImplTest {
 				ProjectileType.RED_PROJECTILE, 0);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(weapon, weapon);
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
 		playerShip.fireWeapon();
 		assertTrue("Check that ship has fired it's weapon", weapon.hasFired);
@@ -149,12 +156,13 @@ public class PlayerShipImplTest {
 	@Test
 	public void testIsInMyTeam() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShipImpl playerShip1 = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
 		PlayerShip playerShip2 = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
 		NonTeamMember enemy = new NonTeamMember();
 		
@@ -173,9 +181,10 @@ public class PlayerShipImplTest {
 	@Test
 	public void testPreCollided() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), null);
+				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons), 
+				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons));
 		PlayerShipImpl playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
 		// Create an entity that's not on the ships team
 		NonTeamMember enemy = new NonTeamMember();
@@ -193,7 +202,7 @@ public class PlayerShipImplTest {
 		
 		// Create another player, i.e. somebody who's in the same team
 		PlayerShipImpl playerShip2 = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
-				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, null);
+				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		projectile = new CollidedTestMockProjectile();
 		projectile.setSource(playerShip2);
 		preCollisionHealth = playerShip.getHealth();
