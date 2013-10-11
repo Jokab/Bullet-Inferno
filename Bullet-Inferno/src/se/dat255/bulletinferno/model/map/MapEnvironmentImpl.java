@@ -2,14 +2,16 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironmentImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -25,11 +27,18 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 	
-	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponData weaponType, ScoreController scoreController) {
+	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinition[] weaponData, Listener<Integer> scoreListener) {
 		this.physics = physics;
 		this.weapons = new WeaponEnvironmentImpl(physics);
-		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponType);
-		segmentManager = new SegmentManagerImpl(physics, entities, weapons, scoreController);
+		
+		// TODO: Replace null with heavy weapon and move upwards in call hierarchy somehow.
+		WeaponLoadout weaponLoadout = new WeaponLoadoutImpl(
+				weaponData[0].createWeapon(physics, weapons),
+				weaponData[1].createWeapon(physics, weapons));
+		
+		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout);
+		
+		segmentManager = new SegmentManagerImpl(physics, entities, weapons, scoreListener);
 	}
 
 	/**
@@ -64,6 +73,11 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	@Override
 	public List<? extends Projectile> getProjectiles() {
 		return weapons.getProjectiles();
+	}
+
+	@Override
+	public WeaponEnvironment getWeaponEnvironment() {
+		return weapons;
 	}
 
 }

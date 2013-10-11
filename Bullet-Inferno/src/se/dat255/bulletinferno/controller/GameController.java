@@ -3,18 +3,24 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.weapon.WeaponData;
+import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
+import se.dat255.bulletinferno.model.loadout.SpecialAbility;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
+import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
+import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -31,11 +37,11 @@ public class GameController extends SimpleController {
 	/**
 	 * The touch input handler
 	 */
-	private InputProcessor processor;
+	private GameTouchController touchController;
 
 	/** The current session instance of the game model. */
 	private ModelEnvironment models;
-	
+
 	/** If the player died; Should not update the game */
 	private boolean gameOver;
 
@@ -45,38 +51,48 @@ public class GameController extends SimpleController {
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
 	
-	/** Stores the weapon type for restarting the game */
-	private WeaponData weaponData;
+	/** Stores the weapons type for restarting the game */
+	private WeaponDefinition[] weaponData;
 
 	/** Reference to the master controller */
 	private MasterController myGame;
-	
+
 	/** Reference to the background view */
 	static BackgroundView bgView;
+
+	private final ResourceManager resourceManager;
 	
-	private AssetManager assetManager = new AssetManager();
-	private ResourceManager resourceManager = new ResourceManagerImpl(assetManager);
+	private SpecialAbilityDefinition special;
+
+	private PassiveAbilityDefinition passive;
+
+
 
 	/**
 	 * Default controller to set required references
-	 * @param myGame The master controller that creates this controller
+	 * 
+	 * @param myGame
+	 *        The master controller that creates this controller
+	 * @param resourceManager2
 	 */
-	public GameController(MasterController myGame) {
+	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
+		this.resourceManager = resourceManager;
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
+	 * @param passive 
+	 * @param special 
 	 */
-	public void createNewGame(WeaponData weaponType) {
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
-		this.weaponData = weaponType;
-		
-		// Original create new game code
-		resourceManager.load();
+		this.weaponData = weaponData;
+		this.special = special;
+		this.passive = passive;
 
 		if (graphics != null) {
 			graphics.dispose();
@@ -84,31 +100,52 @@ public class GameController extends SimpleController {
 		}
 
 		// Initialize the HUD
-		HudView hudView = new HudView(resourceManager);
+		final HudView hudView = new HudView(resourceManager);
 		
 		// Initialize the graphics controller
 		graphics = new Graphics(hudView);
 		graphics.create();
 		
-		// Initialize the score controller
-		ScoreController scoreController = new ScoreController(hudView);
+		// Initialize the score listener
+		Listener<Integer> scoreListener = new Listener<Integer>(){
+			private int score = 0;
+			@Override
+			public void call(Integer e) {
+				score += e;
+				hudView.setScore(score);
+			}
+		};
 		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponType, scoreController);
+		models = new ModelEnvironmentImpl(weaponData, scoreListener);
 		
 		PlayerShip ship = models.getPlayerShip();
-		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
-		graphics.setNewCameraPos(ship.getPosition().x+Graphics.GAME_WIDTH/2, 
-				Graphics.GAME_HEIGHT/2);
-		graphics.addRenderable(shipView);
 		
+		// TODO: Based on user selection
+		passive.getPassiveAbility().getEffect().applyEffect(ship);
+		final SpecialAbility specialAbility = special.getSpecialAbility(models);
+		
+		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		LoadoutView loadoutView = new LoadoutView(ship, resourceManager);
+		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
+				Graphics.GAME_HEIGHT / 2);
+		graphics.addRenderable(shipView);
+		graphics.addRenderable(loadoutView);
+
 		bgView = new BackgroundView(models, resourceManager, ship);
-		//graphics.addRenderable(bgView);
+		// graphics.addRenderable(bgView);
 
 		// Set up input handler
-		processor = new GameTouchController(graphics, ship, this, myGame);
+		touchController = new GameTouchController(graphics, ship, this, myGame);
+		
+		touchController.setSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
+			@Override
+			public void specialAbilityRequested() {
+				specialAbility.getEffect().activate(models.getPlayerShip());
+			}
+		});
 
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
@@ -116,7 +153,7 @@ public class GameController extends SimpleController {
 		ProjectileView projectileView = new ProjectileView(models, resourceManager);
 		graphics.addRenderable(projectileView);
 	}
-	
+
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
@@ -159,11 +196,11 @@ public class GameController extends SimpleController {
 		super.resume();
 		graphics.getHudView().unpause();
 	}
-	
+
 	@Override
 	public void show() {
 		super.show();
-		Gdx.input.setInputProcessor(processor);
+		Gdx.input.setInputProcessor(touchController);
 	}
 
 	@Override
@@ -180,15 +217,18 @@ public class GameController extends SimpleController {
 	 */
 	@Override
 	public void render(float delta) {
-		graphics.setNewCameraPos(models.getPlayerShip().getPosition().x - 
-									models.getPlayerShip().getDimensions().x/2 + 
-									Graphics.GAME_WIDTH/2, 
-								Graphics.GAME_HEIGHT/2);
+		graphics.setNewCameraPos(models.getPlayerShip().getPosition().x -
+				models.getPlayerShip().getDimensions().x / 2 +
+				Graphics.GAME_WIDTH / 2,
+				Graphics.GAME_HEIGHT / 2);
 
 		// Render the game
 		graphics.render();
 		
-		if(!gameOver && models.getPlayerShip().isDead()){
+		// Debug render 
+		//graphics.renderWithDebug(models.getPhysicsEnvironment());
+		
+		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();
 		}
 
@@ -209,6 +249,7 @@ public class GameController extends SimpleController {
 
 			models.update(delta);
 		}
+
 	}
 
 	@Override
@@ -229,14 +270,23 @@ public class GameController extends SimpleController {
 
 		models.setViewport(viewportPosition, viewportDimensions);
 	}
-	
-	public static BackgroundView getBgView(){
+
+	public static BackgroundView getBgView() {
 		return bgView;
 	}
-	
+
 	/** Get method for weapon data set in create new game */
-	public WeaponData getWeaponData(){
+
+	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
+	}
+
+	public SpecialAbilityDefinition getSpecial() {
+		return this.special;
+	}
+	
+	public PassiveAbilityDefinition getPassive() {
+		return this.passive;
 	}
 
 }

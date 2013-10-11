@@ -1,9 +1,5 @@
 package se.dat255.bulletinferno.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import se.dat255.bulletinferno.model.Game;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.util.ManagedTexture;
@@ -20,14 +16,11 @@ public class EnemyView implements Renderable {
 	private Texture texture;
 	private Sprite sprite;
 	private ResourceManager resourceManager;
-	private List<ManagedTexture> managedTextures;
 
 	public EnemyView(ModelEnvironment models, ResourceManager resourceManager) {
 		this.models = models;
 		this.resourceManager = resourceManager;
 		
-		this.managedTextures = new ArrayList<ManagedTexture>();
-
 		this.sprite = new Sprite();
 		//sprite.setOrigin(0, 0);
 		
@@ -42,7 +35,7 @@ public class EnemyView implements Renderable {
 			this.sprite.setTexture(texture);
 			sprite.setRegion(texture);
 			sprite.setSize(enemy.getDimensions().x, enemy.getDimensions().y);
-			sprite.setPosition(enemy.getPosition().x,
+			sprite.setPosition(enemy.getPosition().x - sprite.getWidth() / 2,
 					enemy.getPosition().y - sprite.getHeight() / 2);
 			sprite.draw(batch);
 		}
@@ -50,8 +43,5 @@ public class EnemyView implements Renderable {
 
 	@Override
 	public void dispose() {
-		for(ManagedTexture mTexture : managedTextures) {
-			mTexture.dispose(resourceManager);
-		}
 	}
 }

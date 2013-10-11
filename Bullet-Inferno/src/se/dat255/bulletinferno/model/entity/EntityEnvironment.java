@@ -2,8 +2,6 @@ package se.dat255.bulletinferno.model.entity;
 
 import java.util.List;
 
-import se.dat255.bulletinferno.model.weapon.Projectile;
-
 
 public interface EntityEnvironment {
 	

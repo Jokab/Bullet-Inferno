@@ -15,6 +15,9 @@ public class PhysicsBodyImpl implements PhysicsBody {
 
 	/** The Box2D body wrapped by this object. */
 	private final Body body;
+	
+	/** Cached dimensions for this body */
+	private Vector2 dimensions;
 
 	/**
 	 * Constructs a new PhysicsBodyImpl from the Box2D body supplied.
@@ -58,6 +61,14 @@ public class PhysicsBodyImpl implements PhysicsBody {
 		return body;
 	}
 	
+	@Override
+	public Vector2 getDimensions() {
+		if(dimensions == null){
+			calculateDimensions();
+		}
+		return dimensions;	
+	}
+
 	/**
 	 * This method calculates only the <strong>dimensions of the body</strong>, so if the body 
 	 * consist of two {@link Fixture}, each having a {@link Shape} that do not intercept 
@@ -66,10 +77,7 @@ public class PhysicsBodyImpl implements PhysicsBody {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vector2 getDimensions() {
-		// TODO : it's somewhat of a waste to calculate this every time and in this class,
-		// but box2d won't let anyone extend it's shape classes so we can't build our own shape
-		// class with dimension properties.
+	public void calculateDimensions() {
 		Vector2 lowerPoint = new Vector2();
 		Vector2 upperPoint = new Vector2();
 		Vector2 currentPoint = new Vector2();
@@ -135,6 +143,6 @@ public class PhysicsBodyImpl implements PhysicsBody {
 			// TODO implement support for the other two shapes
 		}
 		
-		return upperPoint.add(lowerPoint.scl(-1f));
+		dimensions = upperPoint.add(lowerPoint.scl(-1f));
 	}
 }

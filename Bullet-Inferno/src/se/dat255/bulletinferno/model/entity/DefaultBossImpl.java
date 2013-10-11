@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.controller.ScoreController;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
@@ -8,6 +8,13 @@ import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.Timer;
 
 import com.badlogic.gdx.math.Vector2;
+
+/**
+ * Default implementation of a boss
+ * 
+ * @author Simon Österberg
+ *
+ */
 
 public class DefaultBossImpl extends SimpleBoss implements Ship{
 
@@ -34,12 +41,25 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	 *        The credit rewarded when boss is killed
 	 * @param offsets
 	 */
-	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, int initialHealth, 
-			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition,
-			ScoreController scoreController) {
-		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition, pattern, scoreController);
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+				bodyDefinition, pattern, scoreListener);
+
+		this.player = entities.getPlayerShip();
+		this.weapons = weapons;
+		this.timers = super.getWeaponTimers();
+
+	}
+	
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
+			Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition,
+			Listener<Integer> scoreListener) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+				bodyDefinition, scoreListener);
 
 		this.player = entities.getPlayerShip();
 		this.weapons = weapons;
@@ -50,16 +70,22 @@ public class DefaultBossImpl extends SimpleBoss implements Ship{
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
 		
-		if (getHealth() >= getInitialHealth() * 0.75f) {
-
+		if (getHealth() == getInitialHealth()){
+			changeToFollowingMovement();
+			
+		}else if (getHealth() >= getInitialHealth() * 0.75f) {
+			changeToDisorderedMovement();
 			fireSpread(source);
 
 		} else if(getHealth() < getInitialHealth() * 0.25) {
-			
-			fireAimSpread(source);
-		} else { 
+			changeToDisorderedMovement();
 			
 			fireAim(source);
+			fireWide(source);
+			
+		} else { 
+			changeToFollowingMovement();
+			fireSpreadAim(source);
 		}
 		
 	}

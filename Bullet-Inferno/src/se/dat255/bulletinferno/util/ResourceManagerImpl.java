@@ -9,9 +9,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class ResourceManagerImpl implements ResourceManager {
-
-	private static AssetManager manager;
-
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
 		FAST_SHIP("data/defaultEnemy.png"),
@@ -20,7 +17,8 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		DEFAULT_ENEMY_SHIP("data/defaultEnemy.png"),
 		SPECIAL_ENEMY_SHIP("data/specialEnemy.png"),
-		BOSS_ENEMY_SHIP("data/boss.png"),
+		HARD_BOSS_SHIP("data/boss.png"),
+		EASY_BOSS_SHIP("data/bossEnemy.png"),
 
 		// Player ship
 		PLAYER_DEFAULT("data/playerShip.png"),
@@ -29,28 +27,38 @@ public class ResourceManagerImpl implements ResourceManager {
 		// Weapons
 		MISSILE_LAUNCHER("data/missileLauncher.png"),
 		DISORDERER("data/disorderer.png"),
+		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
+		DISORDERER_LARGE("data/disordererLarge.png"),
+		SNIPER_RIFLE("data/sniperRifle.png"),
 
 		// Projectiles
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
 		MISSILE("data/missile.png"),
 		PLASMA("data/plasma.png"),
+		HIGH_VELOCITY_PROJECTILE("data/missile.png"),
 
 		// Buttons
 		PAUSE_SCREEN("images/gui/screen_pause.png"),
 		BLUE_BACKGROUND("images/game/background.png"),
 		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
-		
-		// HUD
-		HUD_TEXTURE("images/game/hud.png");
+		PROJECTILE_RAIN("data/projectileRain.png"),
+		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
+		LOADOUT_START_BUTTON("data/startBtn.png"),
+		HUD_TEXTURE("images/game/hud.png"),
 
+		//Particles
+		SMOKE_PARTICLE("images/particles/smoke.png"),
+
+		;
+		
 		private final String path;
 
 		TextureType(String path) {
 			this.path = path;
 		}
 
-		public Texture getTexture() {
+		private Texture getTexture(AssetManager manager) {
 			return manager.get(this.path, Texture.class);
 		}
 
@@ -63,21 +71,26 @@ public class ResourceManagerImpl implements ResourceManager {
 	private static final Map<String, String> sounds = new HashMap<String, String>();
 	private static final Map<String, String> music = new HashMap<String, String>();
 	private final TextureType[] textureTypes;
-
-	public ResourceManagerImpl(AssetManager assetManager) {
-		this.manager = assetManager;
+	
+	private AssetManager manager;
+	
+	private Map<TextureType, ManagedTexture> cachedManagedTextures = new HashMap<TextureType, ManagedTexture>();
+	
+	public ResourceManagerImpl() {
 		this.textureTypes = TextureType.values();
+		manager = new AssetManager();
+		Texture.setAssetManager(manager);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void load() {
+	public void startLoad(boolean blocking) {
 		loadTextures();
-		// TODO: Maybe add a loading screen/bar here of some sort? Maybe this is why my phone
-		// stutters (jakob)
-		manager.finishLoading();
-		// TODO: Add more loading here
+		
+		if(blocking) {
+			manager.finishLoading();
+		}
 	}
 
 	/**
@@ -96,6 +109,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		return manager.get(music.get(identifier), Music.class);
 	}
 
+	/**
+	 * Adds all our managed textures to the AssetManager's load queue.
+	 */
 	private void loadTextures() {
 		for (TextureType type : TextureType.values()) {
 			manager.load(type.path, Texture.class);
@@ -118,7 +134,11 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public ManagedTexture getManagedTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			return new ManagedTextureImpl(textureType.getTexture(), textureType);
+			if(!cachedManagedTextures.containsKey(textureType)){
+				cachedManagedTextures.put(textureType, 
+						new ManagedTextureImpl(textureType.getTexture(manager), textureType));
+			}
+			return cachedManagedTextures.get(textureType);
 		} else {
 			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
 		}
@@ -131,15 +151,26 @@ public class ResourceManagerImpl implements ResourceManager {
 	public ManagedTexture getManagedTexture(ResourceIdentifier identifier) {
 		for (TextureType textureType : textureTypes) {
 			if (identifier.getIdentifier().equals(textureType.name())) {
-				if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-					return new ManagedTextureImpl(textureType.getTexture(), textureType);
-				} else {
-					throw new RuntimeException("Texture " + textureType.name() + " is not loaded."); 
-				}
+				return getManagedTexture(textureType);
 			}
 		}
 
 		throw new RuntimeException("Texture not found for that identifier.");
 	}
 	// TODO: Implement loading methods for sound and music
+
+	@Override
+	public boolean loadAsync() {
+		return manager.update();
+	}
+
+	@Override
+	public float getLoadProgress() {
+		return manager.getProgress();
+	}
+
+	@Override
+	public void dispose() {
+		manager.dispose();
+	}
 }

@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.controller.ScoreController;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -15,21 +15,20 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		PhysicsViewportIntersectionListener {
-	
-	/** Reference to the score controller */
-	protected final ScoreController scoreController;
 
 	private int health;
 	private final int initialHealth;
 	private final int score;
 	private final int credits;
-	private final EnemyType type;
+	private final EnemyDefinitionImpl type;
 
-	private PhysicsBody body = null;
+	protected PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
 	protected Vector2 velocity;
 	protected Weapon[] weapons;
+	
+	private final Listener<Integer> scoreListener;
 
 	/** A flag to make sure we don't remove ourself twice */
 	private boolean flaggedForRemoval = false;
@@ -48,9 +47,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
-			int credits, PhysicsBodyDefinition bodyDefinition, ScoreController scoreController) {
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type,
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2[] weaponPositionModifier, int score,
+			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+		
 		this.physics = physics;
 		this.type = type;
 		this.initialHealth = initialHealth;
@@ -60,18 +62,27 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		this.credits = credits;
 		this.velocity = velocity;
 		this.entities = entities;
-		this.scoreController = scoreController;
+		this.scoreListener = scoreListener;
 		
 		body = this.physics.createBody(bodyDefinition, this, position);
+		
+		// Sets all the weapons' offset with position modifier
+		for(int i = 0; i < weapons.length; i++) {
+			weapons[i].setOffset(
+				getDimensions().cpy().scl(weaponPositionModifier[i]));
+		}
 	}
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyType type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, int score, 
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
+			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2[] weaponPositionModifier, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
-			ScoreController scoreController) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
-				bodyDefinition, scoreController);
-		physics.attachMovementPattern(pattern.copy(), body);
+			Listener<Integer> scoreListener) {
+		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
+				bodyDefinition, scoreListener);
+		if(pattern != null){
+			physics.attachMovementPattern(pattern.copy(), body);
+		}
 
 	}
 
@@ -119,7 +130,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			health -= damage;
 
 			if (isDead()) {
-				scoreController.addScore(getScore());
+				scoreListener.call(getScore());
 				scheduleRemoveSelf();
 			}
 		}
@@ -163,6 +174,14 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void setVelocity(Vector2 velocity) {
 		body.setVelocity(velocity);
 	}
+	
+	public Vector2 getVelocity(){
+		return body.getVelocity();
+	}
+	
+	public Weapon[] getWeapons(){
+		return weapons;
+	}
 
 	@Override
 	public boolean isInMyTeam(Teamable teamMember) {
@@ -170,7 +189,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	@Override
-	public EnemyType getType() {
+	public EnemyDefinitionImpl getType() {
 		return this.type;
 	}
 
@@ -195,6 +214,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 			flaggedForRemoval = true;
 		}
 	}
+	
+	
 
 	@Override
 	public Vector2 getDimensions() {

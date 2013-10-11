@@ -20,5 +20,5 @@ public interface Enemy extends PositionEntity, Disposable, Teamable {
 	 */
 	public int getCredits();
 	
-	EnemyType getType();
+	EnemyDefinitionImpl getType();
 }

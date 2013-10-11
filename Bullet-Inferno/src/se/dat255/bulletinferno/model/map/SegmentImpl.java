@@ -2,7 +2,6 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
-
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -31,9 +30,9 @@ public class SegmentImpl implements Segment {
 	public SegmentImpl(List<? extends Slice> slices, Vector2 position) {
 		// TODO: For debugging purposes. Should probably throw exception or do nothing instead.
 		assert slices.size() > 0 : "Number of slices must be > 0";
-
+		
 		this.slices = slices;
-		this.position = position;
+		this.position = position.cpy();
 	}
 
 	@Override

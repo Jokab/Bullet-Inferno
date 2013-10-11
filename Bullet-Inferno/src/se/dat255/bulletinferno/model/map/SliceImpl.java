@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.ScoreController;
-import se.dat255.bulletinferno.model.entity.EnemyType;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 public class SliceImpl implements Slice, Collidable {
-
+	
 	/** The entry height of this slice */
 	private final float entryHeight;
 
@@ -38,7 +38,10 @@ public class SliceImpl implements Slice, Collidable {
 
 	/** The obstacles present in this slice. */
 	private final List<? extends Obstacle> obstacles;
-
+	
+	/** The position o f the slice*/
+	private final Vector2 position;
+	
 	/**
 	 * Creates a new Slice in the Game instance provided.
 	 * 
@@ -64,7 +67,7 @@ public class SliceImpl implements Slice, Collidable {
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
-			List<? extends EnemyPlacement> enemyPlacements, ScoreController scoreController) {
+			List<? extends EnemyPlacement> enemyPlacements, Listener<Integer> scoreListener) {
 		this.entryHeight = entryHeight;
 		this.exitHeight = exitHeight;
 		this.physics = physics;
@@ -72,6 +75,7 @@ public class SliceImpl implements Slice, Collidable {
 		this.weapons = weapons;
 		this.id = id;
 		this.width = width;
+		this.position = position;
 
 		// Create obstacles from the provided definitions.
 		List<Obstacle> obstacles = new ArrayList<Obstacle>(obstaclePlacements.size());
@@ -89,14 +93,8 @@ public class SliceImpl implements Slice, Collidable {
 		// Create enemies from the provided definitions
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
-			if(enemyPlacement.getContent()==EnemyType.BOSS_ENEMY_SHIP){
-				entities.addEnemy(enemyPlacement.getContent().getBoss(physics, entities, weapons,
-						enemyPosition, scoreController));
-			}else{
-				entities.addEnemy(enemyPlacement.getContent().getEnemyShip(physics, entities,
-						weapons, enemyPosition, scoreController));
-			}
-			
+			entities.addEnemy(enemyPlacement.getContent().createEnemy(physics, entities, weapons, 
+					enemyPosition, scoreListener));
 		}
 	}
 	
@@ -123,17 +121,17 @@ public class SliceImpl implements Slice, Collidable {
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
-			ScoreController scoreController) {
+			Listener<Integer> scoreListener) {
 		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
-				obstaclePlacements, Collections.<EnemyPlacement>emptyList(), scoreController);
+				obstaclePlacements, Collections.<EnemyPlacement>emptyList(), scoreListener);
 	}
 
 	
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
-			Vector2 position, float width, ScoreController scoreController) {
+			Vector2 position, float width, Listener<Integer> scoreListener) {
 		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
-				Collections.<ObstaclePlacement> emptyList(), scoreController);
+				Collections.<ObstaclePlacement> emptyList(), scoreListener);
 	}
 
 	/**
@@ -202,4 +200,11 @@ public class SliceImpl implements Slice, Collidable {
 		return width;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Vector2 getPosition() {
+		return position;
+	}
 }

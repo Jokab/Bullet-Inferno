@@ -98,4 +98,12 @@ public class SimpleMockTimer implements Timer {
 		}
 		listenersToBeRemoved.clear();
 	}
+
+	@Override
+	public boolean isListening(Timerable listener) {
+		if(registeredListeners.contains(listener)){
+			return true;
+		}
+		return false;
+	}
 }

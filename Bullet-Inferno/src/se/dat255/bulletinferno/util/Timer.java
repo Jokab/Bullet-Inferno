@@ -82,7 +82,13 @@ public interface Timer {
 	 * @param listener The listener that should be unregistered.
 	 */
 	public void unregisterListener(Timerable listener);
-
+	
+	/**
+	 * Checks if the speciefied listener is currently listening to the timer
+	 * @param listener the listener to check
+	 * @return if the listener is listening
+	 */
+	public boolean isListening(Timerable listener);
 	/**
 	 * Updates the time
 	 * 

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
@@ -28,6 +29,9 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	
 	/** List of all queued timers to be added */
 	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
+	
+	/** List of all queued timers to be removed */
+	private final List<Timer> timersRemoveQueue = new LinkedList<Timer>();
 	
 	private boolean isIteratingOverTimers = false;
 
@@ -54,7 +58,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	private float timeStepAccumulator = 0f;
 
 	/** Holds the Box2D world. */
-	private final World world;
+	private World world;
 
 	/**
 	 * A collision queue but with filtering and internal usage of special bodies.
@@ -247,6 +251,13 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	public void detachMovementPattern(PhysicsBody body) {
 		movementPatterns.remove(body);
 	}
+	
+	/**
+	 *  {@inheritDoc}
+	 * 	 */
+	public PhysicsMovementPattern getMovementPattern(PhysicsBody body){
+		return movementPatterns.get(body);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -314,6 +325,11 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 			timers.addAll(timersAddQueue);
 			timersAddQueue.clear();
 		}
+		// If timers are waiting to be removed, remove them
+		for(Timer timer : timersRemoveQueue){
+			timers.remove(timer);
+		}
+		timersRemoveQueue.clear();
 		isIteratingOverTimers = false;
 
 		// Run all runLater Runnables from the previous tick.
@@ -341,5 +357,20 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	@Override
 	public void runLater(Runnable task) {
 		runLaters.add(task);
+	}
+
+	@Override
+	public void removeTimer(Timer timer) {
+		if(isIteratingOverTimers) {
+			timersRemoveQueue.add(timer);
+		} else {
+			timers.remove(timer);
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public World getWorld() {
+		return world;
 	}
 }
