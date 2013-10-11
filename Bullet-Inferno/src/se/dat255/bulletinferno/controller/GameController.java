@@ -19,6 +19,8 @@ import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
+import se.dat255.bulletinferno.view.audio.AudioPlayer;
+import se.dat255.bulletinferno.view.audio.AudioPlayerImpl;
 import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
@@ -61,6 +63,8 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
+	private AudioPlayer audiPlayer = new AudioPlayerImpl();
+	
 	private final ResourceManager resourceManager;
 	
 	private SpecialAbilityDefinition special;
@@ -121,7 +125,7 @@ public class GameController extends SimpleController {
 		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
 			@Override
 			public void call(GameActionEvent e) {
-				System.out.println("hej");
+				audiPlayer.playSoundEffect(e);
 			}
 		};
 		
