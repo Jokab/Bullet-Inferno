@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Button for selecting passive abilities
+ */
 public class PassiveButton extends CustomizedButton {
 
 	private PassiveAbilityDefinition ability;

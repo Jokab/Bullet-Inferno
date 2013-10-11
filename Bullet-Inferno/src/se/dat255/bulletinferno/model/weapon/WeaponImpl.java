@@ -17,8 +17,8 @@ public class WeaponImpl implements Weapon {
 	private WeaponDefinition type;
 	private Vector2 offset;
 
-	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, float projectileSpeed) {
+	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, WeaponDefinition weaponData, 
+			float reloadingTime, ProjectileType projectileType, float projectileSpeed) {
 		type = weaponData;
 		this.physics = physics;
 		this.weapons = weapons;

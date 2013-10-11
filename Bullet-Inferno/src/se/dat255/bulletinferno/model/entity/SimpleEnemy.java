@@ -47,11 +47,10 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type,
+	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type,
 			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score,
-			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+			Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		
 		this.physics = physics;
 		this.type = type;
@@ -75,11 +74,11 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
-			Vector2[] weaponPositionModifier, int score, 
-			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
+			Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern, 
 			Listener<Integer> scoreListener) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition, scoreListener);
+		this(physics, entities, type, position, velocity, initialHealth, weapons, 
+				weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
 		if(pattern != null){
 			physics.attachMovementPattern(pattern.copy(), body);
 		}

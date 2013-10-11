@@ -9,8 +9,6 @@ import com.badlogic.gdx.Screen;
 
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 
 /**
  * The master controller is called every frame. It then calls appropriate classes

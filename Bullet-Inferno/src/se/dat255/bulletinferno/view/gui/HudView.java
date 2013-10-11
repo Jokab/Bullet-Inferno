@@ -14,8 +14,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.gui.Listener;
-
 /**
  * Displays the score of the game
  */

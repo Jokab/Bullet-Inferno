@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.gui.HudView;
 

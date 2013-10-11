@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Displays a game over screen and the score of the player
+ */
 public class GameoverScreenView implements RenderableGUI {
 
 	private final Vector2 position = new Vector2(-8.0f, -4.5f);

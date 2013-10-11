@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * When the game is paused, this will display a screen that tells the player that the game is
+ * paused.
+ */
 public class PauseScreenView implements RenderableGUI {
 
 	private final Vector2 position = new Vector2(-8.0f, -4.5f);

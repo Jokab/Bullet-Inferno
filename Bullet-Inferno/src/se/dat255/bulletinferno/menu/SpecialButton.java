@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Button for selecting special abilities
+ */
 public class SpecialButton extends CustomizedButton {
 
 	private SpecialAbilityDefinition ability;

@@ -5,6 +5,9 @@ import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 
+/**
+ * A special effect that slightly damage all enemies on the screen
+ */
 public class SpecialDamageAll implements SpecialEffect {
 
 	private final EntityEnvironment entities;

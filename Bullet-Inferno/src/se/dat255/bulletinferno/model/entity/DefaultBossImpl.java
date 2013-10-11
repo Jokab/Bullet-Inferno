@@ -11,12 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Default implementation of a boss
- * 
- * @author Simon Österberg
- *
  */
-
-public class DefaultBossImpl extends SimpleBoss implements Ship{
+public class DefaultBossImpl extends SimpleBoss implements Ship {
 
 	private Weapon[] weapons;
 	private Timer[] timers;

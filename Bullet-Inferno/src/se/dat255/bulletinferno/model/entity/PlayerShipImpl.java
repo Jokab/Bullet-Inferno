@@ -245,6 +245,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		return this.health <= 0;
 	}
 
+	/** Causes the player to instantly die */
 	private void die() {
 		health = 0;
 		dispose();

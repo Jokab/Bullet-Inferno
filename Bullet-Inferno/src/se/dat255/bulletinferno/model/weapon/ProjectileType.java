@@ -22,8 +22,8 @@ public enum ProjectileType implements ResourceIdentifier {
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f))),
 	MISSILE(0.07f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(0.4f,0.3f))),
-	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)), new PhysicsBodyDefinitionImpl(
-					PhysicsShapeFactory.getRectangularShape(0.8f,0.5f))),
+	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)), 
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.8f,0.5f))),
 	PLASMA(0.3f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
 	private float damage;

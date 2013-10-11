@@ -17,16 +17,12 @@ import se.dat255.bulletinferno.util.Timerable;
  * Abstract superclass for different implementation of bosses. 
  * Implements some methods to be user by subclass to differentiate
  * boss behavior
- * 
- * @author Simon Österberg
- * 
  */
 
 public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	
 	private final PlayerShip player;
-	
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
 	private Timer[] timers;
@@ -36,7 +32,6 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private EvadingMovementPattern emp;
 	private String currentPattern;
 	private final Listener<Integer> scoreListener;
-	
 
 	/** Flag indicating whether we have told player to move us on screen or not */
 	private boolean isOnScreen = false;
@@ -66,13 +61,13 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		this.scoreListener = scoreListener;
 	}
 		
-	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, 
-			Vector2[] weaponPositionModifier,
-			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
-			PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
-		this(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition, scoreListener);
+	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern, 
+			Listener<Integer> scoreListener) {
+		this(physics, entities, type, position, velocity, initialHealth, weapons, 
+				weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
 
 		if(pattern instanceof DisorderedBossMovementPattern){
 			currentPattern = "dmp";
@@ -124,8 +119,8 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Different firing methods determine how many weapon to fire and in what direction
 	
-	// Fires projectiles in a straight line. Only fires the BOSS_SPR* weapons.
-	// Cannot be used simultaneously with fireSpread() or fireSpreadAim()
+	/** Fires projectiles in a straight line. Only fires the BOSS_SPR* weapons.
+	 * Cannot be used simultaneously with fireSpread() or fireSpreadAim() */
 	public void fireWide(Timer source) {
 		for (int i = 0; i < weapons.length; i++) {
 			weaponId = weapons[i].getType().getIdentifier();
@@ -137,8 +132,8 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	}
 	
-	// Fires projectiles in a wide, spreading pattern. Only fires the BOSS_SPR* weapons.
-	// Cannot be used simultaneously with fireWide() or fireSpreadAim()
+	/** Fires projectiles in a wide, spreading pattern. Only fires the BOSS_SPR* weapons.
+	 * Cannot be used simultaneously with fireWide() or fireSpreadAim() */
 	public void fireSpread(Timer source) {
 		for (int i = 0; i < weapons.length; i++) {
 			weaponId = weapons[i].getType().getIdentifier();
@@ -149,9 +144,9 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	}
 	
-	// Fires projectiles in a wide, spreading pattern aimed towards the player. Only fires the BOSS_AIM* 
-	//		weapons.
-	// Cannot be used simultaneously with fireAim()
+	/** Fires projectiles in a wide, spreading pattern aimed towards the player. Only fires the BOSS_AIM* 
+	 *		weapons.
+	 * Cannot be used simultaneously with fireAim() */
 	public void fireSpreadAim(Timer source) {
 		for (int i = 0; i < weapons.length; i++) {
 			weaponId = weapons[i].getType().getIdentifier();
@@ -164,7 +159,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	}
 
-	// Fires projectiles aimed towards the player. Only fires the BOSS_AIM* weapons.
+	/** Fires projectiles aimed towards the player. Only fires the BOSS_AIM* weapons. */
 	public void fireAim(Timer source) {
 		for (int i = 0; i < weapons.length; i++) {
 			weaponId = weapons[i].getType().getIdentifier();
@@ -184,7 +179,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		physics.detachMovementPattern(body);
 	}
 	
-	// Gives the boss a basic up-down movement
+	/** Gives the boss a basic up-down movement */
 	public void changeToDisorderedMovement(){
 		prepareMovementChange();
 		if(!currentPattern.equals("dmp")){
@@ -193,7 +188,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		}
 	}
 	
-	// Makes the boss try to match the players y-position
+	/** Makes the boss try to match the players y-position */
 	public void changeToFollowingMovement(){
 		prepareMovementChange();
 		if(!currentPattern.equals("fmp")){
@@ -202,7 +197,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		}
 	}
 	
-	// Makes the boss avoid the player
+	/** Makes the boss avoid the player */
 	public void changeToEvadingMovement(){
 		prepareMovementChange();
 		if(!currentPattern.equals("emp")){

@@ -17,7 +17,8 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	public float getDamage();
 
 	/**
-	 * Initializes the projectile and attaches a specific movement pattern. Call upon acquiring from the Pool.
+	 * Initializes the projectile and attaches a specific movement pattern. 
+	 * Call upon acquiring from the Pool.
 	 * 
 	 * @param position
 	 *        the initial position.
@@ -29,8 +30,6 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	 *        the team source from which it was fired.
 	 * @param bodyDefinition
 	 *        the size of the body (definition)
-	 *        
-	 *        
 	 */
 	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage,
 			Teamable source, PhysicsBodyDefinition bodyDefinition);

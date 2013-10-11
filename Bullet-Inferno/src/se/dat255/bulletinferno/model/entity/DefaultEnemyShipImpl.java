@@ -16,8 +16,8 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	
 	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth,
-			Weapon[] weapons, Vector2[] weaponPositionModifier,
-			int score, int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons,
 				weaponPositionModifier, score, credits,
 				bodyDefinition, scoreListener);
@@ -32,10 +32,11 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	
 	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth,
-			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, PhysicsBodyDefinition bodyDefinition,
-			PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
-		super(physics, entities, type, position, velocity, initialHealth, weapons, weaponPositionModifier, score, credits,
-				bodyDefinition, pattern, scoreListener);
+			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
+			PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern, 
+			Listener<Integer> scoreListener) {
+		super(physics, entities, type, position, velocity, initialHealth, weapons, 
+				weaponPositionModifier, score, credits, bodyDefinition, pattern, scoreListener);
 		
 		this.timers = new Timer[weapons.length];
 		for(int i=0; i< weapons.length; i++){

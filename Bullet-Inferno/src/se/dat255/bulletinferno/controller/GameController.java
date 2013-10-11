@@ -6,17 +6,10 @@ import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityImpl;
-import se.dat255.bulletinferno.model.loadout.SpecialProjectileRain;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.Timer;
-import se.dat255.bulletinferno.util.TimerImpl;
-import se.dat255.bulletinferno.util.Timerable;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.LoadoutView;
@@ -28,7 +21,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * 
+ * The main controller of the game, handles main initiation and update of time
  */
 public class GameController extends SimpleController {
 
@@ -64,12 +57,14 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
+	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
 	
+	/** Reference to the shared special ability definition */
 	private SpecialAbilityDefinition special;
-
+	/** Reference to the shared passive ability definition */
 	private PassiveAbilityDefinition passive;
-	
+	/** Reference to the shared score listener which handles the score of the game */
 	private ScoreListener scoreListener;
 
 
@@ -89,10 +84,9 @@ public class GameController extends SimpleController {
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
-	 * @param passive 
-	 * @param special 
 	 */
-	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, 
+			PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
 		viewportDimensions = new Vector2();
@@ -289,20 +283,20 @@ public class GameController extends SimpleController {
 		models.setViewport(viewportPosition, viewportDimensions);
 	}
 
+	/** Gets the game background view */
 	public static BackgroundView getBgView() {
 		return bgView;
 	}
 
 	/** Get method for weapon data set in create new game */
-
 	public WeaponDefinition[] getWeaponData(){
 		return weaponData;
 	}
-
+	/** Get method for data set in create new game */
 	public SpecialAbilityDefinition getSpecial() {
 		return this.special;
 	}
-	
+	/** Get method for data set in create new game */
 	public PassiveAbilityDefinition getPassive() {
 		return this.passive;
 	}

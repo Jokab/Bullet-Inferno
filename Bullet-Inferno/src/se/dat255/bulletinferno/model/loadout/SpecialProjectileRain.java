@@ -13,6 +13,9 @@ import se.dat255.bulletinferno.util.Timerable;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * A special effect that fires a lot of projectiles from the left side of the screen
+ */
 public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	private final PhysicsEnvironment physics;

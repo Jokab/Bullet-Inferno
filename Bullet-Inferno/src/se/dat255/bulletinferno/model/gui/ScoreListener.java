@@ -1,11 +1,15 @@
 package se.dat255.bulletinferno.model.gui;
 
+/**
+ * Handles the score of the game
+ */
 public abstract class ScoreListener implements Listener<Integer> {
+	/** The total amount of score */
 	private int score = 0;
+	/** The time elapsed since the player last got time-based score */
 	private float time;
 	
-	public ScoreListener() {}
-	
+	/** How the score should update the view, given by controller */
 	public abstract void updateHudWithScore(int score);
 	
 	@Override
@@ -14,6 +18,7 @@ public abstract class ScoreListener implements Listener<Integer> {
 		updateHudWithScore(score);
 	}
 	
+	/** Update the time, check if the player should receive time-based score */
 	public void update(float delta){
 		time += delta;
 		while(time > 1){
@@ -22,6 +27,7 @@ public abstract class ScoreListener implements Listener<Integer> {
 		}
 	}
 	
+	/** Gets the score */
 	public int getScore(){
 		return score;
 	}

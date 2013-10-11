@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
 import se.dat255.bulletinferno.model.gui.Listener;
-import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -15,6 +14,9 @@ import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Definitions of all the enemies and their stats
+ */
 public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
 	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 0.2f,
@@ -49,14 +51,16 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 	private final PhysicsMovementPattern pattern;
 	private final float initialHealth;
 	private WeaponDefinitionImpl[] weaponsData;
+	/** The score the enemy awards the player on death */
 	private final int score;
+	/** The credits the enemy awards the player on death */
 	private final int credits;
 	private final PhysicsBodyDefinition bodyDefinition;
 	private final Vector2[] weaponPositionModifier;
 
-	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponDefinitionImpl[] weaponsData, int score,
-			int credits,
-			PhysicsBodyDefinition bodyDefinition, Vector2[] weaponPositionModifier, PhysicsMovementPattern pattern) {
+	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponDefinitionImpl[] weaponsData, 
+			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
+			Vector2[] weaponPositionModifier, PhysicsMovementPattern pattern) {
 		this.velocity = velocity.cpy();
 		this.pattern = pattern;
 		this.initialHealth = initialHealth;
@@ -67,8 +71,8 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 	
-	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponDefinitionImpl[] weaponsData, int score,
-			int credits, PhysicsBodyDefinition bodyDefinition, Vector2[] weaponPositionModifier) {
+	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponDefinitionImpl[] weaponsData, 
+			int score, int credits, PhysicsBodyDefinition bodyDefinition, Vector2[] weaponPositionModifier) {
 		this(velocity, initialHealth, weaponsData, score, credits, bodyDefinition, weaponPositionModifier,  null);
 	}
 

@@ -8,6 +8,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * Definition of all the assets that should be handled by the resource manager
+ */
 public class ResourceManagerImpl implements ResourceManager {
 	public enum TextureType {
 		DEFAULT_SHIP("data/defaultEnemy.png"),
