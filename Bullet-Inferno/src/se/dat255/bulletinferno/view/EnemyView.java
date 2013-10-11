@@ -2,7 +2,6 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.Enemy;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -41,10 +40,9 @@ public class EnemyView implements Renderable {
 			maxBounds.x = minBounds.x + enemy.getDimensions().x;
 			maxBounds.y = minBounds.y + enemy.getDimensions().y;
 			bounds.set(minBounds, maxBounds);
-			
+
 			if(viewport.frustum.boundsInFrustum(bounds)) {
-				ManagedTexture mTexture = resourceManager.getManagedTexture(enemy.getType());
-				this.texture = mTexture.getTexture();
+				this.texture = resourceManager.getTexture(enemy.getType());
 				texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				this.sprite.setTexture(texture);
 				sprite.setRegion(texture);

@@ -28,7 +28,7 @@ public class PassiveButton extends CustomizedButton {
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					resourceManager.getManagedTexture(this.ability).getTexture()));
+					resourceManager.getTexture(this.ability)));
 		}
 	}
 

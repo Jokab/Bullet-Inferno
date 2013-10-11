@@ -4,7 +4,6 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.Slice;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.Renderable;
@@ -28,8 +27,6 @@ public class SegmentView implements Renderable {
 	/** The texture that is used for this Segment and its Slices */
 	public final Texture texture;
 
-	private final ManagedTexture mTexture;
-
 	/** Creates a new view for the given segment */
 	public SegmentView(ResourceManager resourceManager, Segment segment) {
 		this.segment = segment;
@@ -37,8 +34,7 @@ public class SegmentView implements Renderable {
 
 		// TODO: Not hardcode
 		// Load segment image into texture
-		mTexture = resourceManager.getManagedTexture(TextureType.MAP_MOUNTAIN);
-		texture = mTexture.getTexture();
+		texture = resourceManager.getTexture(TextureType.MAP_MOUNTAIN);
 
 		List<? extends Slice> slices = segment.getSlices();
 
@@ -87,7 +83,6 @@ public class SegmentView implements Renderable {
 
 	@Override
 	public void dispose() {
-		mTexture.dispose(resourceManager);
 	}
 
 	@Override

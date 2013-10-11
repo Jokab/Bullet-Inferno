@@ -247,8 +247,8 @@ public class LoadoutController extends SimpleController {
 	}
 
 	private void setupStartButton() {
-		Texture startButtonTexture = resourceManager.getManagedTexture(
-				TextureType.LOADOUT_START_BUTTON).getTexture();
+		Texture startButtonTexture = resourceManager.getTexture(
+				TextureType.LOADOUT_START_BUTTON);
 		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
 

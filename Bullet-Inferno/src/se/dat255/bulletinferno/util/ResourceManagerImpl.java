@@ -47,11 +47,11 @@ public class ResourceManagerImpl implements ResourceManager {
 		LOADOUT_START_BUTTON("data/startBtn.png"),
 		HUD_TEXTURE("images/game/hud.png"),
 
-		//Particles
+		// Particles
 		SMOKE_PARTICLE("images/particles/smoke.png"),
 
 		;
-		
+
 		private final String path;
 
 		TextureType(String path) {
@@ -70,14 +70,10 @@ public class ResourceManagerImpl implements ResourceManager {
 	// TODO: Define these maps
 	private static final Map<String, String> sounds = new HashMap<String, String>();
 	private static final Map<String, String> music = new HashMap<String, String>();
-	private final TextureType[] textureTypes;
-	
+
 	private AssetManager manager;
-	
-	private Map<TextureType, ManagedTexture> cachedManagedTextures = new HashMap<TextureType, ManagedTexture>();
-	
+
 	public ResourceManagerImpl() {
-		this.textureTypes = TextureType.values();
 		manager = new AssetManager();
 		Texture.setAssetManager(manager);
 	}
@@ -87,8 +83,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	 */
 	public void startLoad(boolean blocking) {
 		loadTextures();
-		
-		if(blocking) {
+
+		if (blocking) {
 			manager.finishLoading();
 		}
 	}
@@ -132,13 +128,9 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ManagedTexture getManagedTexture(TextureType textureType) {
+	public Texture getTexture(TextureType textureType) {
 		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			if(!cachedManagedTextures.containsKey(textureType)){
-				cachedManagedTextures.put(textureType, 
-						new ManagedTextureImpl(textureType.getTexture(manager), textureType));
-			}
-			return cachedManagedTextures.get(textureType);
+			return textureType.getTexture(manager);
 		} else {
 			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
 		}
@@ -148,15 +140,19 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ManagedTexture getManagedTexture(ResourceIdentifier identifier) {
-		for (TextureType textureType : textureTypes) {
-			if (identifier.getIdentifier().equals(textureType.name())) {
-				return getManagedTexture(textureType);
-			}
+	public Texture getTexture(ResourceIdentifier resourceIndentifier) {
+		String identifier = resourceIndentifier.getIdentifier();
+
+		TextureType type;
+		try {
+			type = TextureType.valueOf(identifier);
+		} catch (IllegalArgumentException exception) {
+			throw new IllegalArgumentException("resource identifier not found", exception);
 		}
 
-		throw new RuntimeException("Texture not found for that identifier.");
+		return getTexture(type);
 	}
+
 	// TODO: Implement loading methods for sound and music
 
 	@Override
@@ -173,4 +169,5 @@ public class ResourceManagerImpl implements ResourceManager {
 	public void dispose() {
 		manager.dispose();
 	}
+
 }

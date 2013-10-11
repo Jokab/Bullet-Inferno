@@ -2,7 +2,6 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.weapon.Projectile;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -37,10 +36,9 @@ public class ProjectileView implements Renderable {
 			maxBounds.x = minBounds.x + projectile.getDimensions().x;
 			maxBounds.y = minBounds.y + projectile.getDimensions().y;
 			bounds.set(minBounds, maxBounds);
-			
+
 			if(viewport.frustum.boundsInFrustum(bounds)) {
-				ManagedTexture mTexture = resourceManager.getManagedTexture(projectile.getType());
-				texture = mTexture.getTexture();
+				texture = resourceManager.getTexture(projectile.getType());
 	
 				sprite.setTexture(texture);
 				sprite.setRegion(texture);

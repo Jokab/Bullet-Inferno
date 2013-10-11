@@ -8,7 +8,6 @@ import java.util.List;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Segment;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.map.SegmentView;
@@ -21,7 +20,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BackgroundView implements Renderable {
 	
 	private PlayerShip ship;
-	private ManagedTexture mTexture;
 	private Texture texture;
 	private List<SegmentView> segmentViews = Collections.emptyList();
 	private ModelEnvironment models;
@@ -33,8 +31,7 @@ public class BackgroundView implements Renderable {
 
 	public BackgroundView(ModelEnvironment models, ResourceManager resourceManager, PlayerShip ship) {
 		this.ship = ship;		
-		mTexture = resourceManager.getManagedTexture(TextureType.BLUE_BACKGROUND);
-		texture = mTexture.getTexture();
+		texture = resourceManager.getTexture(TextureType.BLUE_BACKGROUND);
 		this.models = models;
 		this.resourceManager = resourceManager;
 	}
@@ -113,6 +110,5 @@ public class BackgroundView implements Renderable {
 
 	@Override
 	public void dispose() {
-		mTexture.dispose(resourceManager);
 	}
 }

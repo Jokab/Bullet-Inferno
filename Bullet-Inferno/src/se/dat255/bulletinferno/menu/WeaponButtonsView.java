@@ -8,20 +8,17 @@ import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 public class WeaponButtonsView {
 
@@ -104,8 +101,8 @@ public class WeaponButtonsView {
 		selectionButton.setData(wButton.getData());
 		ButtonStyle style = new ButtonStyle(wButton.getButton().getStyle());
 
-		Texture texture = resourceManager.getManagedTexture(
-				selectionButton.getData()).getTexture();
+		Texture texture = resourceManager.getTexture(
+				selectionButton.getData());
 		style.up = new TextureRegionDrawable(new TextureRegion(texture));
 		style.over = wButton.getButton().getStyle().up;
 
@@ -130,7 +127,7 @@ public class WeaponButtonsView {
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
-		Texture texture = resourceManager.getManagedTexture(identifier).getTexture();
+		Texture texture = resourceManager.getTexture(identifier);
 		TextureRegion region = new TextureRegion(texture);
 		ButtonStyle buttonStyle = new ButtonStyle();
 		buttonStyle.up = new TextureRegionDrawable(region);

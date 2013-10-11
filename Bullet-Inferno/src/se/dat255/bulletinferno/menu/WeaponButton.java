@@ -2,7 +2,6 @@ package se.dat255.bulletinferno.menu;
 
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,7 +32,7 @@ public class WeaponButton extends CustomizedButton {
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					resourceManager.getManagedTexture(this.weaponData).getTexture()));
+					resourceManager.getTexture(this.weaponData)));
 		}
 	}
 

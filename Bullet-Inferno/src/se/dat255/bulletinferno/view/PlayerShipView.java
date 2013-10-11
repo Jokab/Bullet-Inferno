@@ -1,7 +1,6 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.util.Timer;
@@ -15,11 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipView implements Renderable, Timerable {
+
 	private final Texture shipTexture;
-	private final ManagedTexture mShipTexture;
-
-	private final ManagedTexture mExplosion;
-
 	private final Texture explosion;
 
 	private Sprite shipSprite;
@@ -50,12 +46,10 @@ public class PlayerShipView implements Renderable, Timerable {
 
 		this.shipDimensions = ship.getDimensions();
 
-		mShipTexture = resourceManager.getManagedTexture(ship);
-		shipTexture = mShipTexture.getTexture();
+		shipTexture = resourceManager.getTexture(ship);
 		shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-		mExplosion = resourceManager.getManagedTexture(TextureType.PLAYER_EXPLOSION);
-		explosion = mExplosion.getTexture();
+		explosion = resourceManager.getTexture(TextureType.PLAYER_EXPLOSION);
 		explosion.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 		shipSprite = new Sprite(shipTexture);
@@ -66,7 +60,7 @@ public class PlayerShipView implements Renderable, Timerable {
 		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
 
 		// TODO: How should we do with managed textures? No disposal?
-		smokeTexture = resourceManager.getManagedTexture(TextureType.SMOKE_PARTICLE).getTexture();
+		smokeTexture = resourceManager.getTexture(TextureType.SMOKE_PARTICLE);
 		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
 	}
@@ -138,8 +132,6 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	@Override
 	public void dispose() {
-		mExplosion.dispose(resourceManager);
-		mShipTexture.dispose(resourceManager);
 	}
 
 	@Override

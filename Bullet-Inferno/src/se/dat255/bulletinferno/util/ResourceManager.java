@@ -25,7 +25,7 @@ public interface ResourceManager extends Disposable {
 	 *        The TextureType connected with the Texture you want.
 	 * @return The ManagedTexture-object.
 	 */
-	ManagedTexture getManagedTexture(TextureType textureType);
+	Texture getTexture(TextureType textureType);
 
 	/**
 	 * Returns a ManagedTexture-object containing the Texture connected
@@ -35,7 +35,7 @@ public interface ResourceManager extends Disposable {
 	 *        The identifier to be used for looking up the Texture.
 	 * @return The ManagedTexture-object.
 	 */
-	ManagedTexture getManagedTexture(ResourceIdentifier identifier);
+	Texture getTexture(ResourceIdentifier identifier);
 
 	/**
 	 * Returns the loaded {@link Sound} that is mapped to this identifier.

@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.view.gui;
 
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.RenderableGUI;
@@ -13,12 +12,10 @@ public class GameoverScreenView implements RenderableGUI {
 
 	private final Vector2 position = new Vector2(-8.0f, -4.5f);
 	private final Vector2 size = new Vector2(16.0f, 9.0f);
-	private final ManagedTexture managedTexture;
 	private final Texture texture;
 
 	public GameoverScreenView(ResourceManager resourceManager) {
-		managedTexture = resourceManager.getManagedTexture(TextureType.GAMEOVER_SCREEN);
-		texture = managedTexture.getTexture();
+		texture = resourceManager.getTexture(TextureType.GAMEOVER_SCREEN);
 	}
 
 	@Override
@@ -28,7 +25,6 @@ public class GameoverScreenView implements RenderableGUI {
 
 	@Override
 	public void dispose(ResourceManager resourceManager) {
-		managedTexture.dispose(resourceManager);
 	}
 
 	@Override

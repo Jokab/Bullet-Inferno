@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view.gui;
 import java.util.HashSet;
 import java.util.Set;
 
-import se.dat255.bulletinferno.util.ManagedTexture;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.Renderable;
@@ -22,9 +21,6 @@ public class HudView implements Renderable {
 	
 	/** Reference to the resourcemanager */
 	private final ResourceManager resourceManager;
-	
-	/** The texture that holds the HUD */
-	private final ManagedTexture hudTexture;
 	
 	/** The different regions for life statuses */
 	private final TextureRegion lifeRegion;
@@ -52,8 +48,7 @@ public class HudView implements Renderable {
 	 */
 	public HudView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
-		hudTexture = resourceManager.getManagedTexture(TextureType.HUD_TEXTURE);
-		Texture t = hudTexture.getTexture();
+		Texture t = resourceManager.getTexture(TextureType.HUD_TEXTURE);
 		lifeRegion = new TextureRegion(t, 9, 10, 1, 20); // 9 -> 158
 		heatRegions = new TextureRegion[]{
 				new TextureRegion(t, 167, 29, 20, 38), // No heat
@@ -153,7 +148,6 @@ public class HudView implements Renderable {
 
 	@Override
 	public void dispose() {
-		hudTexture.dispose(resourceManager);
 		pauseScreen.dispose(resourceManager);
 	}
 }
