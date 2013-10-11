@@ -3,6 +3,7 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityImpl;
 import se.dat255.bulletinferno.model.loadout.PassiveReloadingTime;
@@ -99,19 +100,26 @@ public class GameController extends SimpleController {
 		}
 
 		// Initialize the HUD
-		HudView hudView = new HudView(resourceManager);
+		final HudView hudView = new HudView(resourceManager);
 		
 		// Initialize the graphics controller
 		graphics = new Graphics(hudView);
 		graphics.create();
 		
-		// Initialize the score controller
-		ScoreController scoreController = new ScoreController(hudView);
+		// Initialize the score listener
+		Listener<Integer> scoreListener = new Listener<Integer>(){
+			private int score = 0;
+			@Override
+			public void call(Integer e) {
+				score += e;
+				hudView.setScore(score);
+			}
+		};
 		
 		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData, scoreController);
+		models = new ModelEnvironmentImpl(weaponData, scoreListener);
 		
 		PlayerShip ship = models.getPlayerShip();
 		

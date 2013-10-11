@@ -2,8 +2,8 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.Random;
 
-import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
@@ -33,10 +33,10 @@ public class SegmentFactory {
 	 * @return A random Segment at <b>position</b> built of <b>sliceAmount</b> number of slices.
 	 */
 	public Segment generateRandomSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, Vector2 position, int sliceAmount, ScoreController scoreController) {
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount, Listener<Integer> scoreListener) {
 		SegmentDefinitionImpl[] values = SegmentDefinitionImpl.values();
 		return values[random.nextInt(values.length)].createSegment(physics, entities, weapons,
-				position, sliceAmount, scoreController);
+				position, sliceAmount, scoreListener);
 	}
 
 	/**
@@ -60,9 +60,9 @@ public class SegmentFactory {
 	 */
 	public Segment generateRandomSegment(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, Vector2 position, int minSliceLength, int maxSliceLength,
-			ScoreController scoreController) {
+			Listener<Integer> scoreListener) {
 		return generateRandomSegment(physics, entities, weapons, position, 
 				random.nextInt(maxSliceLength - minSliceLength + 1) + minSliceLength,
-				scoreController);
+				scoreListener);
 	}
 }

@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.controller.ScoreController;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -73,7 +73,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 	}
 
 	private DefaultEnemyShipImpl getEnemyShip(PhysicsEnvironment physics, EntityEnvironment entities, 
-			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
+			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].createWeapon(physics, weaponEnvironment);
@@ -81,21 +81,21 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
 		if (pattern == null) {
 			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity, initialHealth, 
-					weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreController);
+					weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
 		} else {
 			return new DefaultEnemyShipImpl(physics, entities, this, position, velocity, initialHealth, 
-					weapons, weaponPositionModifier, score, credits, bodyDefinition, pattern, scoreController);
+					weapons, weaponPositionModifier, score, credits, bodyDefinition, pattern, scoreListener);
 		}
 	}
 
 	private DefaultBossImpl getBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
+			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {
 		Weapon[] weapons = new Weapon[weaponsData.length];
 		for (int i = 0; i < weapons.length; i++) {
 			weapons[i] = weaponsData[i].createWeapon(physics, weaponEnvironment);
 		}
 		return new DefaultBossImpl(physics, entities, this, position, velocity, pattern, initialHealth, 
-				weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreController);
+				weapons, weaponPositionModifier, score, credits, bodyDefinition, scoreListener);
 	}
 
 	@Override
@@ -105,11 +105,11 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
 	@Override
 	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController) {
+			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {
 		if (this == EASY_BOSS_SHIP || this == HARD_BOSS_SHIP) {
-			return getBoss(physics, entities, weaponEnvironment, position, scoreController);
+			return getBoss(physics, entities, weaponEnvironment, position, scoreListener);
 		} else {
-			return getEnemyShip(physics, entities, weaponEnvironment, position, scoreController);
+			return getEnemyShip(physics, entities, weaponEnvironment, position, scoreListener);
 		}
 	}
 }

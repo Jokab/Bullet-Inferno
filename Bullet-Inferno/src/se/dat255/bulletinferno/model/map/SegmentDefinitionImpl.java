@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
@@ -74,13 +74,13 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 */
 	@Override
 	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, Vector2 position, int sliceAmount, ScoreController scoreController) {
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount, Listener<Integer> scoreListener) {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
 		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
-			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy(), scoreController);
+			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy(), scoreListener);
 			slices.add(slice);
 			slicePosition.add(slice.getWidth(), 0);
 		}
