@@ -16,15 +16,15 @@ public enum ProjectileType implements ResourceIdentifier {
 	/**
 	 * damage, movementpattern
 	 */
-	RED_PROJECTILE(5f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	RED_PROJECTILE(0.1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 			0.25f, 0.25f))), // null = straight forward
-	GREEN_PROJECTILE(3f, new AccelerationMovementPattern(new Vector2(-10, 0)),
+	GREEN_PROJECTILE(0.05f, new AccelerationMovementPattern(new Vector2(-10, 0)),
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f))),
-	MISSILE(3f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
+	MISSILE(0.07f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(0.4f,0.3f))),
-	HIGH_VELOCITY_PROJECTILE(9f, new AccelerationMovementPattern(new Vector2(20, 0)), new PhysicsBodyDefinitionImpl(
+	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)), new PhysicsBodyDefinitionImpl(
 					PhysicsShapeFactory.getRectangularShape(0.8f,0.5f))),
-	PLASMA(7f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
+	PLASMA(0.3f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
 	private float damage;
 	private final PhysicsMovementPattern pattern;

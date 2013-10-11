@@ -3,7 +3,7 @@ package se.dat255.bulletinferno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.map.Obstacle;
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -43,14 +43,14 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	private final PhysicsEnvironment physics;
-	private final int initialHealth;
 	private float takeDamageModifier = 1; // default
-	private int health;
+	private float health = 1.0f;
 	private final ShipType shipType;
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
 	private Vector2 forwardSpeed = new Vector2(5, 0); // TODO: Not hardcode?
 	private final Vector2[] weaponPositionModifier;
+	private final Listener<Float> healthListener;
 
 	/**
 	 * A timer used to fire the standard weapon
@@ -76,14 +76,27 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		}
 	};
 
-	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
-			final Vector2 position, int initialHealth, WeaponLoadout loadout, ShipType shipType) {
+	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
+			final Vector2 position, WeaponLoadout loadout, ShipType shipType,
+			Listener<Float> healthListener) {
 		this.physics = physics;
-		this.initialHealth = initialHealth;
-		this.health = initialHealth;
 		this.weaponLoadout = loadout;
 		this.shipType = shipType;
 		this.weaponPositionModifier = shipType.getWeaponPosisitionModifier();
+		this.healthListener = healthListener;
+		healthListener.call(this.health);
+		
+		// Add health increment
+		Timer healthIncrement = physics.getTimer();
+		healthIncrement.setContinuous(true);
+		healthIncrement.setTime(0.01f);
+		healthIncrement.registerListener(new Timerable() {
+			@Override
+			public void onTimeout(Timer source, float timeSinceLast) {
+				giveHealth(0.002f);
+			}
+		});
+		healthIncrement.start();
 
 		// Set up the halt timer used to stop the ship at a specified location
 		this.haltTimer = physics.getTimer();
@@ -141,10 +154,22 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public void postCollided(Collidable other) {
 		// NOP
 	}
+	
+	/**
+	 * Gives health to the player and visually update
+	 * @param health The health to give
+	 */
+	public void giveHealth(float health){
+		this.health += health;
+		if(this.health > 1.0f)
+			this.health = 1.0f;
+		healthListener.call(this.health);
+	}
 
 	@Override
 	public void takeDamage(float damage) {
 		this.health -= damage * takeDamageModifier;
+		healthListener.call(this.health);
 
 		if (isDead()) {
 			dispose();
@@ -157,13 +182,13 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	@Override
-	public int getHealth() {
+	public float getHealth() {
 		return this.health;
 	}
 
 	@Override
-	public int getInitialHealth() {
-		return this.initialHealth;
+	public float getInitialHealth() {
+		return 1.0f;
 	}
 
 	@Override

@@ -17,25 +17,25 @@ import com.badlogic.gdx.math.Vector2;
 
 public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
-	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 5,
+	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 0.2f,
 			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.DISORDERER }, 10,
 			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)),
 			new Vector2[] { new Vector2(0, 0) }),
 
-	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 5,
+	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 1f,
 			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.FORCE_GUN }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)),
 			new Vector2[] { new Vector2(0, 0) },
 			new DisorderedMovementPattern(1, 1)),
 
-	EASY_BOSS_SHIP(new Vector2(0, 2), 10,
+	EASY_BOSS_SHIP(new Vector2(0, 2), 4f,
 			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.BOSS_SPR,
 					WeaponDefinitionImpl.BOSS_AIM }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
 			new Vector2[] { new Vector2(0, 0), new Vector2(0, 0) },
 			new DisorderedMovementPattern(1, 4)),
 
-	HARD_BOSS_SHIP(new Vector2(0, 2), 25,
+	HARD_BOSS_SHIP(new Vector2(0, 2), 5f,
 			new WeaponDefinitionImpl[] { WeaponDefinitionImpl.BOSS_SPR,
 					WeaponDefinitionImpl.BOSS_SPR, WeaponDefinitionImpl.BOSS_SPR,
 					WeaponDefinitionImpl.BOSS_AIM, WeaponDefinitionImpl.BOSS_AIM,
@@ -47,14 +47,14 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
-	private final int initialHealth;
+	private final float initialHealth;
 	private WeaponDefinitionImpl[] weaponsData;
 	private final int score;
 	private final int credits;
 	private final PhysicsBodyDefinition bodyDefinition;
 	private final Vector2[] weaponPositionModifier;
 
-	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponDefinitionImpl[] weaponsData, int score,
+	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponDefinitionImpl[] weaponsData, int score,
 			int credits,
 			PhysicsBodyDefinition bodyDefinition, Vector2[] weaponPositionModifier, PhysicsMovementPattern pattern) {
 		this.velocity = velocity.cpy();
@@ -67,7 +67,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition, ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 	
-	EnemyDefinitionImpl(Vector2 velocity, int initialHealth, WeaponDefinitionImpl[] weaponsData, int score,
+	EnemyDefinitionImpl(Vector2 velocity, float initialHealth, WeaponDefinitionImpl[] weaponsData, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, Vector2[] weaponPositionModifier) {
 		this(velocity, initialHealth, weaponsData, score, credits, bodyDefinition, weaponPositionModifier,  null);
 	}

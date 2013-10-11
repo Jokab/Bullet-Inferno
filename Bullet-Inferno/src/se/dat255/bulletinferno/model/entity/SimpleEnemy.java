@@ -16,8 +16,8 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		PhysicsViewportIntersectionListener {
 
-	private int health;
-	private final int initialHealth;
+	private float health;
+	private final float initialHealth;
 	private final int score;
 	private final int credits;
 	private final EnemyDefinitionImpl type;
@@ -49,7 +49,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type,
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
 			Vector2[] weaponPositionModifier, int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		
@@ -74,7 +74,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
-			Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons,
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
 			Vector2[] weaponPositionModifier, int score, 
 			int credits, PhysicsBodyDefinition bodyDefinition, PhysicsMovementPattern pattern,
 			Listener<Integer> scoreListener) {
@@ -119,7 +119,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	@Override
-	public int getHealth() {
+	public float getHealth() {
 		return health;
 	}
 
@@ -162,7 +162,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	@Override
-	public int getInitialHealth() {
+	public float getInitialHealth() {
 		return initialHealth;
 	}
 

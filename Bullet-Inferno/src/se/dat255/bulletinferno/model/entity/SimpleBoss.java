@@ -42,7 +42,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private boolean isOnScreen = false;
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
 			Weapon[] weapons, Vector2[] weaponPositionModifier, int score, int credits, 
 			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, 
@@ -67,7 +67,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	}
 		
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, int initialHealth, Weapon[] weapons, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, 
 			Vector2[] weaponPositionModifier,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition, 
 			PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {

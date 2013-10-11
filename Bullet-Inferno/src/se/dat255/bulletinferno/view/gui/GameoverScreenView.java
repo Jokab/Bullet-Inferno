@@ -15,10 +15,12 @@ public class GameoverScreenView implements RenderableGUI {
 	private final Vector2 size = new Vector2(16.0f, 9.0f);
 	private final ManagedTexture managedTexture;
 	private final Texture texture;
+	private final int score;
 
-	public GameoverScreenView(ResourceManager resourceManager) {
+	public GameoverScreenView(ResourceManager resourceManager, int score) {
 		managedTexture = resourceManager.getManagedTexture(TextureType.GAMEOVER_SCREEN);
 		texture = managedTexture.getTexture();
+		this.score = score;
 	}
 
 	@Override
