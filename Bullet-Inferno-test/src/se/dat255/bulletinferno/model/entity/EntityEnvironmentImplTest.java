@@ -70,7 +70,9 @@ public class EntityEnvironmentImplTest {
 				entities.getEnemies().size() == 1);
 		
 		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
-				new Vector2(), 0, null, null, 0, 65);
+				new Vector2(), 0, 
+				new Weapon[] {WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons)}, 
+				new Vector2[] {new Vector2()}, 0, 65);
 		// Add another one
 		entities.addEnemy(enemy2);
 		assertTrue("Check so that the first enemy is still in the list when another one gets added", 
