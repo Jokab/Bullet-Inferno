@@ -56,6 +56,8 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	 * A timer used to fire the standard weapon
 	 */
 	private Timer weaponTimer;
+	
+	private Timer stop;
 
 	/** A timer used to every update check our location relative to a specified halt distance */
 	private Timer haltTimer;
@@ -79,8 +81,8 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			final Vector2 position, int initialHealth, WeaponLoadout loadout, ShipType shipType) {
 		this.physics = physics;
-		this.initialHealth = initialHealth;
-		this.health = initialHealth;
+		this.initialHealth = 100000;
+		this.health = 100000;
 		this.weaponLoadout = loadout;
 		this.shipType = shipType;
 		this.weaponPositionModifier = shipType.getWeaponPosisitionModifier();
@@ -94,6 +96,11 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
 		weaponTimer.start();
+		
+		this.stop = physics.getTimer();
+		stop.setTime(0.03f);
+		stop.stop();
+		stop.registerListener(this);
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
 		shapes.add(PhysicsShapeFactory.getRectangularShape(2f, 0.3f));
@@ -177,14 +184,22 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void moveY(float dy) {
-		moveY(dy, 1);
+		if(dy==0) {
+			body.setVelocity(new Vector2(body.getVelocity().x, 0));
+		}
+		//moveY(dy, 1);
 	}
 
 	@Override
 	public void moveY(float dy, float scale) {
 		if (!isDead()) {
-			body.getBox2DBody().setTransform(getPosition().add(0, scale * dy), 0);
+			
+			if(getPosition().y<9f) {
+				body.getBox2DBody().applyForce(new Vector2(0,scale*dy*250), getPosition(), true);
+			}
 		}
+		
+		stop.restart();
 	}
 
 	@Override
@@ -244,6 +259,11 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		if (source == weaponTimer) {
 			standardWeapon.fire(getPosition(), new Vector2(1, 0),
 					this);
+		} 
+		
+		if(source == stop) {
+			System.out.println("Stop");
+			body.setVelocity(new Vector2(body.getVelocity().x, 0));
 		}
 	}
 

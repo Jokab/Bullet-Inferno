@@ -123,6 +123,7 @@ public class GameTouchController implements InputProcessor {
 		if(pointer == steeringFinger) {
 			touchOrigin.set(new Vector2());
 			steeringFinger = -1;
+			ship.moveY(0);
 		}
 		return false;
 	}
