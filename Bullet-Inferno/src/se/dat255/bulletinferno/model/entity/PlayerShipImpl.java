@@ -59,6 +59,10 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	/** A timer used to every update check our location relative to a specified halt distance */
 	private Timer haltTimer;
+	
+	
+	private Timer smoothStop;
+	
 	/** The x-coordinate at which the ship should come to a stop. */
 	private float haltAtPosition;
 
@@ -94,6 +98,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.setContinuous(true);
 		weaponTimer.registerListener(this);
 		weaponTimer.start();
+		
+		this.smoothStop = physics.getTimer();
+		smoothStop.setContinuous(true);
+		smoothStop.setTime(0.1f);
+		smoothStop.registerListener(this);
+		smoothStop.stop();
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
 		shapes.add(PhysicsShapeFactory.getRectangularShape(2f, 0.3f));
@@ -177,15 +187,10 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	@Override
 	public void moveY(float dy) {
-		if(dy==0) {
-			
-			System.out.println(getVelocity().y);
-			
-			//body.getBox2DBody().applyForce(new Vector2(0,-getVelocity().y*50), getPosition(), true);
-			
-			//body.setVelocity(new Vector2(body.getVelocity().x, 0));
-		}
-		//moveY(dy, 1);
+		
+		smoothStop.start();
+		
+		
 	}
 
 	@Override
@@ -201,8 +206,9 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 					dy = dy + 1;
 				}
 				
-				body.getBox2DBody().applyForce(new Vector2(0,scale*dy*25), getPosition(), true);
+				body.getBox2DBody().applyForce(new Vector2(0,scale*dy*18), getPosition(), true);
 			
+				smoothStop.restart();
 		}
 		
 	}
@@ -265,6 +271,18 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			standardWeapon.fire(getPosition(), new Vector2(1, 0),
 					this);
 		} 
+		
+		if(source == smoothStop) {
+
+			if (getVelocity().y > 1.5f) {
+				body.getBox2DBody().applyForce(new Vector2(0, -150f), getPosition(), true);
+			} else if (getVelocity().y < -1.5f) {
+				body.getBox2DBody().applyForce(new Vector2(0, 150f), getPosition(), true);
+			} else {
+				body.setVelocity(new Vector2(getVelocity().x, 0));
+				smoothStop.stop();
+			}
+		}
 	
 	}
 
