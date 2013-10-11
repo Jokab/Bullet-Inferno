@@ -1,6 +1,7 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
+import se.dat255.bulletinferno.view.gui.GuiEvent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -43,29 +44,28 @@ public class GameTouchController implements InputProcessor {
 	private final Graphics graphics;
 
 	/**
-	 * Hard reference to the ship model. TODO: Probably shouldn't be directly
-	 * accessed?
+	 * Hard reference to the ship model. 
 	 */
 	private final PlayerShip ship;
+	
+	private final GameController gameController;
+	private final MasterController masterController;
 
 	/** The finger index controlling the position of the ship. */
 	private int steeringFinger = -1;
 	/** The origin of touch down finger controlling the ship*/
 	private Vector2 touchOrigin = new Vector2();
 
-	public GameTouchController(final Graphics graphics, final PlayerShip ship) {
+	public GameTouchController(final Graphics graphics, final PlayerShip ship, 
+			GameController gameController, MasterController masterController) {
 		this.graphics = graphics;
 		this.ship = ship;
+		this.gameController = gameController;
+		this.masterController = masterController;
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == UPKEY) {
-			// ship.moveTo(Graphics.GAME_HEIGHT);
-		}
-		if (keycode == DOWNKEY) {
-			// ship.moveTo(0f);
-		}
 		if (keycode == FIREKEY) {
 			ship.fireWeapon();
 		}
@@ -77,11 +77,6 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Keys.X) {
-			ship.takeDamage(10);
-			System.out.println("Player health: " + ship.getHealth());
-		}
-
 		return false;
 	}
 
@@ -93,10 +88,34 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// Check if GUI input was to be handled TODO: The second division can be made in prehand
-		float guiX = (float) screenX / (Gdx.graphics.getWidth() / 16);
-		float guiY = (float) screenY / (Gdx.graphics.getHeight() / 9);
-		guiY = 9 - guiY;
-		if (graphics.guiInput(guiX, guiY)) {
+		float guiX = (float) screenX / (Gdx.graphics.getWidth() * 0.0625f); // 1 / 16
+		float guiY = (float) screenY / (Gdx.graphics.getHeight() * 0.1111111111f); // 1 / 9
+		guiX -= 8.0f;
+		guiY = 4.5f - guiY;
+		GuiEvent event = graphics.getHudView().guiInput(guiX, guiY);
+		if(event != null){
+			switch(event){
+			case PAUSE:
+				gameController.pauseGame();
+				break;
+			case UNPAUSE:
+				gameController.unpauseGame();
+				break;
+			case GAMEOVER:
+				gameController.gameOver();
+				break;
+			case RESTARTGAME:
+				masterController.startGame(null, 
+						masterController.getGameScreen().getWeaponData(), 
+						masterController.getGameScreen().getSpecial(), 
+						masterController.getGameScreen().getPassive(), 
+						false
+					);
+				break;
+			case STOPGAME:
+				masterController.setScreen(masterController.getLoadoutScreen());
+				break;
+			}
 			return true;
 		}
 		
@@ -110,7 +129,6 @@ public class GameTouchController implements InputProcessor {
 			// Set the touchOrigin vector to know where the touch originated from
 			touchOrigin.set(touchVector);
 			steeringFinger = pointer;
-			//touchDragged(screenX, screenY, pointer);
 		} else {
 			// Right half of the screen
 			ship.fireWeapon();

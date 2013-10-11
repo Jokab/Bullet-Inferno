@@ -176,6 +176,14 @@ public class TimerImpl implements Timer {
 			listeners.remove(listener);
 		}
 	}
+	
+	@Override
+	public boolean isListening(Timerable listener){
+		if(listeners.contains(listener)){
+			return true;
+		}
+		return false;
+	}
 
 	private void notifyAllListeners(float timeSinceLast) {
 		// Set flag for iteration, i.e. no one touches the list

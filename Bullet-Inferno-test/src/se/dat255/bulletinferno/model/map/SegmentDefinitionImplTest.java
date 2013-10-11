@@ -10,8 +10,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
@@ -29,6 +31,7 @@ public class SegmentDefinitionImplTest {
 	private EntityMockEnvironment entities;
 	private WeaponMockEnvironment weapons;
 	private Vector2 pos;
+	private Listener<Integer> scoreListener;
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,6 +39,7 @@ public class SegmentDefinitionImplTest {
 		entities = new EntityMockEnvironment();
 		weapons = new WeaponMockEnvironment();
 		pos = new Vector2(10, 1);
+		scoreListener = new SimpleMockScoreListener();
 	}
 
 	@Test
@@ -84,7 +88,7 @@ public class SegmentDefinitionImplTest {
 			List<Segment> segments = new LinkedList<Segment>();
 			for (int i = 0; i < 25; i++) {
 				segments.add(segmentDef.createSegment(physics, entities, weapons, pos, 
-						suitableSlices.size()));
+						suitableSlices.size(), scoreListener));
 			}
 
 			List<? extends Slice> slicesSegA, slicesSegB;
@@ -126,15 +130,17 @@ public class SegmentDefinitionImplTest {
 				Segment createdSegment;
 				try {
 					createdSegment = segmentDef.createSegment(physics, entities, weapons, 
-							pos, numSlices);
+							pos, numSlices, scoreListener);
 				} catch (IllegalArgumentException e) {
 					continue;
 				}
 				
 				// Make sure the segment created is at the right position and has the
 				// right number of slices.
-				assertEquals("The created segment should be placed at the provied postition",
-						createdSegment.getPosition(), pos);
+				assertTrue("The created segment should be placed at the provied postition",
+						createdSegment.getPosition().equals(pos));
+				assertTrue("Check for alias problems with given position", 
+						createdSegment.getPosition() != pos);
 				assertEquals("The created segment should have the correct number of slices",
 						createdSegment.getSlices().size(), numSlices);
 

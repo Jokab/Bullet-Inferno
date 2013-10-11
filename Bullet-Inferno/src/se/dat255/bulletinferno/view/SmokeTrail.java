@@ -144,18 +144,18 @@ public class SmokeTrail implements Renderable {
 		spawnNewParticles();
 
 		// Update current and draw.
+		batch.setShader(shaderProgram);
+		shaderProgram.setUniform2fv("u_targetPosition", particleOrigin, 0, 2);
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		for (int i = 0; i < currentParticles; i++) {
 			Particle particle = particles.get(i);
 			particle.position.x += velocity.x * deltaTime;
 			particle.position.y += velocity.y * deltaTime;
 
-			batch.setShader(shaderProgram);
-			shaderProgram.setUniform2fv("u_targetPosition", particleOrigin, 0, 2);
 			batch.draw(texture, particle.position.x, particle.position.y,
 					PARTICLE_DIMENSIONS.x, PARTICLE_DIMENSIONS.y);
-			batch.setShader(null);
 		}
+		batch.setShader(null);
 	}
 
 	/**

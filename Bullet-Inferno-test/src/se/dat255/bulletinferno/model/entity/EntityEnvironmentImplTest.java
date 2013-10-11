@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
+import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
@@ -30,7 +31,8 @@ public class EntityEnvironmentImplTest {
 					initialHealth, weapon, weaponPositionModifier, score,
 					credits, 
 					new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), 
-					new SimplePhysicsMovementPatternMock());
+					new SimplePhysicsMovementPatternMock(),
+					new SimpleMockScoreListener());
 		}
 	}
 	

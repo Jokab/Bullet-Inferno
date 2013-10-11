@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.dat255.bulletinferno.model.map.ObstacleDefinitionImpl;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
@@ -28,30 +29,33 @@ public class WeaponDefinitionImplTest {
 	}
 
 	@Test
-	public void testSlowWeaponReloadingTime() {
-		Weapon weapon = WeaponDefinitionImpl.DISORDERER.createWeapon(physics, weapons);
+	public void testReloadingTime() {
+		for (WeaponDefinitionImpl weaponDefinition : WeaponDefinitionImpl.values()) {
+			Weapon weapon = weaponDefinition.createWeapon(physics, weapons);
 
-		assertTrue(
-				"The reloading time of the slow weapon should be the same as the weapon's reloading " +
-				"time created from the SLOW enum.",
-				WeaponDefinitionImpl.DISORDERER.getReloadTime() == weapon.getReloadingTime());
+			assertTrue(
+					"The reloading time of the slow weapon should be the same as the weapon's " +
+					"reloading time created from the SLOW enum." + "FAILING: " + weaponDefinition,
+					weaponDefinition.getReloadTime() == weapon.getReloadingTime());
+		}
 	}
 
 	@Test
-	public void testIsSTANDARDEnemyWeapon() {
+	public void testAutomaticWeapon() {
 		Weapon weapon = WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons);
 
 		assertTrue(
-				"When you retrieve an enemy weapon, it should be an enemy weapon.",
+				"When you retrieve a force gun weapon, it should be an automatic weapon.",
 				weapon.getClass() == AutomaticWeaponImpl.class);
 	}
 	
 	@Test
-	public void testIsSTANDARDPlayerWeapon() {
-		Weapon weapon = WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons);
+	public void testCooldownWeapon() {
+		// Get an automatic weapon
+		Weapon weapon = WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons);
 
 		assertTrue(
-				"When you retrieve a player weapon, it should be player weapon.",
-				weapon.getClass() == WeaponImpl.class);
+				"When you retrieve a missile lanucher weapon, it should be cooldown weapon.",
+				weapon.getClass() == CooldownWeaponImpl.class);
 	}
 }
