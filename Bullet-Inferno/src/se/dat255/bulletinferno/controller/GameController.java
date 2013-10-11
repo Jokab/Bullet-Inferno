@@ -17,10 +17,7 @@ import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
-import se.dat255.bulletinferno.view.RenderableGUI;
-import se.dat255.bulletinferno.view.gui.GameoverScreenView;
-import se.dat255.bulletinferno.view.gui.PauseIconView;
-import se.dat255.bulletinferno.view.gui.PauseScreenView;
+import se.dat255.bulletinferno.view.gui.HudView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -46,9 +43,6 @@ public class GameController extends SimpleController {
 
 	/** If the player died; Should not update the game */
 	private boolean gameOver;
-
-	/** The views to use when going in or out pause */
-	private RenderableGUI pauseScreenView, pauseIconView;
 
 	/** The (center of the) current viewport position, in world coordinates */
 	private Vector2 viewportPosition;
@@ -104,13 +98,20 @@ public class GameController extends SimpleController {
 			graphics = null;
 		}
 
-		graphics = new Graphics();
+		// Initialize the HUD
+		HudView hudView = new HudView(resourceManager);
+		
+		// Initialize the graphics controller
+		graphics = new Graphics(hudView);
 		graphics.create();
-
-		if (models != null) {
+		
+		// Initialize the score controller
+		ScoreController scoreController = new ScoreController(hudView);
+		
+		if(models != null) {
 			models.dispose();
 		}
-		models = new ModelEnvironmentImpl(weaponData);
+		models = new ModelEnvironmentImpl(weaponData, scoreController);
 		
 		PlayerShip ship = models.getPlayerShip();
 		
@@ -129,7 +130,7 @@ public class GameController extends SimpleController {
 		// graphics.addRenderable(bgView);
 
 		// Set up input handler
-		touchController = new GameTouchController(graphics, ship);
+		touchController = new GameTouchController(graphics, ship, this, myGame);
 		
 		touchController.setSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
@@ -138,8 +139,6 @@ public class GameController extends SimpleController {
 			}
 		});
 
-		setupGUI();
-
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
 
@@ -147,23 +146,10 @@ public class GameController extends SimpleController {
 		graphics.addRenderable(projectileView);
 	}
 
-	/** Initiates the pause components when the player starts a level */
-	private void setupGUI() {
-		pauseIconView = new PauseIconView(this);
-		pauseScreenView = new PauseScreenView(this, resourceManager);
-		graphics.addRenderableGUI(pauseIconView);
-	}
-
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
-
-		// Remove pause screen and pause icon from screen
-		graphics.removeRenderableGUI(pauseIconView);
-		graphics.removeRenderableGUI(pauseScreenView);
-
-		RenderableGUI gameOver = new GameoverScreenView(myGame, resourceManager);
-		graphics.addRenderableGUI(gameOver);
+		graphics.getHudView().gameOver();
 	}
 
 	/**
@@ -183,8 +169,7 @@ public class GameController extends SimpleController {
 	/** Pauses the game */
 	public void pauseGame() {
 		super.pause();
-		graphics.removeRenderableGUI(pauseIconView);
-		graphics.addRenderableGUI(pauseScreenView);
+		graphics.getHudView().pause();
 	}
 
 	/**
@@ -201,8 +186,7 @@ public class GameController extends SimpleController {
 	/** Unpauses the game */
 	public void unpauseGame() {
 		super.resume();
-		graphics.removeRenderableGUI(pauseScreenView);
-		graphics.addRenderableGUI(pauseIconView);
+		graphics.getHudView().unpause();
 	}
 
 	@Override

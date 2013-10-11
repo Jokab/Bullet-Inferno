@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.entity;
 
+import se.dat255.bulletinferno.controller.ScoreController;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
@@ -15,5 +16,5 @@ public interface EnemyDefinition {
 	 * @return enemy
 	 */
 	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weaponEnvironment, Vector2 position);
+			WeaponEnvironment weaponEnvironment, Vector2 position, ScoreController scoreController);
 }
