@@ -157,6 +157,7 @@ public class GameController extends SimpleController {
 	/** The player has died, the game is over */
 	public void gameOver() {
 		gameOver = true;
+		touchController.setSuppressKeyboard(true);
 		graphics.getHudView().gameOver();
 	}
 
@@ -177,6 +178,7 @@ public class GameController extends SimpleController {
 	/** Pauses the game */
 	public void pauseGame() {
 		super.pause();
+		touchController.setSuppressKeyboard(true);
 		graphics.getHudView().pause();
 	}
 
@@ -194,6 +196,7 @@ public class GameController extends SimpleController {
 	/** Unpauses the game */
 	public void unpauseGame() {
 		super.resume();
+		touchController.setSuppressKeyboard(false);
 		graphics.getHudView().unpause();
 	}
 

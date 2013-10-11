@@ -55,6 +55,9 @@ public class GameTouchController implements InputProcessor {
 	private int steeringFinger = -1;
 	/** The origin of touch down finger controlling the ship*/
 	private Vector2 touchOrigin = new Vector2();
+	
+	/** Flag indicating that keyboard presses should be ignored */
+	private boolean suppressKeyboard;
 
 	public GameTouchController(final Graphics graphics, final PlayerShip ship, 
 			GameController gameController, MasterController masterController) {
@@ -66,6 +69,9 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if(suppressKeyboard) {
+			return true;
+		}
 		if (keycode == FIREKEY) {
 			ship.fireWeapon();
 		}
@@ -77,11 +83,17 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		if(suppressKeyboard) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
+		if(suppressKeyboard) {
+			return true;
+		}
 		return false;
 	}
 
@@ -176,6 +188,10 @@ public class GameTouchController implements InputProcessor {
 	
 	public void setSpecialAbilityListener(SpecialAbilityListener specialAbilityListener) {
 		this.specialAbilityListener = specialAbilityListener;
+	}
+	
+	public void setSuppressKeyboard(boolean suppressKeyboard) {
+		this.suppressKeyboard = suppressKeyboard;
 	}
 
 }
