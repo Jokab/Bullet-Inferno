@@ -133,8 +133,10 @@ public class SegmentDefinitionImplTest {
 				
 				// Make sure the segment created is at the right position and has the
 				// right number of slices.
-				assertEquals("The created segment should be placed at the provied postition",
-						createdSegment.getPosition(), pos);
+				assertTrue("The created segment should be placed at the provied postition",
+						createdSegment.getPosition().equals(pos));
+				assertTrue("Check for alias problems with given position", 
+						createdSegment.getPosition() != pos);
 				assertEquals("The created segment should have the correct number of slices",
 						createdSegment.getSlices().size(), numSlices);
 

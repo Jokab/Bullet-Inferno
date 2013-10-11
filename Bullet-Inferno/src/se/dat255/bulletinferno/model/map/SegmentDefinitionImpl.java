@@ -84,7 +84,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 			slicePosition.add(slice.getWidth(), 0);
 		}
 
-		return new SegmentImpl(slices, slicePosition.cpy());
+		return new SegmentImpl(slices, position);
 	}
 
 	/**
