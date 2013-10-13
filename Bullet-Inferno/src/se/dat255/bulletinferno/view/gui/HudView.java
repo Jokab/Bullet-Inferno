@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Displays the score of the game
+ * Main view of all the HUD elements in the game
  */
 public class HudView implements Renderable {
 	
@@ -40,6 +40,7 @@ public class HudView implements Renderable {
 	/** The amount of heat regions to display; 0.0f -> 1.0f */
 	private float heatValue = 0.5f;
 	
+	/** Reference to the paus view for easily showing/hiding them */
 	private final RenderableGUI pauseScreen, pauseButton;
 	
 	/**
