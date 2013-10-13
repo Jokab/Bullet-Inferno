@@ -130,6 +130,9 @@ public class GameTouchController implements InputProcessor {
 			case STOPGAME:
 				masterController.setScreen(masterController.getLoadoutScreen());
 				break;
+			case SPECIAL_ABILITY:
+				if(specialAbilityListener != null) specialAbilityListener.specialAbilityRequested();
+				break;
 			}
 			return true;
 		}

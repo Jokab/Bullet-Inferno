@@ -5,5 +5,10 @@ package se.dat255.bulletinferno.view.gui;
  * The controller can then handle the event accordingly
  */
 public enum GuiEvent {
-	PAUSE, UNPAUSE, GAMEOVER, RESTARTGAME, STOPGAME
+	/** Handled pausing and unpausing of the game */
+	PAUSE, UNPAUSE, 
+	/** Handles the state of the game */
+	GAMEOVER, RESTARTGAME, STOPGAME, 
+	/** Fires the ships special ability */
+	SPECIAL_ABILITY
 }

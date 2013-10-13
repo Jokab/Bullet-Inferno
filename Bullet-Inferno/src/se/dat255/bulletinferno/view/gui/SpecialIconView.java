@@ -10,13 +10,13 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Displays the pause icon ingame that allows the player to pause the game.
  */
-public class PauseIconView implements RenderableGUI {
+public class SpecialIconView implements RenderableGUI {
 
 	private final TextureRegion textureRegion;
-	private final Vector2 position = new Vector2(6.6f, 3.1f);
-	private final Vector2 size = new Vector2(1.2f, 1.2f);
+	private final Vector2 position = new Vector2(6.4f, -4.4f);
+	private final Vector2 size = new Vector2(1.5f, 1.5f);
 
-	public PauseIconView(TextureRegion textureRegion) {
+	public SpecialIconView(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
 	}
 
@@ -32,7 +32,7 @@ public class PauseIconView implements RenderableGUI {
 
 	@Override
 	public GuiEvent pressed(float x, float y) {
-		return GuiEvent.PAUSE;
+		return GuiEvent.SPECIAL_ABILITY;
 	}
 
 	@Override
