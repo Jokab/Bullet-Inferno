@@ -107,6 +107,7 @@ public class HudView implements Renderable {
 	/** Displays pause screen */
 	public void pause(){
 		hudRegions.remove(pauseButton);
+		hudRegions.remove(specialButton);
 		hudRegions.add(pauseScreen);
 	}
 	
@@ -114,6 +115,7 @@ public class HudView implements Renderable {
 	public void unpause(){
 		hudRegions.remove(pauseScreen);
 		hudRegions.add(pauseButton);
+		hudRegions.add(specialButton);
 	}
 	
 	public void gameOver(int score){

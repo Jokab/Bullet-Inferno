@@ -32,7 +32,7 @@ public class SpecialIconView implements RenderableGUI {
 
 	@Override
 	public GuiEvent pressed(float x, float y) {
-		return GuiEvent.PAUSE;
+		return GuiEvent.SPECIAL_ABILITY;
 	}
 
 	@Override
