@@ -1,28 +1,28 @@
 package se.dat255.bulletinferno.controller;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.view.LoadingScreenView;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * A screen that handles loading and allocation of all assets that are required in the game.
- *  This is to prevent the game from slowing down due to resource loading which could take time
- *  depending on the speed of the secondary memory.
+ * This is to prevent the game from slowing down due to resource loading which could take time
+ * depending on the speed of the secondary memory.
  */
 public class LoadingScreenController extends SimpleController {
 
-	/** A listener for when the loading the loading screen is doing is finished */
+	/**
+	 * A listener for when the loading the loading screen is doing is finished. This includes
+	 * waiting for the user to touch the screen if the loading screen is set to wait for click.
+	 */
 	public interface FinishedLoadingEventListener {
 		/**
 		 * Called when the loading the loading screen was shown for is complete. If the loading
@@ -31,14 +31,25 @@ public class LoadingScreenController extends SimpleController {
 		public void onLoaded();
 	}
 
+	/** The InputListener used to capture touches on the entire screen */
+	private final InputListener stageClickInputListener = new InputListener() {
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			if (LoadingScreenController.this.loadingFinished) {
+				finishedLoading();
+			}
+			return LoadingScreenController.this.loadingFinished;
+		}
+	};
+
 	/** Aspect to keep on the screen */
 	private final static int VIRTUAL_WIDTH = 1280, VIRTUAL_HEIGHT = 720;
 
 	/** The resource manager this loading screen is used to display progress of */
 	private final ResourceManager resourceManager;
 
-	/** The event listener for when loading is finished */
-	FinishedLoadingEventListener finishListener;
+	/** The event listeners for when loading finishes. */
+	List<FinishedLoadingEventListener> finishListeners = new LinkedList<LoadingScreenController.FinishedLoadingEventListener>();
 
 	/** Flag if we require a user input to do the switch after loading is finished */
 	private boolean clickToSwitch = true;
@@ -46,87 +57,65 @@ public class LoadingScreenController extends SimpleController {
 	/** Flag indicating whether the loading of the asset manager has completed */
 	private boolean loadingFinished = false;
 
+	/** The scene2d stage that takes care of gui handling for us */
 	private Stage stage;
-	private Skin skin;
-	private Texture screenBgTexture;
-	private Image screenBg;
-	private Label clickToStart;
+
+	/** The loading screen view that holds all the gui elements */
+	private LoadingScreenView loadingScreenView;
 
 	/**
-	 * Initiates the screen with the correct size and sets up the elements displayed
+	 * Initiates the loading screen and its view. Also starts the loading of the resourceManager.
+	 * 
+	 * <p>
+	 * Note: This screen will load textures without using the resource manager.
+	 * </p>
 	 */
 	public LoadingScreenController(ResourceManager resourceManager,
 			MasterController masterController) {
+
 		this.resourceManager = resourceManager;
 		resourceManager.startLoad(false);
 
+		// Set up the GUI elements
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		skin = new Skin();
+		loadingScreenView = new LoadingScreenView();
+		loadingScreenView.setFillParent(true);
+		stage.addActor(loadingScreenView);
 
-		setupScreenElements();
-	}
+		// Add a click listener to the whole stage to capture "click to continue" touches
+		stage.addListener(stageClickInputListener);
 
-	/**
-	 * Loads and initializes all the elements to be displayed
-	 */
-	private void setupScreenElements() {
-		screenBgTexture = new Texture("data/loadingScreenBg.png");
-		screenBg = new Image(screenBgTexture);
-		screenBg.setFillParent(true);
-		stage.addActor(screenBg);
-
-		BitmapFont f = new BitmapFont();
-		f.scale(3);
-		LabelStyle ls = new LabelStyle(f, Color.BLACK);
-		clickToStart = new Label("Loading... 0%", ls);
-		clickToStart.setPosition(1280 / 2 - clickToStart.getWidth() / 2,
-				clickToStart.getHeight() + 10);
-		stage.addActor(clickToStart);
-
-		stage.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (loadingFinished) {
-					switchToFinishedScreen();
-					return true;
-				} else {
-					return false;
-				}
-			}
-
-		});
 	}
 
 	@Override
 	public void show() {
 		super.show();
-		Gdx.input.setInputProcessor(stage);
 
+		Gdx.input.setInputProcessor(stage);
 		loadingFinished = false;
 	}
 
-	private void switchToFinishedScreen() {
-		if (finishListener != null) {
-			finishListener.onLoaded();
+	private void finishedLoading() {
+		for (FinishedLoadingEventListener listener : finishListeners) {
+			listener.onLoaded();
 		}
+		// We will clear the list here for now, as currently there is no
+		// case where something wants to listen for all loads
+		finishListeners.clear();
 	}
 
 	@Override
 	public void render(float delta) {
 		if (!resourceManager.loadAsync()) {
-			int percLoaded = (int) Math.floor(resourceManager.getLoadProgress() * 100);
-			clickToStart.setText("Loading... " + percLoaded + "%");
+			// Still loading
+			loadingScreenView.setLoadProgress(resourceManager.getLoadProgress());
 		} else {
-			if (clickToSwitch) {
-				if (!loadingFinished) {
-					loadingFinished = true;
-					clickToStart.setText("Touch to Start!");
-					clickToStart.validate();
-					clickToStart.setPosition(1280 / 2 - clickToStart.getWidth() / 2,
-							clickToStart.getHeight() + 10);
-				}
+			// Done loading
+			loadingFinished = true;
+			if (!clickToSwitch) {
+				finishedLoading();
 			} else {
-				switchToFinishedScreen();
+				loadingScreenView.loadingFinished();
 			}
 		}
 
@@ -145,13 +134,12 @@ public class LoadingScreenController extends SimpleController {
 
 	@Override
 	public void dispose() {
-		screenBgTexture.dispose();
+		loadingScreenView.dispose();
 		stage.dispose();
-		skin.dispose();
 	}
 
-	public void setFinishedLoadingEventListener(FinishedLoadingEventListener finishListener) {
-		this.finishListener = finishListener;
+	public void addFinishedLoadingEventListener(FinishedLoadingEventListener finishListener) {
+		this.finishListeners.add(finishListener);
 	}
 
 	public void setClickToSwitch(boolean clickToSwitch) {
