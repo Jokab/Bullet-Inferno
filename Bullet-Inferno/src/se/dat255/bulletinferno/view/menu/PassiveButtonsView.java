@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.menu;
+package se.dat255.bulletinferno.view.menu;
 
 import java.util.ArrayList;
 import java.util.List;

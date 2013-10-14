@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.view;
+package se.dat255.bulletinferno.view.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

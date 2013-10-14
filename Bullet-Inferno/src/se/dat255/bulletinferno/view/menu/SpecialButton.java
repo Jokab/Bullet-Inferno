@@ -1,6 +1,6 @@
-package se.dat255.bulletinferno.menu;
+package se.dat255.bulletinferno.view.menu;
 
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Color;
@@ -10,14 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
- * Button for selecting passive abilities
+ * Button for selecting special abilities
  */
-public class PassiveButton extends CustomizedButton {
+public class SpecialButton extends CustomizedButton {
 
-	private PassiveAbilityDefinition ability;
+	private SpecialAbilityDefinition ability;
 	private final ResourceManager resourceManager;
 	
-	public PassiveButton(Button button, PassiveAbilityDefinition ability, ResourceManager resourceManager) {
+	public SpecialButton(Button button, SpecialAbilityDefinition ability, ResourceManager resourceManager) {
 		super(button);
 		this.ability = ability;
 		this.resourceManager = resourceManager;
@@ -35,11 +35,11 @@ public class PassiveButton extends CustomizedButton {
 		}
 	}
 
-	public PassiveAbilityDefinition getData() {
+	public SpecialAbilityDefinition getData() {
 		return this.ability;
 	}
 
-	public void setData(PassiveAbilityDefinition data) {
+	public void setData(SpecialAbilityDefinition data) {
 		this.ability = data;
 	}
 

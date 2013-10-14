@@ -4,15 +4,16 @@ import java.util.List;
 
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
-import se.dat255.bulletinferno.menu.PassiveButton;
-import se.dat255.bulletinferno.menu.PassiveButtonsView;
-import se.dat255.bulletinferno.menu.SpecialButton;
-import se.dat255.bulletinferno.menu.SpecialButtonsView;
-import se.dat255.bulletinferno.menu.WeaponButton;
-import se.dat255.bulletinferno.menu.WeaponButtonsView;
+import se.dat255.bulletinferno.view.menu.PassiveButton;
+import se.dat255.bulletinferno.view.menu.PassiveButtonsView;
+import se.dat255.bulletinferno.view.menu.SpecialButton;
+import se.dat255.bulletinferno.view.menu.SpecialButtonsView;
+import se.dat255.bulletinferno.view.menu.WeaponButton;
+import se.dat255.bulletinferno.view.menu.WeaponButtonsView;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;

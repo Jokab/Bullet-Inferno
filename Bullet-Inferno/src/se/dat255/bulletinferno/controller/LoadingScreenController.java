@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.view.LoadingScreenView;
+import se.dat255.bulletinferno.view.menu.LoadingScreenView;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
