@@ -75,4 +75,8 @@ public class SimpleMockProjectile implements Projectile {
 		return null;
 	}
 
+	@Override
+	public void setCollideWithObstacles(boolean collideWithObstacles) {
+	}
+
 }

@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.weapon;
 
+import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -22,6 +23,9 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	
 	/** The EntityEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
+	
+	/** A flag indicating if this projectile should collide with obstacles */
+	private boolean collideWithObstacles = true;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
@@ -51,7 +55,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	@Override
 	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
 			Teamable source, PhysicsBodyDefinition bodyDefinition) {
-		
+		collideWithObstacles = true;
 		projectileType = type;
 		this.damage = damage;
 		this.source = source;
@@ -102,7 +106,10 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	}
 
 	private boolean shouldCollide(Collidable other) {
-		return ((damage > 0 && !(other instanceof Projectile) && other != getSource())
+		if(!collideWithObstacles && (other instanceof Obstacle)) {
+			return false;
+		}
+		return ((damage > 0 && !(other instanceof Projectile) && other != getSource()) 
 				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)));
 	}
 
@@ -168,6 +175,11 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	@Override
 	public Vector2 getDimensions() {
 		return body.getDimensions();
+	}
+	
+	@Override
+	public void setCollideWithObstacles(boolean collideWithObstacles) {
+		this.collideWithObstacles = collideWithObstacles;
 	}
 
 }

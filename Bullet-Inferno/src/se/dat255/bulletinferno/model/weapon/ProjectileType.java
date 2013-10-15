@@ -36,14 +36,14 @@ public enum ProjectileType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public void releaseProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons,
+	public Projectile releaseProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			Vector2 position,
 			Vector2 projectileVector, Teamable source) {
 
 		Projectile projectile = weapons.retrieveProjectile(ProjectileImpl.class);
 		projectile.init(this, position.cpy(), projectileVector,
 				damage, source, bodyDefinition);
-		
+		return projectile;
 	}
 	
 	public void setDamage(float damage) {
