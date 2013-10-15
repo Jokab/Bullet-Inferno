@@ -21,7 +21,8 @@ public class PlayerShipView implements Renderable, Timerable {
 	private Sprite shipSprite;
 	private Sprite explosionSprite;
 	private Timer timer;
-	private ResourceManager resourceManager;
+	
+	private final PlayerShipLoadoutView loadoutView;
 
 	private static final int SMOKE_PARTICLE_COUNT = 100;
 	private final Texture smokeTexture;
@@ -37,7 +38,6 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	public PlayerShipView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
-		this.resourceManager = resourceManager;
 
 		// this.timer = game.getTimer();
 		this.timer = new TimerImpl();
@@ -63,6 +63,9 @@ public class PlayerShipView implements Renderable, Timerable {
 		smokeTexture = resourceManager.getTexture(TextureType.SMOKE_PARTICLE);
 		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
+		
+		// Load-out view is responsible for displaying the load-out we choose on our ship
+		loadoutView = new PlayerShipLoadoutView(ship, resourceManager);
 	}
 
 	@Override
@@ -77,6 +80,9 @@ public class PlayerShipView implements Renderable, Timerable {
 
 			shipSprite.setPosition(x, y);
 			shipSprite.draw(batch);
+			
+			// Make sure weapons are rendered on top of the ship
+			loadoutView.render(batch, viewport);
 
 			// TODO: Fix these values to match some texture offsets (+ break out to constants).
 			smokeTrail.setSpawnPoint(
