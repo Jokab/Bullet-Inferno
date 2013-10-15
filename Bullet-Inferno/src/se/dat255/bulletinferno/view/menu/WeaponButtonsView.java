@@ -107,15 +107,6 @@ public class WeaponButtonsView {
 		selectionButton.getButton().setStyle(style);
 	}
 
-	public void setSelectionToNothing(ButtonStyle style, WeaponButton selectionButton) {
-		ButtonStyle newStyle = new ButtonStyle(style);
-		newStyle.up = new TextureRegionDrawable(new TextureRegion(
-				new Texture("data/frame.png")));
-		newStyle.over = newStyle.up;
-		selectionButton.getButton().setStyle(newStyle);
-		selectionButton.setData(null);
-	}
-
 	private void deselectOtherButtons(WeaponButton selected, List<WeaponButton> weaponList) {
 		for (WeaponButton wButton : weaponList) {
 			if (wButton != selected && wButton.isSelected()) {
@@ -179,7 +170,6 @@ public class WeaponButtonsView {
 						setSelectionToClicked(wButton, selectionButton);
 					} else {
 						wButton.toggleSelected(skin);
-						setSelectionToNothing(button.getStyle(), selectionButton);
 					}
 				}
 				// TODO: add break here since we don't want to keep looping after we found the
@@ -192,28 +182,15 @@ public class WeaponButtonsView {
 
 	public class SelectionClickedListener extends ChangeListener {
 
-		private final WeaponButton selectionButton;
-		private final List<WeaponButton> list;
 		private final String type;
 
-		public SelectionClickedListener(WeaponButton selectionButton, List<WeaponButton> list,
-				String type) {
-			this.selectionButton = selectionButton;
-			this.list = list;
+		public SelectionClickedListener(String type) {
 			this.type = type;
 		}
 
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (selectionButton.getData() == null) {
-				populateTable(type);
-			} else {
-				Button button = selectionButton.getButton();
-				if (button == ((Button) actor)) {
-					setSelectionToNothing(button.getStyle(), selectionButton);
-					deselectOtherButtons(new WeaponButton(null, null, null), list);
-				}
-			}
+			populateTable(type);
 		}
 
 	}

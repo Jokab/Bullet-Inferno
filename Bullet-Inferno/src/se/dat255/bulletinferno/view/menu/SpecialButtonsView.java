@@ -29,7 +29,8 @@ public class SpecialButtonsView {
 	private final Table table;
 	private final Label label;
 
-	public SpecialButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
+	public SpecialButtonsView(Stage stage, Skin skin, Table table, Label label,
+			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
@@ -47,9 +48,9 @@ public class SpecialButtonsView {
 				specialButtons.add(specialButton);
 				specialButton.getButton().addListener(new ClickedListener());
 			}
-	
+
 		}
-		
+
 		setSelectionToSelected(specialButtons.get(0)); // for testing
 		// Set up the table to add these buttons to
 		showTable();
@@ -72,15 +73,6 @@ public class SpecialButtonsView {
 		return new Button(buttonStyle);
 	}
 
-	private void setSelectionToNothing(ButtonStyle style) {
-		ButtonStyle newStyle = new ButtonStyle(style);
-		newStyle.up = new TextureRegionDrawable(new TextureRegion(
-				new Texture("data/frame.png")));
-		newStyle.over = newStyle.up;
-		selectionButton.getButton().setStyle(newStyle);
-		selectionButton.setData(null);
-	}
-
 	private void deselectOtherButtons(SpecialButton selected) {
 		for (SpecialButton sButton : specialButtons) {
 			if (sButton != selected && sButton.isSelected()) {
@@ -101,7 +93,6 @@ public class SpecialButtonsView {
 		selectionButton.getButton().setStyle(style);
 	}
 
-
 	public SpecialButton getSelectionButton() {
 		return this.selectionButton;
 	}
@@ -109,7 +100,6 @@ public class SpecialButtonsView {
 	public void setSelectionButton(SpecialButton selectionSpecialButton) {
 		this.selectionButton = selectionSpecialButton;
 	}
-
 
 	private class ClickedListener extends ChangeListener {
 		@Override
@@ -124,31 +114,22 @@ public class SpecialButtonsView {
 						setSelectionToSelected(sButton);
 					} else {
 						sButton.toggleSelected(skin);
-						setSelectionToNothing(button.getStyle());
 					}
 				}
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
-	
+
 			deselectOtherButtons(selected);
 		}
 	}
 
 	public class SelectionClickedListener extends ChangeListener {
-	
+
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (selectionButton.getData() == null) {
-				populateTable();
-			} else {
-				Button button = selectionButton.getButton();
-				if (button == ((Button) actor)) {
-					setSelectionToNothing(button.getStyle());
-					deselectOtherButtons(new SpecialButton(null, null, null));
-				}
-			}
+			populateTable();
 		}
-	
+
 	}
 }
