@@ -1,14 +1,13 @@
 package se.dat255.bulletinferno.controller;
 
 import se.dat255.bulletinferno.controller.LoadingScreenController.FinishedLoadingEventListener;
+import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.ResourceManagerImpl;
 
 import com.badlogic.gdx.Screen;
-
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 
 /**
  * The master controller is called every frame. It then calls appropriate classes
