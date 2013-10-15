@@ -59,7 +59,7 @@ public class GameController extends SimpleController {
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
-	private AudioPlayer audiPlayer;
+	private AudioPlayer audioPlayer;
 	
 	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
@@ -83,7 +83,7 @@ public class GameController extends SimpleController {
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
 		this.resourceManager = resourceManager;
-		this.audiPlayer = new AudioPlayerImpl(resourceManager);
+		this.audioPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class GameController extends SimpleController {
 		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
 			@Override
 			public void call(GameActionEvent e) {
-				audiPlayer.playSoundEffect(e);
+				audioPlayer.playSoundEffect(e);
 			}
 		};
 		
