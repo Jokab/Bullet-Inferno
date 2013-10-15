@@ -104,10 +104,21 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (isAwake && hitByOtherProjectile(other)) {
+		if(!isAwake){
+			return;
+		}
+		
+		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
+		} else if (hitByPlayerShip(other)) {
+			takeDamage(initialHealth);
 		}
 	}
+
+	private boolean hitByPlayerShip(Collidable other) {
+		return other instanceof PlayerShip;
+	}
+
 
 	private boolean hitByOtherProjectile(Collidable other) {
 		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());

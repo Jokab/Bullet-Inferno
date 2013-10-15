@@ -133,7 +133,11 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
 		} else if (collidedWithNonTeammember(other)) {
-			die();
+			if(other instanceof Enemy) {
+				takeDamage(0.6f / takeDamageModifier);
+			} else {
+				die();
+			}
 		}
 	}
 
