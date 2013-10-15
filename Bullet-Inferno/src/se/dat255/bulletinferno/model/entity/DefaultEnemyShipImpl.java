@@ -50,9 +50,9 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		for(int i=0; i<weapons.length; i++){
+		for(int i=0; i<getWeapons().length; i++){
 			if(source == timers[i]){
-				weapons[i].fire(getPosition(), velocity.cpy().nor(), this);
+				getWeapons()[i].fire(getPosition(), getVelocity().cpy().nor(), this);
 			}
 		}
 	}
@@ -60,7 +60,7 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	@Override
 	public void viewportIntersectionBegin() {
 		super.viewportIntersectionBegin();
-		for(int i=0; i<weapons.length; i++){
+		for(int i=0; i<getWeapons().length; i++){
 			timers[i].start();
 		}
 	}

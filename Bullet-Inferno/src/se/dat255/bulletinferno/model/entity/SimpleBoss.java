@@ -46,12 +46,12 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, 
 				 score, credits, bodyDefinition, scoreListener);
 		
-		this.timers = new Timer[weapons.length];
+		this.timers = new Timer[getWeapons().length];
 		this.entities = entities;		
 		this.physics = physics;
 		this.player = entities.getPlayerShip();
-		for (int i = 0; i < weapons.length; i++) {
-			timers[i] = weapons[i].getTimer();
+		for (int i = 0; i < getWeapons().length; i++) {
+			timers[i] = getWeapons()[i].getTimer();
 			timers[i].registerListener(this);
 			timers[i].stop();
 		}
@@ -90,7 +90,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			this.fmp = new FollowingMovementPattern(player);
 			this.dmp = new DisorderedBossMovementPattern(3f,3);
 		}
-		physics.attachMovementPattern(pattern, body);
+		physics.attachMovementPattern(pattern, getBody());
 
 
 	}		
@@ -101,7 +101,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	@Override
 	public void viewportIntersectionBegin() {
-		for (int i = 0; i < weapons.length; i++) {
+		for (int i = 0; i < getWeapons().length; i++) {
 			timers[i].start();
 		}
 		super.viewportIntersectionBegin();
@@ -125,53 +125,53 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Different firing methods determine how many weapon to fire and in what direction
 	
-	/** Fires projectiles in a straight line. Only fires the BOSS_SPR* weapons.
+	/** Fires projectiles in a straight line. Only fires the BOSS_SPR* getWeapons().
 	 * Cannot be used simultaneously with fireSpread() or fireSpreadAim() */
 	public void fireWide(Timer source) {
-		for (int i = 0; i < weapons.length; i++) {
-			weaponId = weapons[i].getType().getIdentifier();
+		for (int i = 0; i < getWeapons().length; i++) {
+			weaponId = getWeapons()[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_SPR")) {
-				weapons[i].fire(this.getPosition(), new Vector2(-1,weapons[i].getOffset().y).nor(),
+				getWeapons()[i].fire(this.getPosition(), new Vector2(-1,getWeapons()[i].getOffset().y).nor(),
 						this);
 			}
 		}
 
 	}
 	
-	/** Fires projectiles in a wide, spreading pattern. Only fires the BOSS_SPR* weapons.
+	/** Fires projectiles in a wide, spreading pattern. Only fires the BOSS_SPR* getWeapons().
 	 * Cannot be used simultaneously with fireWide() or fireSpreadAim() */
 	public void fireSpread(Timer source) {
-		for (int i = 0; i < weapons.length; i++) {
-			weaponId = weapons[i].getType().getIdentifier();
+		for (int i = 0; i < getWeapons().length; i++) {
+			weaponId = getWeapons()[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_SPR")) {
-				weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
+				getWeapons()[i].fire(this.getPosition(), new Vector2(-1, 0), this);
 			}
 		}
 
 	}
 	
 	/** Fires projectiles in a wide, spreading pattern aimed towards the player. Only fires the BOSS_AIM* 
-	 *		weapons.
+	 *		getWeapons().
 	 * Cannot be used simultaneously with fireAim() */
 	public void fireSpreadAim(Timer source) {
-		for (int i = 0; i < weapons.length; i++) {
-			weaponId = weapons[i].getType().getIdentifier();
+		for (int i = 0; i < getWeapons().length; i++) {
+			weaponId = getWeapons()[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_AIM")) {
-				weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
-						- getPosition().x, player.getPosition().y - getPosition().y + weapons[i].getOffset().y).nor(),
+				getWeapons()[i].fire(this.getPosition(), new Vector2(player.getPosition().x
+						- getPosition().x, player.getPosition().y - getPosition().y + getWeapons()[i].getOffset().y).nor(),
 						this);
 			}
 		}
 
 	}
 
-	/** Fires projectiles aimed towards the player. Only fires the BOSS_AIM* weapons. */
+	/** Fires projectiles aimed towards the player. Only fires the BOSS_AIM* getWeapons(). */
 	public void fireAim(Timer source) {
-		for (int i = 0; i < weapons.length; i++) {
-			weaponId = weapons[i].getType().getIdentifier();
+		for (int i = 0; i < getWeapons().length; i++) {
+			weaponId = getWeapons()[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_AIM")) {
-				weapons[i].fire(this.getPosition(), new Vector2(player.getPosition().x
-						- getPosition().x, player.getPosition().y - getPosition().y -  weapons[i].getOffset().y).nor(),
+				getWeapons()[i].fire(this.getPosition(), new Vector2(player.getPosition().x
+						- getPosition().x, player.getPosition().y - getPosition().y -  getWeapons()[i].getOffset().y).nor(),
 						this);
 			}
 		}
@@ -181,15 +181,15 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	// Methods to change the movement of the boss
 	
 	public void prepareMovementChange(){
-		body.setVelocity(new Vector2(body.getVelocity().x,0));
-		physics.detachMovementPattern(body);
+		getBody().setVelocity(new Vector2(getBody().getVelocity().x,0));
+		physics.detachMovementPattern(getBody());
 	}
 	
 	/** Gives the boss a basic up-down movement */
 	public void changeToDisorderedMovement(){
 		prepareMovementChange();
 		if(!currentPattern.equals("dmp")){
-			physics.attachMovementPattern(dmp.copy(), body);
+			physics.attachMovementPattern(dmp.copy(), getBody());
 			currentPattern = "dmp";
 		}
 	}
@@ -198,7 +198,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	public void changeToFollowingMovement(){
 		prepareMovementChange();
 		if(!currentPattern.equals("fmp")){
-			physics.attachMovementPattern(fmp.copy(), body);
+			physics.attachMovementPattern(fmp.copy(), getBody());
 			currentPattern = "fmp";
 		}
 	}
@@ -207,7 +207,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	public void changeToEvadingMovement(){
 		prepareMovementChange();
 		if(!currentPattern.equals("emp")){
-			physics.attachMovementPattern(emp.copy(), body);
+			physics.attachMovementPattern(emp.copy(), getBody());
 			currentPattern = "emp";
 		}
 	}
@@ -217,7 +217,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	}
 	
 	public PhysicsMovementPattern getMovementPattern(){
-		return physics.getMovementPattern(body);
+		return physics.getMovementPattern(getBody());
 	}
 
 
