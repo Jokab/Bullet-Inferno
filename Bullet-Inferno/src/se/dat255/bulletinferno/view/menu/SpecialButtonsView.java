@@ -25,13 +25,11 @@ public class SpecialButtonsView {
 	private final ResourceManager resourceManager;
 	private final List<SpecialButton> specialButtons = new ArrayList<SpecialButton>();
 	private SpecialButton selectionButton;
-	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
 	private final Label label;
 
 	public SpecialButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
-		this.stage = stage;
 		this.skin = skin;
 		this.table = table;
 		this.label = label;

@@ -12,7 +12,6 @@ import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponPlacement;
 import se.dat255.bulletinferno.model.weapon.WeaponPlacementImpl;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
-import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 

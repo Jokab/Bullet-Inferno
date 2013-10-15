@@ -14,10 +14,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class DefaultBossImpl extends SimpleBoss implements Ship {
 
-	private Weapon[] weapons;
-	private Timer[] timers;
-	private final PlayerShip player;
-
 	/**
 	 * Constructs a new Angry Boss
 	 * 
@@ -47,9 +43,8 @@ public class DefaultBossImpl extends SimpleBoss implements Ship {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern, scoreListener);
 
-		this.player = entities.getPlayerShip();
-		this.weapons = weapons;
-		this.timers = super.getWeaponTimers();
+		entities.getPlayerShip();
+		super.getWeaponTimers();
 
 	}
 	
@@ -63,9 +58,8 @@ public class DefaultBossImpl extends SimpleBoss implements Ship {
 		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);
 
-		this.player = entities.getPlayerShip();
-		this.weapons = weapons;
-		this.timers = super.getWeaponTimers();
+		entities.getPlayerShip();
+		super.getWeaponTimers();
 
 	}
 

@@ -27,14 +27,12 @@ public class WeaponButtonsView {
 	private final List<WeaponButton> heavyWeapons = new ArrayList<WeaponButton>();
 	private WeaponButton standardSelectionButton;
 	private WeaponButton heavySelectionButton;
-	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
 	private final Label label;
 
 	public WeaponButtonsView(Stage stage, Skin skin, Table table, Label label,
 			ResourceManager resourceManager) {
-		this.stage = stage;
 		this.skin = skin;
 		this.table = table;
 		this.label = label;

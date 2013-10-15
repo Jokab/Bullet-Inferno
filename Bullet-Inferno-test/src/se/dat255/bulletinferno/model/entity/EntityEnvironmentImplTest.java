@@ -9,7 +9,6 @@ import org.junit.Test;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.HealthMockListener;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
-import se.dat255.bulletinferno.model.mock.ScoreMockListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;

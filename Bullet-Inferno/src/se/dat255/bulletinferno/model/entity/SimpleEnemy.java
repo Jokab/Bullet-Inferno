@@ -10,11 +10,9 @@ import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.Weapon;
-import se.dat255.bulletinferno.util.GameAction;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.GameActionEventImpl;
 import se.dat255.bulletinferno.util.GameActionImpl;
-import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 

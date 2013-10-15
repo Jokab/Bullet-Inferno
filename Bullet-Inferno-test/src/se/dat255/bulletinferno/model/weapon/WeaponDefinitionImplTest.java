@@ -6,13 +6,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.math.Vector2;
-
-import se.dat255.bulletinferno.model.map.ObstacleDefinitionImpl;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class WeaponDefinitionImplTest {
 

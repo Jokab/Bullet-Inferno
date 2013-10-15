@@ -18,8 +18,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Silces it contains
  */
 public class SegmentView implements Renderable {
-	private final ResourceManager resourceManager;
-
 	/** The segment this view handles */
 	public final Segment segment;
 	/** A reference to the slices needed for this view to render */
@@ -30,8 +28,6 @@ public class SegmentView implements Renderable {
 	/** Creates a new view for the given segment */
 	public SegmentView(ResourceManager resourceManager, Segment segment) {
 		this.segment = segment;
-		this.resourceManager = resourceManager;
-
 		// TODO: Not hardcode
 		// Load segment image into texture
 		texture = resourceManager.getTexture(TextureType.MAP_MOUNTAIN);

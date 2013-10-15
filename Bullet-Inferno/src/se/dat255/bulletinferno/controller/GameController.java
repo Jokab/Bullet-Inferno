@@ -160,7 +160,7 @@ public class GameController extends SimpleController {
 		// Set up input handler
 		touchController = new GameTouchController(graphics, ship, this, myGame);
 		
-		touchController.setSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
+		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
 			public void specialAbilityRequested() {
 				specialAbility.getEffect().activate(models.getPlayerShip());

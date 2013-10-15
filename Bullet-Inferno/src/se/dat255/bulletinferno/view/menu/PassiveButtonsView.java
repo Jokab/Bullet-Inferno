@@ -25,13 +25,11 @@ public class PassiveButtonsView {
 	private final ResourceManager resourceManager;
 	private final List<PassiveButton> passiveButtons = new ArrayList<PassiveButton>();
 	private PassiveButton selectionButton;
-	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
 	private final Label label;
 
 	public PassiveButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
-		this.stage = stage;
 		this.skin = skin;
 		this.table = table;
 		this.label = label;

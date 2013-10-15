@@ -21,7 +21,6 @@ public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 		}
 	});
 
-	private ModelEnvironment game;
 	private final SpecialInitializer specialInitializer;
 
 	SpecialAbilityDefinitionImpl(SpecialInitializer initializer) {

@@ -42,7 +42,6 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		}
 	}
 
-	private final PhysicsEnvironment physics;
 	private float takeDamageModifier = 1; // default
 	private float health = 1.0f;
 	private final ShipType shipType;
@@ -79,7 +78,6 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public PlayerShipImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
 			final Vector2 position, WeaponLoadout loadout, ShipType shipType,
 			Listener<Float> healthListener) {
-		this.physics = physics;
 		this.weaponLoadout = loadout;
 		this.shipType = shipType;
 		this.weaponPositionModifier = shipType.getWeaponPosisitionModifier();

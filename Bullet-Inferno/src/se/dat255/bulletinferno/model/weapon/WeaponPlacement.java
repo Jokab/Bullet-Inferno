@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.entity.EnemyDefinition;
-
 import com.badlogic.gdx.math.Vector2;
 
 public interface WeaponPlacement {
