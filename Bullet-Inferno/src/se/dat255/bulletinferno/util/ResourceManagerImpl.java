@@ -71,15 +71,15 @@ public class ResourceManagerImpl implements ResourceManager {
 	}
 	
 	public enum SoundEffectType {
-		DEFAULT_ENEMY_SHIP(new HashMap<String, String>() {{ 
-					put("DIED", "data/explosion.mp3");
-				}});
+		DEFAULT_ENEMY_SHIP();
 		
-		private final Map<String, String> mapping;
-		
-		private SoundEffectType(Map<String, String> mapping) {
-			this.mapping = mapping;
+		static {
+			DEFAULT_ENEMY_SHIP.mapping.put("DIED", "data/explosion.mp3");
 		}
+		
+		private final Map<String, String> mapping = new HashMap<String, String>();
+		
+		private SoundEffectType() {}
 		
 		public String getSource(String key) {
 			return mapping.get(key);
@@ -128,15 +128,14 @@ public class ResourceManagerImpl implements ResourceManager {
 		//return manager.get(music.get(identifier), Music.class);
 	}
 
-	/**
-	 * Adds all our managed textures to the AssetManager's load queue.
-	 */
+	/** Adds all managed textures to the AssetManager's load queue. */
 	private void loadTextures() {
 		for (TextureType type : TextureType.values()) {
 			manager.load(type.path, Texture.class);
 		}
 	}
 	
+	/** Adds all managed sound effects to the AssetManager's load queue. */
 	private void loadSoundEffects() {
 		for (SoundEffectType type : SoundEffectType.values()) {
 			for(String src : type.mapping.values()) {
@@ -199,6 +198,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public void dispose() {
 		manager.dispose();
+		manager = null;
+		Texture.setAssetManager(null);
 	}
 
 }
