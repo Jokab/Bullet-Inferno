@@ -71,10 +71,12 @@ public class ResourceManagerImpl implements ResourceManager {
 	}
 	
 	public enum SoundEffectType {
-		DEFAULT_ENEMY_SHIP();
+		DEFAULT_ENEMY_SHIP,
+		HARD_BOSS_SHIP;
 		
 		static {
 			DEFAULT_ENEMY_SHIP.mapping.put("DIED", "data/explosion.mp3");
+			HARD_BOSS_SHIP.mapping.put("DIED", "data/explosion.mp3");
 		}
 		
 		private final Map<String, String> mapping = new HashMap<String, String>();
@@ -116,7 +118,8 @@ public class ResourceManagerImpl implements ResourceManager {
 			}
 		}
 		
-		throw new RuntimeException("Sound not found for that identifier.");
+		throw new RuntimeException(String.format("Sound not found for the identifier:action combination '%s:%s'", 
+				identifier.getIdentifier(), action.getAction()));
 	}
 
 	/**
@@ -177,7 +180,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		try {
 			type = TextureType.valueOf(identifier);
 		} catch (IllegalArgumentException exception) {
-			throw new IllegalArgumentException("resource identifier not found", exception);
+			throw new IllegalArgumentException(
+					String.format("Resource with identifier '%s' could not be found", identifier),
+					exception);
 		}
 
 		return getTexture(type);
