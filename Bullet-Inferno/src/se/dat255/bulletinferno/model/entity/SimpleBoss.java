@@ -37,11 +37,8 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private boolean isOnScreen = false;
 	
 	public SimpleBoss(PhysicsEnvironment physics, EntityEnvironment entities, 
-
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
-
 			Weapon[] weapons, int score, int credits, 
-
 			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
 		super(physics, entities, type, position, velocity, initialHealth, weapons, 
 				 score, credits, bodyDefinition, scoreListener);
@@ -101,10 +98,11 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	@Override
 	public void viewportIntersectionBegin() {
+		super.viewportIntersectionBegin();
+		
 		for (int i = 0; i < getWeapons().length; i++) {
 			timers[i].start();
 		}
-		super.viewportIntersectionBegin();
 		if(!isOnScreen) {
 			player.halt(super.getDimensions().x);
 			isOnScreen = true;
@@ -114,7 +112,6 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	@Override
 	public void takeDamage(float damage) {
-
 		super.takeDamage(damage);
 
 		if (isDead()) {
@@ -125,8 +122,10 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	
 	// Different firing methods determine how many weapon to fire and in what direction
 	
-	/** Fires projectiles in a straight line. Only fires the BOSS_SPR* getWeapons().
-	 * Cannot be used simultaneously with fireSpread() or fireSpreadAim() */
+	/**
+	 * Fires projectiles in a straight line. Only fires the BOSS_SPR* weapons. Cannot be used
+	 * simultaneously with fireSpread() or fireSpreadAim()
+	 */
 	public void fireWide(Timer source) {
 		for (int i = 0; i < getWeapons().length; i++) {
 			weaponId = getWeapons()[i].getType().getIdentifier();
@@ -138,8 +137,10 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	}
 	
-	/** Fires projectiles in a wide, spreading pattern. Only fires the BOSS_SPR* getWeapons().
-	 * Cannot be used simultaneously with fireWide() or fireSpreadAim() */
+	/**
+	 * Fires projectiles in a wide, spreading pattern. Only fires the BOSS_SPR* weapons. Cannot be
+	 * used simultaneously with fireWide() or fireSpreadAim()
+	 */
 	public void fireSpread(Timer source) {
 		for (int i = 0; i < getWeapons().length; i++) {
 			weaponId = getWeapons()[i].getType().getIdentifier();
@@ -150,9 +151,10 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	}
 	
-	/** Fires projectiles in a wide, spreading pattern aimed towards the player. Only fires the BOSS_AIM* 
-	 *		getWeapons().
-	 * Cannot be used simultaneously with fireAim() */
+	/**
+	 * Fires projectiles in a wide, spreading pattern aimed towards the player. Only fires the
+	 * BOSS_AIM* weapons. Cannot be used simultaneously with fireAim()
+	 */
 	public void fireSpreadAim(Timer source) {
 		for (int i = 0; i < getWeapons().length; i++) {
 			weaponId = getWeapons()[i].getType().getIdentifier();
@@ -165,7 +167,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	}
 
-	/** Fires projectiles aimed towards the player. Only fires the BOSS_AIM* getWeapons(). */
+	/** Fires projectiles aimed towards the player. Only fires the BOSS_AIM* weapons. */
 	public void fireAim(Timer source) {
 		for (int i = 0; i < getWeapons().length; i++) {
 			weaponId = getWeapons()[i].getType().getIdentifier();
