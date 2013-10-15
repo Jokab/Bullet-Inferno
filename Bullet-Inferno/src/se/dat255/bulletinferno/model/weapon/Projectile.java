@@ -55,4 +55,14 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	
 	public ProjectileType getType();
 
+	/**
+	 * Sets a flag for if this projectile should collide with instances of {@link Obstacle} (the
+	 * "ground" and other non-living objects).
+	 * The default value is True.
+	 * 
+	 * @param collideWithObstacles
+	 *        true if the projectile should collide with {@link Obstacle} instances.
+	 */
+	public void setCollideWithObstacles(boolean collideWithObstacles);
+
 }
