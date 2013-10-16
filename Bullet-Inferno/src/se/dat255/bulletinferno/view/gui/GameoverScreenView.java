@@ -5,7 +5,6 @@ import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -21,7 +20,6 @@ public class GameoverScreenView implements RenderableGUI {
 
 	public GameoverScreenView(ResourceManager resourceManager, int score) {
 		texture = resourceManager.getTexture(TextureType.GAMEOVER_SCREEN);
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.score = score;
 	}
 

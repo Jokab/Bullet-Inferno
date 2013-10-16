@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -243,7 +242,6 @@ public class LoadoutController extends SimpleController {
 	private void setupStartButton() {
 		Texture startButtonTexture = resourceManager.getTexture(
 				TextureType.LOADOUT_START_BUTTON);
-		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
 
 		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
