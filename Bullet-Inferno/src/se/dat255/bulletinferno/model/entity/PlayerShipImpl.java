@@ -206,6 +206,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void moveY(float dy, float scale) {
 		if (!isDead()) {
+			float positionY = body.getPosition().y;
+			float resultY = positionY + dy;
+			if(resultY < 0.5f)
+				dy = 0.5f-positionY;
+			if(resultY > 8.5f)
+				dy = 8.5f-positionY;
 			body.getBox2DBody().setTransform(getPosition().add(0, scale * dy), 0);
 		}
 	}
