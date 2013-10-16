@@ -96,7 +96,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		
 		private SoundEffectType() {}
 		
-		public String getSource(String key) {
+		public String getPath(String key) {
 			return mapping.get(key);
 		}
 	}
@@ -127,7 +127,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	public Sound getSound(ResourceIdentifier identifier, GameAction action) {
 		for (SoundEffectType soundEffectType : SoundEffectType.values()) {
 			if (identifier.getIdentifier().equals(soundEffectType.name())) {
-				return manager.get(soundEffectType.getSource(action.getAction()), Sound.class);
+				return manager.get(soundEffectType.getPath(action.getAction()), Sound.class);
 			}
 		}
 		
