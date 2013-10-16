@@ -23,7 +23,7 @@ public class SegmentView implements Renderable {
 	/** A reference to the slices needed for this view to render */
 	public final SliceView[] slices;
 	/** The texture that is used for this Segment and its Slices */
-	public final Texture texture;
+	public final TextureRegion texture;
 
 	/** Creates a new view for the given segment */
 	public SegmentView(ResourceManager resourceManager, Segment segment) {

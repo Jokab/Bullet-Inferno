@@ -240,12 +240,11 @@ public class LoadoutController extends SimpleController {
 	}
 
 	private void setupStartButton() {
-		Texture startButtonTexture = resourceManager.getTexture(
+		TextureRegion startButtonTexture = resourceManager.getTexture(
 				TextureType.LOADOUT_START_BUTTON);
-		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
 
 		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
-		startButtonStyle.up = new TextureRegionDrawable(startButtonRegion);
+		startButtonStyle.up = new TextureRegionDrawable(startButtonTexture);
 		startButtonStyle.over = skin.newDrawable(startButtonStyle.up, Color.LIGHT_GRAY);
 
 		ImageButton startButton = new ImageButton(startButtonStyle);

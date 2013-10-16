@@ -54,7 +54,7 @@ public class HudView implements Renderable {
 	 */
 	public HudView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
-		Texture hudTexture = resourceManager.getTexture(TextureType.HUD_TEXTURE);
+		Texture hudTexture = resourceManager.getTexture(TextureType.HUD_TEXTURE).getTexture();
 		
 		lifeBackground = new TextureRegion(hudTexture, 2, 35, 162, 33);
 		lifeRegion = new TextureRegion(hudTexture, 9, 10, 1, 20); // 9 -> 158

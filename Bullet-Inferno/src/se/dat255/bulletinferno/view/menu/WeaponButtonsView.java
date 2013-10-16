@@ -99,9 +99,8 @@ public class WeaponButtonsView {
 		selectionButton.setData(wButton.getData());
 		ButtonStyle style = new ButtonStyle(wButton.getButton().getStyle());
 
-		Texture texture = resourceManager.getTexture(
-				selectionButton.getData());
-		style.up = new TextureRegionDrawable(new TextureRegion(texture));
+		style.up = new TextureRegionDrawable(resourceManager.getTexture(
+				selectionButton.getData()));
 		style.over = wButton.getButton().getStyle().up;
 
 		selectionButton.getButton().setStyle(style);
@@ -125,10 +124,9 @@ public class WeaponButtonsView {
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
-		Texture texture = resourceManager.getTexture(identifier);
-		TextureRegion region = new TextureRegion(texture);
+		TextureRegion texture = resourceManager.getTexture(identifier);
 		ButtonStyle buttonStyle = new ButtonStyle();
-		buttonStyle.up = new TextureRegionDrawable(region);
+		buttonStyle.up = new TextureRegionDrawable(texture);
 
 		return new Button(buttonStyle);
 	}

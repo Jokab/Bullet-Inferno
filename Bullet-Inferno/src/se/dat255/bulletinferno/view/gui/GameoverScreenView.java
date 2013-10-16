@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -15,7 +16,7 @@ public class GameoverScreenView implements RenderableGUI {
 
 	private final Vector2 position = new Vector2(-8.05f, -4.55f);
 	private final Vector2 size = new Vector2(16.1f, 9.1f);
-	private final Texture texture;
+	private final TextureRegion texture;
 	private final int score;
 
 	public GameoverScreenView(ResourceManager resourceManager, int score) {

@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.view.RenderableGUI;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -16,7 +17,7 @@ public class PauseScreenView implements RenderableGUI {
 
 	private final Vector2 position = new Vector2(-8.0f, -4.5f);
 	private final Vector2 size = new Vector2(16.0f, 9.0f);
-	private final Texture texture;
+	private final TextureRegion texture;
 
 	public PauseScreenView(ResourceManager resourceManager) {
 		texture = resourceManager.getTexture(TextureType.PAUSE_SCREEN);

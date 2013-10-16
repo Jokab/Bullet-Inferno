@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -18,8 +19,8 @@ public class PlayerShipLoadoutView implements Renderable {
 
 	private final Weapon standardWeapon;
 	private final Weapon heavyWeapon;
-	private final Texture standardWeaponTexture;
-	private final Texture heavyWeaponTexture;
+	private final TextureRegion standardWeaponTexture;
+	private final TextureRegion heavyWeaponTexture;
 	private final Sprite standardWeaponSprite;
 	private final Sprite heavyWeaponSprite;
 

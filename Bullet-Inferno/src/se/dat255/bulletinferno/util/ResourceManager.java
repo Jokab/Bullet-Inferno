@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * A class that holds mappings between types of objects in the game and static resources
@@ -25,7 +26,7 @@ public interface ResourceManager extends Disposable {
 	 *        The TextureType connected with the Texture you want.
 	 * @return The ManagedTexture-object.
 	 */
-	Texture getTexture(TextureType textureType);
+	TextureRegion getTexture(TextureType textureType);
 
 	/**
 	 * Returns a ManagedTexture-object containing the Texture connected
@@ -35,7 +36,7 @@ public interface ResourceManager extends Disposable {
 	 *        The identifier to be used for looking up the Texture.
 	 * @return The ManagedTexture-object.
 	 */
-	Texture getTexture(ResourceIdentifier identifier);
+	TextureRegion getTexture(ResourceIdentifier identifier);
 
 	/**
 	 * Returns the loaded {@link Sound} that is mapped to this identifier.

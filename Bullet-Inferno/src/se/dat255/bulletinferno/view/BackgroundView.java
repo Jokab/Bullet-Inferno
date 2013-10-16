@@ -15,12 +15,13 @@ import se.dat255.bulletinferno.view.map.SegmentView;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class BackgroundView implements Renderable {
 	
 	private PlayerShip ship;
-	private Texture texture;
+	private TextureRegion texture;
 	private List<SegmentView> segmentViews = Collections.emptyList();
 	private ModelEnvironment models;
 	
@@ -84,7 +85,8 @@ public class BackgroundView implements Renderable {
 		refreshSegmentViews();
 		
 		batch.disableBlending();
-		batch.draw(texture, ship.getPosition().x-ship.getDimensions().x/2, 0, 16, 9, 0, 0, 32, 1024, false, false);
+		batch.draw(texture, ship.getPosition().x-ship.getDimensions().x/2, 0, 16, 9);
+		//batch.draw(texture, ship.getPosition().x-ship.getDimensions().x/2, 0, 16, 9, 0, 0, 32, 1024, false, false);
 		batch.enableBlending();
 		
 		float shipLeftX = ship.getPosition().x;
