@@ -56,10 +56,12 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		;
 
+		/** The path to the Texture for this type */
 		private final String path;
+		/** A cached Texture for this texture type that has a filter applied to it. */
 		private Texture texture;
 
-		TextureType(String path) {
+		private TextureType(String path) {
 			this.path = path;
 		}
 
@@ -73,6 +75,11 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		public String getPath() {
 			return this.path;
+		}
+
+		/** Disposes the cached Texture. */
+		private void dispose() {
+			texture = null;
 		}
 	}
 	
@@ -208,6 +215,10 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	@Override
 	public void dispose() {
+		for(TextureType textureType : TextureType.values()){
+			textureType.dispose();
+		}
+		
 		manager.dispose();
 		manager = null;
 		Texture.setAssetManager(null);
