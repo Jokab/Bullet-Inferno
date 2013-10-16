@@ -47,10 +47,8 @@ public class PlayerShipView implements Renderable, Timerable {
 		this.shipDimensions = ship.getDimensions();
 
 		shipTexture = resourceManager.getTexture(ship);
-		shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 		explosion = resourceManager.getTexture(TextureType.PLAYER_EXPLOSION);
-		explosion.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 		shipSprite = new Sprite(shipTexture);
 		shipSprite.setSize(shipDimensions.x, shipDimensions.y);

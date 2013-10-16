@@ -33,7 +33,6 @@ public class PlayerShipLoadoutView implements Renderable {
 		// Standard weapon
 		standardWeapon = ship.getLoadout().getStandardWeapon();
 		standardWeaponTexture = resourceManager.getTexture(standardWeapon.getType());
-		standardWeaponTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		standardWeaponSprite = new Sprite(standardWeaponTexture);
 		standardWeaponSprite.setSize(standardWeapon.getDimensions().x,
 				standardWeapon.getDimensions().y);
@@ -41,7 +40,6 @@ public class PlayerShipLoadoutView implements Renderable {
 		// Heavy weapon
 		heavyWeapon = ship.getLoadout().getHeavyWeapon();
 		heavyWeaponTexture = resourceManager.getTexture(heavyWeapon.getType());
-		heavyWeaponTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		heavyWeaponSprite = new Sprite(heavyWeaponTexture);
 		heavyWeaponSprite.setSize(heavyWeapon.getDimensions().x, heavyWeapon.getDimensions().y);
 

@@ -6,7 +6,6 @@ import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -43,7 +42,6 @@ public class EnemyView implements Renderable {
 
 			if(viewport.frustum.boundsInFrustum(bounds)) {
 				this.texture = resourceManager.getTexture(enemy);
-				texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				this.sprite.setTexture(texture);
 				sprite.setRegion(texture);
 				sprite.setSize(enemy.getDimensions().x, enemy.getDimensions().y);

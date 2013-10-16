@@ -39,7 +39,6 @@ public class ProjectileView implements Renderable {
 
 			if(viewport.frustum.boundsInFrustum(bounds)) {
 				texture = resourceManager.getTexture(projectile.getType());
-	
 				sprite.setTexture(texture);
 				sprite.setRegion(texture);
 				
