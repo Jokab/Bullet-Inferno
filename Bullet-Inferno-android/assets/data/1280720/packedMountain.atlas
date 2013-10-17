@@ -3,11 +3,12 @@ mountain1.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain1
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
 
@@ -15,35 +16,38 @@ mountain2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain2
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
-
-mountain3.png
+  
+mmountain3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain3
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
-
+  
 mountain4.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain4
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
 
@@ -51,11 +55,12 @@ mountain5.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain5
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
 
@@ -63,34 +68,37 @@ mountain6.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain6
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
-  index: -1  
-
+  index: -1
+  
 mountain7.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain7
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
-  index: -1  
-
+  index: -1
+  
 mountain8.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-missile
+
+mountain8
   rotate: false
   xy: 0, 0
-  size: 1920, 10180
-  orig: 0, 0
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
-  index: -1  
+  index: -1

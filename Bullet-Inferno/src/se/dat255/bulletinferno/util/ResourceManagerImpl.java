@@ -19,6 +19,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Definition of all the assets that should be handled by the resource manager
  */
 public class ResourceManagerImpl implements ResourceManager {
+	private static final Resolution[] SUPPORTED_RESOLUTIONS = {
+	        new Resolution(450, 800, "800450"),
+	        new Resolution(720, 1280, "1280720"),
+	        new Resolution(1080, 1920, "19201080")
+	};
 	
 	public enum SoundEffectType {
 		DEFAULT_ENEMY_SHIP,
@@ -42,12 +47,9 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	public ResourceManagerImpl() {
 		manager = new AssetManager();
-		
-		Resolution[] resolutions = { new Resolution(225, 400, ".480320"),
-                new Resolution(450, 800, "800450"),
-                new Resolution(1080, 1920, "19201080")};
+
 		ResolutionFileResolver resolver = new ResolutionFileResolver(
-				new InternalFileHandleResolver(), resolutions);
+				new InternalFileHandleResolver(), SUPPORTED_RESOLUTIONS);
 		
 		manager.setLoader(Texture.class, new TextureLoader(resolver));
 		manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
