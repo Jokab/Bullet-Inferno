@@ -3,24 +3,19 @@ package se.dat255.bulletinferno.util;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
- * An interface to define a holder class for a texture definition.
- *
- */
-interface TextureHolder extends Disposable {	
-
+public interface TextureDefinition extends Disposable {
 	/**
-	 * Returns the texture held by this texture holder
+	 * Returns the texture held by this definition
 	 * @param manager the asset manager
 	 * @return
 	 */
 	public TextureRegion getTexture(AssetManager manager);
 	
 	/**
-	 * Returns the source of the image 
+	 * Returns the source of the texture image 
 	 * @return
 	 */
-	public String getSource();
+	public String getSrouce();
 	
 	/**
 	 * Loads the source the texture held by this holder,

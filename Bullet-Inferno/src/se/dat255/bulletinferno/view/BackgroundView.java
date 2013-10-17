@@ -9,7 +9,7 @@ import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -32,7 +32,7 @@ public class BackgroundView implements Renderable {
 
 	public BackgroundView(ModelEnvironment models, ResourceManager resourceManager, PlayerShip ship) {
 		this.ship = ship;		
-		texture = resourceManager.getTexture(TextureType.BLUE_BACKGROUND);
+		texture = resourceManager.getTexture(TextureDefinitionImpl.BLUE_BACKGROUND);
 		this.models = models;
 		this.resourceManager = resourceManager;
 	}

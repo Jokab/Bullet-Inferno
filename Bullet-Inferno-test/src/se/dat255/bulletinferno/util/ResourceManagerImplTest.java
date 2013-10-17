@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import se.dat255.bulletinferno.test.Common;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
 
 public class ResourceManagerImplTest {
 
@@ -23,9 +22,9 @@ public class ResourceManagerImplTest {
 	@Test
 	public void testAllTextureTypesHavePath() {
 		// Make sure every TextureType has a path
-		for (TextureType textureType : TextureType.values()) {
+		for (TextureDefinitionImpl textureType : TextureDefinitionImpl.values()) {
 			assertNotNull("Each TextureType should have a non-null path",
-					textureType.getPath());
+					textureType.getSrouce());
 		}
 	}
 
@@ -48,7 +47,7 @@ public class ResourceManagerImplTest {
 
 	@Test
 	public void loadNotLoadedTexture() throws RuntimeException {
-		TextureType textureType = TextureType.values()[0];
+		TextureDefinitionImpl textureType = TextureDefinitionImpl.values()[0];
 
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("Texture " + textureType.name() + " is not loaded.");

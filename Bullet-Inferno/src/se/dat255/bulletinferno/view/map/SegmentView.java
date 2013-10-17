@@ -5,11 +5,10 @@ import java.util.List;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.Slice;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.Renderable;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -30,7 +29,7 @@ public class SegmentView implements Renderable {
 		this.segment = segment;
 		// TODO: Not hardcode
 		// Load segment image into texture
-		texture = resourceManager.getTexture(TextureType.MAP_MOUNTAIN);
+		texture = resourceManager.getTexture(TextureDefinitionImpl.MAP_MOUNTAIN);
 
 		List<? extends Slice> slices = segment.getSlices();
 

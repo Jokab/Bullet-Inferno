@@ -107,15 +107,20 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.start();
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
-		shapes.add(PhysicsShapeFactory.getRectangularShape(2f, 0.3f));
-		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 1f, new Vector2(
-				(2f / 2 - 0.4f / 2), 0)));
+		// Body
+		shapes.add(PhysicsShapeFactory.getRectangularShape(1.8f, 0.4f));
+		// Box
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 0.51f, new Vector2(
+				0.45f, 0.255f)));
+		// Propeller
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.03f, 0.51f, new Vector2(
+				0.83f, -0.255f)));
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shapes,
 				BodyType.DYNAMIC);
 
 		this.body = physics.createBody(bodyDefinition, this, position);
 		this.body.setVelocity(forwardSpeed);
-
+		
 		// Sets correct offsets based on ship type
 		// Needs to be done after the body creation, i.e. getDimensions()
 		weaponLoadout.getStandardWeapon().setOffset(

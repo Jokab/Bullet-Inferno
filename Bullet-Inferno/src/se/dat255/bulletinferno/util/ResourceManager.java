@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.util;
 
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -22,11 +20,11 @@ public interface ResourceManager extends Disposable {
 	 * Returns a ManagedTexture-object containing the Texture connected
 	 * with this TextureType.
 	 * 
-	 * @param textureType
-	 *        The TextureType connected with the Texture you want.
+	 * @param textureDefinition
+	 *        The Texture Definition connected with the Texture you want.
 	 * @return The ManagedTexture-object.
 	 */
-	TextureRegion getTexture(TextureType textureType);
+	TextureRegion getTexture(TextureDefinition textureDefinition);
 
 	/**
 	 * Returns a ManagedTexture-object containing the Texture connected

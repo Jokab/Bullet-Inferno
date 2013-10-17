@@ -6,7 +6,7 @@ import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.menu.PassiveButton;
 import se.dat255.bulletinferno.view.menu.PassiveButtonsView;
 import se.dat255.bulletinferno.view.menu.SpecialButton;
@@ -241,7 +241,7 @@ public class LoadoutController extends SimpleController {
 
 	private void setupStartButton() {
 		TextureRegion startButtonTexture = resourceManager.getTexture(
-				TextureType.LOADOUT_START_BUTTON);
+				TextureDefinitionImpl.LOADOUT_START_BUTTON);
 
 		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
 		startButtonStyle.up = new TextureRegionDrawable(startButtonTexture);

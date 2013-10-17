@@ -1,10 +1,9 @@
 package se.dat255.bulletinferno.view.gui;
 
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -20,7 +19,7 @@ public class PauseScreenView implements RenderableGUI {
 	private final TextureRegion texture;
 
 	public PauseScreenView(ResourceManager resourceManager) {
-		texture = resourceManager.getTexture(TextureType.PAUSE_SCREEN);
+		texture = resourceManager.getTexture(TextureDefinitionImpl.PAUSE_SCREEN);
 	}
 
 	@Override

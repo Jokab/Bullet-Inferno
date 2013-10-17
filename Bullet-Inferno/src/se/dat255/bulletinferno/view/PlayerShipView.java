@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;
@@ -49,7 +49,7 @@ public class PlayerShipView implements Renderable, Timerable {
 
 		shipTexture = resourceManager.getTexture(ship);
 
-		explosion = resourceManager.getTexture(TextureType.PLAYER_EXPLOSION);
+		explosion = resourceManager.getTexture(TextureDefinitionImpl.PLAYER_EXPLOSION);
 
 		shipSprite = new Sprite(shipTexture);
 		shipSprite.setSize(shipDimensions.x, shipDimensions.y);
@@ -59,7 +59,7 @@ public class PlayerShipView implements Renderable, Timerable {
 		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
 
 		// TODO: How should we do with managed textures? No disposal?
-		smokeTexture = resourceManager.getTexture(TextureType.SMOKE_PARTICLE);
+		smokeTexture = resourceManager.getTexture(TextureDefinitionImpl.SMOKE_PARTICLE);
 		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		smokeTrail = new SmokeTrail(smokeTexture.getTexture(), SMOKE_PARTICLE_COUNT);
 		
