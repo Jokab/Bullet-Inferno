@@ -134,7 +134,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			takeDamage(((ProjectileDefinition) other).getDamage());
 		} else if (collidedWithNonTeammember(other)) {
 			if(other instanceof Enemy) {
-				takeDamage(0.6f / takeDamageModifier);
+				takeDamage(0.6f, true);
 			} else {
 				die();
 			}
@@ -175,6 +175,17 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		if (isDead()) {
 			dispose();
+		}
+	}
+	
+	/** Helper method for taking damage without using the takeDamageModifier. 
+	 * @see PlayerShip#takeDamage(float)
+	 */
+	private void takeDamage(float damage, boolean ignoreDamageModifier) {
+		if(ignoreDamageModifier) {
+			takeDamage(damage / takeDamageModifier);
+		} else {
+			takeDamage(damage);
 		}
 	}
 
@@ -255,8 +266,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	/** Causes the player to instantly die */
 	private void die() {
-		health = 0;
-		dispose();
+		takeDamage(health, true);
 	}
 	
 	@Override
