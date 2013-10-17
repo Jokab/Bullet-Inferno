@@ -39,6 +39,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
 		MISSILE("data/missile.png"),
+		SPECIAL_ABILITY_MISSILE("data/missile.png"),
 		PLASMA("data/plasma.png"),
 		HIGH_VELOCITY_PROJECTILE("data/missile.png"),
 
