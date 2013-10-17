@@ -44,9 +44,6 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	@Override
 	public void activate(PlayerShip playerShip) {
-		// TODO: there is something wrong with this code. the projectiles travel exponentially
-		// faster with each activation
-
 		this.playerShip = playerShip;
 		bulletPositions.clear();
 		counter = 0;
