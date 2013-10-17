@@ -14,21 +14,27 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
  */
 public class ResourceManagerImpl implements ResourceManager {
 	public enum TextureType {
-		DEFAULT_SHIP("data/defaultEnemy.png"),
-		FAST_SHIP("data/defaultEnemy.png"),
-		SLOW_SHIP("data/defaultEnemy.png"),
+		DEFAULT_SHIP("data/katze.png"),
+		FAST_SHIP("data/katze.png"),
+		SLOW_SHIP("data/katze.png"),
 		MAP_MOUNTAIN("images/game/mountain.png"),
 
-		DEFAULT_ENEMY_SHIP("data/defaultEnemy.png"),
-		SPECIAL_ENEMY_SHIP("data/specialEnemy.png"),
-		HARD_BOSS_SHIP("data/boss.png"),
-		EASY_BOSS_SHIP("data/bossEnemy.png"),
+		KATZE("data/katze.png"),
+		SQUIB("data/squib.png"),
+		EHMO("data/EHMO.png"),
+		DRIPPER("data/dripper.png"),
 
 		// Player ship
 		PLAYER_DEFAULT("data/playerShip.png"),
 		PLAYER_EXPLOSION("data/explosion.gif"),
 
 		// Weapons
+		MACHINE_GUN("data/machineGun.png"),
+		MINI_GUN("data/miniGun.png"),
+		PLASMA_GUN("data/plasmaGun.png"),
+		EGG_CANNON("data/eggCannon.png"),
+		
+		
 		MISSILE_LAUNCHER("data/missileLauncher.png"),
 		DISORDERER("data/disorderer.png"),
 		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
@@ -36,10 +42,16 @@ public class ResourceManagerImpl implements ResourceManager {
 		SNIPER_RIFLE("data/sniperRifle.png"),
 
 		// Projectiles
+		VELOCITY_BULLET("data/bullet.png"),
+		ROUND_BULLET("data/bullet.png"),
+		PLASMA("data/plasma.png"),
+		EGG("data/egg.png"),
+		
+		
+		
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
 		MISSILE("data/missile.png"),
-		PLASMA("data/plasma.png"),
 		HIGH_VELOCITY_PROJECTILE("data/missile.png"),
 
 		// Buttons
@@ -77,11 +89,11 @@ public class ResourceManagerImpl implements ResourceManager {
 	}
 	
 	public enum SoundEffectType {
-		DEFAULT_ENEMY_SHIP,
+		KATZE,
 		HARD_BOSS_SHIP;
 		
 		static {
-			DEFAULT_ENEMY_SHIP.mapping.put("DIED", "data/explosion.mp3");
+			KATZE.mapping.put("DIED", "data/explosion.mp3");
 			HARD_BOSS_SHIP.mapping.put("DIED", "data/explosion.mp3");
 		}
 		

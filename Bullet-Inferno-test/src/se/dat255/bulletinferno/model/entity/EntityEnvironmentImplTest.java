@@ -58,7 +58,7 @@ public class EntityEnvironmentImplTest {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
-		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.KATZE, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 
 				weapons, loadout, new HealthMockListener());
@@ -68,7 +68,7 @@ public class EntityEnvironmentImplTest {
 		assertTrue("Check so that the enemy only get added ocnce", 
 				entities.getEnemies().size() == 1);
 		
-		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.KATZE, new Vector2(), 
 				new Vector2(), 0, 
 				new Weapon[] {WeaponDefinitionImpl.FORCE_GUN.createWeapon(physics, weapons,
 						new Vector2())}, 
@@ -84,9 +84,9 @@ public class EntityEnvironmentImplTest {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
-		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.KATZE, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
-		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.DEFAULT_ENEMY_SHIP, new Vector2(), 
+		Enemy enemy2 = new EnemyMockup(EnemyDefinitionImpl.KATZE, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
 		
 		EntityEnvironment entities = new EntityEnvironmentImpl(physics, 

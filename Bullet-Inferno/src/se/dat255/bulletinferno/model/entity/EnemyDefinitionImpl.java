@@ -21,23 +21,27 @@ import com.badlogic.gdx.math.Vector2;
 public enum EnemyDefinitionImpl implements EnemyDefinition {
 
 	
-	DEFAULT_ENEMY_SHIP(new Vector2(-1, 0), 0.5f,
-			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.DISORDERER, 0, 0)}, 10,
-			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1))),
+	KATZE(new Vector2(-1, 0), 0.5f,
+			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.MACHINE_GUN, 0, 0)}, 10,
+			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1.7f, 0.9f))),
 
-	SPECIAL_ENEMY_SHIP(new Vector2(-2, 0), 0.5f,
-			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.FORCE_GUN, 0, 0) }, 10, 10,
+	SQUIB(new Vector2(-2, 0), 0.5f,
+			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.LASER_GUN, 0, 0) }, 10, 10,
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), new DisorderedMovementPattern(1, 1)),
 
-	EASY_BOSS_SHIP(new Vector2(0, 2), 0.10f,
+	
+			
+	// BOSSES BELOW
+			
+	EHMO(new Vector2(0, 2), 0.10f,
 			new WeaponPlacementImpl[] { new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0 , 0),
 					new WeaponPlacementImpl (WeaponDefinitionImpl.BOSS_AIM, 0, 0) }, 10, 10,
 
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(3, 4.76f)),
 			new DisorderedMovementPattern(1, 4)),
 
 
-	HARD_BOSS_SHIP(new Vector2(0, 2), 25,
+	DRIPPER(new Vector2(0, 2), 25,
 
 			new WeaponPlacementImpl[] {
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0),
@@ -45,8 +49,8 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0),
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, -1/2f) }, 10, 10,
 
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(2, 2)),
-			new DisorderedMovementPattern(1, 4));
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(3, 3.36f)),
+			new DisorderedMovementPattern(1f, 4));
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;
@@ -82,7 +86,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 	@Override
 	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {
-		if (this == EASY_BOSS_SHIP || this == HARD_BOSS_SHIP) {
+		if (this == EHMO || this == DRIPPER) {
 			return getBoss(physics, entities, weaponEnvironment, position, scoreListener);
 		} else {
 			return getEnemyShip(physics, entities, weaponEnvironment, position, scoreListener);

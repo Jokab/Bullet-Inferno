@@ -40,7 +40,7 @@ public class EnemyDefinitionTest {
 	@Test
 	public void testEnemyPosition() {
 		Vector2 position = new Vector2(1, 1);
-		Enemy enemy = EnemyDefinitionImpl.SPECIAL_ENEMY_SHIP.createEnemy(physics, entities, 
+		Enemy enemy = EnemyDefinitionImpl.SQUIB.createEnemy(physics, entities, 
 				weapons, position, scoreListener);
 
 		assertTrue(
