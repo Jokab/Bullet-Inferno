@@ -8,7 +8,6 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	DEFAULT_SHIP(texture("data/defaultEnemy.png")),
 	FAST_SHIP(texture("data/defaultEnemy.png")),
 	SLOW_SHIP(texture("data/defaultEnemy.png")),
-	MAP_MOUNTAIN(texture("images/game/mountain.png")),
 
 	DEFAULT_ENEMY_SHIP(texture("data/defaultEnemy.png")),
 	SPECIAL_ENEMY_SHIP(texture("data/specialEnemy.png")),

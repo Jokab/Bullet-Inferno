@@ -21,15 +21,12 @@ public class SegmentView implements Renderable {
 	public final Segment segment;
 	/** A reference to the slices needed for this view to render */
 	public final SliceView[] slices;
-	/** The texture that is used for this Segment and its Slices */
-	public final TextureRegion texture;
 
 	/** Creates a new view for the given segment */
 	public SegmentView(ResourceManager resourceManager, Segment segment) {
 		this.segment = segment;
 		// TODO: Not hardcode
 		// Load segment image into texture
-		texture = resourceManager.getTexture(TextureDefinitionImpl.MAP_MOUNTAIN);
 
 		List<? extends Slice> slices = segment.getSlices();
 
@@ -39,9 +36,6 @@ public class SegmentView implements Renderable {
 		for (Slice slice : slices) {
 			// TODO: Determine where on Texture the slice image is
 			TextureRegion textureRegion = resourceManager.getTexture(slice);
-			if (texture == null || textureRegion == null) {
-				throw new RuntimeException((texture == null) + " or " + (textureRegion == null));
-			}
 
 			SliceView sliceView = new SliceView(slice, textureRegion);
 			this.slices[i] = sliceView;
