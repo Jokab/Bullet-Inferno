@@ -181,10 +181,10 @@ public class LoadoutController extends SimpleController {
 		weaponSelectionStyle.over = skin.newDrawable(weaponSelectionStyle.up, Color.LIGHT_GRAY);
 
 		// Standard weapon button
-		Button standardButton = setupWeaponSelectionButton(weaponSelectionStyle, weaponButtonsView.getStandardWeapons(), "standard");
+		Button standardButton = setupWeaponSelectionButton(weaponSelectionStyle, "standard");
 		
 		// Heavy weapon button
-		Button heavyButton = setupWeaponSelectionButton(weaponSelectionStyle, weaponButtonsView.getHeavyWeapons(), "heavy");
+		Button heavyButton = setupWeaponSelectionButton(weaponSelectionStyle, "heavy");
 
 		// Special button
 		Button specialButton = setupSpecialSelectionButton(weaponSelectionStyle);
@@ -198,11 +198,11 @@ public class LoadoutController extends SimpleController {
 		stage.addActor(passiveButton);
 	}
 	
-	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, List<WeaponButton> list, String type) {
+	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, String type) {
 		Button weaponButton = new Button(weaponSelectionStyle);
 		weaponButton.setSize(200, 120);
 		WeaponButton selectionButton = new WeaponButton(weaponButton, null, resourceManager);
-		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(selectionButton, list, type));
+		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(type));
 		if(type.equals("standard")) {
 			weaponButton.setPosition(100, 540);
 			weaponButtonsView.setStandardSelectionButton(selectionButton);
