@@ -8,7 +8,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.GameActionEventImpl;
@@ -109,7 +109,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 		
 		if (hitByOtherProjectile(other)) {
-			takeDamage(((Projectile) other).getDamage());
+			takeDamage(((ProjectileDefinition) other).getDamage());
 		} else if (hitByPlayerShip(other)) {
 			takeDamage(initialHealth);
 		}
@@ -121,7 +121,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 
 	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());
+		return other instanceof ProjectileDefinition && !isInMyTeam(((ProjectileDefinition) other).getSource());
 	}
 
 	/**

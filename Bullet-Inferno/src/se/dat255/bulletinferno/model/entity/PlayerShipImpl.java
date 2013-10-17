@@ -11,7 +11,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
@@ -131,7 +131,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void preCollided(Collidable other) {
 		if (hitByOtherProjectile(other)) {
-			takeDamage(((Projectile) other).getDamage());
+			takeDamage(((ProjectileDefinition) other).getDamage());
 		} else if (collidedWithNonTeammember(other)) {
 			if(other instanceof Enemy) {
 				takeDamage(0.6f / takeDamageModifier);
@@ -146,7 +146,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());
+		return other instanceof ProjectileDefinition && !isInMyTeam(((ProjectileDefinition) other).getSource());
 	}
 
 	/**

@@ -8,7 +8,7 @@ import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.MapEnvironment;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.Disposable;
 
@@ -61,7 +61,7 @@ public interface ModelEnvironment extends Disposable {
 	 *
 	 * @return a list of projectiles currently in the game.
 	 */
-	public List<? extends Projectile> getProjectiles();
+	public List<? extends ProjectileDefinition> getProjectiles();
 	
 	/**
 	 * @return the game's physics environment. Only for use by controllers!
