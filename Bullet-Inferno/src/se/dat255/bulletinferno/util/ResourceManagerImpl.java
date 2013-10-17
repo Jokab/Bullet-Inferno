@@ -28,26 +28,28 @@ public class ResourceManagerImpl implements ResourceManager {
 		PLAYER_DEFAULT("data/playerShip.png"),
 		PLAYER_EXPLOSION("data/explosion.gif"),
 
-		// Weapons
-		MACHINE_GUN("data/machineGun.png"),
-		MINI_GUN("data/miniGun.png"),
-		PLASMA_GUN("data/plasmaGun.png"),
-		EGG_CANNON("data/eggCannon.png"),
+		/* Weapons */
+		// Standard
+		STANDARD_MACHINE_GUN("data/machineGun.png"),
+		STANDARD_MINI_GUN("data/miniGun.png"),
+		STANDARD_PLASMA_GUN("data/plasmaGun.png"),
 		
+		STANDARD_MISSILE_LAUNCHER("data/missileLauncher.png"),
+		STANDARD_DISORDERER("data/disorderer.png"),
+		STANDARD_MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
+		STANDARD_DISORDERER_LARGE("data/disordererLarge.png"),
+		STANDARD_SNIPER_RIFLE("data/sniperRifle.png"),
 		
-		MISSILE_LAUNCHER("data/missileLauncher.png"),
-		DISORDERER("data/disorderer.png"),
-		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
-		DISORDERER_LARGE("data/disordererLarge.png"),
-		SNIPER_RIFLE("data/sniperRifle.png"),
+		// Heavy
+		HEAVY_EGG_CANNON("data/eggCannon.png"),
+		HEAVY_LASER_CANNON("data/laserCannon.png"),
 
 		// Projectiles
 		VELOCITY_BULLET("data/bullet.png"),
 		ROUND_BULLET("data/bullet.png"),
 		PLASMA("data/plasma.png"),
 		EGG("data/egg.png"),
-		
-		
+		LASER("data/laser.png"),
 		
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),

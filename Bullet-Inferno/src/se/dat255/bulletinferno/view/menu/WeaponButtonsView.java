@@ -49,16 +49,22 @@ public class WeaponButtonsView {
 
 	private void populateTableWithHeavy() {
 		if (heavyWeapons.size() == 0) {
-			for (int i = 0; i < 5; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				WeaponDefinition weaponData = WeaponDefinitionImpl.MISSILE_LAUNCHER;
-				WeaponButton weaponButton = new WeaponButton(getTableButton(weaponData),
-						weaponData,
-						resourceManager);
-				heavyWeapons.add(weaponButton);
+			WeaponDefinitionImpl[] arr = WeaponDefinitionImpl.values();
+			WeaponDefinition curWeapon = null;
+			String[] prefix = null;
+			for (int i = 0; i < arr.length; i++) {
+				prefix = arr[i].name().split("_");
+				if (prefix[0].equals("HEAVY")) {
+					curWeapon = arr[i];
 
-				weaponButton.getButton().addListener(
-						new TableElementClickedListener(heavySelectionButton, heavyWeapons));
+					WeaponButton weaponButton = new WeaponButton(getTableButton(curWeapon),
+							curWeapon,
+							resourceManager);
+					heavyWeapons.add(weaponButton);
+
+					weaponButton.getButton().addListener(
+							new TableElementClickedListener(heavySelectionButton, heavyWeapons));
+				}
 			}
 		}
 
@@ -68,17 +74,23 @@ public class WeaponButtonsView {
 	}
 
 	private void populateTableWithStandard() {
+		WeaponDefinitionImpl[] arr = WeaponDefinitionImpl.values();
+		WeaponDefinition curWeapon = null;
+		String[] prefix = null;
 		if (standardWeapons.size() == 0) {
-			for (int i = 0; i < 5; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				WeaponDefinition weaponData = WeaponDefinitionImpl.DISORDERER;
-				WeaponButton weaponButton = new WeaponButton(getTableButton(weaponData),
-						weaponData,
-						resourceManager);
-				standardWeapons.add(weaponButton);
+			for (int i = 0; i < arr.length; i++) {
+				prefix = arr[i].name().split("_");
+				if (prefix[0].equals("STANDARD")) {
+					curWeapon = arr[i];
+					WeaponButton weaponButton = new WeaponButton(getTableButton(curWeapon),
+							curWeapon,
+							resourceManager);
+					standardWeapons.add(weaponButton);
 
-				weaponButton.getButton().addListener(
-						new TableElementClickedListener(standardSelectionButton, standardWeapons));
+					weaponButton.getButton().addListener(
+							new TableElementClickedListener(standardSelectionButton,
+									standardWeapons));
+				}
 			}
 		}
 
@@ -90,7 +102,7 @@ public class WeaponButtonsView {
 	private void showTable(List<WeaponButton> weaponList, String labelText) {
 		table.clear();
 		for (WeaponButton button : weaponList) {
-			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
+			this.table.add(button.getButton()).padBottom(20).height(70).width(130).row();
 		}
 		label.setText(labelText);
 	}

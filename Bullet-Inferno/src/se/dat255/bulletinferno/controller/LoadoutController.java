@@ -266,7 +266,6 @@ public class LoadoutController extends SimpleController {
 //		table.debug();
 		table.setPosition(1050, 450);
 		table.setSize(100, 40);
-
 		tableLabel = new Label("Primary Weapon", labelStyle);
 
 		tableLabel.setPosition(table.getX() - 40, table.getY() + 210);
