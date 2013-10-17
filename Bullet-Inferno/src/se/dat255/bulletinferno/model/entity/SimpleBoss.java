@@ -144,7 +144,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		for (int i = 0; i < weapons.length; i++) {
 			weaponId = weapons[i].getType().getIdentifier();
 			if (source == timers[i] && weaponId.substring(0,8).equals("BOSS_SPR")) {
-				weapons[i].fire(this.getPosition(), new Vector2(-1, 0), this);
+				weapons[i].fire(new Vector2(this.getPosition().x,this.getPosition().y+weapons[i].getOffset().y), new Vector2(-1, 0), this);
 			}
 		}
 
