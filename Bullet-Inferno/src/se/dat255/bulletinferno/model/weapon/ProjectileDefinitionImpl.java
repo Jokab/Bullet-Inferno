@@ -10,7 +10,7 @@ import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionListener {
+public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsViewportIntersectionListener {
 
 	private PhysicsBody body = null;
 
@@ -34,7 +34,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	private Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
-			weapons.disposeProjectile(ProjectileImpl.this);
+			weapons.disposeProjectile(ProjectileDefinitionImpl.this);
 		}
 	};
 
@@ -44,7 +44,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * @param game
 	 *        the game instance.
 	 */
-	public ProjectileImpl(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+	public ProjectileDefinitionImpl(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
 		this.weapons = weapons;
 	}
@@ -109,7 +109,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		if(!collideWithObstacles && (other instanceof Obstacle)) {
 			return false;
 		}
-		return ((damage > 0 && !(other instanceof Projectile) && other != getSource()) 
+		return ((damage > 0 && !(other instanceof ProjectileDefinition) && other != getSource()) 
 				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)));
 	}
 

@@ -1,7 +1,7 @@
 package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.ModelEnvironment;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -30,7 +30,7 @@ public class ProjectileView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
-		for (Projectile projectile : modelEnvironment.getProjectiles()) {
+		for (ProjectileDefinition projectile : modelEnvironment.getProjectiles()) {
 			minBounds.x = projectile.getPosition().x;
 			minBounds.y = projectile.getPosition().y;
 			maxBounds.x = minBounds.x + projectile.getDimensions().x;

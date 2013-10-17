@@ -11,7 +11,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
@@ -131,10 +131,10 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void preCollided(Collidable other) {
 		if (hitByOtherProjectile(other)) {
-			takeDamage(((Projectile) other).getDamage());
+			takeDamage(((ProjectileDefinition) other).getDamage());
 		} else if (collidedWithNonTeammember(other)) {
 			if(other instanceof Enemy) {
-				takeDamage(0.6f / takeDamageModifier);
+				takeDamage(0.6f, true);
 			} else {
 				die();
 			}
@@ -146,7 +146,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());
+		return other instanceof ProjectileDefinition && !isInMyTeam(((ProjectileDefinition) other).getSource());
 	}
 
 	/**
@@ -175,6 +175,17 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		if (isDead()) {
 			dispose();
+		}
+	}
+	
+	/** Helper method for taking damage without using the takeDamageModifier. 
+	 * @see PlayerShip#takeDamage(float)
+	 */
+	private void takeDamage(float damage, boolean ignoreDamageModifier) {
+		if(ignoreDamageModifier) {
+			takeDamage(damage / takeDamageModifier);
+		} else {
+			takeDamage(damage);
 		}
 	}
 
@@ -206,6 +217,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void moveY(float dy, float scale) {
 		if (!isDead()) {
+			float positionY = body.getPosition().y;
+			float resultY = positionY + dy;
+			if(resultY < 0.5f)
+				dy = 0.5f-positionY;
+			if(resultY > 8.5f)
+				dy = 8.5f-positionY;
 			body.getBox2DBody().setTransform(getPosition().add(0, scale * dy), 0);
 		}
 	}
@@ -249,8 +266,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	/** Causes the player to instantly die */
 	private void die() {
-		health = 0;
-		dispose();
+		takeDamage(health, true);
 	}
 	
 	@Override

@@ -9,12 +9,12 @@ public interface WeaponEnvironment {
 	 * 
 	 * @return a list of projectiles currently in the game.
 	 */
-	public List<? extends Projectile> getProjectiles();
+	public List<? extends ProjectileDefinition> getProjectiles();
 
 	/**
 	 * Retrieve a projectile
 	 */
-	public Projectile retrieveProjectile(Class<? extends Projectile> type);
+	public ProjectileDefinition retrieveProjectile(Class<? extends ProjectileDefinition> type);
 
 	/**
 	 * Dispose of the specified projectile
@@ -22,6 +22,6 @@ public interface WeaponEnvironment {
 	 * @param projectile
 	 *        The projectile reference to dispose.
 	 */
-	public void disposeProjectile(Projectile projectile);
+	public void disposeProjectile(ProjectileDefinition projectile);
 	
 }

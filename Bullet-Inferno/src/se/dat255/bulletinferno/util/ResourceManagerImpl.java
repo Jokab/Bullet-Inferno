@@ -52,6 +52,9 @@ public class ResourceManagerImpl implements ResourceManager {
 		RED_PROJECTILE("data/redDotProjectile.png"),
 		GREEN_PROJECTILE("data/greenDotProjectile.png"),
 		MISSILE("data/missile.png"),
+
+		SPECIAL_ABILITY_MISSILE("data/missile.png"),
+
 		HIGH_VELOCITY_PROJECTILE("data/missile.png"),
 
 		// Buttons
@@ -68,10 +71,12 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		;
 
+		/** The path to the Texture for this type */
 		private final String path;
+		/** A cached Texture for this texture type that has a filter applied to it. */
 		private Texture texture;
 
-		TextureType(String path) {
+		private TextureType(String path) {
 			this.path = path;
 		}
 
@@ -85,6 +90,11 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		public String getPath() {
 			return this.path;
+		}
+
+		/** Disposes the cached Texture. */
+		private void dispose() {
+			texture = null;
 		}
 	}
 	
@@ -101,7 +111,7 @@ public class ResourceManagerImpl implements ResourceManager {
 		
 		private SoundEffectType() {}
 		
-		public String getSource(String key) {
+		public String getPath(String key) {
 			return mapping.get(key);
 		}
 	}
@@ -132,7 +142,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	public Sound getSound(ResourceIdentifier identifier, GameAction action) {
 		for (SoundEffectType soundEffectType : SoundEffectType.values()) {
 			if (identifier.getIdentifier().equals(soundEffectType.name())) {
-				return manager.get(soundEffectType.getSource(action.getAction()), Sound.class);
+				return manager.get(soundEffectType.getPath(action.getAction()), Sound.class);
 			}
 		}
 		
@@ -220,6 +230,10 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	@Override
 	public void dispose() {
+		for(TextureType textureType : TextureType.values()){
+			textureType.dispose();
+		}
+		
 		manager.dispose();
 		manager = null;
 		Texture.setAssetManager(null);

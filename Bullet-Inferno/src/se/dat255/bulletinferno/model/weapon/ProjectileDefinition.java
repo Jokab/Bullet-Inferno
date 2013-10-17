@@ -8,7 +8,7 @@ import se.dat255.bulletinferno.model.team.Teamable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public interface Projectile extends PositionEntity, Collidable, Poolable {
+public interface ProjectileDefinition extends PositionEntity, Collidable, Poolable {
 	/**
 	 * Returns the damage of the Projectile.
 	 * 

@@ -44,9 +44,11 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 	DRIPPER(new Vector2(0, 2), 25,
 
 			new WeaponPlacementImpl[] {
-					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0),
+					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0.5f),
+					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0.0f),
+					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, -0.5f),
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, 1/2f),
-					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_SPR, 0, 0),
+					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, 0f),
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, -1/2f) }, 10, 10,
 
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(3, 3.36f)),

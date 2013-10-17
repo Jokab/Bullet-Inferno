@@ -32,9 +32,11 @@ public enum ProjectileType implements ResourceIdentifier {
 	
 	RED_PROJECTILE(0.1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 			0.25f, 0.25f))), // null = straight forward
-	GREEN_PROJECTILE(0.05f, new AccelerationMovementPattern(new Vector2(-10, 0)),
+	GREEN_PROJECTILE(0.15f, new AccelerationMovementPattern(new Vector2(-10, 0)),
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f))),
-	MISSILE(0.07f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
+	MISSILE(0.5f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
+			PhysicsShapeFactory.getRectangularShape(0.4f,0.3f))),
+	SPECIAL_ABILITY_MISSILE(0.45f, new AccelerationMovementPattern(new Vector2(10, 0)), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(0.4f,0.3f))),
 	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)), 
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.8f,0.5f)));
@@ -49,11 +51,11 @@ public enum ProjectileType implements ResourceIdentifier {
 		this.bodyDefinition = bodyDefinition;
 	}
 
-	public Projectile releaseProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons,
+	public ProjectileDefinition releaseProjectile(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			Vector2 position,
 			Vector2 projectileVector, Teamable source) {
 
-		Projectile projectile = weapons.retrieveProjectile(ProjectileImpl.class);
+		ProjectileDefinition projectile = weapons.retrieveProjectile(ProjectileDefinitionImpl.class);
 		projectile.init(this, position.cpy(), projectileVector,
 				damage, source, bodyDefinition);
 		return projectile;

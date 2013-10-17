@@ -7,7 +7,7 @@ import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
 import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironmentImpl;
@@ -75,7 +75,7 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	}
 
 	@Override
-	public List<? extends Projectile> getProjectiles() {
+	public List<? extends ProjectileDefinition> getProjectiles() {
 		return weapons.getProjectiles();
 	}
 

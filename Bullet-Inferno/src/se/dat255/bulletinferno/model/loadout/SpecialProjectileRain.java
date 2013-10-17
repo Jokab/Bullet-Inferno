@@ -44,9 +44,6 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
 	@Override
 	public void activate(PlayerShip playerShip) {
-		// TODO: there is something wrong with this code. the projectiles travel exponentially
-		// faster with each activation
-
 		this.playerShip = playerShip;
 		bulletPositions.clear();
 		counter = 0;
@@ -65,7 +62,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public void onTimeout(Timer source, float timeSinceLast) {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS - 1);
 		if (counter < AMOUNT_BULLETS) {
-			ProjectileType.MISSILE.releaseProjectile(physics, weapons,
+			ProjectileType.SPECIAL_ABILITY_MISSILE.releaseProjectile(physics, weapons,
 					bulletPositions.get(index), new Vector2(3, 0), playerShip)
 					.setCollideWithObstacles(false);
 			counter++;
