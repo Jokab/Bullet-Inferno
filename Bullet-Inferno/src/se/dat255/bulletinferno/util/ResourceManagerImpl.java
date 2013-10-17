@@ -44,7 +44,8 @@ public class ResourceManagerImpl implements ResourceManager {
 		manager = new AssetManager();
 		
 		Resolution[] resolutions = { new Resolution(225, 400, ".480320"),
-                new Resolution(450, 800, "800450")};
+                new Resolution(450, 800, "800450"),
+                new Resolution(1080, 1920, "19201080")};
 		ResolutionFileResolver resolver = new ResolutionFileResolver(
 				new InternalFileHandleResolver(), resolutions);
 		

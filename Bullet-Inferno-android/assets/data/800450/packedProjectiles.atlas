@@ -1,0 +1,33 @@
+
+packedProjectiles.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+missile
+  rotate: false
+  xy: 1, 43
+  size: 69, 20
+  orig: 69, 20
+  offset: 0, 0
+  index: -1
+pinkDotProjectile
+  rotate: false
+  xy: 1, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+redDotProjectile
+  rotate: false
+  xy: 43, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+plasma
+  rotate: false
+  xy: 72, 44
+  size: 35, 19
+  orig: 35, 19
+  offset: 0, 0
+  index: -1

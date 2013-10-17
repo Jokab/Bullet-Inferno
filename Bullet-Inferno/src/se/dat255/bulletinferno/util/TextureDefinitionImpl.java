@@ -27,11 +27,11 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	SNIPER_RIFLE(texture("data/sniperRifle.png")),
 
 	// Projectiles
-	RED_PROJECTILE(textureAtlas("data/projectiles/packedProjectiles.atlas", "redDotProjectile.png")),
-	GREEN_PROJECTILE(textureAtlas("data/projectiles/packedProjectiles.atlas", "greenDotProjectile")),
-	MISSILE(textureAtlas("data/projectiles/packedProjectiles.atlas", "missile")),
-	PLASMA(textureAtlas("data/projectiles/packedProjectiles.atlas", "plasma")),
-	HIGH_VELOCITY_PROJECTILE(textureAtlas("data/projectiles/packedProjectiles.atlas", "missile")),
+	RED_PROJECTILE(textureAtlas("data/packedProjectiles.atlas", "redDotProjectile")),
+	GREEN_PROJECTILE(textureAtlas("data/packedProjectiles.atlas", "greenDotProjectile")),
+	MISSILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
+	PLASMA(textureAtlas("data/packedProjectiles.atlas", "plasma")),
+	HIGH_VELOCITY_PROJECTILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 
 	// Buttons
 	PAUSE_SCREEN(texture("images/gui/screen_pause.png")),
@@ -42,6 +42,16 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	LOADOUT_START_BUTTON(texture("data/startBtn.png")),
 	HUD_TEXTURE(texture("images/game/hud.png")),
 
+	// Slices
+	MOUNTAIN_1(textureAtlas("data/packedMountain.atlas", "mountain1")),
+	MOUNTAIN_2(textureAtlas("data/packedMountain.atlas", "mountain2")),
+	MOUNTAIN_3(textureAtlas("data/packedMountain.atlas", "mountain3")),
+	MOUNTAIN_4(textureAtlas("data/packedMountain.atlas", "mountain4")),
+	MOUNTAIN_5(textureAtlas("data/packedMountain.atlas", "mountain5")),
+	MOUNTAIN_6(textureAtlas("data/packedMountain.atlas", "mountain6")),
+	MOUNTAIN_7(textureAtlas("data/packedMountain.atlas", "mountain7")),
+	MOUNTAIN_8(textureAtlas("data/packedMountain.atlas", "mountain8")),
+	
 	// Particles
 	SMOKE_PARTICLE(texture("images/particles/smoke.png")),
 
