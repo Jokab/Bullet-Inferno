@@ -1,0 +1,14 @@
+se.dat255.bulletinferno.controller
+se.dat255.bulletinferno.model
+se.dat255.bulletinferno.model.entity
+se.dat255.bulletinferno.model.loadout
+se.dat255.bulletinferno.model.map
+se.dat255.bulletinferno.model.physics
+se.dat255.bulletinferno.model.team
+se.dat255.bulletinferno.model.weapon
+se.dat255.bulletinferno.util
+se.dat255.bulletinferno.view
+se.dat255.bulletinferno.view.audio
+se.dat255.bulletinferno.view.gui
+se.dat255.bulletinferno.view.map
+se.dat255.bulletinferno.view.menu
