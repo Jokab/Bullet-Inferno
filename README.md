@@ -15,5 +15,8 @@ Duration: 9/9 - 13/10
 ## Developer Documentation
 See the [Developer Documentation] wiki page.
 
+## User manual
+See the [User Manual](https://github.com/Jokab/Bullet-Inferno/blob/development/USER_MANUAL.md).
+
 
 
