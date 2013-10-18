@@ -1,7 +1,7 @@
 package se.dat255.bulletinferno.model.weapon;
 
 /**
- * {@inheritDoc}
+ * @see WeaponLoadout
  */
 public class WeaponLoadoutImpl implements WeaponLoadout {
 

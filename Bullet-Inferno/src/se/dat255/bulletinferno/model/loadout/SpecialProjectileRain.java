@@ -27,8 +27,8 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	private PlayerShip playerShip;
 
 	/**
-	 * Constructs a SpecialEffect which will spawn {@value #AMOUNT_BULLETS} behind the
-	 * player, firing towards the enemies.
+	 * Constructs a SpecialEffect which will spawn bullets behind the player, firing towards the
+	 * enemies.
 	 * 
 	 * @param physics
 	 *        The game's PhysicsEnvironment.

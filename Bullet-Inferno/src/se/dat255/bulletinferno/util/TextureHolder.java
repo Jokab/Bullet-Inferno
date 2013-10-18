@@ -10,18 +10,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 interface TextureHolder extends Disposable {
 
 	/**
-	 * Returns the texture held by this texture holder
-	 * 
 	 * @param manager
 	 *        the asset manager
-	 * @return
+	 * @return the texture held by this texture holder.
 	 */
 	public TextureRegion getTexture(AssetManager manager);
 
 	/**
-	 * Returns the source of the image
-	 * 
-	 * @return
+	 * @return the source of the image.
 	 */
 	public String getSource();
 

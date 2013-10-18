@@ -5,18 +5,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public interface TextureDefinition extends Disposable {
 	/**
-	 * Returns the texture held by this definition
-	 * 
 	 * @param manager
 	 *        the asset manager
-	 * @return
+	 * @return the texture held by this definition.
 	 */
 	public TextureRegion getTexture(AssetManager manager);
 
 	/**
-	 * Returns the source of the texture image
-	 * 
-	 * @return
+	 * @return the source of the texture image.
 	 */
 	public String getSrouce();
 

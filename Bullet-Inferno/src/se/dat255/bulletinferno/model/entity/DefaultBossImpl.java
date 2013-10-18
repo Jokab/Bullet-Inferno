@@ -31,7 +31,6 @@ public class DefaultBossImpl extends SimpleBoss {
 	 *        The score rewarded when boss is killed
 	 * @param credits
 	 *        The credit rewarded when boss is killed
-	 * @param offsets
 	 */
 	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 

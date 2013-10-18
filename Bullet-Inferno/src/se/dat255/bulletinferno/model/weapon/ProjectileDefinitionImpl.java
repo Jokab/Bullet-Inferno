@@ -14,7 +14,8 @@ import se.dat255.bulletinferno.util.ResourceIdentifier;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * An enum for holding different types of projectiles. Are fired by using {@link #releaseProjectile()}
+ * An enum for holding different types of projectiles. Are fired by using
+ * {@link #releaseProjectile(PhysicsEnvironment, WeaponEnvironment, Vector2, Vector2, Teamable)}.
  */
 public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDefinition {
 
