@@ -9,7 +9,6 @@ import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
-import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
