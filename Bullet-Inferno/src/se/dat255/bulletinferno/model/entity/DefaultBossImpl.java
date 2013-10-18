@@ -31,32 +31,24 @@ public class DefaultBossImpl extends SimpleBoss {
 	 *        The score rewarded when boss is killed
 	 * @param credits
 	 *        The credit rewarded when boss is killed
+	 * @param offsets
 	 */
-	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type,
-
-			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
-			float initialHealth,
-
-			Weapon[] weapons, int score, int credits,
-
-			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
-		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, 
+			PhysicsMovementPattern pattern, float initialHealth, Weapon[] weapons, int score, 
+			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
+		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern, scoreListener);
-
 		entities.getPlayerShip();
 		super.getWeaponTimers();
 
 	}
-
-	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities,
-			EnemyDefinitionImpl type,
-
-			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
-			int score, int credits, PhysicsBodyDefinition bodyDefinition,
-
+	
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, 
+			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth, 
+			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition,
 			Listener<Integer> scoreListener) {
-		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
+		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);
 
 		entities.getPlayerShip();
@@ -66,27 +58,30 @@ public class DefaultBossImpl extends SimpleBoss {
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-
-		if (getHealth() == getInitialHealth()) {
-			changeToFollowingMovement();
-
-		} else if (getHealth() >= getInitialHealth() * 0.75f) {
-			changeToDisorderedMovement();
+		if (getHealth() >= getInitialHealth() * 0.75f) {
 			fireSpread(source);
-
-		} else if (getHealth() < getInitialHealth() * 0.25) {
-			changeToDisorderedMovement();
-
+		} else if(getHealth() < getInitialHealth() * 0.25) {
 			fireAim(source);
 			fireWide(source);
-
-		} else {
-			changeToFollowingMovement();
+		} else { 
 			fireSpreadAim(source);
 		}
-
 	}
 
+	@Override
+	public void takeDamage(float damage) {
+		float preHealth = getHealth();
+		super.takeDamage(damage);
+		
+		// If and only if the health has just passed below a given %, change pattern
+		if(preHealth >= (getInitialHealth() * 0.75f) && getHealth() < getInitialHealth()*0.75f) {
+			changeToFollowingMovement();
+		} else if(preHealth >= (getInitialHealth() * 0.25f) && 
+				getHealth() < getInitialHealth()*0.25f) {
+			changeToEvadingMovement();
+		}
+	}
+	
 	@Override
 	public void viewportIntersectionBegin() {
 		super.viewportIntersectionBegin();

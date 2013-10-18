@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model.entity;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -23,9 +23,9 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship 
 	private final PlayerShip player;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
-	private final Timer[] timers;
+	private Timer[] timers;
 	private String weaponId;
-	private DisorderedBossMovementPattern dmp;
+	private DisorderedMovementPattern dmp = new DisorderedMovementPattern(0.5f, 3);
 	private FollowingMovementPattern fmp;
 	private EvadingMovementPattern emp;
 	private String currentPattern;
@@ -41,19 +41,18 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship 
 		super(physics, entities, type, position, velocity, initialHealth, weapons,
 				score, credits, bodyDefinition, scoreListener);
 
-		timers = new Timer[getWeapons().length];
+		this.timers = new Timer[getWeapons().length];
 		this.entities = entities;
 		this.physics = physics;
-		player = entities.getPlayerShip();
+		this.player = entities.getPlayerShip();
 		for (int i = 0; i < getWeapons().length; i++) {
 			timers[i] = getWeapons()[i].getTimer();
 			timers[i].registerListener(this);
 			timers[i].stop();
 		}
 
-		fmp = new FollowingMovementPattern(player);
-		dmp = new DisorderedBossMovementPattern(3f, 3);
-		emp = new EvadingMovementPattern(player);
+		this.fmp = new FollowingMovementPattern(player);
+		this.emp = new EvadingMovementPattern(player);
 		currentPattern = "none";
 
 		this.scoreListener = scoreListener;
@@ -66,28 +65,23 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship 
 			PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);
-		
-		if (pattern instanceof DisorderedBossMovementPattern) {
+
+		if (pattern instanceof DisorderedMovementPattern) {
 			currentPattern = "dmp";
-			dmp = (DisorderedBossMovementPattern) pattern;
-			fmp = new FollowingMovementPattern(player);
-			emp = new EvadingMovementPattern(player);
+			this.dmp = (DisorderedMovementPattern) pattern;
+			this.fmp = new FollowingMovementPattern(player);
+			this.emp = new EvadingMovementPattern(player);
 		} else if (pattern instanceof FollowingMovementPattern) {
 			currentPattern = "fmp";
-			fmp = (FollowingMovementPattern) pattern;
-			dmp = new DisorderedBossMovementPattern(3f, 3);
-			emp = new EvadingMovementPattern(player);
+			this.fmp = (FollowingMovementPattern) pattern;
+			this.emp = new EvadingMovementPattern(player);
 		} else if (pattern instanceof EvadingMovementPattern) {
-			emp = (EvadingMovementPattern) pattern;
-			fmp = new FollowingMovementPattern(player);
-			dmp = new DisorderedBossMovementPattern(3f, 3);
+			this.emp = (EvadingMovementPattern) pattern;
+			this.fmp = new FollowingMovementPattern(player);
 		}
 		physics.attachMovementPattern(pattern, getBody());
 
 	}
-
-	@Override
-	public abstract void onTimeout(Timer source, float timeSinceLast);
 
 	@Override
 	public void viewportIntersectionBegin() {
@@ -188,6 +182,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship 
 	// Methods to change the movement of the boss
 
 	public void prepareMovementChange() {
+		// Set y-velocity to 0
 		getBody().setVelocity(new Vector2(getBody().getVelocity().x, 0));
 		physics.detachMovementPattern(getBody());
 	}
