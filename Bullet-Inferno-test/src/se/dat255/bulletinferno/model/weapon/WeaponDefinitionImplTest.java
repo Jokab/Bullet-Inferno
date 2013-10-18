@@ -53,7 +53,7 @@ public class WeaponDefinitionImplTest {
 	@Test
 	public void testCooldownWeapon() {
 		// Get an automatic weapon
-		Weapon weapon = WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons,
+		Weapon weapon = WeaponDefinitionImpl.HEAVY_LASER_CANNON.createWeapon(physics, weapons,
 				new Vector2());
 
 		assertTrue(
