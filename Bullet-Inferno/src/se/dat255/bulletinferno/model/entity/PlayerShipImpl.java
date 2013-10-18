@@ -109,13 +109,15 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
 		// Body
-		shapes.add(PhysicsShapeFactory.getRectangularShape(1.8f, 0.4f));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(1f, 0.6f));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(1.8f, 0.1f, new Vector2(
+				0f, 0.15f)));
 		// Box
 		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 0.51f, new Vector2(
-				0.45f, 0.255f)));
+				0.45f, 0.25f)));
 		// Propeller
-		shapes.add(PhysicsShapeFactory.getRectangularShape(0.03f, 0.51f, new Vector2(
-				0.83f, -0.255f)));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.03f, 0.5f, new Vector2(
+				0.83f, -0.1f)));
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shapes,
 				BodyType.DYNAMIC);
 
