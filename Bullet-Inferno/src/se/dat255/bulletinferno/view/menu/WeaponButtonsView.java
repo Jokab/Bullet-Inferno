@@ -164,7 +164,7 @@ public class WeaponButtonsView {
 		return heavyWeapons;
 	}
 
-	public class TableElementClickedListener extends ChangeListener {
+	private class TableElementClickedListener extends ChangeListener {
 
 		private final WeaponButton selectionButton;
 		private final List<WeaponButton> list;

@@ -46,7 +46,7 @@ public class PassiveButtonsView {
 				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
 						resourceManager);
 				passiveButtons.add(passiveButton);
-				passiveButton.getButton().addListener(new ClickedListener());
+				passiveButton.getButton().addListener(new TableElementClickedListener());
 			}
 
 		}
@@ -102,7 +102,7 @@ public class PassiveButtonsView {
 		this.selectionButton = selectionSpecialButton;
 	}
 
-	private class ClickedListener extends ChangeListener {
+	private class TableElementClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			PassiveButton selected = null;
