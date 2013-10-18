@@ -4,7 +4,6 @@ import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -14,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
  * 
  * @see ObstacleDefinition
  */
-public class ObstacleImpl implements Obstacle, Teamable {
+public class ObstacleImpl implements Obstacle {
 
 	/** The physics body used by this Obstacle. */
 	private PhysicsBody body;
@@ -53,11 +52,6 @@ public class ObstacleImpl implements Obstacle, Teamable {
 	public void dispose() {
 		physics.removeBody(body);
 		body = null;
-	}
-
-	@Override
-	public boolean isInMyTeam(Teamable teamMember) {
-		return teamMember instanceof ObstacleImpl;
 	}
 
 }

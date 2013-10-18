@@ -136,24 +136,21 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (hitByOtherProjectile(other)) {
-			takeDamage(((Projectile) other).getDamage());
+		if (other instanceof Projectile) {
+			if(!isInMyTeam(((Projectile) other).getSource())) {
+				takeDamage(((Projectile) other).getDamage());
+			}
 		} else if (collidedWithNonTeammember(other)) {
 			if (other instanceof Enemy) {
 				takeDamage(0.6f, true);
-			} else {
-				die();
 			}
+		} else {
+			die();
 		}
 	}
 
 	private boolean collidedWithNonTeammember(Collidable other) {
 		return other instanceof Teamable && !isInMyTeam((Teamable) other);
-	}
-
-	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof Projectile
-				&& !isInMyTeam(((Projectile) other).getSource());
 	}
 
 	/**
