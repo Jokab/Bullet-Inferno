@@ -83,7 +83,7 @@ public class PlayerShipImplTest {
 		startPosition = new Vector2(8, 9);
 		
 		loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.STANDARD_MACHINE_GUN.createWeapon(physics, weapons, new Vector2()), 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		
 		playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
