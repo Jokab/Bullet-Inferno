@@ -25,7 +25,7 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 	 * null movement pattern implies straight travel
 	 */
 
-	VELOCITY_BULLET(0.2f, new SpreadMovementPattern(0.2f), new PhysicsBodyDefinitionImpl(
+	VELOCITY_BULLET(0.08f, new SpreadMovementPattern(0.2f), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(
 					0.2f, 0.1f))),
 	ROUND_BULLET(0.1f, new SpreadMovementPattern(0.7f), new PhysicsBodyDefinitionImpl(
@@ -34,9 +34,9 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 	PLASMA(0.3f, new DisorderedMovementPattern(0.05f, 2f), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(
 					0.4f, 0.2f))),
-	LASER(0.2f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	LASER(0.25f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 			0.6f, 0.05f))),
-	EGG(0.3f, new AccelerationMovementPattern(new Vector2(30, 0)), new PhysicsBodyDefinitionImpl(
+	EGG(0.45f, new AccelerationMovementPattern(new Vector2(30, 0)), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(
 					0.2f, 0.15f))),
 
@@ -48,7 +48,7 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 	MISSILE(0.5f, new AccelerationMovementPattern(new Vector2(10, 0)),
 			new PhysicsBodyDefinitionImpl(
 					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f))),
-	SPECIAL_ABILITY_MISSILE(0.45f, new AccelerationMovementPattern(new Vector2(10, 0)),
+	SPECIAL_ABILITY_MISSILE(0.4f, new AccelerationMovementPattern(new Vector2(10, 0)),
 			new PhysicsBodyDefinitionImpl(
 					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f)),
 					BrutalProjectileImpl.class),
