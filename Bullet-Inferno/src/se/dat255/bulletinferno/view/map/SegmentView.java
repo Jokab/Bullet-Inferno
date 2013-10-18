@@ -45,12 +45,9 @@ public class SegmentView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
-		// TODO: Check if on screen, if it should be rendered
-		for (SliceView slice : slices) {
-			if (true /* Should be rendered */) {
-				slice.render(batch, viewport);
-			}
-		}
+        for (SliceView slice : slices) {
+            slice.render(batch, viewport);
+        }
 	}
 
 	@Override

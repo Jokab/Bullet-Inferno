@@ -7,10 +7,8 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Enum for holding different Weapon types. The method {@link #getPlayerWeaponForGame(Game)}
- * (for players) or {@link #getEnemyWeaponForGame(Game)} (for enemies) are
- * used to retrieve a Weapon for the game.
- * 
+ * Enum for holding different weapon types. Weapons are retrieved with createWeapon().
+ *
  * @author Jakob Csorgei Gustavsson
  * 
  */

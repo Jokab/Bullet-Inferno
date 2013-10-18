@@ -26,6 +26,6 @@ public interface RenderableGUI {
 	/** Called when the object should render itself */
 	public void render(SpriteBatch batch);
 
-	/** Called when the object should dispose it's graphics */
+	/** Called when the object should dispose its graphics */
 	public void dispose(ResourceManager resourceManager);
 }

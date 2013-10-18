@@ -1,7 +1,5 @@
 package se.dat255.bulletinferno.controller;
 
-import java.util.List;
-
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
@@ -284,8 +282,8 @@ public class LoadoutController extends SimpleController {
 		errorMessage.setVisible(false);
 	}
 
-	public void startGame(GameController gameScreen, WeaponDefinition[] weapons, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
-		gameScreen = new GameController(masterController, resourceManager);
+	public void startGame(WeaponDefinition[] weapons, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
+        GameController gameScreen = new GameController(masterController, resourceManager);
 		masterController.startGame(gameScreen, weapons, special, passive, true);
 	}
 
@@ -311,7 +309,7 @@ public class LoadoutController extends SimpleController {
 				showErrorMessage("passive ability");
 			} else {
 				WeaponDefinition[] weapons = new WeaponDefinition[]{standardWeapon, heavyWeapon};
-				startGame(gameController, weapons, special, passive);
+				startGame(weapons, special, passive);
 			}
 		}
 	}

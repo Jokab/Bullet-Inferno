@@ -87,19 +87,13 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (suppressKeyboard) {
-			return true;
-		}
-		return false;
-	}
+        return suppressKeyboard;
+    }
 
 	@Override
 	public boolean keyTyped(char character) {
-		if (suppressKeyboard) {
-			return true;
-		}
-		return false;
-	}
+        return suppressKeyboard;
+    }
 
 	/** Pre-calculated values to increase speed */
 	private static float INVERTER_WIDTH = 1.0f / 16.0f,

@@ -79,7 +79,7 @@ public class SegmentManagerImpl implements SegmentManager {
 	/**
 	 * Removes segments from the beginning of the active segment list (i.e. the leftmost ones).
 	 * 
-	 * @param segment
+	 * @param numberOfSegments
 	 *        the number of segments to remove.
 	 */
 	private void removeSegments(int numberOfSegments) {

@@ -106,7 +106,7 @@ public class PassiveButtonsView {
 			PassiveButton selected = null;
 			for (PassiveButton pButton : passiveButtons) {
 				Button button = pButton.getButton();
-				if (button == ((Button) actor)) {
+				if (button == actor) {
 					selected = pButton;
 					if (!pButton.isSelected()) {
 						pButton.toggleSelected(skin);

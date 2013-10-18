@@ -9,12 +9,12 @@ import com.badlogic.gdx.math.Vector2;
 public interface EnemyDefinition {
 	/**
 	 * Constructs a enemy instance according to this definition.
-	 * @param physics
-	 * @param entities
+	 * @param physicsEnvironment
+	 * @param entityEnvironment
 	 * @param weaponEnvironment
 	 * @param position
 	 * @return enemy
 	 */
-	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+	public Enemy createEnemy(PhysicsEnvironment physicsEnvironment, EntityEnvironment entityEnvironment,
 			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener);
 }

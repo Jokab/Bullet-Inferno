@@ -61,8 +61,10 @@ public class SliceImpl implements Slice, Collidable {
 	 *        The width of the Slice.
 	 * @param obstaclePlacements
 	 *        A list of mappings to where Obstacles should be placed in the Slice.
-	 * @param enemyPlacement
+	 * @param enemyPlacements
 	 * 		  A list of mappings to where enemies should be place in the Slice
+     * @param scoreListener
+     *        A ScoreListener which keeps track of which enemies die, to award score.
 	 */
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,

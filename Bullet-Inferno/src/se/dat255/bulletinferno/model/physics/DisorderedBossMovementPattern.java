@@ -14,16 +14,16 @@ import com.badlogic.gdx.math.Vector2;
 public class DisorderedBossMovementPattern implements PhysicsMovementPattern {
 	private final float frequency;
 	private final float amplitude;
-	private final float GAME_HEIGHT_DIV = 4.5f;
 
-	public DisorderedBossMovementPattern(float frequency, float amplitude) {
+    public DisorderedBossMovementPattern(float frequency, float amplitude) {
 		this.frequency = frequency;
 		this.amplitude = amplitude;
 	}
 
 	@Override
 	public void update(float timeDelta, PhysicsBody body) {
-		if(body.getPosition().y > GAME_HEIGHT_DIV + amplitude/2){
+        float GAME_HEIGHT_DIV = 4.5f;
+        if(body.getPosition().y > GAME_HEIGHT_DIV + amplitude/2){
 			body.setVelocity(new Vector2(body.getVelocity().x, -frequency));
 		}else if(body.getPosition().y < GAME_HEIGHT_DIV - amplitude/2){
 			body.setVelocity(new Vector2(body.getVelocity().x, frequency));

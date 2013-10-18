@@ -86,12 +86,12 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 	}
 
 	@Override
-	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
+	public Enemy createEnemy(PhysicsEnvironment physics, EntityEnvironment entityEnvironment,
 			WeaponEnvironment weaponEnvironment, Vector2 position, Listener<Integer> scoreListener) {
 		if (this == EHMO || this == DRIPPER) {
-			return getBoss(physics, entities, weaponEnvironment, position, scoreListener);
+			return getBoss(physics, entityEnvironment, weaponEnvironment, position, scoreListener);
 		} else {
-			return getEnemyShip(physics, entities, weaponEnvironment, position, scoreListener);
+			return getEnemyShip(physics, entityEnvironment, weaponEnvironment, position, scoreListener);
 		}
 
 	}

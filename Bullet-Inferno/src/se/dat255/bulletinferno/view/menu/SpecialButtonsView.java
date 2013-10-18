@@ -108,7 +108,7 @@ public class SpecialButtonsView {
 			SpecialButton selected = null;
 			for (SpecialButton sButton : specialButtons) {
 				Button button = sButton.getButton();
-				if (button == ((Button) actor)) {
+				if (button == actor) {
 					selected = sButton;
 					if (!sButton.isSelected()) {
 						sButton.toggleSelected(skin);

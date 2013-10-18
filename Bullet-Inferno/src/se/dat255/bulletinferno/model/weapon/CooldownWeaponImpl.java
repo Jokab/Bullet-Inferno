@@ -10,7 +10,6 @@ import se.dat255.bulletinferno.util.Timerable;
 public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
     private final ProjectileType projectileType;
-    private final Timer cooldownTimer;
     private final Timer firingRateTimer; // very high firing rate, but needs to be limited
     private final PhysicsEnvironment physics;
     private final WeaponEnvironment weapons;
@@ -31,7 +30,7 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
         // Magic number... ?
         fullAmmo = (int) (10 / reloadingTime); // reloading time determines amount of projectiles
 
-        cooldownTimer = getTimer();
+        Timer cooldownTimer = getTimer();
         cooldownTimer.setTime(reloadingTime);
         cooldownTimer.setContinuous(true);
         cooldownTimer.registerListener(this);

@@ -69,10 +69,8 @@ public class WeaponButton extends CustomizedButton {
 			return false;
 		if (isSelected != other.isSelected)
 			return false;
-		if (weaponData != other.weaponData)
-			return false;
-		return true;
-	}
+        return weaponData == other.weaponData;
+    }
 	
 	
 }

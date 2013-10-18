@@ -176,7 +176,7 @@ public class WeaponButtonsView {
 			WeaponButton selected = null;
 			for (WeaponButton wButton : list) {
 				Button button = wButton.getButton();
-				if (button == ((Button) actor)) {
+				if (button == actor) {
 					selected = wButton;
 					if (!wButton.isSelected()) {
 						wButton.toggleSelected(skin);

@@ -38,15 +38,14 @@ public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsVi
 		}
 	};
 
-	/**
-	 * Constructs a new projectile
-	 * 
-	 * @param game
-	 *        the game instance.
-	 */
-	public ProjectileDefinitionImpl(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		this.physics = physics;
-		this.weapons = weapons;
+    /**
+     * Constructs a new ProjectileDefinitionImpl.
+     * @param physicsEnvironment
+     * @param weaponEnvironment
+     */
+	public ProjectileDefinitionImpl(PhysicsEnvironment physicsEnvironment, WeaponEnvironment weaponEnvironment) {
+		this.physics = physicsEnvironment;
+		this.weapons = weaponEnvironment;
 	}
 
 	/**
@@ -109,7 +108,7 @@ public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsVi
 		if(!collideWithObstacles && (other instanceof Obstacle)) {
 			return false;
 		}
-		return ((damage > 0 && !(other instanceof ProjectileDefinition) && other != getSource()) 
+		return ((damage > 0 && !(other instanceof ProjectileDefinition) && other != getSource())
 				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)));
 	}
 

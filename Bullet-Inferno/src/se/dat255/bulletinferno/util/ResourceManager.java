@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * A class that holds mappings between types of objects in the game and static resources
  * such as {@link Texture}, {@link Sound} and {@link Music}. Resources
  * are retrieved using a String identifier. <b>To use the
- * textures, they must first be loaded with {@link #startLoad()}</b>, which uses the libGDX built-in
+ * textures, they must first be loaded with {@link #startLoad(boolean)}</b>, which uses the libGDX built-in
  * {@link AssetManager} to do asynchronous loading.
  * 
  */
