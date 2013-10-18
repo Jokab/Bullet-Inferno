@@ -72,7 +72,7 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_8_GROUND, 0, 0),
 			placeObstacle(ObstacleDefinitionImpl.DEFAULT_TREE, 4.63f, 1.7f)),
 			Arrays.asList(
-				placeEnemy(EnemyDefinitionImpl.DRIPPER, 8.35f, 5.55f))
+				placeEnemy(EnemyDefinitionImpl.DRIPPER, 11f, 4.5f))
 		),
 	SIMPLE_GROUND(2f, 2f, 16f, Collections.<ObstaclePlacement>emptyList())
 	;
