@@ -25,7 +25,7 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	private final PlayerShipLoadoutView loadoutView;
 
-	private static final int SMOKE_PARTICLE_COUNT = 100;
+	private static final int SMOKE_PARTICLE_COUNT = 10;
 	private final TextureRegion smokeTexture;
 	private final SmokeTrail smokeTrail;
 
@@ -58,7 +58,6 @@ public class PlayerShipView implements Renderable, Timerable {
 		explosionSprite = new Sprite(explosion);
 		explosionSprite.setSize((int) (shipDimensions.y * 2), (int) (shipDimensions.y * 2));
 
-		// TODO: How should we do with managed textures? No disposal?
 		smokeTexture = resourceManager.getTexture(TextureDefinitionImpl.SMOKE_PARTICLE);
 		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest,
 				Texture.TextureFilter.Nearest);
@@ -84,10 +83,10 @@ public class PlayerShipView implements Renderable, Timerable {
 			// Make sure weapons are rendered on top of the ship
 			loadoutView.render(batch, viewport);
 
-			// TODO: Fix these values to match some texture offsets (+ break out to constants).
 			smokeTrail.setSpawnPoint(
-					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
+					new Vector2(lastShipPosition.x - 0.35f, lastShipPosition.y - 0.15f));
 			smokeTrail.setParticleOrigin(lastShipPosition);
+			smokeTrail.setVelocity(new Vector2(-3f + ship.getXVelocity() / 2f, 0.3f));
 			smokeTrail.render(batch, viewport);
 
 		}
