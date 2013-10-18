@@ -21,8 +21,7 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	WATER(0, 0, 20f, Collections.<ObstaclePlacement>emptyList()),
 	
 	MOUNTAIN_1(0, 1.75f, 16f, Arrays.asList(
-			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_1_GROUND, 0, 0),
-			placeObstacle(ObstacleDefinitionImpl.DEFAULT_TREE, 11.37f, 1.7f)), 
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_1_GROUND, 0, 0)), 
 		Arrays.asList(
 			placeEnemy(EnemyDefinitionImpl.SQUIB, 12, 8.5f))
 		),
@@ -40,8 +39,7 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 	
 	MOUNTAIN_4(3.8f, 1.75f, 16f, Arrays.asList(
 				placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_4_GROUND, 0, 0),
-				placeObstacle(ObstacleDefinitionImpl.FLOATING_ROCK, 10f, 2.85f),
-				placeObstacle(ObstacleDefinitionImpl.SMALL_TREE, 2.38f, 4.81f)),
+				placeObstacle(ObstacleDefinitionImpl.FLOATING_ROCK, 10f, 2.85f)),
 			Arrays.asList(
 				placeEnemy(EnemyDefinitionImpl.SQUIB, 8.25f, 8.5f),
 				placeEnemy(EnemyDefinitionImpl.SQUIB, 11.35f, 7.73f))
@@ -69,10 +67,9 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 		),
 	
 	MOUNTAIN_8(1.75f, 0, 16f, Arrays.asList(
-			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_8_GROUND, 0, 0),
-			placeObstacle(ObstacleDefinitionImpl.DEFAULT_TREE, 4.63f, 1.7f)),
+			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_8_GROUND, 0, 0)),
 			Arrays.asList(
-				placeEnemy(EnemyDefinitionImpl.DRIPPER, 8.35f, 5.55f))
+				placeEnemy(EnemyDefinitionImpl.DRIPPER, 11f, 4.5f))
 		),
 	SIMPLE_GROUND(2f, 2f, 16f, Collections.<ObstaclePlacement>emptyList())
 	;

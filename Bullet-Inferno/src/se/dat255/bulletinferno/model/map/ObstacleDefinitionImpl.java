@@ -109,12 +109,11 @@ public enum ObstacleDefinitionImpl implements ObstacleDefinition {
 			}))),
 			
 	MOUNTAIN_8_GROUND(Arrays.asList(
-			PhysicsShapeFactory.getChainShape(new Vector2[] {new Vector2(16, 0), 
-				new Vector2(15.27f, 2.68f), new Vector2(14.63f, 3.91f), new Vector2(13.9f, 4.65f),
-				new Vector2(13.35f, 4.85f), new Vector2(12.78f, 4.85f), new Vector2(12.15f, 4.57f),
-				new Vector2(11.57f, 3.72f), new Vector2(10.52f, 1.54f), new Vector2(9.61f, 0.78f),
-				new Vector2(8.63f, 0.64f), new Vector2(3.37f, 0.73f), new Vector2(2.2f, 1.55f),
-				new Vector2(1.65f, 1.75f), new Vector2(0, 1.75f)
+			PhysicsShapeFactory.getChainShape(new Vector2[] { new Vector2(0, 1.75f),
+					new Vector2(1.65f, 1.75f), new Vector2(2.2f, 1.55f),
+					new Vector2(3.37f, 0.73f), new Vector2(3.8f, 0.69f),
+					new Vector2(14.62f, 0.69f), new Vector2(15.13f, 0.65f),
+					new Vector2(15.87f, 0.35f), new Vector2(16, 0)
 			}))),
 	FLAT_GROUND(PhysicsShapeFactory.getChainShape(new Vector2[] { 
 			new Vector2(0,0), new Vector2(16, 0)
