@@ -100,4 +100,9 @@ public class SimplePlayerShipMock implements PlayerShip {
 		
 	}
 
+	@Override
+	public float getXVelocity() {
+		return 5;
+	}
+
 }

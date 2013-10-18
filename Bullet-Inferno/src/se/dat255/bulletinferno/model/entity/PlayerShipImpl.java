@@ -311,4 +311,13 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public Vector2 getDimensions() {
 		return body.getDimensions();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public float getXVelocity() {
+		return body.getVelocity().x;
+	}
+
 }
