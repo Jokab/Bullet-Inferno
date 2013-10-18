@@ -57,7 +57,7 @@ public class BossImplTest {
 	
 	@Test
 	public void testChangeMovementPattern(){
-		SimpleBoss boss = new BossMockup(EnemyDefinitionImpl.HARD_BOSS_SHIP, new Vector2(), 
+		SimpleBoss boss = new BossMockup(EnemyDefinitionImpl.DRIPPER, new Vector2(), 
 				new Vector2(0,1f), 0, new Weapon[] {}, new Vector2[] {}, 99, 0);
 		boss.changeToDisorderedMovement();
 		assertTrue("Movement pattern should be disordered", boss.getMovementPattern() instanceof DisorderedBossMovementPattern);

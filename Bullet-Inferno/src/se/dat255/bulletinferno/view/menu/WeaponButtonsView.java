@@ -99,21 +99,11 @@ public class WeaponButtonsView {
 		selectionButton.setData(wButton.getData());
 		ButtonStyle style = new ButtonStyle(wButton.getButton().getStyle());
 
-		Texture texture = resourceManager.getTexture(
-				selectionButton.getData());
-		style.up = new TextureRegionDrawable(new TextureRegion(texture));
+		style.up = new TextureRegionDrawable(resourceManager.getTexture(
+				selectionButton.getData()));
 		style.over = wButton.getButton().getStyle().up;
 
 		selectionButton.getButton().setStyle(style);
-	}
-
-	public void setSelectionToNothing(ButtonStyle style, WeaponButton selectionButton) {
-		ButtonStyle newStyle = new ButtonStyle(style);
-		newStyle.up = new TextureRegionDrawable(new TextureRegion(
-				new Texture("data/frame.png")));
-		newStyle.over = newStyle.up;
-		selectionButton.getButton().setStyle(newStyle);
-		selectionButton.setData(null);
 	}
 
 	private void deselectOtherButtons(WeaponButton selected, List<WeaponButton> weaponList) {
@@ -125,10 +115,9 @@ public class WeaponButtonsView {
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
-		Texture texture = resourceManager.getTexture(identifier);
-		TextureRegion region = new TextureRegion(texture);
+		TextureRegion texture = resourceManager.getTexture(identifier);
 		ButtonStyle buttonStyle = new ButtonStyle();
-		buttonStyle.up = new TextureRegionDrawable(region);
+		buttonStyle.up = new TextureRegionDrawable(texture);
 
 		return new Button(buttonStyle);
 	}
@@ -179,7 +168,6 @@ public class WeaponButtonsView {
 						setSelectionToClicked(wButton, selectionButton);
 					} else {
 						wButton.toggleSelected(skin);
-						setSelectionToNothing(button.getStyle(), selectionButton);
 					}
 				}
 				// TODO: add break here since we don't want to keep looping after we found the
@@ -192,28 +180,15 @@ public class WeaponButtonsView {
 
 	public class SelectionClickedListener extends ChangeListener {
 
-		private final WeaponButton selectionButton;
-		private final List<WeaponButton> list;
 		private final String type;
 
-		public SelectionClickedListener(WeaponButton selectionButton, List<WeaponButton> list,
-				String type) {
-			this.selectionButton = selectionButton;
-			this.list = list;
+		public SelectionClickedListener(String type) {
 			this.type = type;
 		}
 
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (selectionButton.getData() == null) {
-				populateTable(type);
-			} else {
-				Button button = selectionButton.getButton();
-				if (button == ((Button) actor)) {
-					setSelectionToNothing(button.getStyle(), selectionButton);
-					deselectOtherButtons(new WeaponButton(null, null, null), list);
-				}
-			}
+			populateTable(type);
 		}
 
 	}

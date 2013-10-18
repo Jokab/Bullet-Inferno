@@ -1,6 +1,6 @@
 package se.dat255.bulletinferno.model.mock;
 
-import se.dat255.bulletinferno.model.gui.Listener;
+import se.dat255.bulletinferno.util.Listener;
 
 public class HealthMockListener implements Listener<Float> {
 	float score = 0;

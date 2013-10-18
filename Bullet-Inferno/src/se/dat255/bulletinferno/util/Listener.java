@@ -1,4 +1,4 @@
-package se.dat255.bulletinferno.model.gui;
+package se.dat255.bulletinferno.util;
 
 /**
  * Generic callback listener

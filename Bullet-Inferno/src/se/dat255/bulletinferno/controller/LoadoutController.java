@@ -6,7 +6,7 @@ import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.menu.PassiveButton;
 import se.dat255.bulletinferno.view.menu.PassiveButtonsView;
 import se.dat255.bulletinferno.view.menu.SpecialButton;
@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -182,10 +181,10 @@ public class LoadoutController extends SimpleController {
 		weaponSelectionStyle.over = skin.newDrawable(weaponSelectionStyle.up, Color.LIGHT_GRAY);
 
 		// Standard weapon button
-		Button standardButton = setupWeaponSelectionButton(weaponSelectionStyle, weaponButtonsView.getStandardWeapons(), "standard");
+		Button standardButton = setupWeaponSelectionButton(weaponSelectionStyle, "standard");
 		
 		// Heavy weapon button
-		Button heavyButton = setupWeaponSelectionButton(weaponSelectionStyle, weaponButtonsView.getHeavyWeapons(), "heavy");
+		Button heavyButton = setupWeaponSelectionButton(weaponSelectionStyle, "heavy");
 
 		// Special button
 		Button specialButton = setupSpecialSelectionButton(weaponSelectionStyle);
@@ -199,11 +198,11 @@ public class LoadoutController extends SimpleController {
 		stage.addActor(passiveButton);
 	}
 	
-	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, List<WeaponButton> list, String type) {
+	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, String type) {
 		Button weaponButton = new Button(weaponSelectionStyle);
 		weaponButton.setSize(200, 120);
 		WeaponButton selectionButton = new WeaponButton(weaponButton, null, resourceManager);
-		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(selectionButton, list, type));
+		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(type));
 		if(type.equals("standard")) {
 			weaponButton.setPosition(100, 540);
 			weaponButtonsView.setStandardSelectionButton(selectionButton);
@@ -241,13 +240,11 @@ public class LoadoutController extends SimpleController {
 	}
 
 	private void setupStartButton() {
-		Texture startButtonTexture = resourceManager.getTexture(
-				TextureType.LOADOUT_START_BUTTON);
-		startButtonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		TextureRegion startButtonRegion = new TextureRegion(startButtonTexture);
+		TextureRegion startButtonTexture = resourceManager.getTexture(
+				TextureDefinitionImpl.LOADOUT_START_BUTTON);
 
 		ImageButtonStyle startButtonStyle = new ImageButtonStyle();
-		startButtonStyle.up = new TextureRegionDrawable(startButtonRegion);
+		startButtonStyle.up = new TextureRegionDrawable(startButtonTexture);
 		startButtonStyle.over = skin.newDrawable(startButtonStyle.up, Color.LIGHT_GRAY);
 
 		ImageButton startButton = new ImageButton(startButtonStyle);

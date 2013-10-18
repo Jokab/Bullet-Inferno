@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -11,9 +10,10 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.Projectile;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+import se.dat255.bulletinferno.util.Listener;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
@@ -107,15 +107,20 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		weaponTimer.start();
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
-		shapes.add(PhysicsShapeFactory.getRectangularShape(2f, 0.3f));
-		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 1f, new Vector2(
-				(2f / 2 - 0.4f / 2), 0)));
+		// Body
+		shapes.add(PhysicsShapeFactory.getRectangularShape(1.8f, 0.4f));
+		// Box
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 0.51f, new Vector2(
+				0.45f, 0.255f)));
+		// Propeller
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.03f, 0.51f, new Vector2(
+				0.83f, -0.255f)));
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shapes,
 				BodyType.DYNAMIC);
 
 		this.body = physics.createBody(bodyDefinition, this, position);
 		this.body.setVelocity(forwardSpeed);
-
+		
 		// Sets correct offsets based on ship type
 		// Needs to be done after the body creation, i.e. getDimensions()
 		weaponLoadout.getStandardWeapon().setOffset(
@@ -131,10 +136,10 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void preCollided(Collidable other) {
 		if (hitByOtherProjectile(other)) {
-			takeDamage(((Projectile) other).getDamage());
+			takeDamage(((ProjectileDefinition) other).getDamage());
 		} else if (collidedWithNonTeammember(other)) {
 			if(other instanceof Enemy) {
-				takeDamage(0.6f / takeDamageModifier);
+				takeDamage(0.6f, true);
 			} else {
 				die();
 			}
@@ -146,7 +151,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	}
 
 	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());
+		return other instanceof ProjectileDefinition && !isInMyTeam(((ProjectileDefinition) other).getSource());
 	}
 
 	/**
@@ -175,6 +180,17 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		if (isDead()) {
 			dispose();
+		}
+	}
+	
+	/** Helper method for taking damage without using the takeDamageModifier. 
+	 * @see PlayerShip#takeDamage(float)
+	 */
+	private void takeDamage(float damage, boolean ignoreDamageModifier) {
+		if(ignoreDamageModifier) {
+			takeDamage(damage / takeDamageModifier);
+		} else {
+			takeDamage(damage);
 		}
 	}
 
@@ -206,6 +222,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void moveY(float dy, float scale) {
 		if (!isDead()) {
+			float positionY = body.getPosition().y;
+			float resultY = positionY + dy;
+			if(resultY < 0.5f)
+				dy = 0.5f-positionY;
+			if(resultY > 8.5f)
+				dy = 8.5f-positionY;
 			body.getBox2DBody().setTransform(getPosition().add(0, scale * dy), 0);
 		}
 	}
@@ -249,8 +271,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 	/** Causes the player to instantly die */
 	private void die() {
-		health = 0;
-		dispose();
+		takeDamage(health, true);
 	}
 	
 	@Override

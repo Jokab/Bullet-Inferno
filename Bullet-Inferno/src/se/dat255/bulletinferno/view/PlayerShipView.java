@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;
@@ -11,12 +11,13 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipView implements Renderable, Timerable {
 
-	private final Texture shipTexture;
-	private final Texture explosion;
+	private final TextureRegion shipTexture;
+	private final TextureRegion explosion;
 
 	private Sprite shipSprite;
 	private Sprite explosionSprite;
@@ -25,7 +26,7 @@ public class PlayerShipView implements Renderable, Timerable {
 	private final PlayerShipLoadoutView loadoutView;
 
 	private static final int SMOKE_PARTICLE_COUNT = 100;
-	private final Texture smokeTexture;
+	private final TextureRegion smokeTexture;
 	private final SmokeTrail smokeTrail;
 
 	private final PlayerShip ship;
@@ -47,10 +48,8 @@ public class PlayerShipView implements Renderable, Timerable {
 		this.shipDimensions = ship.getDimensions();
 
 		shipTexture = resourceManager.getTexture(ship);
-		shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-		explosion = resourceManager.getTexture(TextureType.PLAYER_EXPLOSION);
-		explosion.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		explosion = resourceManager.getTexture(TextureDefinitionImpl.PLAYER_EXPLOSION);
 
 		shipSprite = new Sprite(shipTexture);
 		shipSprite.setSize(shipDimensions.x, shipDimensions.y);
@@ -60,9 +59,9 @@ public class PlayerShipView implements Renderable, Timerable {
 		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
 
 		// TODO: How should we do with managed textures? No disposal?
-		smokeTexture = resourceManager.getTexture(TextureType.SMOKE_PARTICLE);
-		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
+		smokeTexture = resourceManager.getTexture(TextureDefinitionImpl.SMOKE_PARTICLE);
+		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+		smokeTrail = new SmokeTrail(smokeTexture.getTexture(), SMOKE_PARTICLE_COUNT);
 		
 		// Load-out view is responsible for displaying the load-out we choose on our ship
 		loadoutView = new PlayerShipLoadoutView(ship, resourceManager);

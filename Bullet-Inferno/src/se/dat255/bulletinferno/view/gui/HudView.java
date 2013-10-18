@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,6 +20,12 @@ import com.badlogic.gdx.math.Vector2;
  * Main view of all the HUD elements in the game
  */
 public class HudView implements Renderable {
+	
+	/** The rate of alpha value that the the life bar should fade out at when life is full*/
+	private static final float LIFE_ALPHA_FADEOUT_PER_SECOND = 1.5f;
+	
+	/** The minimum value of alpha the health bar should have */
+	private static final float MIN_LIFE_BAR_ALPHA = 0.4f;
 	
 	/** Reference to the resourcemanager */
 	private final ResourceManager resourceManager;
@@ -39,6 +47,10 @@ public class HudView implements Renderable {
 	private int activeScoreNumbers = 1;
 	/** The width of the health bar */
 	private float lifeWidth;
+	/** The current life points of the ship (between 0 and 1) */
+	private float life;
+	/** The interpolation coefficient value between 0 and 1 for fading alpha of the life bar */
+	private float lifeFadeoutTime;
 	/** The amount of heat regions to display; 0.0f -> 1.0f */
 	private float heatValue = 0.5f;
 	
@@ -54,7 +66,7 @@ public class HudView implements Renderable {
 	 */
 	public HudView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
-		Texture hudTexture = resourceManager.getTexture(TextureType.HUD_TEXTURE);
+		Texture hudTexture = resourceManager.getTexture(TextureDefinitionImpl.HUD_TEXTURE).getTexture();
 		
 		lifeBackground = new TextureRegion(hudTexture, 2, 35, 162, 33);
 		lifeRegion = new TextureRegion(hudTexture, 9, 10, 1, 20); // 9 -> 158
@@ -99,6 +111,7 @@ public class HudView implements Renderable {
 	
 	/** Sets the value of life between 0 and 1 */
 	public void setLife(float life){
+		this.life = life;
 		lifeRegion.setRegionX((int)(9 + 149f * life));
 		lifeRegion.setRegionWidth(1);
 		lifeWidth = 3f * life;
@@ -148,8 +161,21 @@ public class HudView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
-		batch.draw(lifeBackground, -1.6f, 3.9f, 3.2f, 0.7f);
-		batch.draw(lifeRegion, -1.5f, 4f, lifeWidth, 0.5f);
+		if (life >= 1) {
+			lifeFadeoutTime += LIFE_ALPHA_FADEOUT_PER_SECOND * Gdx.graphics.getDeltaTime();
+			lifeFadeoutTime = Math.min(1, lifeFadeoutTime);
+			Color prevColor = batch.getColor();
+			batch.setColor(Color.WHITE.cpy().lerp(
+					1f, 1f, 1f, MIN_LIFE_BAR_ALPHA, lifeFadeoutTime));
+			batch.draw(lifeBackground, -1.6f, 3.9f, 3.2f, 0.7f);
+			batch.draw(lifeRegion, -1.5f, 4f, lifeWidth, 0.5f);
+			batch.setColor(prevColor);
+		} else {
+			lifeFadeoutTime = 0;
+			batch.draw(lifeBackground, -1.6f, 3.9f, 3.2f, 0.7f);
+			batch.draw(lifeRegion, -1.5f, 4f, lifeWidth, 0.5f);
+		}
+
 		for(int i = 10 - activeScoreNumbers, j = 0; i < 10; i++, j++){
 			batch.draw(numberRegions[scoreArray[i]], j*0.4f-8, 4f, 0.5f, 0.5f);
 		}

@@ -14,9 +14,9 @@ public class WeaponEnvironmentImpl implements WeaponEnvironment {
 	
 	private final PhysicsEnvironment physics;
 	
-	private final List<Projectile> projectiles = new ArrayList<Projectile>();
-	private final Map<Class<? extends Projectile>, Pool<Projectile>> projectilePools = 
-			new HashMap<Class<? extends Projectile>, Pool<Projectile>>();
+	private final List<ProjectileDefinition> projectiles = new ArrayList<ProjectileDefinition>();
+	private final Map<Class<? extends ProjectileDefinition>, Pool<ProjectileDefinition>> projectilePools = 
+			new HashMap<Class<? extends ProjectileDefinition>, Pool<ProjectileDefinition>>();
 	
 	public WeaponEnvironmentImpl(PhysicsEnvironment physics) {
 		this.physics = physics;
@@ -26,7 +26,7 @@ public class WeaponEnvironmentImpl implements WeaponEnvironment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<? extends Projectile> getProjectiles() {
+	public List<? extends ProjectileDefinition> getProjectiles() {
 		return projectiles;
 	}
 
@@ -34,7 +34,7 @@ public class WeaponEnvironmentImpl implements WeaponEnvironment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Projectile retrieveProjectile(Class<? extends Projectile> type) {
+	public ProjectileDefinition retrieveProjectile(Class<? extends ProjectileDefinition> type) {
 		// If pool for specified type of projectile doesn't exist
 		// create a new pool and but it in the map
 		if (!projectilePools.containsKey(type)) {
@@ -42,25 +42,25 @@ public class WeaponEnvironmentImpl implements WeaponEnvironment {
 		}
 
 		// Get a projectile from the pool
-		Projectile p = projectilePools.get(type).obtain();
+		ProjectileDefinition p = projectilePools.get(type).obtain();
 		projectiles.add(p);
 		return p;
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void disposeProjectile(Projectile projectile) {
+	public void disposeProjectile(ProjectileDefinition projectile) {
 		projectiles.remove(projectile);
 		if (projectilePools.containsKey(projectile.getClass())) {
 			projectilePools.get(projectile.getClass()).free(projectile);
 		}
 	}
 
-	private Pool<Projectile> createNewPool(
-			final Class<? extends Projectile> type) {
-		return new Pool<Projectile>() {
+	private Pool<ProjectileDefinition> createNewPool(
+			final Class<? extends ProjectileDefinition> type) {
+		return new Pool<ProjectileDefinition>() {
 			@Override
-			protected Projectile newObject() {
+			protected ProjectileDefinition newObject() {
 				try {
 					// Create an instance of the specified type
 					return type.getConstructor(PhysicsEnvironment.class, WeaponEnvironment.class)

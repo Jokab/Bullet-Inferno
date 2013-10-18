@@ -29,7 +29,8 @@ public class PassiveButtonsView {
 	private final Table table;
 	private final Label label;
 
-	public PassiveButtonsView(Stage stage, Skin skin, Table table, Label label, ResourceManager resourceManager) {
+	public PassiveButtonsView(Stage stage, Skin skin, Table table, Label label,
+			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
@@ -47,9 +48,9 @@ public class PassiveButtonsView {
 				passiveButtons.add(passiveButton);
 				passiveButton.getButton().addListener(new ClickedListener());
 			}
-	
+
 		}
-		
+
 		setSelectionToSelected(passiveButtons.get(0));
 		// Set up the table to add these buttons to
 		showTable();
@@ -64,21 +65,11 @@ public class PassiveButtonsView {
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
-		Texture texture = resourceManager.getTexture(identifier);
-		TextureRegion region = new TextureRegion(texture);
+		TextureRegion texture = resourceManager.getTexture(identifier);
 		ButtonStyle buttonStyle = new ButtonStyle();
-		buttonStyle.up = new TextureRegionDrawable(region);
+		buttonStyle.up = new TextureRegionDrawable(texture);
 
 		return new Button(buttonStyle);
-	}
-
-	private void setSelectionToNothing(ButtonStyle style) {
-		ButtonStyle newStyle = new ButtonStyle(style);
-		newStyle.up = new TextureRegionDrawable(new TextureRegion(
-				new Texture("data/frame.png")));
-		newStyle.over = newStyle.up;
-		selectionButton.getButton().setStyle(newStyle);
-		selectionButton.setData(null);
 	}
 
 	private void deselectOtherButtons(PassiveButton selected) {
@@ -93,14 +84,12 @@ public class PassiveButtonsView {
 		ButtonStyle style = pButton.getButton().getStyle();
 		selectionButton.setData(pButton.getData());
 
-		Texture texture = resourceManager.getTexture(
-				selectionButton.getData());
-		style.up = new TextureRegionDrawable(new TextureRegion(texture));
+		style.up = new TextureRegionDrawable(resourceManager.getTexture(
+				selectionButton.getData()));
 		style.over = style.up;
 
 		selectionButton.getButton().setStyle(style);
 	}
-
 
 	public PassiveButton getSelectionButton() {
 		return this.selectionButton;
@@ -109,7 +98,6 @@ public class PassiveButtonsView {
 	public void setSelectionButton(PassiveButton selectionSpecialButton) {
 		this.selectionButton = selectionSpecialButton;
 	}
-
 
 	private class ClickedListener extends ChangeListener {
 		@Override
@@ -124,31 +112,21 @@ public class PassiveButtonsView {
 						setSelectionToSelected(pButton);
 					} else {
 						pButton.toggleSelected(skin);
-						setSelectionToNothing(button.getStyle());
 					}
 				}
 				// TODO: add break here since we don't want to keep looping after we found the
 				// matching weapon
 			}
-	
+
 			deselectOtherButtons(selected);
 		}
 	}
 
 	public class SelectionClickedListener extends ChangeListener {
-	
+
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			if (selectionButton.getData() == null) {
-				populateTable();
-			} else {
-				Button button = selectionButton.getButton();
-				if (button == ((Button) actor)) {
-					setSelectionToNothing(button.getStyle());
-					deselectOtherButtons(new PassiveButton(null, null, null));
-				}
-			}
+			populateTable();
 		}
-	
 	}
 }
