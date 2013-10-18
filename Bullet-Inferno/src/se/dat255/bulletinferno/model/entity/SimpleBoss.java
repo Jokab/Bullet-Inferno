@@ -195,27 +195,27 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 	/** Gives the boss a basic up-down movement */
 	public void changeToDisorderedMovement() {
+		prepareMovementChange();
 		if (!currentPattern.equals("dmp")) {
 			physics.attachMovementPattern(dmp.copy(), getBody());
-			prepareMovementChange();
 			currentPattern = "dmp";
 		}
 	}
 
 	/** Makes the boss try to match the players y-position */
 	public void changeToFollowingMovement() {
+		prepareMovementChange();
 		if (!currentPattern.equals("fmp")) {
 			physics.attachMovementPattern(fmp.copy(), getBody());
-			prepareMovementChange();
 			currentPattern = "fmp";
 		}
 	}
 
 	/** Makes the boss avoid the player */
 	public void changeToEvadingMovement() {
+		prepareMovementChange();
 		if (!currentPattern.equals("emp")) {
 			physics.attachMovementPattern(emp.copy(), getBody());
-			prepareMovementChange();
 			currentPattern = "emp";
 		}
 	}
