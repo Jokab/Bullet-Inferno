@@ -44,7 +44,6 @@ public class LoadoutController extends SimpleController {
 	private final Skin skin;
 
 	private final MasterController masterController;
-	private final GameController gameController;
 	private final ResourceManager resourceManager;
 
 	private Label errorMessage;
@@ -69,8 +68,6 @@ public class LoadoutController extends SimpleController {
 	 */
 	public LoadoutController(final MasterController masterController,
 			final ResourceManager resourceManager) {
-		gameController = new GameController(masterController, resourceManager);
-
 		this.resourceManager = resourceManager;
 		this.masterController = masterController;
 		

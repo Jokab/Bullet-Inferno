@@ -34,9 +34,9 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 	PLASMA(0.3f, new DisorderedMovementPattern(0.05f, 2f), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(
 					0.4f, 0.2f))),
-	LASER(1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	LASER(0.2f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 			0.6f, 0.05f))),
-	EGG(1f, new AccelerationMovementPattern(new Vector2(30, 0)), new PhysicsBodyDefinitionImpl(
+	EGG(0.3f, new AccelerationMovementPattern(new Vector2(30, 0)), new PhysicsBodyDefinitionImpl(
 			PhysicsShapeFactory.getRectangularShape(
 					0.2f, 0.15f))),
 
