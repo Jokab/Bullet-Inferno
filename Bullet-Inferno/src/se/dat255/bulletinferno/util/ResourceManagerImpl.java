@@ -160,7 +160,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public void dispose() {
 		for(TextureDefinition definition : TextureDefinitionImpl.values()){
-			definition.unloadSource(manager);
+			definition.dispose();
 		}
 		
 		manager.dispose();
