@@ -47,13 +47,13 @@ public class ResourceManagerImplTest {
 
 	@Test
 	public void loadNotLoadedTexture() throws RuntimeException {
-		TextureDefinitionImpl textureType = TextureDefinitionImpl.values()[0];
+		TextureDefinitionImpl definition = TextureDefinitionImpl.values()[0];
 
 		thrown.expect(RuntimeException.class);
-		thrown.expectMessage("Texture " + textureType.name() + " is not loaded.");
+		thrown.expectMessage("Texture " + definition.getSrouce() + " is not loaded.");
 
 		ResourceManagerImpl manager = new ResourceManagerImpl();
 
-		manager.getTexture(textureType);
+		manager.getTexture(definition);
 	}
 }
