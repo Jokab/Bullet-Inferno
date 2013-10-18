@@ -52,7 +52,8 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship 
 		}
 
 		this.fmp = new FollowingMovementPattern(player);
-		this.emp = new EvadingMovementPattern(player);
+		float halfHeight = getBody().getDimensions().y / 2;
+		this.emp = new EvadingMovementPattern(player, 2.5f, 0.7f + halfHeight, 9f - halfHeight);
 		currentPattern = "none";
 
 		this.scoreListener = scoreListener;
@@ -70,11 +71,13 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship 
 			currentPattern = "dmp";
 			this.dmp = (DisorderedMovementPattern) pattern;
 			this.fmp = new FollowingMovementPattern(player);
-			this.emp = new EvadingMovementPattern(player);
+			float halfHeight = getBody().getDimensions().y / 2;
+			this.emp = new EvadingMovementPattern(player, 2.5f, 0.7f + halfHeight, 9f - halfHeight);
 		} else if (pattern instanceof FollowingMovementPattern) {
 			currentPattern = "fmp";
 			this.fmp = (FollowingMovementPattern) pattern;
-			this.emp = new EvadingMovementPattern(player);
+			float halfHeight = getBody().getDimensions().y / 2;
+			this.emp = new EvadingMovementPattern(player, 2.5f, 0.7f + halfHeight, 9f - halfHeight);
 		} else if (pattern instanceof EvadingMovementPattern) {
 			this.emp = (EvadingMovementPattern) pattern;
 			this.fmp = new FollowingMovementPattern(player);
