@@ -10,6 +10,7 @@ import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -60,7 +61,7 @@ public class BossImplTest {
 		SimpleBoss boss = new BossMockup(EnemyDefinitionImpl.DRIPPER, new Vector2(), 
 				new Vector2(0,1f), 0, new Weapon[] {}, new Vector2[] {}, 99, 0);
 		boss.changeToDisorderedMovement();
-		assertTrue("Movement pattern should be disordered", boss.getMovementPattern() instanceof DisorderedBossMovementPattern);
+		assertTrue("Movement pattern should be disordered", boss.getMovementPattern() instanceof DisorderedMovementPattern);
 		boss.prepareMovementChange();
 		assertTrue("Boss should have speed 0", boss.getVelocity().y == 0);
 		assertTrue("Boss should not have a movement pattern", boss.getMovementPattern() == null);		

@@ -3,10 +3,11 @@ package se.dat255.bulletinferno.model.weapon;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
-public interface ProjectileDefinition {
+public interface ProjectileDefinition extends ResourceIdentifier {
 
 	/**
 	 * Releases (fires) a projectile at the provided position.
