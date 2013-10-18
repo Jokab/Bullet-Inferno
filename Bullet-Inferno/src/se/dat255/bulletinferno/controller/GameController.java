@@ -246,10 +246,10 @@ public class GameController extends SimpleController {
 				Graphics.GAME_HEIGHT / 2);
 
 		// Render the game
-		graphics.render();
+		//graphics.render();
 		
 		// Debug render 
-		//graphics.renderWithDebug(models.getPhysicsEnvironment());
+		graphics.renderWithDebug(models.getPhysicsEnvironment());
 		
 		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();

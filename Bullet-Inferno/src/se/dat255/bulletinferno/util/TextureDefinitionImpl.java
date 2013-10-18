@@ -17,16 +17,21 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	PLAYER_DEFAULT(texture("data/playerShip.png")),
 	PLAYER_EXPLOSION(texture("data/explosion.gif")),
 
+	
+	
+	
 	// Weapons
-	MACHINE_GUN(texture("data/machineGun.png")),
-	MINI_GUN(texture("data/miniGun.png")),
-	PLASMA_GUN(texture("data/plasmaGun.png")),
-	EGG_CANNON(texture("data/eggCannon.png")),
+	STANDARD_MACHINE_GUN(texture("data/machineGun.png")),
+	STANDARD_MINI_GUN(texture("data/miniGun.png")),
+	STANDARD_PLASMA_GUN(texture("data/plasmaGun.png")),
+	HEAVY_EGG_CANNON(texture("data/eggCannon.png")),
+	HEAVY_LASER_CANNON(texture("data/laserCannon.png")),
 	MISSILE_LAUNCHER(texture("data/missileLauncher.png")),
 	DISORDERER(texture("data/disorderer.png")),
 	MISSILE_LAUNCHER_LARGE(texture("data/missileLauncherLarge.png")),
 	DISORDERER_LARGE(texture("data/disordererLarge.png")),
 	SNIPER_RIFLE(texture("data/sniperRifle.png")),
+	LASER(texture("data/laser.png")),
 	
 	// Projectiles
 	VELOCITY_BULLET(textureAtlas("data/packedProjectiles.atlas", "bullet")),
@@ -38,6 +43,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	MISSILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 	SPECIAL_ABILITY_MISSILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 	HIGH_VELOCITY_PROJECTILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
+	
 
 	// Buttons
 	PAUSE_SCREEN(texture("images/gui/screen_pause.png")),

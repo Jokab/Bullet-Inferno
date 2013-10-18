@@ -52,7 +52,7 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 	public void onTimeout(Timer source, float timeSinceLast) {
 		for(int i=0; i<getWeapons().length; i++){
 			if(source == timers[i]){
-				getWeapons()[i].fire(getPosition(), getVelocity().cpy().nor(), this);
+				getWeapons()[i].fire(getPosition(), new Vector2(-1,0), this);
 			}
 		}
 	}
