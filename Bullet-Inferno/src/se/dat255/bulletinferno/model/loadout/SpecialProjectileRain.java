@@ -63,8 +63,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS - 1);
 		if (counter < AMOUNT_BULLETS) {
 			ProjectileDefinitionImpl.SPECIAL_ABILITY_MISSILE.releaseProjectile(physics, weapons,
-					bulletPositions.get(index), new Vector2(3, 0), playerShip)
-					.setCollideWithObstacles(false);
+					bulletPositions.get(index), new Vector2(3, 0), playerShip);
 			counter++;
 		}
 	}

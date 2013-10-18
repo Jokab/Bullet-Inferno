@@ -49,19 +49,27 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f))),
 	SPECIAL_ABILITY_MISSILE(0.45f, new AccelerationMovementPattern(new Vector2(10, 0)),
 			new PhysicsBodyDefinitionImpl(
-					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f))),
+					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f)),
+					BrutalProjectileImpl.class),
 	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)),
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.8f, 0.5f)));
 
 	private float damage;
 	private final PhysicsMovementPattern pattern;
 	private final PhysicsBodyDefinition bodyDefinition;
+	private final Class<? extends Projectile> projectileType;
 
 	ProjectileDefinitionImpl(float damage, PhysicsMovementPattern pattern,
-			PhysicsBodyDefinition bodyDefinition) {
+			PhysicsBodyDefinition bodyDefinition, Class<? extends Projectile> projectileType) {
 		this.damage = damage;
 		this.pattern = pattern;
 		this.bodyDefinition = bodyDefinition;
+		this.projectileType = projectileType;
+	}
+	
+	ProjectileDefinitionImpl(float damage, PhysicsMovementPattern pattern,
+			PhysicsBodyDefinition bodyDefinition) {
+		this(damage, pattern, bodyDefinition, ProjectileImpl.class);
 	}
 
 	@Override
@@ -71,7 +79,7 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 			Vector2 projectileVector, Teamable source) {
 
 		Projectile projectile = weapons
-				.retrieveProjectile(ProjectileImpl.class);
+				.retrieveProjectile(projectileType);
 		projectile.init(this, position.cpy(), projectileVector,
 				damage, source, bodyDefinition);
 		return projectile;
