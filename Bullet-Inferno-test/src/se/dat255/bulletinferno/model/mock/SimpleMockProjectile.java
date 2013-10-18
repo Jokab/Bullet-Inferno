@@ -5,7 +5,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
@@ -51,7 +51,7 @@ public class SimpleMockProjectile implements Projectile {
 	}
 
 	@Override
-	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage, Teamable source,
+	public void init(ProjectileDefinition type, Vector2 position, Vector2 velocity, float damage, Teamable source,
 			PhysicsBodyDefinition bodyDefinition) {
 		
 	}
@@ -66,7 +66,7 @@ public class SimpleMockProjectile implements Projectile {
 	}
 
 	@Override
-	public ProjectileType getType() {
+	public ProjectileDefinition getType() {
 		return null;
 	}
 

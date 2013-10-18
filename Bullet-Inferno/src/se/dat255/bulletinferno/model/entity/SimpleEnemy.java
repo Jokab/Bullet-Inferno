@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -10,11 +9,10 @@ import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.Weapon;
-import se.dat255.bulletinferno.util.GameAction;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.GameActionEventImpl;
 import se.dat255.bulletinferno.util.GameActionImpl;
-import se.dat255.bulletinferno.util.ResourceIdentifier;
+import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,25 +25,25 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private final int credits;
 	private final EnemyDefinitionImpl type;
 	private Listener<GameActionEvent> actionListener;
-	
-	protected PhysicsBody body = null;
+
+	private PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
-	protected Vector2 velocity;
-	protected Weapon[] weapons;
+	private final Vector2 velocity;
+	private final Weapon[] weapons;
 
 	private final Listener<Integer> scoreListener;
 
 	/** A flag to make sure we don't remove ourself twice */
 	private boolean flaggedForRemoval = false;
 	// TODO : Fix this in box2d instead?
-	protected boolean isAwake = false;
+	private boolean isAwake = false;
 
 	/**
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
 	 */
-	private Runnable removeSelf = new Runnable() {
+	private final Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
 			entities.removeEnemy(SimpleEnemy.this);
@@ -53,13 +51,11 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	};
 
-
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type,
 			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
 			int score,
 			int credits, PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
-
 
 		this.physics = physics;
 		this.type = type;
@@ -75,7 +71,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		body = this.physics.createBody(bodyDefinition, this, position);
 	}
 
-
 	public SimpleEnemy(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type,
 			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, int score,
@@ -88,7 +83,6 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 			physics.attachMovementPattern(pattern.copy(), body);
 		}
-
 	}
 
 	@Override
@@ -106,13 +100,24 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (isAwake && hitByOtherProjectile(other)) {
+		if (!isAwake) {
+			return;
+		}
+
+		if (hitByOtherProjectile(other)) {
 			takeDamage(((Projectile) other).getDamage());
+		} else if (hitByPlayerShip(other)) {
+			takeDamage(initialHealth);
 		}
 	}
 
+	private boolean hitByPlayerShip(Collidable other) {
+		return other instanceof PlayerShip;
+	}
+
 	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof Projectile && !isInMyTeam(((Projectile) other).getSource());
+		return other instanceof Projectile
+				&& !isInMyTeam(((Projectile) other).getSource());
 	}
 
 	/**
@@ -131,12 +136,12 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	@Override
 	public void takeDamage(float damage) {
 		// Take no damage if enemy isn't alive
-		if (health > 0) {
+		if (!isDead()) {
 			health -= damage;
 
 			if (isDead()) {
 				scoreListener.call(getScore());
-				if(actionListener != null) {
+				if (actionListener != null) {
 					actionListener.call(new GameActionEventImpl(this, GameActionImpl.DIED));
 				}
 				scheduleRemoveSelf();
@@ -159,7 +164,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void dispose() {
 		physics.removeBody(body);
 		if (weapons != null) {
-			for (int i = 0; i < (weapons.length); i++) {
+			for (int i = 0; i < weapons.length; i++) {
 				if (weapons[i] != null) {
 					weapons[i].getTimer().stop();
 				}
@@ -183,11 +188,11 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		body.setVelocity(velocity);
 	}
 
-	public Vector2 getVelocity() {
+	protected Vector2 getVelocity() {
 		return body.getVelocity();
 	}
 
-	public Weapon[] getWeapons() {
+	protected Weapon[] getWeapons() {
 		return weapons;
 	}
 
@@ -206,7 +211,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void viewportIntersectionEnd() {
 		scheduleRemoveSelf();
 	}
-	
+
 	@Override
 	public String getIdentifier() {
 		return type.name();
@@ -223,13 +228,17 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	}
 
+	@Override
 	public void setActionListener(Listener<GameActionEvent> actionListener) {
 		this.actionListener = actionListener;
 	}
 
-
 	@Override
 	public Vector2 getDimensions() {
 		return body.getDimensions();
+	}
+
+	protected PhysicsBody getBody() {
+		return body;
 	}
 }

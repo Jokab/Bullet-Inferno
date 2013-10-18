@@ -1,0 +1,76 @@
+
+packedMountain1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mountain1
+  rotate: false
+  xy: 1, 453
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+mountain2
+  rotate: false
+  xy: 1, 1
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+  
+packedMountain2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mountain3
+  rotate: false
+  xy: 1, 453
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+mountain4
+  rotate: false
+  xy: 1, 1
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+
+packedMountain3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mountain5
+  rotate: false
+  xy: 1, 453
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+mountain6
+  rotate: false
+  xy: 1, 1
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+
+packedMountain4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mountain7
+  rotate: false
+  xy: 1, 453
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1
+mountain8
+  rotate: false
+  xy: 1, 1
+  size: 800, 450
+  orig: 800, 450
+  offset: 0, 0
+  index: -1

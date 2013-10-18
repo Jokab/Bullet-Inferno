@@ -1,8 +1,7 @@
 package se.dat255.bulletinferno.model.loadout;
 
-
 public class SpecialAbilityImpl implements SpecialAbility {
-	
+
 	private final SpecialEffect effect;
 
 	/**
@@ -19,6 +18,6 @@ public class SpecialAbilityImpl implements SpecialAbility {
 	 */
 	@Override
 	public SpecialEffect getEffect() {
-		return this.effect;
+		return effect;
 	}
 }

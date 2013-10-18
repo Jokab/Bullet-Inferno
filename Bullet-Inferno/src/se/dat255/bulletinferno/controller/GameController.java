@@ -3,17 +3,16 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.gui.Listener;
-import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.GameActionEvent;
+import se.dat255.bulletinferno.util.Listener;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.SimpleScoreListener;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
-import se.dat255.bulletinferno.view.LoadoutView;
 import se.dat255.bulletinferno.view.PlayerShipView;
 import se.dat255.bulletinferno.view.ProjectileView;
 import se.dat255.bulletinferno.view.audio.AudioPlayer;
@@ -50,48 +49,49 @@ public class GameController extends SimpleController {
 
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
-	
+
 	/** Stores the weapons type for restarting the game */
 	private WeaponDefinition[] weaponData;
 
 	/** Reference to the master controller */
-	private MasterController myGame;
+	private final MasterController myGame;
 
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
-	private AudioPlayer audiPlayer;
-	
+	private final AudioPlayer audioPlayer;
+
 	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
-	
+
 	/** Reference to the shared special ability definition */
 	private SpecialAbilityDefinition special;
 	/** Reference to the shared passive ability definition */
 	private PassiveAbilityDefinition passive;
 	/** Reference to the shared score listener which handles the score of the game */
-	private ScoreListener scoreListener;
-
-
+	private SimpleScoreListener scoreListener;
+	
+	/** Holds the players last position, in order to check if the player has moved */
+	private float lastPlayerPositionX;
 
 	/**
 	 * Default controller to set required references
 	 * 
 	 * @param myGame
 	 *        The master controller that creates this controller
-	 * @param resourceManager2
+	 * @param resourceManager
 	 */
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
 		this.resourceManager = resourceManager;
-		this.audiPlayer = new AudioPlayerImpl(resourceManager);
+		audioPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, 
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special,
 			PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
@@ -107,62 +107,60 @@ public class GameController extends SimpleController {
 
 		// Initialize the HUD
 		final HudView hudView = new HudView(resourceManager);
-		
+
 		// Initialize the graphics controller
 		graphics = new Graphics(hudView);
 		graphics.create();
-		
+
 		// Initialize the score listener
-		scoreListener = new ScoreListener(){
+		scoreListener = new SimpleScoreListener() {
 			@Override
-			public void updateHudWithScore(int score) {
+			public void notifyScoreChanged(int score) {
 				hudView.setScore(score);
 			}
 		};
 
-		
 		// Update life when ship changes life
-		Listener<Float> healthListener = new Listener<Float>(){
+		Listener<Float> healthListener = new Listener<Float>() {
 			@Override
 			public void call(Float life) {
 				hudView.setLife(life);
 			}
 		};
-		
+
 		// Initialize the action listener
-		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
+		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>() {
 			@Override
 			public void call(GameActionEvent e) {
-				audiPlayer.playSoundEffect(e);
+				audioPlayer.playSoundEffect(e);
 			}
 		};
-		
-		if(models != null) {
+
+		if (models != null) {
 			models.dispose();
 		}
 
 		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
-		
+
 		PlayerShip ship = models.getPlayerShip();
-		
+
 		// TODO: Based on user selection
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
 		final SpecialAbility specialAbility = special.getSpecialAbility(models);
-		
+
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
-		LoadoutView loadoutView = new LoadoutView(ship, resourceManager);
+
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
 				Graphics.GAME_HEIGHT / 2);
 		graphics.addRenderable(shipView);
-		graphics.addRenderable(loadoutView);
 
 		bgView = new BackgroundView(models, resourceManager, ship);
 		// graphics.addRenderable(bgView);
 
 		// Set up input handler
 		touchController = new GameTouchController(graphics, ship, this, myGame);
-		
-		touchController.setSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
+
+		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
 			public void specialAbilityRequested() {
 				specialAbility.getEffect().activate(models.getPlayerShip());
@@ -249,10 +247,10 @@ public class GameController extends SimpleController {
 
 		// Render the game
 		graphics.render();
-		
-		// Debug render 
-		//graphics.renderWithDebug(models.getPhysicsEnvironment());
-		
+
+		// Debug render
+		// graphics.renderWithDebug(models.getPhysicsEnvironment());
+
 		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();
 		}
@@ -273,8 +271,12 @@ public class GameController extends SimpleController {
 			models.setViewport(viewportPosition, viewportDimensions);
 
 			models.update(delta);
-			
-			scoreListener.update(delta);
+
+			Vector2 playerPosition = models.getPlayerShip().getPosition();
+			if(lastPlayerPositionX != playerPosition.x){
+				scoreListener.update(delta);
+			}
+			lastPlayerPositionX = playerPosition.x;
 		}
 
 	}
@@ -304,16 +306,18 @@ public class GameController extends SimpleController {
 	}
 
 	/** Get method for weapon data set in create new game */
-	public WeaponDefinition[] getWeaponData(){
+	public WeaponDefinition[] getWeaponData() {
 		return weaponData;
 	}
+
 	/** Get method for data set in create new game */
 	public SpecialAbilityDefinition getSpecial() {
-		return this.special;
+		return special;
 	}
+
 	/** Get method for data set in create new game */
 	public PassiveAbilityDefinition getPassive() {
-		return this.passive;
+		return passive;
 	}
 
 }

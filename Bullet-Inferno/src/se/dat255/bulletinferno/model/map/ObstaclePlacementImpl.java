@@ -20,14 +20,16 @@ public class ObstaclePlacementImpl implements ObstaclePlacement {
 	/**
 	 * @param obstacleDefinition
 	 *        as for {@link ObstaclePlacement#getObstacleDefinition()}.
-	 * @param x position
-	 * 			as for {@link ObstaclePlacement#getPosition()}
-	 * @param y position
+	 * @param x
+	 *        position
+	 *        as for {@link ObstaclePlacement#getPosition()}
+	 * @param y
+	 *        position
 	 *        as for {@link ObstaclePlacement#getPosition()}
 	 */
 	public ObstaclePlacementImpl(ObstacleDefinition obstacleDefinition, float x, float y) {
 		this.obstacleDefinition = obstacleDefinition;
-		this.position = new Vector2(x, y);
+		position = new Vector2(x, y);
 	}
 
 	/**

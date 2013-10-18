@@ -26,18 +26,18 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 
 	/** List of all timers */
 	private final List<Timer> timers = new LinkedList<Timer>();
-	
+
 	/** List of all queued timers to be added */
 	private final List<Timer> timersAddQueue = new LinkedList<Timer>();
-	
+
 	/** List of all queued timers to be removed */
 	private final List<Timer> timersRemoveQueue = new LinkedList<Timer>();
-	
+
 	private boolean isIteratingOverTimers = false;
 
 	/** A list of Runnables that will be run at the next update. */
 	private final List<Runnable> runLaters = new LinkedList<Runnable>();
-	
+
 	/** The discrete time step to take each update. */
 	private static float TIME_STEP = 1 / 60f;
 
@@ -58,7 +58,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	private float timeStepAccumulator = 0f;
 
 	/** Holds the Box2D world. */
-	private World world;
+	private final World world;
 
 	/**
 	 * A collision queue but with filtering and internal usage of special bodies.
@@ -228,11 +228,11 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 		bodyDef.position.set(position);
 		Body body = world.createBody(bodyDef);
 		body.setUserData(collidable);
-		
-		for(FixtureDef fixtureDef : definition.getBox2DFixtureDefinition()) {
+
+		for (FixtureDef fixtureDef : definition.getBox2DFixtureDefinition()) {
 			body.createFixture(fixtureDef);
 		}
-		
+
 		return new PhysicsBodyImpl(body);
 	}
 
@@ -251,11 +251,12 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	public void detachMovementPattern(PhysicsBody body) {
 		movementPatterns.remove(body);
 	}
-	
+
 	/**
-	 *  {@inheritDoc}
-	 * 	 */
-	public PhysicsMovementPattern getMovementPattern(PhysicsBody body){
+	 * {@inheritDoc}
+	 * */
+	@Override
+	public PhysicsMovementPattern getMovementPattern(PhysicsBody body) {
 		return movementPatterns.get(body);
 	}
 
@@ -274,7 +275,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	@Override
 	public void update(float deltaTime) {
 		updateTimers(deltaTime);
-		
+
 		timeStepAccumulator += deltaTime;
 
 		// Take discrete steps of TIME_STEP, sometimes even multiple of them (to keep up).
@@ -312,7 +313,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 	public void dispose() {
 		collisionQueue.dispose();
 	}
-	
+
 	private void updateTimers(float deltaTime) {
 		// Update timers, set iterator flag
 		// to indicate that no one is allowed to modify list
@@ -326,7 +327,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 			timersAddQueue.clear();
 		}
 		// If timers are waiting to be removed, remove them
-		for(Timer timer : timersRemoveQueue){
+		for (Timer timer : timersRemoveQueue) {
 			timers.remove(timer);
 		}
 		timersRemoveQueue.clear();
@@ -338,7 +339,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 		}
 		runLaters.clear();
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public Timer getTimer() {
@@ -352,7 +353,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 
 		return t;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void runLater(Runnable task) {
@@ -361,13 +362,13 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 
 	@Override
 	public void removeTimer(Timer timer) {
-		if(isIteratingOverTimers) {
+		if (isIteratingOverTimers) {
 			timersRemoveQueue.add(timer);
 		} else {
 			timers.remove(timer);
 		}
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public World getWorld() {

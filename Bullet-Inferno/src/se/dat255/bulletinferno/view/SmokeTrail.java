@@ -21,7 +21,7 @@ public class SmokeTrail implements Renderable {
 	private class Particle {
 
 		/** Current position, bottom-left world coordinates. */
-		private Vector2 position = new Vector2();
+		private final Vector2 position = new Vector2();
 
 	}
 
@@ -38,7 +38,7 @@ public class SmokeTrail implements Renderable {
 	private Vector2 spawnPoint = new Vector2(0, 0);
 
 	/** All particles, inflated with numberOfParticles ones immediately upon construction. */
-	private List<Particle> particles;
+	private final List<Particle> particles;
 
 	/** Total number of particles (even non-displayed). */
 	private final int numberOfParticles;
@@ -57,7 +57,7 @@ public class SmokeTrail implements Renderable {
 	 * 
 	 * @see SmokeTrail#timeAccumulator
 	 */
-	private float spawnTime = 0.05f;
+	private final float spawnTime = 0.03f;
 
 	private final ShaderProgram shaderProgram;
 
@@ -65,7 +65,7 @@ public class SmokeTrail implements Renderable {
 	 * A factor to apply for the distance (e.g. alpha decay). <tt>distance</tt> is applied to this,
 	 * and then <tt>(1-distance)</tt> is clamped to <tt>[0, 1]</tt>.
 	 */
-	private static final String DISTANCE_DECAY = "0.2";
+	private static final String DISTANCE_DECAY = "0.9";
 
 	/** The (shared) origin of all particles (only used for distance based color effects). */
 	private final float[] particleOrigin = new float[] { spawnPoint.x, spawnPoint.y };
@@ -78,11 +78,11 @@ public class SmokeTrail implements Renderable {
 	 */
 	public SmokeTrail(Texture texture, int numberOfParticles) {
 		this.texture = texture;
-		this.shaderProgram = getShaderProgram();
+		shaderProgram = getShaderProgram();
 
 		// Init particles:
 		this.numberOfParticles = numberOfParticles;
-		this.particles = new ArrayList<Particle>(numberOfParticles);
+		particles = new ArrayList<Particle>(numberOfParticles);
 		for (int i = 0; i < numberOfParticles; i++) {
 			particles.add(new Particle());
 		}
@@ -193,7 +193,7 @@ public class SmokeTrail implements Renderable {
 				.replace("%TEXCOORD_ATTRIBUTE:0%", ShaderProgram.TEXCOORD_ATTRIBUTE + "0")
 				.replace("%DISTANCE_DECAY%", DISTANCE_DECAY);
 
-		final String fragmentShader = (""
+		final String fragmentShader = ""
 				+ "#ifdef GL_ES\n"
 				+ "#define LOWP lowp\n"
 				+ "precision mediump float;\n"
@@ -209,7 +209,7 @@ public class SmokeTrail implements Renderable {
 				+ "void main() {\n"
 				+ "  gl_FragColor = vec4(1.0, 1.0, 1.0, v_alpha)\n" +
 				"      * texture2D(u_texture, v_texCoords);\n"
-				+ "}");
+				+ "}";
 
 		ShaderProgram shader = new ShaderProgram(vertexShader, fragmentShader);
 

@@ -8,7 +8,8 @@ public interface Teamable {
 	/**
 	 * Returns whether the specified team member belongs to my team
 	 * 
-	 * @param teamMember The (other) Teamable object to compare against.
+	 * @param teamMember
+	 *        The (other) Teamable object to compare against.
 	 * @return is team member
 	 */
 	public boolean isInMyTeam(Teamable teamMember);

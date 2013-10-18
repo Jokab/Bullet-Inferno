@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.view;
 
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.TimerImpl;
 import se.dat255.bulletinferno.util.Timerable;
@@ -11,20 +11,22 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerShipView implements Renderable, Timerable {
 
-	private final Texture shipTexture;
-	private final Texture explosion;
+	private final TextureRegion shipTexture;
+	private final TextureRegion explosion;
 
-	private Sprite shipSprite;
+	private final Sprite shipSprite;
 	private Sprite explosionSprite;
-	private Timer timer;
-	private ResourceManager resourceManager;
+	private final Timer timer;
 
-	private static final int SMOKE_PARTICLE_COUNT = 100;
-	private final Texture smokeTexture;
+	private final PlayerShipLoadoutView loadoutView;
+
+	private static final int SMOKE_PARTICLE_COUNT = 10;
+	private final TextureRegion smokeTexture;
 	private final SmokeTrail smokeTrail;
 
 	private final PlayerShip ship;
@@ -37,32 +39,32 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	public PlayerShipView(final PlayerShip ship, ResourceManager resourceManager) {
 		this.ship = ship;
-		this.resourceManager = resourceManager;
 
 		// this.timer = game.getTimer();
-		this.timer = new TimerImpl();
-		this.timer.setTime(EXPLOSION_TIMEOUT);
-		this.timer.registerListener(this);
+		timer = new TimerImpl();
+		timer.setTime(EXPLOSION_TIMEOUT);
+		timer.registerListener(this);
 
-		this.shipDimensions = ship.getDimensions();
+		shipDimensions = ship.getDimensions();
 
 		shipTexture = resourceManager.getTexture(ship);
-		shipTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-		explosion = resourceManager.getTexture(TextureType.PLAYER_EXPLOSION);
-		explosion.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		explosion = resourceManager.getTexture(TextureDefinitionImpl.PLAYER_EXPLOSION);
 
 		shipSprite = new Sprite(shipTexture);
 		shipSprite.setSize(shipDimensions.x, shipDimensions.y);
 		shipSprite.setOrigin(shipSprite.getWidth() / 2, shipSprite.getHeight() / 2);
 
 		explosionSprite = new Sprite(explosion);
-		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
+		explosionSprite.setSize((int) (shipDimensions.y * 2), (int) (shipDimensions.y * 2));
 
-		// TODO: How should we do with managed textures? No disposal?
-		smokeTexture = resourceManager.getTexture(TextureType.SMOKE_PARTICLE);
-		smokeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-		smokeTrail = new SmokeTrail(smokeTexture, SMOKE_PARTICLE_COUNT);
+		smokeTexture = resourceManager.getTexture(TextureDefinitionImpl.SMOKE_PARTICLE);
+		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest,
+				Texture.TextureFilter.Nearest);
+		smokeTrail = new SmokeTrail(smokeTexture.getTexture(), SMOKE_PARTICLE_COUNT);
+
+		// Load-out view is responsible for displaying the load-out we choose on our ship
+		loadoutView = new PlayerShipLoadoutView(ship, resourceManager);
 	}
 
 	@Override
@@ -78,10 +80,13 @@ public class PlayerShipView implements Renderable, Timerable {
 			shipSprite.setPosition(x, y);
 			shipSprite.draw(batch);
 
-			// TODO: Fix these values to match some texture offsets (+ break out to constants).
+			// Make sure weapons are rendered on top of the ship
+			loadoutView.render(batch, viewport);
+
 			smokeTrail.setSpawnPoint(
-					new Vector2(lastShipPosition.x - 0.05f, lastShipPosition.y - 0.1f));
+					new Vector2(lastShipPosition.x - 0.35f, lastShipPosition.y - 0.15f));
 			smokeTrail.setParticleOrigin(lastShipPosition);
+			smokeTrail.setVelocity(new Vector2(-3f + ship.getXVelocity() / 2f, 0.3f));
 			smokeTrail.render(batch, viewport);
 
 		}

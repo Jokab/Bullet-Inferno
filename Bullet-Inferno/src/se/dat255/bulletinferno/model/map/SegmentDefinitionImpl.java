@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
+import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -64,8 +64,8 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 */
 	SegmentDefinitionImpl(SliceDefinition entry, SliceDefinition exit,
 			List<? extends SliceDefinition> suitableSlices) {
-		this.entrySlice = entry;
-		this.exitSlice = exit;
+		entrySlice = entry;
+		exitSlice = exit;
 		this.suitableSlices = suitableSlices;
 	}
 
@@ -74,13 +74,15 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	 */
 	@Override
 	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, Vector2 position, int sliceAmount, Listener<Integer> scoreListener) {
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount,
+			Listener<Integer> scoreListener) {
 		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
 		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
 		Vector2 slicePosition = position.cpy();
 		Slice slice;
 		for (SliceDefinition sliceType : sliceDefinitonsPath) {
-			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy(), scoreListener);
+			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy(),
+					scoreListener);
 			slices.add(slice);
 			slicePosition.add(slice.getWidth(), 0);
 		}
@@ -136,7 +138,7 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 				}
 
 				// If the current slice is the second to the last exit slice
-				if (sliceNum == (numMiddleSlices - 1)) {
+				if (sliceNum == numMiddleSlices - 1) {
 					// make sure it also matches the exit slice
 					if (slice.getExitHeight() == exitSlice.getEntryHeight()) {
 						path.add(slice);

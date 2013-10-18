@@ -4,47 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.PlayerShipImpl.ShipType;
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.GameActionEvent;
+import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Implementation of a EntityEnvironment.
+ */
 public class EntityEnvironmentImpl implements EntityEnvironment {
-	
+
 	private final List<Enemy> enemies = new ArrayList<Enemy>();
-	private PlayerShip playerShip;
-	private PhysicsEnvironment physics;
-	private WeaponEnvironment weapons;
+	private final PlayerShip playerShip;
 	private Listener<GameActionEvent> actionListener;
-	
+
 	public EntityEnvironmentImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			WeaponLoadout weaponLoadout, Listener<Float> healthListener) {
-		this.physics = physics;
-		this.weapons = weapons;
-		
-		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 8), weaponLoadout, 
+		playerShip = new PlayerShipImpl(physics, this, new Vector2(0, 8), weaponLoadout,
 				ShipType.PLAYER_DEFAULT, healthListener);
-		this.physics = physics;
-		this.weapons = weapons;
 	}
-	
+
 	public EntityEnvironmentImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponLoadout weaponLoadout, Listener<Float> healthListener, 
+			WeaponLoadout weaponLoadout, Listener<Float> healthListener,
 			Listener<GameActionEvent> actionListener) {
 		this(physics, weapons, weaponLoadout, healthListener);
 		this.actionListener = actionListener;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
-		if(actionListener != null) {
+		if (actionListener != null) {
 			enemy.setActionListener(actionListener);
 		}
 	}

@@ -20,7 +20,7 @@ public class PassiveDamageModifier implements PassiveEffect {
 	@Override
 	public void applyEffect(PlayerShip playerShip) {
 		Weapon weapon = playerShip.getWeapon();
-		this.initialDamage = weapon.getProjectileType().getDamage();
+		initialDamage = weapon.getProjectileType().getDamage();
 		weapon.getProjectileType().setDamage(initialDamage * percent);
 	}
 

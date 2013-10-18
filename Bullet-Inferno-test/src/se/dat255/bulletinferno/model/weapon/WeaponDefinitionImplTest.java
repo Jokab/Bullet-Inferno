@@ -6,13 +6,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.math.Vector2;
-
-import se.dat255.bulletinferno.model.map.ObstacleDefinitionImpl;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class WeaponDefinitionImplTest {
 
@@ -54,11 +53,11 @@ public class WeaponDefinitionImplTest {
 	@Test
 	public void testCooldownWeapon() {
 		// Get an automatic weapon
-		Weapon weapon = WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons,
+		Weapon weapon = WeaponDefinitionImpl.HEAVY_LASER_CANNON.createWeapon(physics, weapons,
 				new Vector2());
 
 		assertTrue(
-				"When you retrieve a missile lanucher weapon, it should be cooldown weapon.",
+				"When you retrieve a heavy laser cannon weapon, it should be cooldown weapon.",
 				weapon.getClass() == CooldownWeaponImpl.class);
 	}
 }

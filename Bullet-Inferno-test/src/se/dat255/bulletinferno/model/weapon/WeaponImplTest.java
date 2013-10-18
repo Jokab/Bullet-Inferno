@@ -38,7 +38,7 @@ public class WeaponImplTest {
 		// Tests that the reloading time is set in the constructor
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
+				20, ProjectileDefinitionImpl.RED_PROJECTILE, 0);
 		assertTrue("The reloadingTime should be set in the constructor",
 				weapon.getReloadingTime() == 20);
 	}
@@ -48,7 +48,7 @@ public class WeaponImplTest {
 		// Tests that a newly created weapon is not reloading
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
+				20, ProjectileDefinitionImpl.RED_PROJECTILE, 0);
 		assertTrue("A newly created weapon should not be reloading",
 				weapon.getReloadingTimeLeft() <= 0);
 	}
@@ -59,7 +59,7 @@ public class WeaponImplTest {
 		// Essentially the same test as above
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);
+				20, ProjectileDefinitionImpl.RED_PROJECTILE, 0);
 		assertTrue("A newly created weapon should be loaded",
 				weapon.isLoaded());
 	}
@@ -71,7 +71,7 @@ public class WeaponImplTest {
 		// and that it triggers a cool-down on the weapon.
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons, 
-				WeaponDefinitionImpl.MISSILE_LAUNCHER, 20, ProjectileType.RED_PROJECTILE, 1);
+				WeaponDefinitionImpl.MISSILE_LAUNCHER, 20, ProjectileDefinitionImpl.RED_PROJECTILE, 1);
 		Vector2 origin = new Vector2(1, 1);
 		weapon.fire(origin, new Vector2(), new SimplePlayerShipMock());
 
@@ -88,7 +88,7 @@ public class WeaponImplTest {
 		// Tests that the weapon reloads
 
 		WeaponImpl weapon = new WeaponImpl(physics, weapons,WeaponDefinitionImpl.MISSILE_LAUNCHER, 
-				20, ProjectileType.RED_PROJECTILE, 0);		
+				20, ProjectileDefinitionImpl.RED_PROJECTILE, 0);		
 		assertTrue(weapon.isLoaded());
 		weapon.fire(new Vector2(), new Vector2(), null);
 		

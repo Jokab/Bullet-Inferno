@@ -1,11 +1,11 @@
 package se.dat255.bulletinferno.view.gui;
 
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -13,14 +13,11 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class GameoverScreenView implements RenderableGUI {
 
-	private final Vector2 position = new Vector2(-8.0f, -4.5f);
-	private final Vector2 size = new Vector2(16.0f, 9.0f);
-	private final Texture texture;
-	private final int score;
-
+	private final Vector2 position = new Vector2(-8.05f, -4.55f);
+	private final Vector2 size = new Vector2(16.1f, 9.1f);
+	private final TextureRegion texture;
 	public GameoverScreenView(ResourceManager resourceManager, int score) {
-		texture = resourceManager.getTexture(TextureType.GAMEOVER_SCREEN);
-		this.score = score;
+		texture = resourceManager.getTexture(TextureDefinitionImpl.GAMEOVER_SCREEN);
 	}
 
 	@Override
@@ -35,15 +32,15 @@ public class GameoverScreenView implements RenderableGUI {
 	@Override
 	public GuiEvent pressed(float x, float y) {
 		// Restart
-		if(-5.4f < x && x < -1.46f && -2.1f < y && y < -0.5f){
+		if (-5.4f < x && x < -1.46f && -2.1f < y && y < -0.5f) {
 			return GuiEvent.RESTARTGAME;
 		}
-		
+
 		// Menu
-		if(2.6f < x && x < 5.14f && -2.12f < y && y < -0.32){
+		if (2.6f < x && x < 5.14f && -2.12f < y && y < -0.32) {
 			return GuiEvent.STOPGAME;
 		}
-		
+
 		return null;
 	}
 

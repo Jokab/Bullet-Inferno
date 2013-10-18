@@ -1,18 +1,17 @@
 package se.dat255.bulletinferno.util;
 
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * A class that holds mappings between types of objects in the game and static resources
  * such as {@link Texture}, {@link Sound} and {@link Music}. Resources
  * are retrieved using a String identifier. <b>To use the
- * textures, they must first be loaded with {@link #startLoad()}</b>, which uses the libGDX built-in
- * {@link AssetManager} to do asynchronous loading.
+ * textures, they must first be loaded with {@link #startLoad(boolean)}</b>, which uses the libGDX
+ * built-in {@link AssetManager} to do asynchronous loading.
  * 
  */
 public interface ResourceManager extends Disposable {
@@ -21,11 +20,11 @@ public interface ResourceManager extends Disposable {
 	 * Returns a ManagedTexture-object containing the Texture connected
 	 * with this TextureType.
 	 * 
-	 * @param textureType
-	 *        The TextureType connected with the Texture you want.
+	 * @param textureDefinition
+	 *        The Texture Definition connected with the Texture you want.
 	 * @return The ManagedTexture-object.
 	 */
-	Texture getTexture(TextureType textureType);
+	TextureRegion getTexture(TextureDefinition textureDefinition);
 
 	/**
 	 * Returns a ManagedTexture-object containing the Texture connected
@@ -35,7 +34,7 @@ public interface ResourceManager extends Disposable {
 	 *        The identifier to be used for looking up the Texture.
 	 * @return The ManagedTexture-object.
 	 */
-	Texture getTexture(ResourceIdentifier identifier);
+	TextureRegion getTexture(ResourceIdentifier identifier);
 
 	/**
 	 * Returns the loaded {@link Sound} that is mapped to this identifier.
@@ -61,15 +60,15 @@ public interface ResourceManager extends Disposable {
 	 * 
 	 * <p>
 	 * <b>Note:</b> If called with blocking set to false, the caller must also make sure to call
-	 * {@link ResourceManager#loadAsync} until the method returns true before attempting to query the
-	 * ResourceManager for resources.
+	 * {@link ResourceManager#loadAsync} until the method returns true before attempting to query
+	 * the ResourceManager for resources.
 	 * </p>
 	 * 
 	 * @param blocking
 	 *        if the loading should block the thread.
 	 */
 	void startLoad(boolean blocking);
-	
+
 	/**
 	 * Tells the ResourceManager to keep loading resources asynchronously. Returns false while
 	 * loading is still in progress. It is not safe to query the ResourceManager for resources
@@ -82,7 +81,7 @@ public interface ResourceManager extends Disposable {
 	 * @return boolean indicating if loading is finished. True meaning loading has finished.
 	 */
 	boolean loadAsync();
-	
+
 	/**
 	 * Gets the current percentage of textures loaded, between (inclusive) 0 and 1.
 	 * 

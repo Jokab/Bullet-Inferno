@@ -35,44 +35,44 @@ public interface ModelEnvironment extends Disposable {
 	 *        the dimensions of the viewport in world coordinates (width, height).
 	 */
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
-	
+
 	public PlayerShip getPlayerShip();
-	
+
 	/**
 	 * @return a list of all the active segments in the world.
 	 */
 	public List<? extends Segment> getSegments();
-	
+
 	/**
 	 * @return the number of segments that has been removed from the segment list since the game
-	 * started. Removes only happen from the beginning of the segment list.
+	 *         started. Removes only happen from the beginning of the segment list.
 	 */
 	public int getRemovedSegmentCount();
-	
+
 	/**
 	 * Returns a list of all enemies in the game
-	 *
+	 * 
 	 * @return enemies
 	 */
 	public List<? extends Enemy> getEnemies();
-	
+
 	/**
 	 * Returns a list of all projectiles in the game
-	 *
+	 * 
 	 * @return a list of projectiles currently in the game.
 	 */
 	public List<? extends Projectile> getProjectiles();
-	
+
 	/**
 	 * @return the game's physics environment. Only for use by controllers!
 	 */
 	public PhysicsEnvironment getPhysicsEnvironment();
-	
+
 	/**
 	 * @return the game's weapon environment. Only for use by controllers!
 	 */
 	public WeaponEnvironment getWeaponEnvironment();
-	
+
 	/**
 	 * @return the game's map environment. Only for use by controllers!
 	 */

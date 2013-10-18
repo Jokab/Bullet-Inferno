@@ -9,17 +9,21 @@ import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionListener {
+/**
+ * Implementation of a Projectile. 
+ */
+public class ProjectileImpl implements Projectile,
+		PhysicsViewportIntersectionListener {
 
 	private PhysicsBody body = null;
 
 	private float damage;
 	private Teamable source = null;
-	private ProjectileType projectileType;
-	
+	private ProjectileDefinition projectileType;
+
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
-	
+
 	/** The EntityEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 
@@ -27,7 +31,7 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
 	 */
-	private Runnable removeSelf = new Runnable() {
+	private final Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
 			weapons.disposeProjectile(ProjectileImpl.this);
@@ -35,23 +39,23 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	};
 
 	/**
-	 * Constructs a new projectile
+	 * Constructs a new ProjectileDefinitionImpl.
 	 * 
-	 * @param game
-	 *        the game instance.
+	 * @param physicsEnvironment
+	 * @param weaponEnvironment
 	 */
-	public ProjectileImpl(PhysicsEnvironment physics, WeaponEnvironment weapons) {
-		this.physics = physics;
-		this.weapons = weapons;
+	public ProjectileImpl(PhysicsEnvironment physicsEnvironment,
+			WeaponEnvironment weaponEnvironment) {
+		physics = physicsEnvironment;
+		weapons = weaponEnvironment;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
+	public void init(ProjectileDefinition type, Vector2 origin, Vector2 velocity, float damage,
 			Teamable source, PhysicsBodyDefinition bodyDefinition) {
-		
 		projectileType = type;
 		this.damage = damage;
 		this.source = source;
@@ -102,8 +106,8 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 	}
 
 	private boolean shouldCollide(Collidable other) {
-		return ((damage > 0 && !(other instanceof Projectile) && other != getSource())
-				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)));
+		return damage > 0 && !(other instanceof Projectile) && other != getSource()
+				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other));
 	}
 
 	/**
@@ -154,14 +158,14 @@ public class ProjectileImpl implements Projectile, PhysicsViewportIntersectionLi
 		// Check if the projectile has any damage left, i.e. if it has already
 		// exploded (only happens in rare cases on the same frame as collided),
 		// if so, explode and remove
-		if(damage > 0) {
+		if (damage > 0) {
 			physics.runLater(removeSelf);
 			damage = 0;
 		}
 	}
 
 	@Override
-	public ProjectileType getType() {
+	public ProjectileDefinition getType() {
 		return projectileType;
 	}
 

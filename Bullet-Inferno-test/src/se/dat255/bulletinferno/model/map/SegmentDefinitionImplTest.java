@@ -10,13 +10,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.mock.EntityMockEnvironment;
 import se.dat255.bulletinferno.model.mock.PhysicsWorldImplSpy;
 import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
+import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 

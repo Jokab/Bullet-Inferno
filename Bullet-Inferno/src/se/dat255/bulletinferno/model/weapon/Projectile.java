@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 public interface Projectile extends PositionEntity, Collidable, Poolable {
+	
 	/**
 	 * Returns the damage of the Projectile.
 	 * 
@@ -17,7 +18,7 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	public float getDamage();
 
 	/**
-	 * Initializes the projectile and attaches a specific movement pattern. 
+	 * Initializes the projectile and attaches a specific movement pattern.
 	 * Call upon acquiring from the Pool.
 	 * 
 	 * @param position
@@ -31,19 +32,21 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	 * @param bodyDefinition
 	 *        the size of the body (definition)
 	 */
-	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage,
+	public void init(ProjectileDefinition type, Vector2 position, Vector2 velocity, float damage,
 			Teamable source, PhysicsBodyDefinition bodyDefinition);
 
 	/**
 	 * Sets the velocity of the projectile
 	 * 
-	 * @param velocity The new velocity of the projectile.
+	 * @param velocity
+	 *        The new velocity of the projectile.
 	 */
 	public void setVelocity(Vector2 velocity);
 
 	/**
 	 * Gets the position of the projectile
 	 */
+	@Override
 	public Vector2 getPosition();
 
 	/**
@@ -52,7 +55,12 @@ public interface Projectile extends PositionEntity, Collidable, Poolable {
 	 * @return source
 	 */
 	public Teamable getSource();
-	
-	public ProjectileType getType();
+
+	/**
+	 * Returns the type of this projectile.
+	 * 
+	 * @return The projectile's type.
+	 */
+	public ProjectileDefinition getType();
 
 }

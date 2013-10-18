@@ -16,30 +16,20 @@ public class DisorderedMovementPattern implements PhysicsMovementPattern {
 	@Override
 	public void update(float timeDelta, PhysicsBody body) {
 		time += timeDelta;
-
 		if (time > frequency) {
-
 			time = -time;
-
 			forceSwitch = !forceSwitch;
 		}
 
 		if (forceSwitch) {
-
 			body.setVelocity(new Vector2(body.getVelocity().x, -amplitude));
-
 		} else {
-
 			body.setVelocity(new Vector2(body.getVelocity().x, amplitude));
-
 		}
 	}
 
 	@Override
 	public PhysicsMovementPattern copy() {
-
 		return new DisorderedMovementPattern(frequency, amplitude);
-
 	}
-
 }

@@ -1,8 +1,7 @@
 package se.dat255.bulletinferno.model.weapon;
 
-
 /**
- * {@inheritDoc}
+ * @see WeaponLoadout
  */
 public class WeaponLoadoutImpl implements WeaponLoadout {
 
@@ -13,13 +12,13 @@ public class WeaponLoadoutImpl implements WeaponLoadout {
 		this.primaryWeapon = primaryWeapon;
 		this.heavyWeapon = heavyWeapon;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Weapon getStandardWeapon() {
-		return this.primaryWeapon;
+		return primaryWeapon;
 	}
 
 	/**
@@ -27,7 +26,7 @@ public class WeaponLoadoutImpl implements WeaponLoadout {
 	 */
 	@Override
 	public Weapon getHeavyWeapon() {
-		return this.heavyWeapon;
+		return heavyWeapon;
 	}
-	
+
 }

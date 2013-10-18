@@ -11,14 +11,14 @@ public class WeaponImpl implements Weapon {
 
 	private final PhysicsEnvironment physics;
 	private final WeaponEnvironment weapons;
-	private final ProjectileType projectileType;
+	private final ProjectileDefinition projectileType;
 	private final float projectileSpeed;
 	private float reloadingTime;
-	private WeaponDefinition type;
+	private final WeaponDefinition type;
 	private Vector2 offset;
 
-	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, 
-			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, 
+	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
+			WeaponDefinition weaponData, float reloadingTime, ProjectileDefinition projectileType,
 			float projectileSpeed, Vector2 offset) {
 		type = weaponData;
 		this.physics = physics;
@@ -31,9 +31,10 @@ public class WeaponImpl implements Weapon {
 		timer.setTime(reloadingTime);
 		timer.stop();
 	}
-	
+
 	/**
 	 * Constructs a new weapon with no offset
+	 * 
 	 * @param physics
 	 * @param weapons
 	 * @param weaponData
@@ -41,8 +42,8 @@ public class WeaponImpl implements Weapon {
 	 * @param projectileType
 	 * @param projectileSpeed
 	 */
-	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons, 
-			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType, 
+	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
+			WeaponDefinition weaponData, float reloadingTime, ProjectileDefinition projectileType,
 			float projectileSpeed) {
 		this(physics, weapons, weaponData, reloadingTime, projectileType, projectileSpeed,
 				new Vector2());
@@ -83,8 +84,9 @@ public class WeaponImpl implements Weapon {
 	@Override
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
-			
-			projectileType.releaseProjectile(physics, weapons, position.add(getOffset()),
+
+			projectileType.releaseProjectile(physics, weapons,
+					position.add(getOffset().cpy().add(new Vector2(getDimensions().x, 0))),
 					direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();
@@ -97,7 +99,7 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public ProjectileType getProjectileType() {
+	public ProjectileDefinition getProjectileType() {
 		return projectileType;
 	}
 

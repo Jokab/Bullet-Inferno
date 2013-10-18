@@ -4,7 +4,6 @@ import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -14,11 +13,11 @@ import com.badlogic.gdx.math.Vector2;
  * 
  * @see ObstacleDefinition
  */
-public class ObstacleImpl implements Obstacle, Teamable {
+public class ObstacleImpl implements Obstacle {
 
 	/** The physics body used by this Obstacle. */
 	private PhysicsBody body;
-	
+
 	/** The Physics instance this Obstacle belongs to. */
 	private final PhysicsEnvironment physics;
 
@@ -26,11 +25,15 @@ public class ObstacleImpl implements Obstacle, Teamable {
 	 * Construct a new ObstacleImpl with a body definition and position. The Obstacle will be added
 	 * to the physics world simulation.
 	 * 
-	 * @param physics the game in which the Obstacle will operate.
-	 * @param bodyDefinition a body definition the Obstacle will use for its body.
-	 * @param position The world-coordinates the Obstacle will be placed at in the physics world.
+	 * @param physics
+	 *        the game in which the Obstacle will operate.
+	 * @param bodyDefinition
+	 *        a body definition the Obstacle will use for its body.
+	 * @param position
+	 *        The world-coordinates the Obstacle will be placed at in the physics world.
 	 */
-	public ObstacleImpl(PhysicsEnvironment physics, PhysicsBodyDefinition bodyDefinition, Vector2 position) {
+	public ObstacleImpl(PhysicsEnvironment physics, PhysicsBodyDefinition bodyDefinition,
+			Vector2 position) {
 		this.physics = physics;
 		body = physics.createBody(bodyDefinition, this, position);
 	}
@@ -49,11 +52,6 @@ public class ObstacleImpl implements Obstacle, Teamable {
 	public void dispose() {
 		physics.removeBody(body);
 		body = null;
-	}
-	
-	@Override
-	public boolean isInMyTeam(Teamable teamMember) {
-		return teamMember instanceof ObstacleImpl;
 	}
 
 }

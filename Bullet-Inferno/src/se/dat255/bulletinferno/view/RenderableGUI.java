@@ -22,10 +22,10 @@ public interface RenderableGUI {
 
 	/** Gets the size of the GUI element */
 	public Vector2 getSize();
-	
+
 	/** Called when the object should render itself */
 	public void render(SpriteBatch batch);
 
-	/** Called when the object should dispose it's graphics */
+	/** Called when the object should dispose its graphics */
 	public void dispose(ResourceManager resourceManager);
 }

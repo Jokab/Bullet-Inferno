@@ -8,6 +8,10 @@ import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Environment for keeping track of anything map-related.
+ *
+ */
 public interface MapEnvironment {
 
 	/**
@@ -34,17 +38,17 @@ public interface MapEnvironment {
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
 	public EntityEnvironment getEntityEnvironment();
-	
+
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
 	 * @return a list of projectiles currently in the game.
 	 */
 	public List<? extends Projectile> getProjectiles();
-	
+
 	/**
 	 * @return the games weapon environment. Only for use by controllers!
 	 */
 	public WeaponEnvironment getWeaponEnvironment();
-	
+
 }

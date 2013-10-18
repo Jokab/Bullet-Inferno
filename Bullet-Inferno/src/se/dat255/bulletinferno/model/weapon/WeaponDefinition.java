@@ -19,7 +19,7 @@ public interface WeaponDefinition extends ResourceIdentifier {
 	 * 
 	 * @return The projectile.
 	 */
-	ProjectileType getProjectileType();
+	ProjectileDefinition getProjectileType();
 
 	/**
 	 * Returns the velocity of the projectile that is fired.
@@ -30,19 +30,20 @@ public interface WeaponDefinition extends ResourceIdentifier {
 
 	/**
 	 * Returns a new Weapon that this definition holds
+	 * 
 	 * @param physics
 	 * @param weapons
 	 * @param offset
 	 * @return A new weapon instance.
 	 */
-	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons, 
+	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			Vector2 offset);
 
 	/**
 	 * Returns the dimensions of the weapon
+	 * 
 	 * @return The dimensions as a vector
 	 */
 	Vector2 getDimensions();
-	
-	
+
 }

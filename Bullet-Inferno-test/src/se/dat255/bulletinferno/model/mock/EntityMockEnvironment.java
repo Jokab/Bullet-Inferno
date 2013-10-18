@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.mock;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.Enemy;
@@ -9,6 +10,7 @@ import se.dat255.bulletinferno.model.entity.PlayerShip;
 public class EntityMockEnvironment implements EntityEnvironment {
 	public final PhysicsWorldImplSpy physics;
 	public final WeaponMockEnvironment weapons;
+	public List<Enemy> enemies = new ArrayList<Enemy>();
 	
 	public EntityMockEnvironment() {
 		this(new PhysicsWorldImplSpy() , new WeaponMockEnvironment());
@@ -20,20 +22,17 @@ public class EntityMockEnvironment implements EntityEnvironment {
 	}
 	
 	@Override
-	public void addEnemy(Enemy emeny) {
-		// TODO Auto-generated method stub
-		
+	public void addEnemy(Enemy enemy) {
+		enemies.add(enemy);
 	}
 
 	@Override
 	public List<? extends Enemy> getEnemies() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.enemies;
 	}
 
 	@Override
 	public PlayerShip getPlayerShip() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

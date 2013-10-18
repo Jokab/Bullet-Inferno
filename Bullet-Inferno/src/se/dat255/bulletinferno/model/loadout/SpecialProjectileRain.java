@@ -6,7 +6,7 @@ import java.util.List;
 import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
@@ -27,8 +27,8 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	private PlayerShip playerShip;
 
 	/**
-	 * Constructs a SpecialEffect which will spawn {@value #AMOUNT_BULLETS} behind the
-	 * player, firing towards the enemies.
+	 * Constructs a SpecialEffect which will spawn bullets behind the player, firing towards the
+	 * enemies.
 	 * 
 	 * @param physics
 	 *        The game's PhysicsEnvironment.
@@ -38,15 +38,12 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
 		this.weapons = weapons;
-		this.timer = physics.getTimer();
+		timer = physics.getTimer();
 		timer.registerListener(this);
 	}
 
 	@Override
 	public void activate(PlayerShip playerShip) {
-		// TODO: there is something wrong with this code. the projectiles travel exponentially
-		// faster with each activation
-
 		this.playerShip = playerShip;
 		bulletPositions.clear();
 		counter = 0;
@@ -56,7 +53,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		timer.start();
 		for (int i = 1; i <= AMOUNT_BULLETS; i++) {
 			float xPos = playerShip.getPosition().x;
-			float yPos = (((Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS) * i + 1);
+			float yPos = (Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS * i + 1;
 			bulletPositions.add(new Vector2(xPos, yPos));
 		}
 	}
@@ -65,7 +62,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public void onTimeout(Timer source, float timeSinceLast) {
 		int index = (int) Math.ceil(Math.random() * AMOUNT_BULLETS - 1);
 		if (counter < AMOUNT_BULLETS) {
-			ProjectileType.MISSILE.releaseProjectile(physics, weapons,
+			ProjectileDefinitionImpl.SPECIAL_ABILITY_MISSILE.releaseProjectile(physics, weapons,
 					bulletPositions.get(index), new Vector2(3, 0), playerShip);
 			counter++;
 		}

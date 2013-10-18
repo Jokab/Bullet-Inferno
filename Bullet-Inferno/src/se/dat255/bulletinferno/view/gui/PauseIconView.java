@@ -13,8 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 public class PauseIconView implements RenderableGUI {
 
 	private final TextureRegion textureRegion;
-	private final Vector2 position = new Vector2(6.5f, 3f);
-	private final Vector2 size = new Vector2(1.5f, 1.5f);
+	private final Vector2 position = new Vector2(6.6f, 3.1f);
+	private final Vector2 size = new Vector2(1.2f, 1.2f);
 
 	public PauseIconView(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
@@ -26,7 +26,8 @@ public class PauseIconView implements RenderableGUI {
 	}
 
 	/** Disposed by HudView */
-	@Override @Deprecated
+	@Override
+	@Deprecated
 	public void dispose(ResourceManager resourceManager) {
 	}
 

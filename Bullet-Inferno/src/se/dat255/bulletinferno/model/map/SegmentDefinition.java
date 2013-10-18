@@ -1,9 +1,9 @@
 package se.dat255.bulletinferno.model.map;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
+import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,5 +27,6 @@ public interface SegmentDefinition {
 	 * @return A Segment made up of <i>sliceAmount</i> slices.
 	 */
 	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
-			WeaponEnvironment weapons, Vector2 position, int sliceAmount, Listener<Integer> scoreListener);
+			WeaponEnvironment weapons, Vector2 position, int sliceAmount,
+			Listener<Integer> scoreListener);
 }
