@@ -45,9 +45,14 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	LOADOUT_PASSIVE_RELOADING_TIME(texture("data/reloadSpeed.png")),
 	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER(texture("data/shieldBoost.png")),
 	LOADOUT_PASSIVE_DAMAGE_MODIFIER(texture("data/damageBoost.png")),
-
 	LOADOUT_SPECIAL_PROJECTILE_RAIN(texture("data/projectileRain.png")),
 	LOADOUT_SPECIAL_NUKE(texture("data/nuke.png")),
+	LOADOUT_BACKGROUND(texture("data/menu.png")),
+	LOADOUT_SHIP(texture("data/menuship.png")),
+	LOADOUT_SPECIAL_ABILITIES(texture("data/menuspecialabilities.png")),
+	LOADOUT_PASSIVE_ABILITIES(texture("data/menupassiveabilities.png")),
+	LOADOUT_STANDARD_WEAPON(texture("data/menustandardweapon.png")),
+	LOADOUT_HEAVYWEAPON(texture("data/menuheavyweapon.png")),
 
 	// Buttons
 	PAUSE_SCREEN(texture("images/gui/screen_pause.png")),
