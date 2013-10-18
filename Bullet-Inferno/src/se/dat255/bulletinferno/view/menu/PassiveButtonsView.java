@@ -37,11 +37,12 @@ public class PassiveButtonsView {
 	}
 
 	public void populateTable() {
+		PassiveAbilityDefinitionImpl[] arr = PassiveAbilityDefinitionImpl.values();
 		if (passiveButtons.size() == 0) {
 			table.clear();
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < arr.length; i++) {
 				// TODO: the line below needs changing to take into account all weapons
-				PassiveAbilityDefinition ability = PassiveAbilityDefinitionImpl.TAKE_DAMAGE_MODIFIER;
+				PassiveAbilityDefinition ability = arr[i];
 				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
 						resourceManager);
 				passiveButtons.add(passiveButton);
@@ -59,7 +60,7 @@ public class PassiveButtonsView {
 	private void showTable() {
 		table.clear();
 		for (PassiveButton button : passiveButtons) {
-			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
+			this.table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
 		label.setText("Passive abilities");
 	}

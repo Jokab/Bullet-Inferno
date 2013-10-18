@@ -44,13 +44,19 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	SPECIAL_ABILITY_MISSILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 	HIGH_VELOCITY_PROJECTILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 	
-
+	// Loadout menu specific
+	LOADOUT_PASSIVE_RELOADING_TIME(texture("data/reloadSpeed.png")),
+	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER(texture("data/shieldBoost.png")),
+	LOADOUT_PASSIVE_DAMAGE_MODIFIER(texture("data/damageBoost.png")),
+	
+	LOADOUT_SPECIAL_PROJECTILE_RAIN(texture("data/projectileRain.png")),
+	LOADOUT_SPECIAL_NUKE(texture("data/nuke.png")),
+	
 	// Buttons
 	PAUSE_SCREEN(texture("images/gui/screen_pause.png")),
 	BLUE_BACKGROUND(texture("images/game/background.png")),
 	GAMEOVER_SCREEN(texture("images/gui/screen_gameover.png")),
 	PROJECTILE_RAIN(texture("data/projectileRain.png")),
-	TAKE_DAMAGE_MODIFIER(texture("data/shieldMenu.png")),
 	LOADOUT_START_BUTTON(texture("data/startBtn.png")),
 	HUD_TEXTURE(texture("images/game/hud.png")),
 

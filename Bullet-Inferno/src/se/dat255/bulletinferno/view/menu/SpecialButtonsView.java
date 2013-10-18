@@ -5,6 +5,7 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinitionImpl;
+import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
 
@@ -37,11 +38,12 @@ public class SpecialButtonsView {
 	}
 
 	public void populateTable() {
+		SpecialAbilityDefinitionImpl[] arr = SpecialAbilityDefinitionImpl.values();
 		if (specialButtons.size() == 0) {
 			table.clear();
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < arr.length; i++) {
 				// TODO: the line below needs changing to take into account all weapons
-				SpecialAbilityDefinition ability = SpecialAbilityDefinitionImpl.PROJECTILE_RAIN;
+				SpecialAbilityDefinition ability = arr[i];
 				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
 						resourceManager);
 				specialButtons.add(specialButton);
@@ -60,7 +62,7 @@ public class SpecialButtonsView {
 	private void showTable() {
 		table.clear();
 		for (SpecialButton button : specialButtons) {
-			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
+			this.table.add(button.getButton()).padBottom(20).height(95).width(175).row();
 		}
 		label.setText("Special abilities");
 	}

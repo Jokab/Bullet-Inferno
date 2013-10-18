@@ -7,13 +7,13 @@ import se.dat255.bulletinferno.model.ModelEnvironment;
  */
 public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 
-	DAMAGE_ALL_ENEMIES(new SpecialInitializer() {
+	LOADOUT_SPECIAL_NUKE(new SpecialInitializer() {
 		@Override
 		public SpecialAbility initialize(ModelEnvironment game) {
 			return new SpecialAbilityImpl(new SpecialDamageAll(game.getEntityEnvironment()));
 		}
 	}),
-	PROJECTILE_RAIN(new SpecialInitializer() {
+	LOADOUT_SPECIAL_PROJECTILE_RAIN(new SpecialInitializer() {
 		@Override
 		public SpecialAbility initialize(ModelEnvironment game) {
 			return new SpecialAbilityImpl(new SpecialProjectileRain(game.getPhysicsEnvironment(),
