@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -14,6 +13,7 @@ import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
+import se.dat255.bulletinferno.util.Listener;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;

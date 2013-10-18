@@ -2,7 +2,6 @@ package se.dat255.bulletinferno.model.entity;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
@@ -10,6 +9,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.weapon.Weapon;
+import se.dat255.bulletinferno.util.Listener;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
 

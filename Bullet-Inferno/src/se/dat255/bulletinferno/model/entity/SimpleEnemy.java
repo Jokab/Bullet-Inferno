@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsBody;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -13,6 +12,7 @@ import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.GameActionEventImpl;
 import se.dat255.bulletinferno.util.GameActionImpl;
+import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 

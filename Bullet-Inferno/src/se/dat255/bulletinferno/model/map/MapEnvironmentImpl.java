@@ -4,8 +4,6 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
-import se.dat255.bulletinferno.model.gui.Listener;
-import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
@@ -14,6 +12,8 @@ import se.dat255.bulletinferno.model.weapon.WeaponEnvironmentImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.util.GameActionEvent;
+import se.dat255.bulletinferno.util.Listener;
+import se.dat255.bulletinferno.util.SimpleScoreListener;
 
 import com.badlogic.gdx.math.Vector2;
 

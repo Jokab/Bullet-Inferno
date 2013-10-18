@@ -1,6 +1,5 @@
 package se.dat255.bulletinferno.model.entity;
 
-import se.dat255.bulletinferno.model.gui.Listener;
 import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
@@ -11,6 +10,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponPlacement;
 import se.dat255.bulletinferno.model.weapon.WeaponPlacementImpl;
+import se.dat255.bulletinferno.util.Listener;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
 
 import com.badlogic.gdx.math.Vector2;

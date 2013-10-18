@@ -3,14 +3,14 @@ package se.dat255.bulletinferno.controller;
 import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
-import se.dat255.bulletinferno.model.gui.Listener;
-import se.dat255.bulletinferno.model.gui.ScoreListener;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.GameActionEvent;
+import se.dat255.bulletinferno.util.Listener;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.SimpleScoreListener;
 import se.dat255.bulletinferno.view.BackgroundView;
 import se.dat255.bulletinferno.view.EnemyView;
 import se.dat255.bulletinferno.view.PlayerShipView;
@@ -69,7 +69,7 @@ public class GameController extends SimpleController {
 	/** Reference to the shared passive ability definition */
 	private PassiveAbilityDefinition passive;
 	/** Reference to the shared score listener which handles the score of the game */
-	private ScoreListener scoreListener;
+	private SimpleScoreListener scoreListener;
 
 
 
@@ -112,9 +112,9 @@ public class GameController extends SimpleController {
 		graphics.create();
 		
 		// Initialize the score listener
-		scoreListener = new ScoreListener(){
+		scoreListener = new SimpleScoreListener(){
 			@Override
-			public void updateHudWithScore(int score) {
+			public void notifyScoreChanged(int score) {
 				hudView.setScore(score);
 			}
 		};
