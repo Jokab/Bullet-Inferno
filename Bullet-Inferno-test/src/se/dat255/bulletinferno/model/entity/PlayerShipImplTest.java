@@ -17,7 +17,8 @@ import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.physics.Collidable;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.ProjectileType;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
+import se.dat255.bulletinferno.model.weapon.ProjectileDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.WeaponImpl;
@@ -45,7 +46,7 @@ public class PlayerShipImplTest {
 	private class MockWeapon extends WeaponImpl {
 		private boolean hasFired = false;
 		
-		public MockWeapon(WeaponDefinition type, float reloadingTime, ProjectileType projectileType, float velocity) {
+		public MockWeapon(WeaponDefinition type, float reloadingTime, ProjectileDefinition projectileType, float velocity) {
 			super(physics, weapons, type, reloadingTime, projectileType, velocity);
 		}
 		
@@ -139,7 +140,7 @@ public class PlayerShipImplTest {
 	@Test
 	public void testFireWeapon() {
 		MockWeapon weapon = new MockWeapon(WeaponDefinitionImpl.MISSILE_LAUNCHER, 0, 
-				ProjectileType.RED_PROJECTILE, 0);
+				ProjectileDefinitionImpl.RED_PROJECTILE, 0);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(weapon, weapon);
 		playerShip = new PlayerShipImpl(physics, new EntityMockEnvironment(), 
 				new Vector2(), loadout, ShipType.PLAYER_DEFAULT, new HealthMockListener());
@@ -193,7 +194,7 @@ public class PlayerShipImplTest {
 		projectile.setSource(playerShip2);
 		preCollisionHealth = playerShip.getHealth();
 		
-		playerShip.preCollided(playerShip2);
+		playerShip.preCollided(projectile);
 		assertTrue("Should take no damage from projectile, since it's hit by a team member", 
 				playerShip.getHealth() == preCollisionHealth);
 		

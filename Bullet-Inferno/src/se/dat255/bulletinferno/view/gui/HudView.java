@@ -135,6 +135,7 @@ public class HudView implements Renderable {
 		hudRegions.add(specialButton);
 	}
 
+	/** Shows the game over screen **/
 	public void gameOver(int score) {
 		RenderableGUI gameOver = new GameoverScreenView(resourceManager, score);
 		hudRegions.clear();

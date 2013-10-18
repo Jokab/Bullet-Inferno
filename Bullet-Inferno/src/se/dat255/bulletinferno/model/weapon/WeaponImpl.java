@@ -11,14 +11,14 @@ public class WeaponImpl implements Weapon {
 
 	private final PhysicsEnvironment physics;
 	private final WeaponEnvironment weapons;
-	private final ProjectileType projectileType;
+	private final ProjectileDefinition projectileType;
 	private final float projectileSpeed;
 	private float reloadingTime;
 	private final WeaponDefinition type;
 	private Vector2 offset;
 
 	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType,
+			WeaponDefinition weaponData, float reloadingTime, ProjectileDefinition projectileType,
 			float projectileSpeed, Vector2 offset) {
 		type = weaponData;
 		this.physics = physics;
@@ -43,7 +43,7 @@ public class WeaponImpl implements Weapon {
 	 * @param projectileSpeed
 	 */
 	public WeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType,
+			WeaponDefinition weaponData, float reloadingTime, ProjectileDefinition projectileType,
 			float projectileSpeed) {
 		this(physics, weapons, weaponData, reloadingTime, projectileType, projectileSpeed,
 				new Vector2());
@@ -99,7 +99,7 @@ public class WeaponImpl implements Weapon {
 	}
 
 	@Override
-	public ProjectileType getProjectileType() {
+	public ProjectileDefinition getProjectileType() {
 		return projectileType;
 	}
 

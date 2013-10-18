@@ -57,7 +57,7 @@ public class SmokeTrail implements Renderable {
 	 * 
 	 * @see SmokeTrail#timeAccumulator
 	 */
-	private final float spawnTime = 0.05f;
+	private final float spawnTime = 0.03f;
 
 	private final ShaderProgram shaderProgram;
 
@@ -65,7 +65,7 @@ public class SmokeTrail implements Renderable {
 	 * A factor to apply for the distance (e.g. alpha decay). <tt>distance</tt> is applied to this,
 	 * and then <tt>(1-distance)</tt> is clamped to <tt>[0, 1]</tt>.
 	 */
-	private static final String DISTANCE_DECAY = "0.2";
+	private static final String DISTANCE_DECAY = "0.9";
 
 	/** The (shared) origin of all particles (only used for distance based color effects). */
 	private final float[] particleOrigin = new float[] { spawnPoint.x, spawnPoint.y };

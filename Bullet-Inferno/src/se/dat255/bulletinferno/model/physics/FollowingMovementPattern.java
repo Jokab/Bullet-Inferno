@@ -35,11 +35,8 @@ public class FollowingMovementPattern implements PhysicsMovementPattern {
 
 	@Override
 	public PhysicsMovementPattern copy() {
-
 		return new FollowingMovementPattern(entity);
-
 	}
-
 }
 
 

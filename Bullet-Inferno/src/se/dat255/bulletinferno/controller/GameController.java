@@ -70,6 +70,9 @@ public class GameController extends SimpleController {
 	private PassiveAbilityDefinition passive;
 	/** Reference to the shared score listener which handles the score of the game */
 	private SimpleScoreListener scoreListener;
+	
+	/** Holds the players last position, in order to check if the player has moved */
+	private float lastPlayerPositionX;
 
 	/**
 	 * Default controller to set required references
@@ -269,7 +272,11 @@ public class GameController extends SimpleController {
 
 			models.update(delta);
 
-			scoreListener.update(delta);
+			Vector2 playerPosition = models.getPlayerShip().getPosition();
+			if(lastPlayerPositionX != playerPosition.x){
+				scoreListener.update(delta);
+			}
+			lastPlayerPositionX = playerPosition.x;
 		}
 
 	}

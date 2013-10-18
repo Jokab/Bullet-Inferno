@@ -12,6 +12,9 @@ import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Implementation of a EntityEnvironment.
+ */
 public class EntityEnvironmentImpl implements EntityEnvironment {
 
 	private final List<Enemy> enemies = new ArrayList<Enemy>();

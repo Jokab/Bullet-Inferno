@@ -33,9 +33,6 @@ public class DisorderedProjectileMovementPattern implements PhysicsMovementPatte
 
 	@Override
 	public PhysicsMovementPattern copy() {
-
 		return new DisorderedMovementPattern(frequency, amplitude);
-
 	}
-
 }

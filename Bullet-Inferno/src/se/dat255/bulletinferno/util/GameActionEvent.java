@@ -9,5 +9,10 @@ public interface GameActionEvent {
 	 */
 	public ResourceIdentifier getSource();
 
+	/**
+	 * Returns the GameActionEvent's GameAction.
+	 * 
+	 * @return The GameAction.
+	 */
 	public GameAction getAction();
 }

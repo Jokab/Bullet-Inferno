@@ -19,7 +19,7 @@ public interface WeaponDefinition extends ResourceIdentifier {
 	 * 
 	 * @return The projectile.
 	 */
-	ProjectileType getProjectileType();
+	ProjectileDefinition getProjectileType();
 
 	/**
 	 * Returns the velocity of the projectile that is fired.

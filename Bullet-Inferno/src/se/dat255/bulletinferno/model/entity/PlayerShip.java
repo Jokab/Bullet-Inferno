@@ -68,4 +68,10 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 * Used mainly for starting movement after defeating a boss
 	 */
 	public void restoreSpeed();
+
+	/**
+	 * @return the ship's velocity horizontally. Note that it has no velocity for Y...
+	 */
+	public float getXVelocity();
+
 }

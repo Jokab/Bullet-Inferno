@@ -1,187 +1,107 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.map.Obstacle;
-import se.dat255.bulletinferno.model.physics.Collidable;
-import se.dat255.bulletinferno.model.physics.PhysicsBody;
+import se.dat255.bulletinferno.model.physics.AccelerationMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
+import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.physics.PhysicsViewportIntersectionListener;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
+import se.dat255.bulletinferno.model.physics.SpreadMovementPattern;
 import se.dat255.bulletinferno.model.team.Teamable;
+import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+import se.dat255.bulletinferno.util.ResourceIdentifier;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class ProjectileDefinitionImpl implements ProjectileDefinition,
-		PhysicsViewportIntersectionListener {
+/**
+ * An enum for holding different types of projectiles. Are fired by using {@link #releaseProjectile()}
+ */
+public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDefinition {
 
-	private PhysicsBody body = null;
+	/**
+	 * damage, movementpattern, hitbox
+	 * 
+	 * null movement pattern implies straight travel
+	 */
+
+	VELOCITY_BULLET(0.2f, new SpreadMovementPattern(0.2f), new PhysicsBodyDefinitionImpl(
+			PhysicsShapeFactory.getRectangularShape(
+					0.2f, 0.1f))),
+	ROUND_BULLET(0.1f, new SpreadMovementPattern(0.7f), new PhysicsBodyDefinitionImpl(
+			PhysicsShapeFactory.getRectangularShape(
+					0.3f, 0.1f))),
+	PLASMA(0.3f, new DisorderedMovementPattern(0.05f, 2f), new PhysicsBodyDefinitionImpl(
+			PhysicsShapeFactory.getRectangularShape(
+					0.4f, 0.2f))),
+	LASER(1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+			0.6f, 0.05f))),
+	EGG(1f, new AccelerationMovementPattern(new Vector2(30, 0)), new PhysicsBodyDefinitionImpl(
+			PhysicsShapeFactory.getRectangularShape(
+					0.2f, 0.15f))),
+
+	RED_PROJECTILE(0.1f, null, new PhysicsBodyDefinitionImpl(
+			PhysicsShapeFactory.getRectangularShape(
+					0.25f, 0.25f))),
+	GREEN_PROJECTILE(0.15f, new AccelerationMovementPattern(new Vector2(-10, 0)),
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f, 0.25f))),
+	MISSILE(0.5f, new AccelerationMovementPattern(new Vector2(10, 0)),
+			new PhysicsBodyDefinitionImpl(
+					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f))),
+	SPECIAL_ABILITY_MISSILE(0.45f, new AccelerationMovementPattern(new Vector2(10, 0)),
+			new PhysicsBodyDefinitionImpl(
+					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f)),
+					BrutalProjectileImpl.class),
+	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)),
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.8f, 0.5f)));
 
 	private float damage;
-	private Teamable source = null;
-	private ProjectileType projectileType;
+	private final PhysicsMovementPattern pattern;
+	private final PhysicsBodyDefinition bodyDefinition;
+	private final Class<? extends Projectile> projectileType;
 
-	/** The PhysicsEnvironment instance injected at construction. */
-	private final PhysicsEnvironment physics;
-
-	/** The EntityEnvironment instance injected at construction. */
-	private final WeaponEnvironment weapons;
-
-	/** A flag indicating if this projectile should collide with obstacles */
-	private boolean collideWithObstacles = true;
-
-	/**
-	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
-	 * the physics world during a simulation.
-	 */
-	private final Runnable removeSelf = new Runnable() {
-		@Override
-		public void run() {
-			weapons.disposeProjectile(ProjectileDefinitionImpl.this);
-		}
-	};
-
-	/**
-	 * Constructs a new ProjectileDefinitionImpl.
-	 * 
-	 * @param physicsEnvironment
-	 * @param weaponEnvironment
-	 */
-	public ProjectileDefinitionImpl(PhysicsEnvironment physicsEnvironment,
-			WeaponEnvironment weaponEnvironment) {
-		physics = physicsEnvironment;
-		weapons = weaponEnvironment;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage,
-			Teamable source, PhysicsBodyDefinition bodyDefinition) {
-		collideWithObstacles = true;
-		projectileType = type;
+	ProjectileDefinitionImpl(float damage, PhysicsMovementPattern pattern,
+			PhysicsBodyDefinition bodyDefinition, Class<? extends Projectile> projectileType) {
 		this.damage = damage;
-		this.source = source;
-		body = physics.createBody(bodyDefinition, this, origin);
-
-		// Check if there is a movement pattern to attach
-		if (type.getMovementPattern() != null) {
-			physics.attachMovementPattern(type.getMovementPattern().copy(), body);
-		}
-
-		this.setVelocity(velocity);
+		this.pattern = pattern;
+		this.bodyDefinition = bodyDefinition;
+		this.projectileType = projectileType;
+	}
+	
+	ProjectileDefinitionImpl(float damage, PhysicsMovementPattern pattern,
+			PhysicsBodyDefinition bodyDefinition) {
+		this(damage, pattern, bodyDefinition, ProjectileImpl.class);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
+	public Projectile releaseProjectile(PhysicsEnvironment physics,
+			WeaponEnvironment weapons,
+			Vector2 position,
+			Vector2 projectileVector, Teamable source) {
+
+		Projectile projectile = weapons
+				.retrieveProjectile(projectileType);
+		projectile.init(this, position.cpy(), projectileVector,
+				damage, source, bodyDefinition);
+		return projectile;
+	}
+
+	@Override
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+
+	@Override
+	public String getIdentifier() {
+		return this.name();
+	}
+
+	@Override
+	public PhysicsMovementPattern getMovementPattern() {
+		return pattern;
+	}
+
 	@Override
 	public float getDamage() {
 		return damage;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void preCollided(Collidable other) {
-		// NOP
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void postCollided(Collidable other) {
-		// Decrease the damage after hits, since we must let the other object that collided with us
-		// decide if they want to take our current damage (etc.) before we zero it.
-		if (shouldCollide(other)) {
-			damage = 0;
-			// Note: Do not move this out of here - this must be called only once, and that is
-			// when
-			// damage reaches 0. (Calling it twice will give you hard to debug segfaults.)
-			if (damage <= 0) {
-				// We won't need this projectile anymore, since it is useless and can't hurt
-				// anyone.
-				weapons.disposeProjectile(this);
-			}
-		}
-	}
-
-	private boolean shouldCollide(Collidable other) {
-		if (!collideWithObstacles && other instanceof Obstacle) {
-			return false;
-		}
-		return damage > 0 && !(other instanceof ProjectileDefinition) && other != getSource()
-				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void reset() {
-		physics.removeBody(body);
-		body = null;
-		source = null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setVelocity(Vector2 velocity) {
-		body.setVelocity(velocity);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Vector2 getPosition() {
-		return body.getPosition();
-	}
-
-	@Override
-	public Teamable getSource() {
-		return source;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void viewportIntersectionBegin() {
-		// NOP
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void viewportIntersectionEnd() {
-		// Run later as we are not allowed to alter the world here.
-		// Check if the projectile has any damage left, i.e. if it has already
-		// exploded (only happens in rare cases on the same frame as collided),
-		// if so, explode and remove
-		if (damage > 0) {
-			physics.runLater(removeSelf);
-			damage = 0;
-		}
-	}
-
-	@Override
-	public ProjectileType getType() {
-		return projectileType;
-	}
-
-	@Override
-	public Vector2 getDimensions() {
-		return body.getDimensions();
-	}
-
-	@Override
-	public void setCollideWithObstacles(boolean collideWithObstacles) {
-		this.collideWithObstacles = collideWithObstacles;
-	}
-
 }

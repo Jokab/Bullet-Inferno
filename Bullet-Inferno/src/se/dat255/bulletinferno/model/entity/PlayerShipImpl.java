@@ -10,7 +10,7 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl.BodyType;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
-import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.Listener;
@@ -109,13 +109,15 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 
 		List<Shape> shapes = new ArrayList<Shape>(2);
 		// Body
-		shapes.add(PhysicsShapeFactory.getRectangularShape(1.8f, 0.4f));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(1f, 0.6f));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(1.8f, 0.1f, new Vector2(
+				0f, 0.15f)));
 		// Box
 		shapes.add(PhysicsShapeFactory.getRectangularShape(0.4f, 0.51f, new Vector2(
-				0.45f, 0.255f)));
+				0.45f, 0.25f)));
 		// Propeller
-		shapes.add(PhysicsShapeFactory.getRectangularShape(0.03f, 0.51f, new Vector2(
-				0.83f, -0.255f)));
+		shapes.add(PhysicsShapeFactory.getRectangularShape(0.03f, 0.5f, new Vector2(
+				0.83f, -0.1f)));
 		PhysicsBodyDefinition bodyDefinition = new PhysicsBodyDefinitionImpl(shapes,
 				BodyType.DYNAMIC);
 
@@ -136,24 +138,21 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	 */
 	@Override
 	public void preCollided(Collidable other) {
-		if (hitByOtherProjectile(other)) {
-			takeDamage(((ProjectileDefinition) other).getDamage());
+		if (other instanceof Projectile) {
+			if(!isInMyTeam(((Projectile) other).getSource())) {
+				takeDamage(((Projectile) other).getDamage());
+			}
 		} else if (collidedWithNonTeammember(other)) {
 			if (other instanceof Enemy) {
 				takeDamage(0.6f, true);
-			} else {
-				die();
 			}
+		} else {
+			die();
 		}
 	}
 
 	private boolean collidedWithNonTeammember(Collidable other) {
 		return other instanceof Teamable && !isInMyTeam((Teamable) other);
-	}
-
-	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof ProjectileDefinition
-				&& !isInMyTeam(((ProjectileDefinition) other).getSource());
 	}
 
 	/**
@@ -312,4 +311,13 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	public Vector2 getDimensions() {
 		return body.getDimensions();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public float getXVelocity() {
+		return body.getVelocity().x;
+	}
+
 }

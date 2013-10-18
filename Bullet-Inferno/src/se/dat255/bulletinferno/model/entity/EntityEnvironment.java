@@ -2,6 +2,9 @@ package se.dat255.bulletinferno.model.entity;
 
 import java.util.List;
 
+/**
+ * Container for holding all the actual entities in the game.
+ */
 public interface EntityEnvironment {
 
 	/**
