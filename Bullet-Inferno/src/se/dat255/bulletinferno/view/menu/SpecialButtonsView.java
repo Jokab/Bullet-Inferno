@@ -8,7 +8,6 @@ import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -67,6 +66,7 @@ public class SpecialButtonsView {
 	private Button getTableButton(ResourceIdentifier identifier) {
 		TextureRegion texture = resourceManager.getTexture(identifier);
 		ButtonStyle buttonStyle = new ButtonStyle();
+		buttonStyle.up = new TextureRegionDrawable(texture);
 
 		return new Button(buttonStyle);
 	}
