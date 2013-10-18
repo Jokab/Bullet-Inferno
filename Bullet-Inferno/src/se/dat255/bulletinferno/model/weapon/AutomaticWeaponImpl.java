@@ -35,7 +35,7 @@ public class AutomaticWeaponImpl extends WeaponImpl {
 
 		if (isLoaded()) {
 
-			getProjectileType().releaseProjectile(physics, weapons, position.add(getOffset()),
+			getProjectileType().releaseProjectile(physics, weapons, position.add(getOffset().cpy().add(new Vector2(getDimensions().x/2,0))),
 					direction.scl(getProjectileVelocity()), source);
 			// Start count down
 			getTimer().restart();

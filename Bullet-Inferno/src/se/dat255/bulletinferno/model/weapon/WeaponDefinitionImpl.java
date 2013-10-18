@@ -28,7 +28,8 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	HEAVY_LASER_CANNON(1f, ProjectileType.LASER, 30f, new Vector2(1.2f,0.65f)),
 	HEAVY_EGG_CANNON(1f, ProjectileType.EGG, 10f, new Vector2(1.2f,0.65f)),
 	
-	LASER_GUN(0.5f, ProjectileType.LASER, 10f, new Vector2(5f,2f)),
+	KATZE_GUN(0.2f, ProjectileType.VELOCITY_BULLET, 10f, new Vector2(0f, 0f)),
+	LASER_GUN(0.5f, ProjectileType.LASER, 10f, new Vector2(0f,0f)),
 	DISORDERER(0.5f, ProjectileType.PLASMA, 10f, new Vector2(1f,0.5f)),
 	//STANDARD(0.05f, ProjectileType.RED_PROJECTILE, 14, new Vector2(1f,0.5f)),
 	FORCE_GUN(0.2f, ProjectileType.GREEN_PROJECTILE, 7, new Vector2(1f,0.5f)),
