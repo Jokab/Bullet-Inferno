@@ -200,7 +200,6 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			physics.attachMovementPattern(dmp.copy(), getBody());
 			currentPattern = "dmp";
 		}
-		System.out.println(currentPattern);
 	}
 
 	/** Makes the boss try to match the players y-position */
