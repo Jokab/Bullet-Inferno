@@ -19,15 +19,15 @@ public enum ProjectileType implements ResourceIdentifier {
 	 * damage, movementpattern
 	 */
 	
-	VELOCITY_BULLET(1f, new SpreadMovementPattern(0.2f), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	VELOCITY_BULLET(0.2f, new SpreadMovementPattern(0.2f), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 			0.2f, 0.1f))),
-	ROUND_BULLET(1f, new SpreadMovementPattern(5f), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	ROUND_BULLET(0.1f, new SpreadMovementPattern(0.7f), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 					0.3f, 0.1f))),
-	PLASMA(1f, new DisorderedMovementPattern(0.05f, 3f), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	PLASMA(0.3f, new DisorderedMovementPattern(0.05f, 2f), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 							0.4f, 0.2f))),
 	LASER(1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 									0.6f, 0.05f))),	
-	EGG(1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
+	EGG(1f, new AccelerationMovementPattern(new Vector2(30,0)), new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(
 											0.2f, 0.15f))),	
 	
 	RED_PROJECTILE(0.1f, null, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(

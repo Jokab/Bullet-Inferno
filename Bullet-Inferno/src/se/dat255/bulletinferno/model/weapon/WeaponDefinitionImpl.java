@@ -21,12 +21,12 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	 * reloadTime, projectile, offset, projectileVelocity
 	 */
 	
-	STANDARD_MACHINE_GUN(0.2f, ProjectileType.VELOCITY_BULLET, 10f, new Vector2(0.8f, 0.4f)),
-	STANDARD_MINI_GUN(0.05f, ProjectileType.ROUND_BULLET, 8f, new Vector2(0.8f, 0.6f)),
+	STANDARD_MACHINE_GUN(0.17f, ProjectileType.VELOCITY_BULLET, 16f, new Vector2(0.8f, 0.4f)),
+	STANDARD_MINI_GUN(0.07f, ProjectileType.ROUND_BULLET, 12f, new Vector2(0.8f, 0.6f)),
 	STANDARD_PLASMA_GUN(0.25f, ProjectileType.PLASMA, 10f, new Vector2(0.8f,0.5f)),
 	
-	HEAVY_LASER_CANNON(1f, ProjectileType.LASER, 30f, new Vector2(1.2f,0.65f)),
-	HEAVY_EGG_CANNON(1f, ProjectileType.EGG, 10f, new Vector2(1.2f,0.65f)),
+	HEAVY_LASER_CANNON(0.5f, ProjectileType.LASER, 20f, new Vector2(1.2f,0.65f)),
+	HEAVY_EGG_CANNON(2f, ProjectileType.EGG, 35f, new Vector2(1.2f,0.65f)),
 	
 	KATZE_GUN(0.2f, ProjectileType.VELOCITY_BULLET, 10f, new Vector2(0f, 0f)),
 	LASER_GUN(0.5f, ProjectileType.LASER, 10f, new Vector2(0f,0f)),

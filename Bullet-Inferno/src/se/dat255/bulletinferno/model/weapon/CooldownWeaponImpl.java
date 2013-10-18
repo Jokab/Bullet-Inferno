@@ -48,12 +48,13 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
         if (firingRateTimer.isFinished()) {
 
-            if (usedAmmo < fullAmmo) {
-                usedAmmo = usedAmmo + 1;
-                projectileType.releaseProjectile(physics, weapons,  position.add(getOffset()),
-                        direction.scl(projectileSpeed), source);
+			if (usedAmmo < fullAmmo) {
+				usedAmmo = usedAmmo + 1;
+				projectileType.releaseProjectile(physics, weapons,
+						position.add(getOffset().cpy().add(new Vector2(getDimensions().x, 0))),
+						direction.scl(projectileSpeed), source);
 
-            }
+			}
             // System.out.println("Projectiles left: " + (fullAmmo - usedAmmo));
             firingRateTimer.restart();
         }
