@@ -68,8 +68,10 @@ public class WeaponButtonsView {
 			}
 		}
 
+		if (heavySelectionButton.getData() == null) {
+			setSelectionToClicked(heavyWeapons.get(0), heavySelectionButton);
+		}
 		// Set up the table to add these buttons to
-		setSelectionToClicked(heavyWeapons.get(0), heavySelectionButton);
 		showTable(heavyWeapons, "Heavy Weapons");
 	}
 
@@ -94,7 +96,9 @@ public class WeaponButtonsView {
 			}
 		}
 
-		setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
+		if (standardSelectionButton.getData() == null) {
+			setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
+		}
 		// Set up the table to add these buttons to
 		showTable(standardWeapons, "Standard Weapons");
 	}
@@ -102,12 +106,12 @@ public class WeaponButtonsView {
 	private void showTable(List<WeaponButton> weaponList, String labelText) {
 		table.clear();
 		for (WeaponButton button : weaponList) {
-			this.table.add(button.getButton()).padBottom(20).height(70).width(130).row();
+			this.table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
 		label.setText(labelText);
 	}
 
-	public void setSelectionToClicked(WeaponButton wButton, WeaponButton selectionButton) {
+	private void setSelectionToClicked(WeaponButton wButton, WeaponButton selectionButton) {
 		selectionButton.setData(wButton.getData());
 		ButtonStyle style = new ButtonStyle(wButton.getButton().getStyle());
 

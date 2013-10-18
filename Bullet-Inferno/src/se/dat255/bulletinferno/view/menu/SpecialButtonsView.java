@@ -51,7 +51,9 @@ public class SpecialButtonsView {
 
 		}
 
-		setSelectionToSelected(specialButtons.get(0)); // for testing
+		if (selectionButton.getData() == null) {
+			setSelectionToSelected(specialButtons.get(0)); // for testing
+		}
 		// Set up the table to add these buttons to
 		showTable();
 	}
