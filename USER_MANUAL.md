@@ -14,8 +14,8 @@ Heavy weapons fire when you touch the right half of the screen. These weapons ha
 
 ### Special ability
 Special abilities provide an extra attack that can be used by touching the special ability button in the bottom-right corner of the screen. The current special abillities are;
-* Nuke: Damages all enemies on the screen.
-* Projectile rain: Spawns 20 projectiles evenly across the y-axis, but at random positions and at an interval. Incredibly useful if you're facing a lot of enemies.
+* **Nuke**: Damages all enemies on the screen.
+* **Projectile rain**: Spawns 20 projectiles evenly across the y-axis, but at random positions and at an interval. Incredibly useful if you're facing a lot of enemies.
 
 ### Passive ability
 Passive abilities give you a permanent boost throughout the game without having to be activated. Currently implemented are;
