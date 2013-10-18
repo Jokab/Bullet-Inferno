@@ -18,8 +18,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Bullet-Inferno";
 		cfg.useGL20 = true;
-		cfg.width = 1280;
-		cfg.height = 720;
+		cfg.width = 400;
+		cfg.height = 200;
 		
 		new LwjglApplication(new MasterController(), cfg);
 	}

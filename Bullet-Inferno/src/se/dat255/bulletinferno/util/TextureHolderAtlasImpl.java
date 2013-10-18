@@ -25,6 +25,10 @@ class TextureHolderAtlasImpl implements TextureHolder {
 		}
 		if(manager.isLoaded(source, TextureAtlas.class)) {
 			cachedTexture = manager.get(this.source, TextureAtlas.class).findRegion(region);
+			if(cachedTexture == null) {
+				throw new RuntimeException("The atlas region: " + region + 
+						" could not be found in atlas: " + source);
+			}
 			cachedTexture.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		} else {
 			throw new RuntimeException("Texture " + source + 
