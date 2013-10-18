@@ -46,12 +46,14 @@ public class SpecialButtonsView {
 				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
 						resourceManager);
 				specialButtons.add(specialButton);
-				specialButton.getButton().addListener(new ClickedListener());
+				specialButton.getButton().addListener(new TableElementClickedListener());
 			}
 
 		}
 
-		setSelectionToSelected(specialButtons.get(0)); // for testing
+		if (selectionButton.getData() == null) {
+			setSelectionToSelected(specialButtons.get(0));
+		}
 		// Set up the table to add these buttons to
 		showTable();
 	}
@@ -101,7 +103,7 @@ public class SpecialButtonsView {
 		this.selectionButton = selectionSpecialButton;
 	}
 
-	private class ClickedListener extends ChangeListener {
+	private class TableElementClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			SpecialButton selected = null;
