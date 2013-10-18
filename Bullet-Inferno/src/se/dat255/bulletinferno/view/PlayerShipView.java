@@ -76,9 +76,12 @@ public class PlayerShipView implements Renderable, Timerable {
 			float x = lastShipPosition.x - shipDimensions.x / 2;
 			float y = lastShipPosition.y - shipDimensions.y / 2;
 
+		
+			
 			shipSprite.setPosition(x, y);
 			shipSprite.draw(batch);
-			
+				
+
 			// Make sure weapons are rendered on top of the ship
 			loadoutView.render(batch, viewport);
 

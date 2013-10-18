@@ -48,17 +48,17 @@ public class PlayerShipLoadoutView implements Renderable {
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
 		lastShipPosition = ship.getPosition();
-		float x = lastShipPosition.x - ship.getDimensions().x / 2;
-		float y = lastShipPosition.y - ship.getDimensions().y / 2;
+		float x = lastShipPosition.x;
+		float y = lastShipPosition.y;
 
 		// Standard weapon
-		standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x,
-				y + standardWeapon.getOffset().y + standardWeaponSprite.getHeight());
+		standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x - standardWeapon.getDimensions().y/2,
+				y + standardWeapon.getOffset().y - standardWeapon.getDimensions().y/2);
 		standardWeaponSprite.draw(batch);
 
 		// Heavy weapon
-		heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x,
-				y + heavyWeapon.getOffset().y + heavyWeaponSprite.getHeight());
+		heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x - heavyWeapon.getDimensions().y/2,
+				y + heavyWeapon.getOffset().y - heavyWeapon.getDimensions().y/2);
 		heavyWeaponSprite.draw(batch);
 	}
 

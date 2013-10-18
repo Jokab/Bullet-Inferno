@@ -21,12 +21,12 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	 * reloadTime, projectile, offset, projectileVelocity
 	 */
 	
-	STANDARD_MACHINE_GUN(0.2f, ProjectileType.VELOCITY_BULLET, 10f, new Vector2(2.26f, 1f)),
-	STANDARD_MINI_GUN(0.05f, ProjectileType.ROUND_BULLET, 8f, new Vector2(2.46f, 1.5f)),
-	STANDARD_PLASMA_GUN(0.25f, ProjectileType.PLASMA, 10f, new Vector2(1.7f,1f)),
+	STANDARD_MACHINE_GUN(0.2f, ProjectileType.VELOCITY_BULLET, 10f, new Vector2(0.8f, 0.4f)),
+	STANDARD_MINI_GUN(0.05f, ProjectileType.ROUND_BULLET, 8f, new Vector2(0.8f, 0.6f)),
+	STANDARD_PLASMA_GUN(0.25f, ProjectileType.PLASMA, 10f, new Vector2(0.8f,0.5f)),
 	
-	HEAVY_LASER_CANNON(1f, ProjectileType.LASER, 10f, new Vector2(5f,2f)),
-	HEAVY_EGG_CANNON(1f, ProjectileType.EGG, 10f, new Vector2(5f,2.5f)),
+	HEAVY_LASER_CANNON(1f, ProjectileType.LASER, 30f, new Vector2(1.2f,0.65f)),
+	HEAVY_EGG_CANNON(1f, ProjectileType.EGG, 10f, new Vector2(1.2f,0.65f)),
 	
 	LASER_GUN(0.5f, ProjectileType.LASER, 10f, new Vector2(5f,2f)),
 	DISORDERER(0.5f, ProjectileType.PLASMA, 10f, new Vector2(1f,0.5f)),
@@ -74,7 +74,7 @@ WeaponDefinitionImpl(float reloadTime, ProjectileType projectileType,
 	@Override
 	public Weapon createWeapon(PhysicsEnvironment physics, WeaponEnvironment weapons, 
 			Vector2 offset) {
-		if (this == MISSILE_LAUNCHER) {
+		if (this == HEAVY_LASER_CANNON || this == HEAVY_EGG_CANNON) {
 			return new CooldownWeaponImpl(physics, weapons, this, reloadingTime, projectileType, 
 					projectileSpeed, offset);
 
