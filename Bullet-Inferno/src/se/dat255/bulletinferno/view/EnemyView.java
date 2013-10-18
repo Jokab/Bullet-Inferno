@@ -8,13 +8,14 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
 public class EnemyView implements Renderable {
 
 	private final ModelEnvironment models;
-	private Texture texture;
+	private TextureRegion texture;
 	private Sprite sprite;
 	private ResourceManager resourceManager;
 	
@@ -42,7 +43,7 @@ public class EnemyView implements Renderable {
 
 			if(viewport.frustum.boundsInFrustum(bounds)) {
 				this.texture = resourceManager.getTexture(enemy);
-				this.sprite.setTexture(texture);
+
 				sprite.setRegion(texture);
 				sprite.setSize(enemy.getDimensions().x, enemy.getDimensions().y);
 				sprite.setPosition(enemy.getPosition().x - sprite.getWidth() / 2,

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.Renderable;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
@@ -66,7 +66,7 @@ public class HudView implements Renderable {
 	 */
 	public HudView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
-		Texture hudTexture = resourceManager.getTexture(TextureType.HUD_TEXTURE);
+		Texture hudTexture = resourceManager.getTexture(TextureDefinitionImpl.HUD_TEXTURE).getTexture();
 		
 		lifeBackground = new TextureRegion(hudTexture, 2, 35, 162, 33);
 		lifeRegion = new TextureRegion(hudTexture, 9, 10, 1, 20); // 9 -> 158

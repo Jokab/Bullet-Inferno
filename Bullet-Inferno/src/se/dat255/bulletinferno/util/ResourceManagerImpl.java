@@ -4,99 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver.Resolution;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Definition of all the assets that should be handled by the resource manager
  */
 public class ResourceManagerImpl implements ResourceManager {
-	public enum TextureType {
-		DEFAULT_SHIP("data/katze.png"),
-		FAST_SHIP("data/katze.png"),
-		SLOW_SHIP("data/katze.png"),
-		MAP_MOUNTAIN("images/game/mountain.png"),
-
-		KATZE("data/katze.png"),
-		SQUIB("data/squib.png"),
-		EHMO("data/EHMO.png"),
-		DRIPPER("data/dripper.png"),
-
-		// Player ship
-		PLAYER_DEFAULT("data/playerShip.png"),
-		PLAYER_EXPLOSION("data/explosion.gif"),
-
-		// Weapons
-		MACHINE_GUN("data/machineGun.png"),
-		MINI_GUN("data/miniGun.png"),
-		PLASMA_GUN("data/plasmaGun.png"),
-		EGG_CANNON("data/eggCannon.png"),
-		
-		
-		MISSILE_LAUNCHER("data/missileLauncher.png"),
-		DISORDERER("data/disorderer.png"),
-		MISSILE_LAUNCHER_LARGE("data/missileLauncherLarge.png"),
-		DISORDERER_LARGE("data/disordererLarge.png"),
-		SNIPER_RIFLE("data/sniperRifle.png"),
-
-		// Projectiles
-		VELOCITY_BULLET("data/bullet.png"),
-		ROUND_BULLET("data/bullet.png"),
-		PLASMA("data/plasma.png"),
-		EGG("data/egg.png"),
-		
-		
-		
-		RED_PROJECTILE("data/redDotProjectile.png"),
-		GREEN_PROJECTILE("data/greenDotProjectile.png"),
-		MISSILE("data/missile.png"),
-
-		SPECIAL_ABILITY_MISSILE("data/missile.png"),
-
-		HIGH_VELOCITY_PROJECTILE("data/missile.png"),
-
-		// Buttons
-		PAUSE_SCREEN("images/gui/screen_pause.png"),
-		BLUE_BACKGROUND("images/game/background.png"),
-		GAMEOVER_SCREEN("images/gui/screen_gameover.png"),
-		PROJECTILE_RAIN("data/projectileRain.png"),
-		TAKE_DAMAGE_MODIFIER("data/shieldMenu.png"),
-		LOADOUT_START_BUTTON("data/startBtn.png"),
-		HUD_TEXTURE("images/game/hud.png"),
-
-		// Particles
-		SMOKE_PARTICLE("images/particles/smoke.png"),
-
-		;
-
-		/** The path to the Texture for this type */
-		private final String path;
-		/** A cached Texture for this texture type that has a filter applied to it. */
-		private Texture texture;
-
-		private TextureType(String path) {
-			this.path = path;
-		}
-
-		private Texture getTexture(AssetManager manager) {
-			if(texture == null){
-				texture = manager.get(this.path, Texture.class);
-				texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			}
-			return texture;
-		}
-
-		public String getPath() {
-			return this.path;
-		}
-
-		/** Disposes the cached Texture. */
-		private void dispose() {
-			texture = null;
-		}
-	}
+	private static final Resolution[] SUPPORTED_RESOLUTIONS = {
+	        new Resolution(450, 800, "800450"),
+	        new Resolution(720, 1280, "1280720"),
+	        new Resolution(1080, 1920, "19201080")
+	};
 	
 	public enum SoundEffectType {
 		KATZE,
@@ -120,6 +47,12 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	public ResourceManagerImpl() {
 		manager = new AssetManager();
+
+		ResolutionFileResolver resolver = new ResolutionFileResolver(
+				new InternalFileHandleResolver(), SUPPORTED_RESOLUTIONS);
+		
+		manager.setLoader(Texture.class, new TextureLoader(resolver));
+		manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
 		Texture.setAssetManager(manager);
 	}
 
@@ -161,8 +94,8 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	/** Adds all managed textures to the AssetManager's load queue. */
 	private void loadTextures() {
-		for (TextureType type : TextureType.values()) {
-			manager.load(type.path, Texture.class);
+		for (TextureDefinition definition : TextureDefinitionImpl.values()) {
+			definition.loadSource(manager);
 		}
 	}
 	
@@ -189,31 +122,27 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Texture getTexture(TextureType textureType) {
-		if (manager.isLoaded(textureType.getPath(), Texture.class)) {
-			return textureType.getTexture(manager);
-		} else {
-			throw new RuntimeException("Texture " + textureType.name() + " is not loaded.");
-		}
+	public TextureRegion getTexture(TextureDefinition textureDefinition) {
+		return textureDefinition.getTexture(manager);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Texture getTexture(ResourceIdentifier resourceIndentifier) {
+	public TextureRegion getTexture(ResourceIdentifier resourceIndentifier) {
 		String identifier = resourceIndentifier.getIdentifier();
 
-		TextureType type;
+		TextureDefinition definition;
 		try {
-			type = TextureType.valueOf(identifier);
+			definition = TextureDefinitionImpl.valueOf(identifier);
 		} catch (IllegalArgumentException exception) {
 			throw new IllegalArgumentException(
 					String.format("Resource with identifier '%s' could not be found", identifier),
 					exception);
 		}
 
-		return getTexture(type);
+		return getTexture(definition);
 	}
 
 	// TODO: Implement loading methods for sound and music
@@ -230,8 +159,8 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	@Override
 	public void dispose() {
-		for(TextureType textureType : TextureType.values()){
-			textureType.dispose();
+		for(TextureDefinition definition : TextureDefinitionImpl.values()){
+			definition.unloadSource(manager);
 		}
 		
 		manager.dispose();

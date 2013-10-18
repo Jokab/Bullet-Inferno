@@ -9,18 +9,19 @@ import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.ResourceManagerImpl.TextureType;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.map.SegmentView;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class BackgroundView implements Renderable {
 	
 	private PlayerShip ship;
-	private Texture texture;
+	private TextureRegion texture;
 	private List<SegmentView> segmentViews = Collections.emptyList();
 	private ModelEnvironment models;
 	
@@ -31,7 +32,7 @@ public class BackgroundView implements Renderable {
 
 	public BackgroundView(ModelEnvironment models, ResourceManager resourceManager, PlayerShip ship) {
 		this.ship = ship;		
-		texture = resourceManager.getTexture(TextureType.BLUE_BACKGROUND);
+		texture = resourceManager.getTexture(TextureDefinitionImpl.BLUE_BACKGROUND);
 		this.models = models;
 		this.resourceManager = resourceManager;
 	}
@@ -84,7 +85,7 @@ public class BackgroundView implements Renderable {
 		refreshSegmentViews();
 		
 		batch.disableBlending();
-		batch.draw(texture, ship.getPosition().x-ship.getDimensions().x/2, 0, 16, 9, 0, 0, 32, 1024, false, false);
+		batch.draw(texture, ship.getPosition().x-ship.getDimensions().x/2, 0, 16, 9);
 		batch.enableBlending();
 		
 		float shipLeftX = ship.getPosition().x;
