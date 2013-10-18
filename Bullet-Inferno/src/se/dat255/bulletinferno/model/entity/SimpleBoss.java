@@ -18,8 +18,7 @@ import se.dat255.bulletinferno.util.Timerable;
  * Implements some methods to be user by subclass to differentiate
  * boss behavior
  */
-
-public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
+public abstract class SimpleBoss extends SimpleEnemy implements Timerable, Ship {
 
 	private final PlayerShip player;
 	private final PhysicsEnvironment physics;
@@ -65,10 +64,9 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 			Weapon[] weapons,
 			int score, int credits, PhysicsBodyDefinition bodyDefinition,
 			PhysicsMovementPattern pattern, Listener<Integer> scoreListener) {
-
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);
-
+		
 		if (pattern instanceof DisorderedBossMovementPattern) {
 			currentPattern = "dmp";
 			dmp = (DisorderedBossMovementPattern) pattern;
@@ -114,7 +112,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		}
 	}
 
-	// Different firing methods determine how many weapon to fire and in what direction
+	// Different firing methods determine how many weapons to fire and in what direction
 
 	/**
 	 * Fires projectiles in a straight line. Only fires the BOSS_SPR* weapons. Cannot be used
@@ -221,10 +219,20 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		}
 	}
 
+	/**
+	 * Returns the weapons' timers for this boss.
+	 * 
+	 * @return The timers.
+	 */
 	public Timer[] getWeaponTimers() {
 		return timers;
 	}
 
+	/**
+	 * Returns the movement pattern for this boss.
+	 * 
+	 * @return The movement pattern.
+	 */
 	public PhysicsMovementPattern getMovementPattern() {
 		return physics.getMovementPattern(getBody());
 	}

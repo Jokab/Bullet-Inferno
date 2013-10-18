@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Default implementation of a boss
  */
-public class DefaultBossImpl extends SimpleBoss implements Ship {
+public class DefaultBossImpl extends SimpleBoss {
 
 	/**
 	 * Constructs a new Angry Boss

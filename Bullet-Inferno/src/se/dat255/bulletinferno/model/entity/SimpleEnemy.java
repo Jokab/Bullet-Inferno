@@ -136,7 +136,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	@Override
 	public void takeDamage(float damage) {
 		// Take no damage if enemy isn't alive
-		if (health > 0) {
+		if (!isDead()) {
 			health -= damage;
 
 			if (isDead()) {
