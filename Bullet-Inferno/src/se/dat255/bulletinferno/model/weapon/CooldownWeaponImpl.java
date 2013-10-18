@@ -9,7 +9,7 @@ import se.dat255.bulletinferno.util.Timerable;
 
 public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
-	private final ProjectileType projectileType;
+	private final ProjectileDefinition projectileType;
 	private final Timer firingRateTimer; // very high firing rate, but needs to be limited
 	private final PhysicsEnvironment physics;
 	private final WeaponEnvironment weapons;
@@ -18,7 +18,7 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 	private int usedAmmo = 0;
 
 	public CooldownWeaponImpl(PhysicsEnvironment physics, WeaponEnvironment weapons,
-			WeaponDefinition weaponData, float reloadingTime, ProjectileType projectileType,
+			WeaponDefinition weaponData, float reloadingTime, ProjectileDefinition projectileType,
 			float projectileSpeed, Vector2 offset) {
 		super(physics, weapons, weaponData, reloadingTime, projectileType, projectileSpeed, offset);
 
@@ -44,15 +44,12 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
 	@Override
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
-
 		if (firingRateTimer.isFinished()) {
-
 			if (usedAmmo < fullAmmo) {
 				usedAmmo = usedAmmo + 1;
 				projectileType.releaseProjectile(physics, weapons,
 						position.add(getOffset().cpy().add(new Vector2(getDimensions().x, 0))),
 						direction.scl(projectileSpeed), source);
-
 			}
 			// System.out.println("Projectiles left: " + (fullAmmo - usedAmmo));
 			firingRateTimer.restart();
@@ -61,10 +58,8 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-
 		if (usedAmmo > 0) {
 			usedAmmo = usedAmmo - 1;
 		}
 	}
-
 }

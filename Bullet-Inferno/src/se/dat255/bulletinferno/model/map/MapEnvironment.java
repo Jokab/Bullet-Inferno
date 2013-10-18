@@ -3,11 +3,15 @@ package se.dat255.bulletinferno.model.map;
 import java.util.List;
 
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
-import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Environment for keeping track of anything map-related.
+ *
+ */
 public interface MapEnvironment {
 
 	/**
@@ -40,7 +44,7 @@ public interface MapEnvironment {
 	 * 
 	 * @return a list of projectiles currently in the game.
 	 */
-	public List<? extends ProjectileDefinition> getProjectiles();
+	public List<? extends Projectile> getProjectiles();
 
 	/**
 	 * @return the games weapon environment. Only for use by controllers!

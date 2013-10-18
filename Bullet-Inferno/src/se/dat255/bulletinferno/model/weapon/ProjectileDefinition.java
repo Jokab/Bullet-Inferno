@@ -1,70 +1,47 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import se.dat255.bulletinferno.model.physics.Collidable;
-import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
-import se.dat255.bulletinferno.model.physics.PositionEntity;
+import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
+import se.dat255.bulletinferno.model.physics.PhysicsMovementPattern;
 import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pool.Poolable;
 
-public interface ProjectileDefinition extends PositionEntity, Collidable, Poolable {
+public interface ProjectileDefinition {
+
 	/**
-	 * Returns the damage of the Projectile.
+	 * Releases (fires) a projectile at the provided position.
 	 * 
-	 * @return damage The damage that this Projectile deals.
+	 * @param physics The PhysicsEnvironment.
+	 * @param weapons The WeaponsEnvironment.
+	 * @param position The position the projectile will be spawned at
+	 * @param projectileVector The direction that this projectile will travel in.
+	 * @param source The source that this projectile was fired from.
+	 * @return The projectile that was released.
+	 */
+	public Projectile releaseProjectile(PhysicsEnvironment physics,
+			WeaponEnvironment weapons,
+			Vector2 position,
+			Vector2 projectileVector, Teamable source);
+
+	/**
+	 * Sets the damage of the projectile.
+	 * 
+	 * @param damage The damage to be set.
+	 */
+	public void setDamage(float damage);
+
+	/**
+	 * Returns the projectile's movement pattern.
+	 * 
+	 * @return The projectile's movement pattern.
+	 */
+	public PhysicsMovementPattern getMovementPattern();
+
+	/**
+	 * Returns the projectile's damage.
+	 * 
+	 * @return The damage.
 	 */
 	public float getDamage();
-
-	/**
-	 * Initializes the projectile and attaches a specific movement pattern.
-	 * Call upon acquiring from the Pool.
-	 * 
-	 * @param position
-	 *        the initial position.
-	 * @param velocity
-	 *        the initial velocity.
-	 * @param damage
-	 *        the projectile damage coefficient.
-	 * @param source
-	 *        the team source from which it was fired.
-	 * @param bodyDefinition
-	 *        the size of the body (definition)
-	 */
-	public void init(ProjectileType type, Vector2 position, Vector2 velocity, float damage,
-			Teamable source, PhysicsBodyDefinition bodyDefinition);
-
-	/**
-	 * Sets the velocity of the projectile
-	 * 
-	 * @param velocity
-	 *        The new velocity of the projectile.
-	 */
-	public void setVelocity(Vector2 velocity);
-
-	/**
-	 * Gets the position of the projectile
-	 */
-	@Override
-	public Vector2 getPosition();
-
-	/**
-	 * Returns the teamable source from which it was fired.
-	 * 
-	 * @return source
-	 */
-	public Teamable getSource();
-
-	public ProjectileType getType();
-
-	/**
-	 * Sets a flag for if this projectile should collide with instances of (the
-	 * "ground" and other non-living objects).
-	 * The default value is True.
-	 * 
-	 * @param collideWithObstacles
-	 *        true if the projectile should collide with Obstacle instances.
-	 */
-	public void setCollideWithObstacles(boolean collideWithObstacles);
 
 }

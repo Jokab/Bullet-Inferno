@@ -10,7 +10,7 @@ import se.dat255.bulletinferno.model.map.MapEnvironmentImpl;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironmentImpl;
-import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.GameActionEvent;
@@ -93,7 +93,7 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<? extends ProjectileDefinition> getProjectiles() {
+	public List<? extends Projectile> getProjectiles() {
 		return map.getProjectiles();
 	}
 

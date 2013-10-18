@@ -34,9 +34,6 @@ public class EvadingMovementPattern implements PhysicsMovementPattern {
 
 	@Override
 	public PhysicsMovementPattern copy() {
-
 		return new EvadingMovementPattern(player);
-
 	}
-
 }

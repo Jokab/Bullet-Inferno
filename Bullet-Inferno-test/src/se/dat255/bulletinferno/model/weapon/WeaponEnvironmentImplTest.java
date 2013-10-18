@@ -26,7 +26,7 @@ public class WeaponEnvironmentImplTest {
 		assertTrue("The list of projectiles of a new game should be empty",
 				weapons.getProjectiles().isEmpty());
 
-		ProjectileDefinition projectile = weapons
+		Projectile projectile = weapons
 				.retrieveProjectile(SimpleMockProjectile.class);
 		assertTrue(
 				"retrieveProjectile should return a Projectile of the wanted class-type",
@@ -40,7 +40,7 @@ public class WeaponEnvironmentImplTest {
 	@Test
 	public void testDisposeProjectile() {
 		WeaponEnvironment weapons = new WeaponEnvironmentImpl(new PhysicsWorldImplSpy());
-		ProjectileDefinition projectile = weapons
+		Projectile projectile = weapons
 				.retrieveProjectile(SimpleMockProjectile.class);
 		assertTrue("The projectile should be added to the list of projectiles",
 				weapons.getProjectiles().contains(projectile));

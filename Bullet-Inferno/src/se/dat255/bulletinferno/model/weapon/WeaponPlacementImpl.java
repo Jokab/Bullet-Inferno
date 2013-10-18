@@ -22,11 +22,6 @@ public class WeaponPlacementImpl implements WeaponPlacement {
 		offset = new Vector2(x, y);
 	}
 
-	public WeaponPlacementImpl() {
-		content = WeaponDefinitionImpl.DISORDERER;
-		offset = new Vector2(0, 0);
-	}
-
 	@Override
 	public WeaponDefinition getContent() {
 		return content;
@@ -36,5 +31,4 @@ public class WeaponPlacementImpl implements WeaponPlacement {
 	public Vector2 getOffset() {
 		return offset;
 	}
-
 }

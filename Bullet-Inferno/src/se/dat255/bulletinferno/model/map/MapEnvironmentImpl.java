@@ -5,7 +5,7 @@ import java.util.List;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
 import se.dat255.bulletinferno.model.entity.EntityEnvironmentImpl;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
-import se.dat255.bulletinferno.model.weapon.ProjectileDefinition;
+import se.dat255.bulletinferno.model.weapon.Projectile;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.model.weapon.WeaponEnvironmentImpl;
@@ -15,6 +15,9 @@ import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.Listener;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Implementation of the MapEnvironment.
+ */
 public class MapEnvironmentImpl implements MapEnvironment {
 	private final SegmentManager segmentManager;
 
@@ -74,7 +77,7 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	}
 
 	@Override
-	public List<? extends ProjectileDefinition> getProjectiles() {
+	public List<? extends Projectile> getProjectiles() {
 		return weapons.getProjectiles();
 	}
 

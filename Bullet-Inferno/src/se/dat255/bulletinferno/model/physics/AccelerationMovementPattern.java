@@ -12,16 +12,11 @@ public class AccelerationMovementPattern implements PhysicsMovementPattern {
 
 	@Override
 	public void update(float timeDelta, PhysicsBody body) {
-
 		body.getBox2DBody().applyForceToCenter(forceVector, true);
-
 	}
 
 	@Override
 	public PhysicsMovementPattern copy() {
-
 		return new AccelerationMovementPattern(forceVector);
-
 	}
-
 }

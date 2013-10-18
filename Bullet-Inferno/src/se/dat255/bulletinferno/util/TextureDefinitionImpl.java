@@ -78,6 +78,14 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 		this.holder = holder;
 	}
 
+	private static TextureHolder texture(String source) {
+		return new TextureHolderImpl(source);
+	}
+
+	private static TextureHolder textureAtlas(String source, String region) {
+		return new TextureHolderAtlasImpl(source, region);
+	}
+
 	@Override
 	public TextureRegion getTexture(AssetManager manager) {
 		return holder.getTexture(manager);
@@ -86,14 +94,6 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	@Override
 	public String getSrouce() {
 		return holder.getSource();
-	}
-
-	private static TextureHolder texture(String source) {
-		return new TextureHolderImpl(source);
-	}
-
-	private static TextureHolder textureAtlas(String source, String region) {
-		return new TextureHolderAtlasImpl(source, region);
 	}
 
 	@Override

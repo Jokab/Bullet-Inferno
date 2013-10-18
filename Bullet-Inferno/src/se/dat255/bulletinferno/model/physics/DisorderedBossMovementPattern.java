@@ -33,9 +33,6 @@ public class DisorderedBossMovementPattern implements PhysicsMovementPattern {
 
 	@Override
 	public PhysicsMovementPattern copy() {
-
 		return new DisorderedBossMovementPattern(frequency, amplitude);
-
 	}
-
 }

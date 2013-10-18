@@ -46,8 +46,8 @@ public class ProjectileImplTest {
 	@Test
 	public void testGetDamage() {
 		// Tests that the projectileImpl has a default damage > 0.
-		ProjectileDefinitionImpl projectile = new ProjectileDefinitionImpl(physics, weapons);
-		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, null, 
+		ProjectileImpl projectile = new ProjectileImpl(physics, weapons);
+		projectile.init(ProjectileDefinitionImpl.RED_PROJECTILE, new Vector2(), new Vector2(), 30, null, 
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
 		assertTrue("The default damage of a projectile should be above 0",
@@ -58,13 +58,13 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testCollidedOtherProjectileNoDamageChange() {
-		ProjectileDefinition projectileA = new ProjectileDefinitionImpl(physics, weapons);
-		projectileA.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null,
+		Projectile projectileA = new ProjectileImpl(physics, weapons);
+		projectileA.init(ProjectileDefinitionImpl.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null,
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		float initialDamage = projectileA.getDamage();
 
-		ProjectileDefinition projectileB = new ProjectileDefinitionImpl(physics, weapons);
-		projectileB.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null,
+		Projectile projectileB = new ProjectileImpl(physics, weapons);
+		projectileB.init(ProjectileDefinitionImpl.RED_PROJECTILE,new Vector2(), new Vector2(), 30, null,
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 
 		projectileA.preCollided(projectileB);
@@ -81,8 +81,8 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testCollidedDamageDecreasePostCollision() {
-		ProjectileDefinition projectile = new ProjectileDefinitionImpl(physics, weapons);
-		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, new Teamable() {
+		Projectile projectile = new ProjectileImpl(physics, weapons);
+		projectile.init(ProjectileDefinitionImpl.RED_PROJECTILE,new Vector2(), new Vector2(), 30, new Teamable() {
 			
 			@Override
 			public boolean isInMyTeam(Teamable teamMember) {
@@ -111,7 +111,7 @@ public class ProjectileImplTest {
 
 	@Test
 	public void testCollidedWithSource() {
-		ProjectileDefinition projectile = new ProjectileDefinitionImpl(physics, weapons);
+		Projectile projectile = new ProjectileImpl(physics, weapons);
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
 				WeaponDefinitionImpl.STANDARD_MACHINE_GUN.createWeapon(physics, weapons, new Vector2()), 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
@@ -119,7 +119,7 @@ public class ProjectileImplTest {
 				ShipType.PLAYER_DEFAULT, new HealthMockListener());
 		
 		// Set the ship as the source
-		projectile.init(ProjectileType.RED_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip,
+		projectile.init(ProjectileDefinitionImpl.RED_PROJECTILE,new Vector2(), new Vector2(), 30, sourceShip,
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		
 		float initialDamage = projectile.getDamage();
@@ -153,13 +153,13 @@ public class ProjectileImplTest {
 	}
 	@Test
 	public void testSameTeamSource() {
-		ProjectileDefinition projectile = new ProjectileDefinitionImpl(physics, weapons);
+		Projectile projectile = new ProjectileImpl(physics, weapons);
 		
 		TeamA teamA1 = new TeamA();
 		TeamA teamA2 = new TeamA();
 		TeamB teamB = new TeamB();
 		// Set team A as the source
-		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, teamA1,
+		projectile.init(ProjectileDefinitionImpl.RED_PROJECTILE, new Vector2(), new Vector2(), 30, teamA1,
 				new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.25f,0.25f)));
 		
 		float initialDamage = projectile.getDamage();
@@ -177,8 +177,8 @@ public class ProjectileImplTest {
 	
 	@Test
 	public void testPhysicsBodyAddedCollidedRemoved() {
-		ProjectileDefinition projectile = new ProjectileDefinitionImpl(physics, weapons);
-		projectile.init(ProjectileType.RED_PROJECTILE, new Vector2(), new Vector2(), 30, new Teamable() {
+		Projectile projectile = new ProjectileImpl(physics, weapons);
+		projectile.init(ProjectileDefinitionImpl.RED_PROJECTILE, new Vector2(), new Vector2(), 30, new Teamable() {
 			
 			@Override
 			public boolean isInMyTeam(Teamable teamMember) {
