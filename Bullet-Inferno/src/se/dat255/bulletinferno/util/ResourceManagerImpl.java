@@ -21,9 +21,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class ResourceManagerImpl implements ResourceManager {
 
 	private static final Resolution[] SUPPORTED_RESOLUTIONS = {
-	        new Resolution(450, 800, "800450"),
-	        new Resolution(720, 1280, "1280720"),
-	        new Resolution(1080, 1920, "19201080")
+		new Resolution(270, 480, ""), // Default resolution   
+		new Resolution(450, 800, "800450"),
+	    new Resolution(720, 1280, "1280720"),
+	    new Resolution(1080, 1920, "19201080")
 	};
 
 	public enum SoundEffectType {
