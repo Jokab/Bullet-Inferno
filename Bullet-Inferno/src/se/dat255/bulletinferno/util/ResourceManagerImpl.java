@@ -102,11 +102,15 @@ public class ResourceManagerImpl implements ResourceManager {
 	
 	public enum SoundEffectType {
 		KATZE,
-		HARD_BOSS_SHIP;
+		SQUIB,
+		EHMO,
+		DRIPPER;
 		
 		static {
 			KATZE.mapping.put("DIED", "data/explosion.mp3");
-			HARD_BOSS_SHIP.mapping.put("DIED", "data/explosion.mp3");
+			SQUIB.mapping.put("DIED", "data/explosion.mp3");
+			EHMO.mapping.put("DIED", "data/explosion.mp3");
+			DRIPPER.mapping.put("DIED", "data/explosion.mp3");
 		}
 		
 		private final Map<String, String> mapping = new HashMap<String, String>();
