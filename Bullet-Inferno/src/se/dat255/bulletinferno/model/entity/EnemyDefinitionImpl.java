@@ -52,7 +52,7 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 					new WeaponPlacementImpl(WeaponDefinitionImpl.BOSS_AIM, 0, -1/2f) }, 10, 10,
 
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(3, 3.36f)),
-			new DisorderedMovementPattern(1f, 4));
+			new DisorderedMovementPattern(0.5f, 3));
 
 	private final Vector2 velocity;
 	private final PhysicsMovementPattern pattern;

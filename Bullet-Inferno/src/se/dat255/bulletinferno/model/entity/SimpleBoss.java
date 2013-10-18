@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model.entity;
 
 import com.badlogic.gdx.math.Vector2;
 
-import se.dat255.bulletinferno.model.physics.DisorderedBossMovementPattern;
+import se.dat255.bulletinferno.model.physics.DisorderedMovementPattern;
 import se.dat255.bulletinferno.model.physics.EvadingMovementPattern;
 import se.dat255.bulletinferno.model.physics.FollowingMovementPattern;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinition;
@@ -26,7 +26,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private final EntityEnvironment entities;
 	private Timer[] timers;
 	private String weaponId;
-	private DisorderedBossMovementPattern dmp;
+	private DisorderedMovementPattern dmp = new DisorderedMovementPattern(0.5f, 3);
 	private FollowingMovementPattern fmp;
 	private EvadingMovementPattern emp;
 	private String currentPattern;
@@ -53,7 +53,6 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		}
 
 		this.fmp = new FollowingMovementPattern(player);
-		this.dmp = new DisorderedBossMovementPattern(3f, 3);
 		this.emp = new EvadingMovementPattern(player);
 		currentPattern = "none";
 
@@ -69,26 +68,22 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		this(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);
 
-		if (pattern instanceof DisorderedBossMovementPattern) {
+		if (pattern instanceof DisorderedMovementPattern) {
 			currentPattern = "dmp";
-			this.dmp = (DisorderedBossMovementPattern) pattern;
+			this.dmp = (DisorderedMovementPattern) pattern;
 			this.fmp = new FollowingMovementPattern(player);
 			this.emp = new EvadingMovementPattern(player);
 		} else if (pattern instanceof FollowingMovementPattern) {
 			currentPattern = "fmp";
 			this.fmp = (FollowingMovementPattern) pattern;
-			this.dmp = new DisorderedBossMovementPattern(3f, 3);
 			this.emp = new EvadingMovementPattern(player);
 		} else if (pattern instanceof EvadingMovementPattern) {
 			this.emp = (EvadingMovementPattern) pattern;
 			this.fmp = new FollowingMovementPattern(player);
-			this.dmp = new DisorderedBossMovementPattern(3f, 3);
 		}
 		physics.attachMovementPattern(pattern, getBody());
 
 	}
-
-	public abstract void onTimeout(Timer source, float timeSinceLast);
 
 	@Override
 	public void viewportIntersectionBegin() {
@@ -189,6 +184,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	// Methods to change the movement of the boss
 
 	public void prepareMovementChange() {
+		// Set y-velocity to 0
 		getBody().setVelocity(new Vector2(getBody().getVelocity().x, 0));
 		physics.detachMovementPattern(getBody());
 	}

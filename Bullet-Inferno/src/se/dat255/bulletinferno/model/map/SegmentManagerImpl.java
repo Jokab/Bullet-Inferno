@@ -18,10 +18,10 @@ import com.badlogic.gdx.math.Vector2;
 public class SegmentManagerImpl implements SegmentManager {
 
 	/** The minimum number of slices per segment when randomizing slices in segments. */
-	private static final int SLICES_PER_SEGMENT_MIN = 10;
+	private static final int SLICES_PER_SEGMENT_MIN = 4;
 
 	/** The maximum number of slices per segment when randomizing slices in segments. */
-	private static final int SLICES_PER_SEGMENT_MAX = 20;
+	private static final int SLICES_PER_SEGMENT_MAX = 6;
 
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
