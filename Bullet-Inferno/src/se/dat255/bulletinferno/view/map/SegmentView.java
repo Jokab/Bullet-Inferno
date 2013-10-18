@@ -5,7 +5,6 @@ import java.util.List;
 import se.dat255.bulletinferno.model.map.Segment;
 import se.dat255.bulletinferno.model.map.Slice;
 import se.dat255.bulletinferno.util.ResourceManager;
-import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.Renderable;
 
 import com.badlogic.gdx.graphics.Camera;
@@ -45,9 +44,9 @@ public class SegmentView implements Renderable {
 
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
-        for (SliceView slice : slices) {
-            slice.render(batch, viewport);
-        }
+		for (SliceView slice : slices) {
+			slice.render(batch, viewport);
+		}
 	}
 
 	@Override

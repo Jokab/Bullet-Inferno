@@ -6,9 +6,9 @@ package se.dat255.bulletinferno.view.gui;
  */
 public enum GuiEvent {
 	/** Handled pausing and unpausing of the game */
-	PAUSE, UNPAUSE, 
+	PAUSE, UNPAUSE,
 	/** Handles the state of the game */
-	GAMEOVER, RESTARTGAME, STOPGAME, 
+	GAMEOVER, RESTARTGAME, STOPGAME,
 	/** Fires the ships special ability */
 	SPECIAL_ABILITY
 }

@@ -35,26 +35,29 @@ public interface Weapon {
 	 * offset, in the given direction. The source is for determine which
 	 * team the fired projectile belongs to.
 	 * 
-	 * @param position The initial position where the projectile should be added.
-	 * @param direction The direction of the projectile.
-	 * @param source The Teamable that should be used by the projectile.
+	 * @param position
+	 *        The initial position where the projectile should be added.
+	 * @param direction
+	 *        The direction of the projectile.
+	 * @param source
+	 *        The Teamable that should be used by the projectile.
 	 */
 	public void fire(Vector2 position, Vector2 direction, Teamable source);
 
 	float getProjectileVelocity();
-	
+
 	ProjectileType getProjectileType();
 
 	public Timer getTimer();
 
 	public void setReloadingTime(float reloadingTime);
-	
+
 	public WeaponDefinition getType();
-	
+
 	public Vector2 getDimensions();
-	
+
 	public Vector2 getOffset();
-	
+
 	public void setOffset(Vector2 offset);
 
 }

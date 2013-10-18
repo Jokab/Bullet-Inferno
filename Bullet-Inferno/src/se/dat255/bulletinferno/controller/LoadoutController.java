@@ -49,12 +49,12 @@ public class LoadoutController extends SimpleController {
 	private Label errorMessage;
 	private Table table;
 
-	private WeaponButtonsView weaponButtonsView;
-	private SpecialButtonsView specialButtonsView;
-	private PassiveButtonsView passiveButtonsView;
+	private final WeaponButtonsView weaponButtonsView;
+	private final SpecialButtonsView specialButtonsView;
+	private final PassiveButtonsView passiveButtonsView;
 
 	private Label tableLabel;
-	
+
 	private Label standardLabel;
 	private Label heavyLabel;
 	private Label specialLabel;
@@ -69,7 +69,7 @@ public class LoadoutController extends SimpleController {
 	 */
 	public LoadoutController(final MasterController masterController,
 			final ResourceManager resourceManager) {
-		this.gameController = new GameController(masterController, resourceManager);
+		gameController = new GameController(masterController, resourceManager);
 
 		this.resourceManager = resourceManager;
 		this.masterController = masterController;
@@ -82,7 +82,7 @@ public class LoadoutController extends SimpleController {
 		pixmap.setColor(Color.GRAY);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-		
+
 		BitmapFont font = new BitmapFont();
 		font.scale(0.8f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
@@ -97,7 +97,7 @@ public class LoadoutController extends SimpleController {
 		setupStartButton();
 
 		setupSelectionButtons();
-		
+
 		// Initially populate a table with a kind of equipment
 		weaponButtonsView.populateTable("standard");
 
@@ -105,11 +105,10 @@ public class LoadoutController extends SimpleController {
 		weaponButtonsView.populateTable("heavy");
 		specialButtonsView.populateTable();
 		passiveButtonsView.populateTable();
-		
+
 		setupErrorMessage();
-		
+
 		setupLabelsForSelectionButtons(labelStyle);
-		
 
 	}
 
@@ -117,25 +116,25 @@ public class LoadoutController extends SimpleController {
 		standardLabel = new Label("Standard weapon", labelStyle);
 		Button standardButton = weaponButtonsView.getStandardSelectionButton().getButton();
 		setSelectionLabelPositions(standardLabel, standardButton);
-		
+
 		heavyLabel = new Label("Heavy Weapon", labelStyle);
 		Button heavyButton = weaponButtonsView.getHeavySelectionButton().getButton();
 		setSelectionLabelPositions(heavyLabel, heavyButton);
-		
+
 		specialLabel = new Label("Special Ability", labelStyle);
 		Button specialButton = specialButtonsView.getSelectionButton().getButton();
 		setSelectionLabelPositions(specialLabel, specialButton);
-		
+
 		passiveLabel = new Label("Passive Ability", labelStyle);
 		Button passiveButton = passiveButtonsView.getSelectionButton().getButton();
 		setSelectionLabelPositions(passiveLabel, passiveButton);
-		
+
 		stage.addActor(standardLabel);
 		stage.addActor(heavyLabel);
 		stage.addActor(specialLabel);
 		stage.addActor(passiveLabel);
 	}
-	
+
 	private void setSelectionLabelPositions(Label label, Button button) {
 		label.setPosition(button.getX() + 15, button.getY() + button.getHeight() + 20);
 	}
@@ -180,7 +179,7 @@ public class LoadoutController extends SimpleController {
 
 		// Standard weapon button
 		Button standardButton = setupWeaponSelectionButton(weaponSelectionStyle, "standard");
-		
+
 		// Heavy weapon button
 		Button heavyButton = setupWeaponSelectionButton(weaponSelectionStyle, "heavy");
 
@@ -195,16 +194,16 @@ public class LoadoutController extends SimpleController {
 		stage.addActor(specialButton);
 		stage.addActor(passiveButton);
 	}
-	
+
 	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, String type) {
 		Button weaponButton = new Button(weaponSelectionStyle);
 		weaponButton.setSize(200, 120);
 		WeaponButton selectionButton = new WeaponButton(weaponButton, null, resourceManager);
 		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(type));
-		if(type.equals("standard")) {
+		if (type.equals("standard")) {
 			weaponButton.setPosition(100, 540);
 			weaponButtonsView.setStandardSelectionButton(selectionButton);
-		} else if(type.equals("heavy")) {
+		} else if (type.equals("heavy")) {
 			weaponButton.setPosition(100, 360);
 			weaponButtonsView.setHeavySelectionButton(selectionButton);
 		}
@@ -223,7 +222,7 @@ public class LoadoutController extends SimpleController {
 				specialButtonsView.new SelectionClickedListener());
 		return specialButton;
 	}
-	
+
 	private Button setupPassiveSelectionButton(ButtonStyle weaponSelectionStyle) {
 		ButtonStyle passiveSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
 		Button passiveButton = new Button(passiveSelectionStyle);
@@ -257,10 +256,10 @@ public class LoadoutController extends SimpleController {
 
 	private void setupTable(LabelStyle labelStyle) {
 		// Set up the table for the primary weapons
-		this.table = new Table();
+		table = new Table();
 
 		// Add table to stage
-//		table.debug();
+		// table.debug();
 		table.setPosition(1050, 450);
 		table.setSize(100, 40);
 		tableLabel = new Label("Primary Weapon", labelStyle);
@@ -277,13 +276,14 @@ public class LoadoutController extends SimpleController {
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
 		errorMessage = new Label("", labelStyle);
 
-		errorMessage.setPosition((VIRTUAL_WIDTH / 2) - 250, VIRTUAL_HEIGHT - 50);
+		errorMessage.setPosition(VIRTUAL_WIDTH / 2 - 250, VIRTUAL_HEIGHT - 50);
 		stage.addActor(errorMessage);
 		errorMessage.setVisible(false);
 	}
 
-	public void startGame(WeaponDefinition[] weapons, SpecialAbilityDefinition special, PassiveAbilityDefinition passive) {
-        GameController gameScreen = new GameController(masterController, resourceManager);
+	public void startGame(WeaponDefinition[] weapons, SpecialAbilityDefinition special,
+			PassiveAbilityDefinition passive) {
+		GameController gameScreen = new GameController(masterController, resourceManager);
 		masterController.startGame(gameScreen, weapons, special, passive, true);
 	}
 
@@ -295,7 +295,8 @@ public class LoadoutController extends SimpleController {
 	public class StartButtonClickedListener extends ChangeListener {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
-			WeaponDefinition standardWeapon = weaponButtonsView.getStandardSelectionButton().getData();
+			WeaponDefinition standardWeapon = weaponButtonsView.getStandardSelectionButton()
+					.getData();
 			WeaponDefinition heavyWeapon = weaponButtonsView.getHeavySelectionButton().getData();
 			SpecialAbilityDefinition special = specialButtonsView.getSelectionButton().getData();
 			PassiveAbilityDefinition passive = passiveButtonsView.getSelectionButton().getData();
@@ -308,7 +309,7 @@ public class LoadoutController extends SimpleController {
 			} else if (passive == null) {
 				showErrorMessage("passive ability");
 			} else {
-				WeaponDefinition[] weapons = new WeaponDefinition[]{standardWeapon, heavyWeapon};
+				WeaponDefinition[] weapons = new WeaponDefinition[] { standardWeapon, heavyWeapon };
 				startGame(weapons, special, passive);
 			}
 		}

@@ -34,17 +34,17 @@ public interface MapEnvironment {
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions);
 
 	public EntityEnvironment getEntityEnvironment();
-	
+
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
 	 * @return a list of projectiles currently in the game.
 	 */
 	public List<? extends ProjectileDefinition> getProjectiles();
-	
+
 	/**
 	 * @return the games weapon environment. Only for use by controllers!
 	 */
 	public WeaponEnvironment getWeaponEnvironment();
-	
+
 }

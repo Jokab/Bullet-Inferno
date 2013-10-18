@@ -13,35 +13,34 @@ import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.Listener;
-import se.dat255.bulletinferno.util.SimpleScoreListener;
-
 import com.badlogic.gdx.math.Vector2;
 
 public class MapEnvironmentImpl implements MapEnvironment {
 	private final SegmentManager segmentManager;
-	
+
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
-	
+
 	/** The EntityEnvironment instance injected at construction. */
 	private final EntityEnvironment entities;
-	
+
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
-	
-	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinition[] weaponData, 
-			Listener<Integer> scoreListener, Listener<Float> healthListener, 
+
+	public MapEnvironmentImpl(PhysicsEnvironment physics, WeaponDefinition[] weaponData,
+			Listener<Integer> scoreListener, Listener<Float> healthListener,
 			Listener<GameActionEvent> actionListener) {
 		this.physics = physics;
-		this.weapons = new WeaponEnvironmentImpl(physics);
-		
+		weapons = new WeaponEnvironmentImpl(physics);
+
 		// TODO: Replace null with heavy weapon and move upwards in call hierarchy somehow.
 		WeaponLoadout weaponLoadout = new WeaponLoadoutImpl(
 				weaponData[0].createWeapon(physics, weapons, new Vector2()),
 				weaponData[1].createWeapon(physics, weapons, new Vector2()));
-		
-		this.entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout, healthListener, actionListener);
-		
+
+		entities = new EntityEnvironmentImpl(physics, weapons, weaponLoadout, healthListener,
+				actionListener);
+
 		segmentManager = new SegmentManagerImpl(physics, entities, weapons, scoreListener);
 	}
 
@@ -52,7 +51,7 @@ public class MapEnvironmentImpl implements MapEnvironment {
 	public List<? extends Segment> getSegments() {
 		return segmentManager.getSegments();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

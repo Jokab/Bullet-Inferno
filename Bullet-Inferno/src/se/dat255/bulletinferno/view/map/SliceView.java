@@ -13,21 +13,24 @@ import com.badlogic.gdx.math.collision.BoundingBox;
  * Renders a single slice
  */
 public class SliceView implements Renderable {
-	
+
 	/** TextureRegion sharing the same Texture for the whole Segment */
 	private final TextureRegion textureRegion;
 
 	/** */
-	private Slice slice;
-	
-	private Vector3 minBounds = new Vector3(0, 0, 0);
-	private Vector3 maxBounds = new Vector3(0, 0, 0);
-	private BoundingBox bounds = new BoundingBox(minBounds, maxBounds);
-	
+	private final Slice slice;
+
+	private final Vector3 minBounds = new Vector3(0, 0, 0);
+	private final Vector3 maxBounds = new Vector3(0, 0, 0);
+	private final BoundingBox bounds = new BoundingBox(minBounds, maxBounds);
+
 	/**
 	 * Sets the required values in order to render the SliceView
-	 * @param slice the slice to be rendered by this view
-	 * @param textureRegion The region of the Texture to use
+	 * 
+	 * @param slice
+	 *        the slice to be rendered by this view
+	 * @param textureRegion
+	 *        The region of the Texture to use
 	 */
 	public SliceView(Slice slice, TextureRegion textureRegion) {
 		this.slice = slice;
@@ -41,14 +44,15 @@ public class SliceView implements Renderable {
 		maxBounds.x = minBounds.x + slice.getWidth();
 		maxBounds.y = minBounds.y;
 		bounds.set(minBounds, maxBounds);
-		
-		if(viewport.frustum.boundsInFrustum(bounds)){
-			batch.draw(textureRegion, slice.getPosition().x, slice.getPosition().y, 
+
+		if (viewport.frustum.boundsInFrustum(bounds)) {
+			batch.draw(textureRegion, slice.getPosition().x, slice.getPosition().y,
 					slice.getWidth(), 9);
 		}
 	}
 
 	@Override
-	public void dispose() {}
+	public void dispose() {
+	}
 
 }

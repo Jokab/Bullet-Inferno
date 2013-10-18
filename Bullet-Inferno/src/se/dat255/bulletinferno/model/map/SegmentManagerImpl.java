@@ -25,27 +25,27 @@ public class SegmentManagerImpl implements SegmentManager {
 
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
-	
+
 	/** The EntityEnvironment instance injected at construction. */
 	private final EntityEnvironment entities;
-	
+
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
-	
+
 	/**
 	 * Currently active segments on the map. Removes from this list increments removedSegmentsCount
 	 * by one one for each removed segment. Removes are only allowed from the head (beginning) and
 	 * adds only allowed to the tail (end), similar to a queue but not exactly.
 	 */
 	private List<Segment> segments = new ArrayList<Segment>(0);
-	
+
 	/** The number of segments that have been removed from the (beginning of) segments so far. */
 	private int removedSegmentCount = 0;
-	
+
 	private final Listener<Integer> scoreListener;
-	
+
 	/** Segment factory instance. */
-	private SegmentFactory segmentFactory = new SegmentFactory();
+	private final SegmentFactory segmentFactory = new SegmentFactory();
 
 	/**
 	 * Construct a new segment manager. Segments will be available after calling set
@@ -67,7 +67,7 @@ public class SegmentManagerImpl implements SegmentManager {
 	private void addSegment(Segment segment) {
 		segments.add(segment);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -86,8 +86,8 @@ public class SegmentManagerImpl implements SegmentManager {
 		if (segments.size() < numberOfSegments) {
 			throw new IllegalArgumentException("numberOfSegments exceeds segment list length");
 		}
-		
-		if(numberOfSegments < 1) {
+
+		if (numberOfSegments < 1) {
 			return;
 		}
 
@@ -122,40 +122,40 @@ public class SegmentManagerImpl implements SegmentManager {
 	 */
 	@Override
 	public void setViewport(Vector2 viewportPosition, Vector2 viewportDimensions) {
-		float halfWidth = viewportDimensions.x/2;
+		float halfWidth = viewportDimensions.x / 2;
 		float xMin = viewportPosition.x - halfWidth;
 		float xMax = viewportPosition.x + halfWidth;
-		
+
 		// Remove any segments that is not in the viewport.
 		int segmentsToRemove = 0;
-		for(Segment segment : segments) {
-			if(segment.getPosition().x + segment.getWidth() < xMin) {
+		for (Segment segment : segments) {
+			if (segment.getPosition().x + segment.getWidth() < xMin) {
 				segmentsToRemove++;
 			}
 		}
 		removeSegments(segmentsToRemove);
-		
+
 		// Get the position with highest X-value where a new segment could possibly be added, if the
 		// position is inside the viewport of course.
 		float rightmostLeftBounds = xMin;
 		int lastSegmentIndex = segments.size() - 1;
-		if(lastSegmentIndex > -1) {
+		if (lastSegmentIndex > -1) {
 			Segment lastSegment = segments.get(lastSegmentIndex);
 			rightmostLeftBounds = lastSegment.getPosition().x + lastSegment.getWidth();
 		}
-		
+
 		// Add new segments until the viewport is full of them (possibly adding none).
-		while(rightmostLeftBounds < xMax) {
+		while (rightmostLeftBounds < xMax) {
 			Segment segment = segmentFactory.generateRandomSegment(physics, entities, weapons,
 					new Vector2(rightmostLeftBounds, 0),
 					SLICES_PER_SEGMENT_MIN, SLICES_PER_SEGMENT_MAX, scoreListener);
-			
+
 			float width = segment.getWidth();
-			if(width <= 0) {
+			if (width <= 0) {
 				throw new IllegalStateException("the generated segment had non-positive width");
 			}
 			rightmostLeftBounds += width;
-			
+
 			addSegment(segment);
 		}
 	}

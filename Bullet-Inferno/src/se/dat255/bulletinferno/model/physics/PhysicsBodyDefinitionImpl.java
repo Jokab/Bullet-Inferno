@@ -77,9 +77,9 @@ public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 		definition.gravityScale = 0; // No gravity.
 
 		this.shapes = shapes;
-		
+
 		List<FixtureDef> fixtureDefinitions = new ArrayList<FixtureDef>(shapes.size());
-		for(Shape shape : shapes) {
+		for (Shape shape : shapes) {
 			FixtureDef fixtureDefinition = new FixtureDef();
 			fixtureDefinition.shape = shape;
 			fixtureDefinition.density = 0f;
@@ -103,7 +103,7 @@ public class PhysicsBodyDefinitionImpl implements PhysicsBodyDefinition,
 	 */
 	@Override
 	public void dispose() {
-		for(Shape shape : shapes) {
+		for (Shape shape : shapes) {
 			shape.dispose();
 		}
 	}

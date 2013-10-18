@@ -32,13 +32,14 @@ public class PhysicsShapeFactory {
 		shape.setAsBox(width / 2f, height / 2f);
 		return shape;
 	}
-	
+
 	/**
 	 * Like {@link PhysicsShapeFactory#getRectangularShape(float, float)} but has position. Yep,
 	 * Box2D shapes have (relative) position, which is usually interpreted as how much off-center
 	 * they are on a physics body (which in turn depends on other shapes/fixtures on the body).
 	 * 
-	 * @param position the position relative to center (usually on a physics body).
+	 * @param position
+	 *        the position relative to center (usually on a physics body).
 	 * @see PhysicsShapeFactory#getRectangularShape(float, float)
 	 */
 	public static Shape getRectangularShape(float width, float height, Vector2 position) {
@@ -46,7 +47,7 @@ public class PhysicsShapeFactory {
 		shape.setAsBox(width / 2f, height / 2f, position, 0);
 		return shape;
 	}
-	
+
 	public static Shape getChainShape(Vector2[] vertices) {
 		ChainShape shape = new ChainShape();
 		shape.createChain(vertices);

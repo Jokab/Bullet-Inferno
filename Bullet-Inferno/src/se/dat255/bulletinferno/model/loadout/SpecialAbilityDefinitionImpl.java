@@ -24,7 +24,7 @@ public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 	private final SpecialInitializer specialInitializer;
 
 	SpecialAbilityDefinitionImpl(SpecialInitializer initializer) {
-		this.specialInitializer = initializer;
+		specialInitializer = initializer;
 	}
 
 	/**

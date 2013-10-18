@@ -19,26 +19,25 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 
 	private static final int LOAD_BAR_MAX_WIDTH = 501;
 	private static final int LOAD_BAR_BOTTOM_MARGIN = 30;
-	
-	
+
 	/** Text format to be displayed while the loading is in progress */
 	private final String progressLabelText = "Loading... %d%%";
 	/** Text to be displayed when the loading is finished */
 	private final String onFinishedLabelText = "Touch to Start!";
 
 	private float percent;
-	
+
 	// Should be disposed GUI elements
-	private Texture screenBgTexture;
-	private Texture loadBarTexture;
-	private Texture loadBarBgTexture;
-	private BitmapFont progressLabelFont;
+	private final Texture screenBgTexture;
+	private final Texture loadBarTexture;
+	private final Texture loadBarBgTexture;
+	private final BitmapFont progressLabelFont;
 
 	// GUI elements
-	private Image screenBg;
-	private Label progressLabel;
-	private Image loadBarBg;
-	private Image loadBar;
+	private final Image screenBg;
+	private final Label progressLabel;
+	private final Image loadBarBg;
+	private final Image loadBar;
 
 	/**
 	 * Creates a new LoadingScreenView.
@@ -54,16 +53,16 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		screenBg = new Image(screenBgTexture);
 		screenBg.setFillParent(true);
 		addActor(screenBg);
-		
+
 		// The loading bar background
 		loadBarBgTexture = new Texture(Gdx.files.internal("data/loadingBarBg.png"));
 		loadBarBgTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		loadBarBg = new Image(loadBarBgTexture);
 		loadBarBg.setY(LOAD_BAR_BOTTOM_MARGIN);
-		loadBarBg.setWidth(LOAD_BAR_MAX_WIDTH); 
-		loadBarBg.setX(1280/2 - LOAD_BAR_MAX_WIDTH/2); 
+		loadBarBg.setWidth(LOAD_BAR_MAX_WIDTH);
+		loadBarBg.setX(1280 / 2 - LOAD_BAR_MAX_WIDTH / 2);
 		addActor(loadBarBg);
-		
+
 		// The loading bar
 		loadBarTexture = new Texture(Gdx.files.internal("data/loadingBar.png"));
 		loadBarTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -73,8 +72,10 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		addActor(loadBar);
 
 		// Progress label
-		progressLabelFont = new BitmapFont(Gdx.files.internal("data/fonts/arial_bold_32.fnt"), false);
-		progressLabelFont.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		progressLabelFont = new BitmapFont(Gdx.files.internal("data/fonts/arial_bold_32.fnt"),
+				false);
+		progressLabelFont.getRegion().getTexture()
+				.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		LabelStyle ls = new LabelStyle(progressLabelFont, Color.BLACK);
 		progressLabel = new Label("", ls);
 		progressLabel.setY(65);
@@ -89,10 +90,10 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	 */
 	public void setLoadProgress(float loadProgress) {
 		percent = Interpolation.linear.apply(percent, loadProgress, 0.1f);
-		
+
 		progressLabel.setText(String.format(progressLabelText, (int) Math.floor(percent * 100)));
 		centerProgressLabel();
-		
+
 		loadBar.setWidth(percent * LOAD_BAR_MAX_WIDTH);
 		loadBar.invalidate();
 
@@ -105,7 +106,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		if (!progressLabel.getText().equals(onFinishedLabelText)) {
 			progressLabel.setText(onFinishedLabelText);
 			centerProgressLabel();
-			
+
 			loadBar.setWidth(LOAD_BAR_MAX_WIDTH);
 			loadBar.invalidate();
 		}
@@ -115,7 +116,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	 * Helper method for centering the progress label when it changes text.
 	 */
 	private void centerProgressLabel() {
-		progressLabel.setX((getWidth() / 2) - (progressLabel.getPrefWidth() / 2));
+		progressLabel.setX(getWidth() / 2 - progressLabel.getPrefWidth() / 2);
 	}
 
 	@Override

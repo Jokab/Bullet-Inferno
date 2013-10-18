@@ -40,7 +40,7 @@ public interface Segment extends Disposable {
 	 */
 	public float getEntryHeight();
 
-	/** 
+	/**
 	 * Gets the exit height (i.e. the height of the rightmost Slice) of the Segment.
 	 * 
 	 * @return The exit height of the Segment.

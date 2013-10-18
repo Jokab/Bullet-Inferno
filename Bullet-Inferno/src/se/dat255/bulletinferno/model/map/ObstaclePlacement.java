@@ -11,10 +11,10 @@ public interface ObstaclePlacement {
 	 * @return an {@link ObstacleDefinition} for this {@link ObstaclePlacement}.
 	 */
 	public ObstacleDefinition getObstacleDefinition();
-	
+
 	/**
 	 * @return the {@link Slice}-relative position of the obstacle in world-(delta)-coordinates.
 	 */
 	public Vector2 getPosition();
-	
+
 }

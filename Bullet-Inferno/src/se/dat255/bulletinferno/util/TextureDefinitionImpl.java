@@ -17,9 +17,6 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	PLAYER_DEFAULT(texture("data/playerShip.png")),
 	PLAYER_EXPLOSION(texture("data/explosion.gif")),
 
-	
-	
-	
 	// Weapons
 	STANDARD_MACHINE_GUN(texture("data/machineGun.png")),
 	STANDARD_MINI_GUN(texture("data/miniGun.png")),
@@ -32,7 +29,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	DISORDERER_LARGE(texture("data/disordererLarge.png")),
 	SNIPER_RIFLE(texture("data/sniperRifle.png")),
 	LASER(texture("data/laser.png")),
-	
+
 	// Projectiles
 	VELOCITY_BULLET(textureAtlas("data/packedProjectiles.atlas", "bullet")),
 	ROUND_BULLET(textureAtlas("data/packedProjectiles.atlas", "bullet")),
@@ -43,15 +40,15 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	MISSILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 	SPECIAL_ABILITY_MISSILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
 	HIGH_VELOCITY_PROJECTILE(textureAtlas("data/packedProjectiles.atlas", "missile")),
-	
+
 	// Loadout menu specific
 	LOADOUT_PASSIVE_RELOADING_TIME(texture("data/reloadSpeed.png")),
 	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER(texture("data/shieldBoost.png")),
 	LOADOUT_PASSIVE_DAMAGE_MODIFIER(texture("data/damageBoost.png")),
-	
+
 	LOADOUT_SPECIAL_PROJECTILE_RAIN(texture("data/projectileRain.png")),
 	LOADOUT_SPECIAL_NUKE(texture("data/nuke.png")),
-	
+
 	// Buttons
 	PAUSE_SCREEN(texture("images/gui/screen_pause.png")),
 	BLUE_BACKGROUND(texture("images/game/background.png")),
@@ -69,7 +66,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	MOUNTAIN_6(textureAtlas("data/packedMountain.atlas", "mountain6")),
 	MOUNTAIN_7(textureAtlas("data/packedMountain.atlas", "mountain7")),
 	MOUNTAIN_8(textureAtlas("data/packedMountain.atlas", "mountain8")),
-	
+
 	// Particles
 	SMOKE_PARTICLE(texture("images/particles/smoke.png")),
 
@@ -80,7 +77,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	private TextureDefinitionImpl(TextureHolder holder) {
 		this.holder = holder;
 	}
-	
+
 	@Override
 	public TextureRegion getTexture(AssetManager manager) {
 		return holder.getTexture(manager);
@@ -90,7 +87,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	public String getSrouce() {
 		return holder.getSource();
 	}
-	
+
 	private static TextureHolder texture(String source) {
 		return new TextureHolderImpl(source);
 	}
@@ -98,12 +95,12 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	private static TextureHolder textureAtlas(String source, String region) {
 		return new TextureHolderAtlasImpl(source, region);
 	}
-	
+
 	@Override
 	public void dispose() {
 		holder.dispose();
 	}
-	
+
 	@Override
 	public void loadSource(AssetManager manager) {
 		holder.loadSource(manager);

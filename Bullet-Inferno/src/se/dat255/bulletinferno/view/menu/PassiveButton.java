@@ -16,8 +16,9 @@ public class PassiveButton extends CustomizedButton {
 
 	private PassiveAbilityDefinition ability;
 	private final ResourceManager resourceManager;
-	
-	public PassiveButton(Button button, PassiveAbilityDefinition ability, ResourceManager resourceManager) {
+
+	public PassiveButton(Button button, PassiveAbilityDefinition ability,
+			ResourceManager resourceManager) {
 		super(button);
 		this.ability = ability;
 		this.resourceManager = resourceManager;
@@ -25,22 +26,22 @@ public class PassiveButton extends CustomizedButton {
 
 	@Override
 	public void toggleSelected(Skin skin) {
-		this.isSelected = !isSelected;
+		isSelected = !isSelected;
 		if (isSelected) {
 			button.getStyle().up = skin.newDrawable(button.getStyle().up,
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					resourceManager.getTexture(this.ability)));
+					resourceManager.getTexture(ability)));
 		}
 	}
 
 	public PassiveAbilityDefinition getData() {
-		return this.ability;
+		return ability;
 	}
 
 	public void setData(PassiveAbilityDefinition data) {
-		this.ability = data;
+		ability = data;
 	}
 
 }

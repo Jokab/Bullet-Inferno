@@ -35,15 +35,15 @@ public class GameoverScreenView implements RenderableGUI {
 	@Override
 	public GuiEvent pressed(float x, float y) {
 		// Restart
-		if(-5.4f < x && x < -1.46f && -2.1f < y && y < -0.5f){
+		if (-5.4f < x && x < -1.46f && -2.1f < y && y < -0.5f) {
 			return GuiEvent.RESTARTGAME;
 		}
-		
+
 		// Menu
-		if(2.6f < x && x < 5.14f && -2.12f < y && y < -0.32){
+		if (2.6f < x && x < 5.14f && -2.12f < y && y < -0.32) {
 			return GuiEvent.STOPGAME;
 		}
-		
+
 		return null;
 	}
 

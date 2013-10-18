@@ -5,7 +5,6 @@ import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.util.ResourceManager;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -53,13 +52,15 @@ public class PlayerShipLoadoutView implements Renderable {
 		float y = lastShipPosition.y;
 
 		// Standard weapon
-		standardWeaponSprite.setPosition(x + standardWeapon.getOffset().x - standardWeapon.getDimensions().y/2,
-				y + standardWeapon.getOffset().y - standardWeapon.getDimensions().y/2);
+		standardWeaponSprite.setPosition(
+				x + standardWeapon.getOffset().x - standardWeapon.getDimensions().y / 2,
+				y + standardWeapon.getOffset().y - standardWeapon.getDimensions().y / 2);
 		standardWeaponSprite.draw(batch);
 
 		// Heavy weapon
-		heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x - heavyWeapon.getDimensions().y/2,
-				y + heavyWeapon.getOffset().y - heavyWeapon.getDimensions().y/2);
+		heavyWeaponSprite.setPosition(x + heavyWeapon.getOffset().x - heavyWeapon.getDimensions().y
+				/ 2,
+				y + heavyWeapon.getOffset().y - heavyWeapon.getDimensions().y / 2);
 		heavyWeaponSprite.draw(batch);
 	}
 

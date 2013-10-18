@@ -32,7 +32,8 @@ public interface PhysicsEnvironment extends Disposable {
 	 * Removes the specified body from the world.
 	 * <strong>Is only allowed to be called once on each body</strong>
 	 * 
-	 * @param body The body to be removed from the world.
+	 * @param body
+	 *        The body to be removed from the world.
 	 */
 	public void removeBody(PhysicsBody body);
 
@@ -72,28 +73,32 @@ public interface PhysicsEnvironment extends Disposable {
 	/**
 	 * Detaches the movement pattern from the specified body.
 	 * 
-	 * @param body The body that should have its movement pattern removed.
+	 * @param body
+	 *        The body that should have its movement pattern removed.
 	 */
 	public void detachMovementPattern(PhysicsBody body);
-	
+
 	/**
 	 * Returns the currently attached movement pattern for the specified body
 	 * 
-	 * @param body The body whose movement pattern should be checked
+	 * @param body
+	 *        The body whose movement pattern should be checked
 	 * @return The currently attached movement pattern
 	 */
 	public PhysicsMovementPattern getMovementPattern(PhysicsBody body);
-	
+
 	/**
 	 * Returns a new timer
 	 * 
 	 * @return timer
 	 */
 	public Timer getTimer();
-	
+
 	/**
 	 * Removes a timer from the list of timers.
-	 * @param timer the timer instance to be removed
+	 * 
+	 * @param timer
+	 *        the timer instance to be removed
 	 */
 	public void removeTimer(Timer timer);
 
@@ -109,10 +114,11 @@ public interface PhysicsEnvironment extends Disposable {
 	 *        The Runnable that should be run.
 	 */
 	public void runLater(Runnable task);
-	
+
 	/**
-	 * Returns the box2d world instance currently running 
+	 * Returns the box2d world instance currently running
 	 * the game. <strong>To be handled with care</strong>
+	 * 
 	 * @return world
 	 */
 	public World getWorld();

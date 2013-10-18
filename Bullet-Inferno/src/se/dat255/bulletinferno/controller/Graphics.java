@@ -29,22 +29,22 @@ public class Graphics {
 	private SpriteBatch worldBatch, guiBatch;
 
 	private Box2DDebugRenderer debugRenderer;
-	
+
 	/** The size, in meters, of the visible area. */
 	public static final float GAME_WIDTH = 16f, GAME_HEIGHT = 9f;
 	/** Inverted size, multiplication is faster than division */
 	public static final float GAME_WIDTH_INVERTED = 1 / GAME_WIDTH,
 			GAME_HEIGHT_INVERTED = 1 / GAME_HEIGHT;
-	
+
 	/** A vector that checks where the camera should be placed next update */
-	private Vector2 nextCameraPos = new Vector2();
+	private final Vector2 nextCameraPos = new Vector2();
 
 	/** List of all objects that are to be rendered in the world */
 	private final Set<Renderable> renderables = new HashSet<Renderable>();
-	
+
 	/** List of all objects that are to be rendered as HUD elements */
 	private final HudView hudView;
-	
+
 	/** Sets required references */
 	public Graphics(HudView hudView) {
 		this.hudView = hudView;
@@ -60,7 +60,7 @@ public class Graphics {
 		worldBatch = new SpriteBatch();
 		debugRenderer = new Box2DDebugRenderer();
 		debugRenderer.setDrawBodies(true);
-		
+
 		guiCamera = new OrthographicCamera(16, 9);
 		guiBatch = new SpriteBatch();
 		guiBatch.setProjectionMatrix(guiCamera.combined);
@@ -87,7 +87,7 @@ public class Graphics {
 	 * Positions the camera correctly and renders all the graphics of the game
 	 */
 	public void render() {
-		
+
 		// Update the camera position
 		worldCamera.position.set(nextCameraPos.x, nextCameraPos.y, 0);
 		worldCamera.update();
@@ -108,15 +108,15 @@ public class Graphics {
 			renderable.render(worldBatch, worldCamera);
 		}
 		worldBatch.end();
-		
+
 		// Render HUD and GUI elements
 		guiBatch.begin();
 		hudView.render(guiBatch, null);
 		guiBatch.end();
 	}
-	
+
 	/** Gets hold of the HudView */
-	public HudView getHudView(){
+	public HudView getHudView() {
 		return hudView;
 	}
 
@@ -124,7 +124,7 @@ public class Graphics {
 		render();
 		debugRenderer.render(physics.getWorld(), worldCamera.combined);
 	}
-	
+
 	/** Adds an object to be rendered in the world. Uses hashcode to separate */
 	public void addRenderable(Renderable renderable) {
 		renderables.add(renderable);
@@ -151,10 +151,10 @@ public class Graphics {
 		worldCamera.project(vector);
 		position.set(vector.x, vector.y);
 	}
-	
+
 	/** Sets the next camera position */
-	public void setNewCameraPos(float x, float y){
+	public void setNewCameraPos(float x, float y) {
 		nextCameraPos.set(x, y);
 	}
-	
+
 }

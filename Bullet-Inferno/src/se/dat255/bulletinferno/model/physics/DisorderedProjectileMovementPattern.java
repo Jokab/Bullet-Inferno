@@ -7,12 +7,12 @@ public class DisorderedProjectileMovementPattern implements PhysicsMovementPatte
 	private final float frequency;
 	private final float amplitude;
 	private boolean forceSwitch = true;
-	private float xSpeed;
+	private final float xSpeed;
 
 	public DisorderedProjectileMovementPattern(float frequency, float amplitude) {
 		this.frequency = frequency;
 		this.amplitude = amplitude;
-		this.xSpeed = 10;
+		xSpeed = 10;
 	}
 
 	@Override

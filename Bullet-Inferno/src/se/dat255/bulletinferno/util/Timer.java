@@ -25,7 +25,8 @@ public interface Timer {
 	/**
 	 * Sets the time to count down and <strong>stops</strong> the timer
 	 * 
-	 * @param time The time to set the timer for.
+	 * @param time
+	 *        The time to set the timer for.
 	 */
 	public void setTime(float time);
 
@@ -65,30 +66,36 @@ public interface Timer {
 	 * Set if the timer should be continuous (loop). Affect goes in place on
 	 * timeout
 	 * 
-	 * @param continuous If the timer should be continuous.
+	 * @param continuous
+	 *        If the timer should be continuous.
 	 */
 	public void setContinuous(boolean continuous);
 
 	/**
 	 * Registers specified listener to the timer, if it isn't already registered
 	 * 
-	 * @param listener The listener that should be registered.
+	 * @param listener
+	 *        The listener that should be registered.
 	 */
 	public void registerListener(Timerable listener);
 
 	/**
 	 * unregisters the specified listener from the timer
 	 * 
-	 * @param listener The listener that should be unregistered.
+	 * @param listener
+	 *        The listener that should be unregistered.
 	 */
 	public void unregisterListener(Timerable listener);
-	
+
 	/**
 	 * Checks if the speciefied listener is currently listening to the timer
-	 * @param listener the listener to check
+	 * 
+	 * @param listener
+	 *        the listener to check
 	 * @return if the listener is listening
 	 */
 	public boolean isListening(Timerable listener);
+
 	/**
 	 * Updates the time
 	 * 

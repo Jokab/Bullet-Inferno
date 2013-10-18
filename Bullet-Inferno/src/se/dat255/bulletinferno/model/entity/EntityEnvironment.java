@@ -2,9 +2,8 @@ package se.dat255.bulletinferno.model.entity;
 
 import java.util.List;
 
-
 public interface EntityEnvironment {
-	
+
 	/**
 	 * Adds the specified enemy to the game
 	 * 

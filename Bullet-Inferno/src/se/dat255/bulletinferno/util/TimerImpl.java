@@ -36,7 +36,8 @@ public class TimerImpl implements Timer {
 	 * Constructs a new Timer with specified time to count down, that is not
 	 * continuous.
 	 * 
-	 * @param time The time to count down from.
+	 * @param time
+	 *        The time to count down from.
 	 */
 	public TimerImpl(float time) {
 		if (time < 0) {
@@ -48,8 +49,10 @@ public class TimerImpl implements Timer {
 	/**
 	 * Constructs a new Timer with specified time and specified continuity
 	 * 
-	 * @param time The time to count down form.
-	 * @param continuous Whether the timer is continuous (looping) or not.
+	 * @param time
+	 *        The time to count down form.
+	 * @param continuous
+	 *        Whether the timer is continuous (looping) or not.
 	 */
 	public TimerImpl(float time, boolean continuous) {
 		this(time);
@@ -176,11 +179,11 @@ public class TimerImpl implements Timer {
 			listeners.remove(listener);
 		}
 	}
-	
+
 	@Override
-	public boolean isListening(Timerable listener){
-        return listeners.contains(listener);
-    }
+	public boolean isListening(Timerable listener) {
+		return listeners.contains(listener);
+	}
 
 	private void notifyAllListeners(float timeSinceLast) {
 		// Set flag for iteration, i.e. no one touches the list

@@ -24,7 +24,7 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 	private final PlayerShip player;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
-	private Timer[] timers;
+	private final Timer[] timers;
 	private String weaponId;
 	private DisorderedBossMovementPattern dmp;
 	private FollowingMovementPattern fmp;
@@ -42,19 +42,19 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 		super(physics, entities, type, position, velocity, initialHealth, weapons,
 				score, credits, bodyDefinition, scoreListener);
 
-		this.timers = new Timer[getWeapons().length];
+		timers = new Timer[getWeapons().length];
 		this.entities = entities;
 		this.physics = physics;
-		this.player = entities.getPlayerShip();
+		player = entities.getPlayerShip();
 		for (int i = 0; i < getWeapons().length; i++) {
 			timers[i] = getWeapons()[i].getTimer();
 			timers[i].registerListener(this);
 			timers[i].stop();
 		}
 
-		this.fmp = new FollowingMovementPattern(player);
-		this.dmp = new DisorderedBossMovementPattern(3f, 3);
-		this.emp = new EvadingMovementPattern(player);
+		fmp = new FollowingMovementPattern(player);
+		dmp = new DisorderedBossMovementPattern(3f, 3);
+		emp = new EvadingMovementPattern(player);
 		currentPattern = "none";
 
 		this.scoreListener = scoreListener;
@@ -71,23 +71,24 @@ public abstract class SimpleBoss extends SimpleEnemy implements Timerable {
 
 		if (pattern instanceof DisorderedBossMovementPattern) {
 			currentPattern = "dmp";
-			this.dmp = (DisorderedBossMovementPattern) pattern;
-			this.fmp = new FollowingMovementPattern(player);
-			this.emp = new EvadingMovementPattern(player);
+			dmp = (DisorderedBossMovementPattern) pattern;
+			fmp = new FollowingMovementPattern(player);
+			emp = new EvadingMovementPattern(player);
 		} else if (pattern instanceof FollowingMovementPattern) {
 			currentPattern = "fmp";
-			this.fmp = (FollowingMovementPattern) pattern;
-			this.dmp = new DisorderedBossMovementPattern(3f, 3);
-			this.emp = new EvadingMovementPattern(player);
+			fmp = (FollowingMovementPattern) pattern;
+			dmp = new DisorderedBossMovementPattern(3f, 3);
+			emp = new EvadingMovementPattern(player);
 		} else if (pattern instanceof EvadingMovementPattern) {
-			this.emp = (EvadingMovementPattern) pattern;
-			this.fmp = new FollowingMovementPattern(player);
-			this.dmp = new DisorderedBossMovementPattern(3f, 3);
+			emp = (EvadingMovementPattern) pattern;
+			fmp = new FollowingMovementPattern(player);
+			dmp = new DisorderedBossMovementPattern(3f, 3);
 		}
 		physics.attachMovementPattern(pattern, getBody());
 
 	}
 
+	@Override
 	public abstract void onTimeout(Timer source, float timeSinceLast);
 
 	@Override

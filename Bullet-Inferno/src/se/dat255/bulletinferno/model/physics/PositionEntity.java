@@ -17,5 +17,5 @@ public interface PositionEntity {
 	 * @return The dimensions of an object
 	 */
 	public Vector2 getDimensions();
-	
+
 }

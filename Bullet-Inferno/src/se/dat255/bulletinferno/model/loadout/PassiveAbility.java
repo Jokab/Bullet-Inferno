@@ -2,7 +2,7 @@ package se.dat255.bulletinferno.model.loadout;
 
 /**
  * A PassiveAbility holds a {@link PassiveEffect}.
- *
+ * 
  */
 public interface PassiveAbility {
 

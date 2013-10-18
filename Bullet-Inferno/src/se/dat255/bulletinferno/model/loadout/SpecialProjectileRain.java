@@ -38,7 +38,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons) {
 		this.physics = physics;
 		this.weapons = weapons;
-		this.timer = physics.getTimer();
+		timer = physics.getTimer();
 		timer.registerListener(this);
 	}
 
@@ -53,7 +53,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 		timer.start();
 		for (int i = 1; i <= AMOUNT_BULLETS; i++) {
 			float xPos = playerShip.getPosition().x;
-			float yPos = (((Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS) * i + 1);
+			float yPos = (Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS * i + 1;
 			bulletPositions.add(new Vector2(xPos, yPos));
 		}
 	}

@@ -29,8 +29,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	private PhysicsBody body = null;
 	private final PhysicsEnvironment physics;
 	private final EntityEnvironment entities;
-	private Vector2 velocity;
-	private Weapon[] weapons;
+	private final Vector2 velocity;
+	private final Weapon[] weapons;
 
 	private final Listener<Integer> scoreListener;
 
@@ -43,7 +43,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
 	 */
-	private Runnable removeSelf = new Runnable() {
+	private final Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
 			entities.removeEnemy(SimpleEnemy.this);
@@ -116,7 +116,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	}
 
 	private boolean hitByOtherProjectile(Collidable other) {
-		return other instanceof ProjectileDefinition && !isInMyTeam(((ProjectileDefinition) other).getSource());
+		return other instanceof ProjectileDefinition
+				&& !isInMyTeam(((ProjectileDefinition) other).getSource());
 	}
 
 	/**
@@ -163,7 +164,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void dispose() {
 		physics.removeBody(body);
 		if (weapons != null) {
-			for (int i = 0; i < (weapons.length); i++) {
+			for (int i = 0; i < weapons.length; i++) {
 				if (weapons[i] != null) {
 					weapons[i].getTimer().stop();
 				}
@@ -227,6 +228,7 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 		}
 	}
 
+	@Override
 	public void setActionListener(Listener<GameActionEvent> actionListener) {
 		this.actionListener = actionListener;
 	}

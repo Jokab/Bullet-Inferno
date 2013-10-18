@@ -10,5 +10,5 @@ public interface PassiveAbilityDefinition extends ResourceIdentifier {
 	 * @return The PassiveAbility.
 	 */
 	PassiveAbility getPassiveAbility();
-	
+
 }

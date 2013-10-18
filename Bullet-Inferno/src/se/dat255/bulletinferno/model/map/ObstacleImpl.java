@@ -18,7 +18,7 @@ public class ObstacleImpl implements Obstacle, Teamable {
 
 	/** The physics body used by this Obstacle. */
 	private PhysicsBody body;
-	
+
 	/** The Physics instance this Obstacle belongs to. */
 	private final PhysicsEnvironment physics;
 
@@ -26,11 +26,15 @@ public class ObstacleImpl implements Obstacle, Teamable {
 	 * Construct a new ObstacleImpl with a body definition and position. The Obstacle will be added
 	 * to the physics world simulation.
 	 * 
-	 * @param physics the game in which the Obstacle will operate.
-	 * @param bodyDefinition a body definition the Obstacle will use for its body.
-	 * @param position The world-coordinates the Obstacle will be placed at in the physics world.
+	 * @param physics
+	 *        the game in which the Obstacle will operate.
+	 * @param bodyDefinition
+	 *        a body definition the Obstacle will use for its body.
+	 * @param position
+	 *        The world-coordinates the Obstacle will be placed at in the physics world.
 	 */
-	public ObstacleImpl(PhysicsEnvironment physics, PhysicsBodyDefinition bodyDefinition, Vector2 position) {
+	public ObstacleImpl(PhysicsEnvironment physics, PhysicsBodyDefinition bodyDefinition,
+			Vector2 position) {
 		this.physics = physics;
 		body = physics.createBody(bodyDefinition, this, position);
 	}
@@ -50,7 +54,7 @@ public class ObstacleImpl implements Obstacle, Teamable {
 		physics.removeBody(body);
 		body = null;
 	}
-	
+
 	@Override
 	public boolean isInMyTeam(Teamable teamMember) {
 		return teamMember instanceof ObstacleImpl;

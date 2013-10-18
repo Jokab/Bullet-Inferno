@@ -24,12 +24,11 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	private final PhysicsEnvironment physics;
 	private final MapEnvironment map;
 
-
-	public ModelEnvironmentImpl(WeaponDefinition[] weaponData, 
-			SimpleScoreListener scoreListener, Listener<Float> healthListener, 
+	public ModelEnvironmentImpl(WeaponDefinition[] weaponData,
+			SimpleScoreListener scoreListener, Listener<Float> healthListener,
 			Listener<GameActionEvent> actionListener) {
 		physics = new PhysicsEnvironmentImpl();
-		map = new MapEnvironmentImpl(physics, weaponData, scoreListener, healthListener, 
+		map = new MapEnvironmentImpl(physics, weaponData, scoreListener, healthListener,
 				actionListener);
 	}
 
@@ -121,7 +120,7 @@ public class ModelEnvironmentImpl implements ModelEnvironment {
 	public MapEnvironment getMapEnvironment() {
 		return map;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

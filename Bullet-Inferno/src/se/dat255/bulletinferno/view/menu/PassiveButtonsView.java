@@ -60,7 +60,7 @@ public class PassiveButtonsView {
 	private void showTable() {
 		table.clear();
 		for (PassiveButton button : passiveButtons) {
-			this.table.add(button.getButton()).padBottom(20).height(95).width(200).row();
+			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
 		label.setText("Passive abilities");
 	}
@@ -93,11 +93,11 @@ public class PassiveButtonsView {
 	}
 
 	public PassiveButton getSelectionButton() {
-		return this.selectionButton;
+		return selectionButton;
 	}
 
 	public void setSelectionButton(PassiveButton selectionSpecialButton) {
-		this.selectionButton = selectionSpecialButton;
+		selectionButton = selectionSpecialButton;
 	}
 
 	private class TableElementClickedListener extends ChangeListener {

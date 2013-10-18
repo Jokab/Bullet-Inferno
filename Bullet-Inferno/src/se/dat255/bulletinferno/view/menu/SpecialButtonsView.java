@@ -5,7 +5,6 @@ import java.util.List;
 
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinitionImpl;
-import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
 
@@ -62,7 +61,7 @@ public class SpecialButtonsView {
 	private void showTable() {
 		table.clear();
 		for (SpecialButton button : specialButtons) {
-			this.table.add(button.getButton()).padBottom(20).height(95).width(175).row();
+			table.add(button.getButton()).padBottom(20).height(95).width(175).row();
 		}
 		label.setText("Special abilities");
 	}
@@ -95,11 +94,11 @@ public class SpecialButtonsView {
 	}
 
 	public SpecialButton getSelectionButton() {
-		return this.selectionButton;
+		return selectionButton;
 	}
 
 	public void setSelectionButton(SpecialButton selectionSpecialButton) {
-		this.selectionButton = selectionSpecialButton;
+		selectionButton = selectionSpecialButton;
 	}
 
 	private class TableElementClickedListener extends ChangeListener {

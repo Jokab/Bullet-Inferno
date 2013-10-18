@@ -32,29 +32,31 @@ public class DefaultBossImpl extends SimpleBoss implements Ship {
 	 * @param credits
 	 *        The credit rewarded when boss is killed
 	 */
-	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type,
 
-			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern, float initialHealth, 
+			Vector2 position, Vector2 velocity, PhysicsMovementPattern pattern,
+			float initialHealth,
 
-			Weapon[] weapons, int score, int credits, 
+			Weapon[] weapons, int score, int credits,
 
 			PhysicsBodyDefinition bodyDefinition, Listener<Integer> scoreListener) {
-		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
+		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern, scoreListener);
 
 		entities.getPlayerShip();
 		super.getWeaponTimers();
 
 	}
-	
-	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities, EnemyDefinitionImpl type, 
 
+	public DefaultBossImpl(PhysicsEnvironment physics, EntityEnvironment entities,
+			EnemyDefinitionImpl type,
 
-			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons, 
-			 int score, int credits, PhysicsBodyDefinition bodyDefinition,
+			Vector2 position, Vector2 velocity, float initialHealth, Weapon[] weapons,
+			int score, int credits, PhysicsBodyDefinition bodyDefinition,
 
 			Listener<Integer> scoreListener) {
-		super(physics, entities,type, position, velocity, initialHealth, weapons, score, credits,
+		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, scoreListener);
 
 		entities.getPlayerShip();
@@ -64,25 +66,25 @@ public class DefaultBossImpl extends SimpleBoss implements Ship {
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		
-		if (getHealth() == getInitialHealth()){
+
+		if (getHealth() == getInitialHealth()) {
 			changeToFollowingMovement();
-			
-		}else if (getHealth() >= getInitialHealth() * 0.75f) {
+
+		} else if (getHealth() >= getInitialHealth() * 0.75f) {
 			changeToDisorderedMovement();
 			fireSpread(source);
 
-		} else if(getHealth() < getInitialHealth() * 0.25) {
+		} else if (getHealth() < getInitialHealth() * 0.25) {
 			changeToDisorderedMovement();
-			
+
 			fireAim(source);
 			fireWide(source);
-			
-		} else { 
+
+		} else {
 			changeToFollowingMovement();
 			fireSpreadAim(source);
 		}
-		
+
 	}
 
 	@Override

@@ -35,10 +35,10 @@ public class LoadingScreenController extends SimpleController {
 	private final InputListener stageClickInputListener = new InputListener() {
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			if (LoadingScreenController.this.loadingFinished) {
+			if (loadingFinished) {
 				finishedLoading();
 			}
-			return LoadingScreenController.this.loadingFinished;
+			return loadingFinished;
 		}
 	};
 
@@ -58,10 +58,10 @@ public class LoadingScreenController extends SimpleController {
 	private boolean loadingFinished = false;
 
 	/** The scene2d stage that takes care of gui handling for us */
-	private Stage stage;
+	private final Stage stage;
 
 	/** The loading screen view that holds all the gui elements */
-	private LoadingScreenView loadingScreenView;
+	private final LoadingScreenView loadingScreenView;
 
 	/**
 	 * Initiates the loading screen and its view. Also starts the loading of the resourceManager.
@@ -139,7 +139,7 @@ public class LoadingScreenController extends SimpleController {
 	}
 
 	public void addFinishedLoadingEventListener(FinishedLoadingEventListener finishListener) {
-		this.finishListeners.add(finishListener);
+		finishListeners.add(finishListener);
 	}
 
 	public void setClickToSwitch(boolean clickToSwitch) {

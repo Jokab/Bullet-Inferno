@@ -105,7 +105,7 @@ public class WeaponButtonsView {
 	private void showTable(List<WeaponButton> weaponList, String labelText) {
 		table.clear();
 		for (WeaponButton button : weaponList) {
-			this.table.add(button.getButton()).padBottom(20).height(95).width(200).row();
+			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
 		label.setText(labelText);
 	}
@@ -142,7 +142,7 @@ public class WeaponButtonsView {
 	}
 
 	public void setStandardSelectionButton(WeaponButton selectionWeaponButton) {
-		this.standardSelectionButton = selectionWeaponButton;
+		standardSelectionButton = selectionWeaponButton;
 	}
 
 	public List<WeaponButton> getStandardWeapons() {

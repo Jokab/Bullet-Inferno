@@ -17,7 +17,7 @@ public interface ProjectileDefinition extends PositionEntity, Collidable, Poolab
 	public float getDamage();
 
 	/**
-	 * Initializes the projectile and attaches a specific movement pattern. 
+	 * Initializes the projectile and attaches a specific movement pattern.
 	 * Call upon acquiring from the Pool.
 	 * 
 	 * @param position
@@ -37,13 +37,15 @@ public interface ProjectileDefinition extends PositionEntity, Collidable, Poolab
 	/**
 	 * Sets the velocity of the projectile
 	 * 
-	 * @param velocity The new velocity of the projectile.
+	 * @param velocity
+	 *        The new velocity of the projectile.
 	 */
 	public void setVelocity(Vector2 velocity);
 
 	/**
 	 * Gets the position of the projectile
 	 */
+	@Override
 	public Vector2 getPosition();
 
 	/**
@@ -52,11 +54,11 @@ public interface ProjectileDefinition extends PositionEntity, Collidable, Poolab
 	 * @return source
 	 */
 	public Teamable getSource();
-	
+
 	public ProjectileType getType();
 
 	/**
-	 * Sets a flag for if this projectile should collide with instances of  (the
+	 * Sets a flag for if this projectile should collide with instances of (the
 	 * "ground" and other non-living objects).
 	 * The default value is True.
 	 * 

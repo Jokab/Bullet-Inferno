@@ -37,7 +37,7 @@ public class GameTouchController implements InputProcessor {
 	private static final float SENSE_SCALE = 1f;
 
 	/** A list of special ability listeners */
-	private List<SpecialAbilityListener> specialAbilityListeners = new LinkedList<GameTouchController.SpecialAbilityListener>();
+	private final List<SpecialAbilityListener> specialAbilityListeners = new LinkedList<GameTouchController.SpecialAbilityListener>();
 
 	/**
 	 * The game camera. This is needed to unproject x/y values to the virtual
@@ -56,7 +56,7 @@ public class GameTouchController implements InputProcessor {
 	/** The finger index controlling the position of the ship. */
 	private int steeringFinger = -1;
 	/** The origin of touch down finger controlling the ship */
-	private Vector2 touchOrigin = new Vector2();
+	private final Vector2 touchOrigin = new Vector2();
 
 	/** Flag indicating that keyboard presses should be ignored */
 	private boolean suppressKeyboard;
@@ -87,13 +87,13 @@ public class GameTouchController implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-        return suppressKeyboard;
-    }
+		return suppressKeyboard;
+	}
 
 	@Override
 	public boolean keyTyped(char character) {
-        return suppressKeyboard;
-    }
+		return suppressKeyboard;
+	}
 
 	/** Pre-calculated values to increase speed */
 	private static float INVERTER_WIDTH = 1.0f / 16.0f,
@@ -102,8 +102,8 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// Check if GUI input was to be handled
-		float guiX = (float) screenX / (Gdx.graphics.getWidth() * INVERTER_WIDTH);
-		float guiY = (float) screenY / (Gdx.graphics.getHeight() * INVERTER_HEIGHT);
+		float guiX = screenX / (Gdx.graphics.getWidth() * INVERTER_WIDTH);
+		float guiY = screenY / (Gdx.graphics.getHeight() * INVERTER_HEIGHT);
 		guiX -= 8.0f;
 		guiY = 4.5f - guiY;
 		GuiEvent event = graphics.getHudView().guiInput(guiX, guiY);

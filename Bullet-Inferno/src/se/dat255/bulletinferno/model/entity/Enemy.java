@@ -22,9 +22,10 @@ public interface Enemy extends PositionEntity, Disposable, Teamable, ResourceIde
 	 * @return The credits received.
 	 */
 	public int getCredits();
-	
+
 	/**
 	 * Sets the action listener to be notified on enemy actions
+	 * 
 	 * @param actionListener
 	 */
 	public void setActionListener(Listener<GameActionEvent> actionListener);

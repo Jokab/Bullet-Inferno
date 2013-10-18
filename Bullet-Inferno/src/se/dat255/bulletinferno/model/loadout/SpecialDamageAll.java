@@ -18,7 +18,8 @@ public class SpecialDamageAll implements SpecialEffect {
 	 * on screen at the time of activation. The damage dealt is set in the
 	 * field {@link #DAMAGE}.
 	 * 
-	 * @param entities The EntityEnvironment for the game.
+	 * @param entities
+	 *        The EntityEnvironment for the game.
 	 */
 	public SpecialDamageAll(EntityEnvironment entities) {
 		this.entities = entities;
@@ -29,8 +30,8 @@ public class SpecialDamageAll implements SpecialEffect {
 	 */
 	@Override
 	public void activate(PlayerShip playerShip) {
-		for(Enemy enemy : entities.getEnemies()) {
-			if(enemy instanceof Destructible) {
+		for (Enemy enemy : entities.getEnemies()) {
+			if (enemy instanceof Destructible) {
 				((Destructible) enemy).takeDamage(DAMAGE);
 			}
 		}

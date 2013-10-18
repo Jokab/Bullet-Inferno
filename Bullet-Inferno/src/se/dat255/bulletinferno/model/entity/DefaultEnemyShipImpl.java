@@ -11,27 +11,27 @@ import se.dat255.bulletinferno.util.Timerable;
 import com.badlogic.gdx.math.Vector2;
 
 public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable {
-	
-	private Timer[] timers;
-	
+
+	private final Timer[] timers;
+
 	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth,
-			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition, 
+			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition,
 			Listener<Integer> scoreListener) {
 
 		super(physics, entities, type, position, velocity, initialHealth, weapons,
-				 score, credits,
+				score, credits,
 				bodyDefinition, scoreListener);
 
-		this.timers = new Timer[weapons.length];
-		for (int i = 0; i < weapons.length; i++){
+		timers = new Timer[weapons.length];
+		for (int i = 0; i < weapons.length; i++) {
 			timers[i] = weapons[i].getTimer();
 			timers[i].registerListener(this);
 			timers[i].stop();
 		}
 
 	}
-	
+
 	public DefaultEnemyShipImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			EnemyDefinitionImpl type, Vector2 position, Vector2 velocity, float initialHealth,
 			Weapon[] weapons, int score, int credits, PhysicsBodyDefinition bodyDefinition,
@@ -39,9 +39,8 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 		super(physics, entities, type, position, velocity, initialHealth, weapons, score, credits,
 				bodyDefinition, pattern, scoreListener);
 
-		
-		this.timers = new Timer[weapons.length];
-		for(int i=0; i< weapons.length; i++){
+		timers = new Timer[weapons.length];
+		for (int i = 0; i < weapons.length; i++) {
 			timers[i] = weapons[i].getTimer();
 			timers[i].registerListener(this);
 			timers[i].stop();
@@ -50,17 +49,17 @@ public class DefaultEnemyShipImpl extends SimpleEnemy implements Ship, Timerable
 
 	@Override
 	public void onTimeout(Timer source, float timeSinceLast) {
-		for(int i=0; i<getWeapons().length; i++){
-			if(source == timers[i]){
-				getWeapons()[i].fire(getPosition(), new Vector2(-1,0), this);
+		for (int i = 0; i < getWeapons().length; i++) {
+			if (source == timers[i]) {
+				getWeapons()[i].fire(getPosition(), new Vector2(-1, 0), this);
 			}
 		}
 	}
-	
+
 	@Override
 	public void viewportIntersectionBegin() {
 		super.viewportIntersectionBegin();
-		for(int i=0; i<getWeapons().length; i++){
+		for (int i = 0; i < getWeapons().length; i++) {
 			timers[i].start();
 		}
 	}

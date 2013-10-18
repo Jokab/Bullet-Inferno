@@ -42,9 +42,10 @@ public interface Slice extends Disposable, ResourceIdentifier {
 	 * @return width (meters)
 	 */
 	public float getWidth();
-	
+
 	/**
 	 * Returns the position of the sprite in world coordinates
+	 * 
 	 * @return
 	 */
 	public Vector2 getPosition();

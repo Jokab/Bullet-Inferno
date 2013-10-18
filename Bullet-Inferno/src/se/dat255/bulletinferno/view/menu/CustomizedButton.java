@@ -16,15 +16,15 @@ public abstract class CustomizedButton {
 	public CustomizedButton(Button button) {
 		this.button = button;
 	}
-	
+
 	/** Getter for the GUI button */
 	public Button getButton() {
-		return this.button;
+		return button;
 	}
 
 	/** Returns if the button is toggled */
 	public boolean isSelected() {
-		return this.isSelected;
+		return isSelected;
 	}
 
 	/** What happends when the button gets toggled */

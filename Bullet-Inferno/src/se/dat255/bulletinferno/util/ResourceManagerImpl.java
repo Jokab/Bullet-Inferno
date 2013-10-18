@@ -21,10 +21,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class ResourceManagerImpl implements ResourceManager {
 
 	private static final Resolution[] SUPPORTED_RESOLUTIONS = {
-		new Resolution(270, 480, ""), // Default resolution   
-		new Resolution(450, 800, "800450"),
-	    new Resolution(720, 1280, "1280720"),
-	    new Resolution(1080, 1920, "19201080")
+			new Resolution(270, 480, ""), // Default resolution
+			new Resolution(450, 800, "800450"),
+			new Resolution(720, 1280, "1280720"),
+			new Resolution(1080, 1920, "19201080")
 	};
 
 	public enum SoundEffectType {
@@ -32,23 +32,24 @@ public class ResourceManagerImpl implements ResourceManager {
 		SQUIB,
 		EHMO,
 		DRIPPER;
-		
+
 		static {
 			KATZE.mapping.put("DIED", "data/explosion.mp3");
 			SQUIB.mapping.put("DIED", "data/explosion.mp3");
 			EHMO.mapping.put("DIED", "data/explosion.mp3");
 			DRIPPER.mapping.put("DIED", "data/explosion.mp3");
 		}
-		
+
 		private final Map<String, String> mapping = new HashMap<String, String>();
-		
-		private SoundEffectType() {}
-		
+
+		private SoundEffectType() {
+		}
+
 		public String getPath(String key) {
 			return mapping.get(key);
 		}
 	}
-	
+
 	private AssetManager manager;
 
 	public ResourceManagerImpl() {
@@ -56,7 +57,7 @@ public class ResourceManagerImpl implements ResourceManager {
 
 		ResolutionFileResolver resolver = new ResolutionFileResolver(
 				new InternalFileHandleResolver(), SUPPORTED_RESOLUTIONS);
-		
+
 		manager.setLoader(Texture.class, new TextureLoader(resolver));
 		manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
 		Texture.setAssetManager(manager);
@@ -65,11 +66,12 @@ public class ResourceManagerImpl implements ResourceManager {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void startLoad(boolean blocking) {
 		loadTextures();
 		loadSoundEffects();
-		
-		if(blocking) {
+
+		if (blocking) {
 			manager.finishLoading();
 		}
 	}
@@ -84,8 +86,9 @@ public class ResourceManagerImpl implements ResourceManager {
 				return manager.get(soundEffectType.getPath(action.getAction()), Sound.class);
 			}
 		}
-		
-		throw new RuntimeException(String.format("Sound not found for the identifier:action combination '%s:%s'", 
+
+		throw new RuntimeException(String.format(
+				"Sound not found for the identifier:action combination '%s:%s'",
 				identifier.getIdentifier(), action.getAction()));
 	}
 
@@ -95,7 +98,7 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public Music getMusic(String identifier) {
 		return null;
-		//return manager.get(music.get(identifier), Music.class);
+		// return manager.get(music.get(identifier), Music.class);
 	}
 
 	/** Adds all managed textures to the AssetManager's load queue. */
@@ -104,11 +107,11 @@ public class ResourceManagerImpl implements ResourceManager {
 			definition.loadSource(manager);
 		}
 	}
-	
+
 	/** Adds all managed sound effects to the AssetManager's load queue. */
 	private void loadSoundEffects() {
 		for (SoundEffectType type : SoundEffectType.values()) {
-			for(String src : type.mapping.values()) {
+			for (String src : type.mapping.values()) {
 				manager.load(src, Sound.class);
 			}
 		}
@@ -165,10 +168,10 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	@Override
 	public void dispose() {
-		for(TextureDefinition definition : TextureDefinitionImpl.values()){
+		for (TextureDefinition definition : TextureDefinitionImpl.values()) {
 			definition.dispose();
 		}
-		
+
 		manager.dispose();
 		manager = null;
 		Texture.setAssetManager(null);

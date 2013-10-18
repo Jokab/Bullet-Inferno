@@ -10,7 +10,7 @@ public class PassiveTakeDamageModifier implements PassiveEffect {
 
 	/**
 	 * @param percent
-	 *        The percentage which the damage taken will be modified by. So a value of 0.9 will 
+	 *        The percentage which the damage taken will be modified by. So a value of 0.9 will
 	 *        make the player take 90% of the original damage, i.e. 10% less.
 	 */
 	public PassiveTakeDamageModifier(float percent) {

@@ -3,7 +3,7 @@ package se.dat255.bulletinferno.model.weapon;
 import java.util.List;
 
 public interface WeaponEnvironment {
-	
+
 	/**
 	 * Returns a list of all projectiles in the game
 	 * 
@@ -23,5 +23,5 @@ public interface WeaponEnvironment {
 	 *        The projectile reference to dispose.
 	 */
 	public void disposeProjectile(ProjectileDefinition projectile);
-	
+
 }

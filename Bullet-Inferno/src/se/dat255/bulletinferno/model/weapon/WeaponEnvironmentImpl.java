@@ -11,17 +11,17 @@ import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import com.badlogic.gdx.utils.Pool;
 
 public class WeaponEnvironmentImpl implements WeaponEnvironment {
-	
+
 	private final PhysicsEnvironment physics;
-	
+
 	private final List<ProjectileDefinition> projectiles = new ArrayList<ProjectileDefinition>();
-	private final Map<Class<? extends ProjectileDefinition>, Pool<ProjectileDefinition>> projectilePools = 
+	private final Map<Class<? extends ProjectileDefinition>, Pool<ProjectileDefinition>> projectilePools =
 			new HashMap<Class<? extends ProjectileDefinition>, Pool<ProjectileDefinition>>();
-	
+
 	public WeaponEnvironmentImpl(PhysicsEnvironment physics) {
 		this.physics = physics;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

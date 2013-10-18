@@ -26,7 +26,7 @@ public interface Destructible extends Teamable, Disposable {
 	 * @return The initial health.
 	 */
 	public float getInitialHealth();
-	
+
 	/**
 	 * Returns true if the enemy's health is below or equal to 0.
 	 * 

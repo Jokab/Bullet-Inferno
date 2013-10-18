@@ -10,6 +10,6 @@ public interface PhysicsMovementPattern {
 	 *        , the body to apply the movement pattern
 	 */
 	public void update(float timeDelta, PhysicsBody body);
-	
+
 	public PhysicsMovementPattern copy();
 }

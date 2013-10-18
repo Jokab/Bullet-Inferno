@@ -4,7 +4,6 @@ import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 
-
 public interface PlayerShip extends Ship, ResourceIdentifier {
 
 	/**
@@ -15,19 +14,21 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 
 	// TODO: javadoc this in some good way
 
-
 	/**
 	 * Makes the PlayerShip move the specified distance on the y-axis
 	 * 
-	 * @param dy distance in y
+	 * @param dy
+	 *        distance in y
 	 */
 	public void moveY(float dy);
-	
+
 	/**
 	 * Makes the PlayerShip move the specified distance on the y-axis, with
 	 * a specified scale. For example scale = 0.5 only moves the ship half the
 	 * distance specified, and scale = 2 twice as long
-	 * @param dy distance in y
+	 * 
+	 * @param dy
+	 *        distance in y
 	 * @param scale
 	 */
 	public void moveY(float dy, float scale);
@@ -57,11 +58,11 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	/**
 	 * Sets the velocity to 0 after a specified distance (meters).
 	 * 
-	 * @param distance the distance in meters before the ship should stop.
+	 * @param distance
+	 *        the distance in meters before the ship should stop.
 	 */
 	public void halt(float distance);
-	
-	
+
 	/**
 	 * Restores speed to what it was before
 	 * Used mainly for starting movement after defeating a boss

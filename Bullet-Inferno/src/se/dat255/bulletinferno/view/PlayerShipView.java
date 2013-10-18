@@ -19,10 +19,10 @@ public class PlayerShipView implements Renderable, Timerable {
 	private final TextureRegion shipTexture;
 	private final TextureRegion explosion;
 
-	private Sprite shipSprite;
+	private final Sprite shipSprite;
 	private Sprite explosionSprite;
-	private Timer timer;
-	
+	private final Timer timer;
+
 	private final PlayerShipLoadoutView loadoutView;
 
 	private static final int SMOKE_PARTICLE_COUNT = 100;
@@ -41,11 +41,11 @@ public class PlayerShipView implements Renderable, Timerable {
 		this.ship = ship;
 
 		// this.timer = game.getTimer();
-		this.timer = new TimerImpl();
-		this.timer.setTime(EXPLOSION_TIMEOUT);
-		this.timer.registerListener(this);
+		timer = new TimerImpl();
+		timer.setTime(EXPLOSION_TIMEOUT);
+		timer.registerListener(this);
 
-		this.shipDimensions = ship.getDimensions();
+		shipDimensions = ship.getDimensions();
 
 		shipTexture = resourceManager.getTexture(ship);
 
@@ -56,13 +56,14 @@ public class PlayerShipView implements Renderable, Timerable {
 		shipSprite.setOrigin(shipSprite.getWidth() / 2, shipSprite.getHeight() / 2);
 
 		explosionSprite = new Sprite(explosion);
-		explosionSprite.setSize((int)(shipDimensions.y * 2), (int)(shipDimensions.y * 2));
+		explosionSprite.setSize((int) (shipDimensions.y * 2), (int) (shipDimensions.y * 2));
 
 		// TODO: How should we do with managed textures? No disposal?
 		smokeTexture = resourceManager.getTexture(TextureDefinitionImpl.SMOKE_PARTICLE);
-		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest,
+				Texture.TextureFilter.Nearest);
 		smokeTrail = new SmokeTrail(smokeTexture.getTexture(), SMOKE_PARTICLE_COUNT);
-		
+
 		// Load-out view is responsible for displaying the load-out we choose on our ship
 		loadoutView = new PlayerShipLoadoutView(ship, resourceManager);
 	}
@@ -77,11 +78,8 @@ public class PlayerShipView implements Renderable, Timerable {
 			float x = lastShipPosition.x - shipDimensions.x / 2;
 			float y = lastShipPosition.y - shipDimensions.y / 2;
 
-		
-			
 			shipSprite.setPosition(x, y);
 			shipSprite.draw(batch);
-				
 
 			// Make sure weapons are rendered on top of the ship
 			loadoutView.render(batch, viewport);

@@ -11,10 +11,9 @@ import se.dat255.bulletinferno.model.weapon.WeaponEnvironment;
 import se.dat255.bulletinferno.util.Listener;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 public class SliceImpl implements Slice, Collidable {
-	
+
 	/** The entry height of this slice */
 	private final float entryHeight;
 
@@ -26,10 +25,10 @@ public class SliceImpl implements Slice, Collidable {
 
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
-	
+
 	/** The EntityEnvironment instance injected at construction. */
 	private final EntityEnvironment entities;
-	
+
 	/** The WeaponEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
 
@@ -38,10 +37,10 @@ public class SliceImpl implements Slice, Collidable {
 
 	/** The obstacles present in this slice. */
 	private final List<? extends Obstacle> obstacles;
-	
-	/** The position o f the slice*/
+
+	/** The position o f the slice */
 	private final Vector2 position;
-	
+
 	/**
 	 * Creates a new Slice in the Game instance provided.
 	 * 
@@ -62,9 +61,9 @@ public class SliceImpl implements Slice, Collidable {
 	 * @param obstaclePlacements
 	 *        A list of mappings to where Obstacles should be placed in the Slice.
 	 * @param enemyPlacements
-	 * 		  A list of mappings to where enemies should be place in the Slice
-     * @param scoreListener
-     *        A ScoreListener which keeps track of which enemies die, to award score.
+	 *        A list of mappings to where enemies should be place in the Slice
+	 * @param scoreListener
+	 *        A ScoreListener which keeps track of which enemies die, to award score.
 	 */
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
@@ -89,17 +88,17 @@ public class SliceImpl implements Slice, Collidable {
 					.createObstacle(physics, obstaclePosition);
 			obstacles.add(obstacle);
 		}
-		
+
 		this.obstacles = obstacles;
-		
+
 		// Create enemies from the provided definitions
 		for (EnemyPlacement enemyPlacement : enemyPlacements) {
 			Vector2 enemyPosition = enemyPlacement.getPosition().cpy().add(position);
-			entities.addEnemy(enemyPlacement.getContent().createEnemy(physics, entities, weapons, 
+			entities.addEnemy(enemyPlacement.getContent().createEnemy(physics, entities, weapons,
 					enemyPosition, scoreListener));
 		}
 	}
-	
+
 	/**
 	 * Creates a new Slice in the Game instance provided.
 	 * 
@@ -125,10 +124,9 @@ public class SliceImpl implements Slice, Collidable {
 			Vector2 position, float width, List<? extends ObstaclePlacement> obstaclePlacements,
 			Listener<Integer> scoreListener) {
 		this(physics, entities, weapons, id, entryHeight, exitHeight, position, width,
-				obstaclePlacements, Collections.<EnemyPlacement>emptyList(), scoreListener);
+				obstaclePlacements, Collections.<EnemyPlacement> emptyList(), scoreListener);
 	}
 
-	
 	public SliceImpl(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, SliceDefinitionImpl id, float entryHeight, float exitHeight,
 			Vector2 position, float width, Listener<Integer> scoreListener) {

@@ -25,14 +25,14 @@ public class MasterController extends com.badlogic.gdx.Game {
 
 	private ResourceManager resourceManager;
 
-	private FinishedLoadingEventListener switchToGameOnLoaded = new FinishedLoadingEventListener() {
+	private final FinishedLoadingEventListener switchToGameOnLoaded = new FinishedLoadingEventListener() {
 		@Override
 		public void onLoaded() {
 			setScreen(getGameScreen());
 		}
 	};
 
-	private FinishedLoadingEventListener switchToLoadoutOnLoaded = new FinishedLoadingEventListener() {
+	private final FinishedLoadingEventListener switchToLoadoutOnLoaded = new FinishedLoadingEventListener() {
 		@Override
 		public void onLoaded() {
 			setScreen(getLoadoutScreen());
@@ -41,9 +41,9 @@ public class MasterController extends com.badlogic.gdx.Game {
 
 	@Override
 	public void create() {
-		this.resourceManager = new ResourceManagerImpl();
+		resourceManager = new ResourceManagerImpl();
 
-		this.loadingScreen = new LoadingScreenController(resourceManager, this);
+		loadingScreen = new LoadingScreenController(resourceManager, this);
 		loadingScreen.addFinishedLoadingEventListener(switchToLoadoutOnLoaded);
 		loadingScreen.setClickToSwitch(true);
 		setScreen(loadingScreen);

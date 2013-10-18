@@ -10,20 +10,21 @@ import se.dat255.bulletinferno.model.team.Teamable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsViewportIntersectionListener {
+public class ProjectileDefinitionImpl implements ProjectileDefinition,
+		PhysicsViewportIntersectionListener {
 
 	private PhysicsBody body = null;
 
 	private float damage;
 	private Teamable source = null;
 	private ProjectileType projectileType;
-	
+
 	/** The PhysicsEnvironment instance injected at construction. */
 	private final PhysicsEnvironment physics;
-	
+
 	/** The EntityEnvironment instance injected at construction. */
 	private final WeaponEnvironment weapons;
-	
+
 	/** A flag indicating if this projectile should collide with obstacles */
 	private boolean collideWithObstacles = true;
 
@@ -31,28 +32,30 @@ public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsVi
 	 * A task that when added to the Game's runLater will remove this projectile. Used to no modify
 	 * the physics world during a simulation.
 	 */
-	private Runnable removeSelf = new Runnable() {
+	private final Runnable removeSelf = new Runnable() {
 		@Override
 		public void run() {
 			weapons.disposeProjectile(ProjectileDefinitionImpl.this);
 		}
 	};
 
-    /**
-     * Constructs a new ProjectileDefinitionImpl.
-     * @param physicsEnvironment
-     * @param weaponEnvironment
-     */
-	public ProjectileDefinitionImpl(PhysicsEnvironment physicsEnvironment, WeaponEnvironment weaponEnvironment) {
-		this.physics = physicsEnvironment;
-		this.weapons = weaponEnvironment;
+	/**
+	 * Constructs a new ProjectileDefinitionImpl.
+	 * 
+	 * @param physicsEnvironment
+	 * @param weaponEnvironment
+	 */
+	public ProjectileDefinitionImpl(PhysicsEnvironment physicsEnvironment,
+			WeaponEnvironment weaponEnvironment) {
+		physics = physicsEnvironment;
+		weapons = weaponEnvironment;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage, 
+	public void init(ProjectileType type, Vector2 origin, Vector2 velocity, float damage,
 			Teamable source, PhysicsBodyDefinition bodyDefinition) {
 		collideWithObstacles = true;
 		projectileType = type;
@@ -105,11 +108,11 @@ public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsVi
 	}
 
 	private boolean shouldCollide(Collidable other) {
-		if(!collideWithObstacles && (other instanceof Obstacle)) {
+		if (!collideWithObstacles && other instanceof Obstacle) {
 			return false;
 		}
-		return ((damage > 0 && !(other instanceof ProjectileDefinition) && other != getSource())
-				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other)));
+		return damage > 0 && !(other instanceof ProjectileDefinition) && other != getSource()
+				&& (!(other instanceof Teamable) || !getSource().isInMyTeam((Teamable) other));
 	}
 
 	/**
@@ -160,7 +163,7 @@ public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsVi
 		// Check if the projectile has any damage left, i.e. if it has already
 		// exploded (only happens in rare cases on the same frame as collided),
 		// if so, explode and remove
-		if(damage > 0) {
+		if (damage > 0) {
 			physics.runLater(removeSelf);
 			damage = 0;
 		}
@@ -175,7 +178,7 @@ public class ProjectileDefinitionImpl implements ProjectileDefinition, PhysicsVi
 	public Vector2 getDimensions() {
 		return body.getDimensions();
 	}
-	
+
 	@Override
 	public void setCollideWithObstacles(boolean collideWithObstacles) {
 		this.collideWithObstacles = collideWithObstacles;

@@ -8,7 +8,8 @@ public interface SpecialAbilityDefinition extends ResourceIdentifier {
 	/**
 	 * Returns the SpecialAbility selected.
 	 * 
-	 * @param game The ModelEnvironment for the game.
+	 * @param game
+	 *        The ModelEnvironment for the game.
 	 * @return The SpecialAbility.
 	 */
 	SpecialAbility getSpecialAbility(ModelEnvironment game);

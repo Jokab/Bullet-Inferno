@@ -26,7 +26,8 @@ public class SpecialIconView implements RenderableGUI {
 	}
 
 	/** Disposed by HudView */
-	@Override @Deprecated
+	@Override
+	@Deprecated
 	public void dispose(ResourceManager resourceManager) {
 	}
 

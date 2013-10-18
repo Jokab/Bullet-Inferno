@@ -49,29 +49,27 @@ public class GameController extends SimpleController {
 
 	/** The current viewport dimensions, in world coordinates. */
 	private Vector2 viewportDimensions;
-	
+
 	/** Stores the weapons type for restarting the game */
 	private WeaponDefinition[] weaponData;
 
 	/** Reference to the master controller */
-	private MasterController myGame;
+	private final MasterController myGame;
 
 	/** Reference to the background view */
 	static BackgroundView bgView;
 
-	private AudioPlayer audioPlayer;
-	
+	private final AudioPlayer audioPlayer;
+
 	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
-	
+
 	/** Reference to the shared special ability definition */
 	private SpecialAbilityDefinition special;
 	/** Reference to the shared passive ability definition */
 	private PassiveAbilityDefinition passive;
 	/** Reference to the shared score listener which handles the score of the game */
 	private SimpleScoreListener scoreListener;
-
-
 
 	/**
 	 * Default controller to set required references
@@ -83,14 +81,14 @@ public class GameController extends SimpleController {
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
 		this.resourceManager = resourceManager;
-		this.audioPlayer = new AudioPlayerImpl(resourceManager);
+		audioPlayer = new AudioPlayerImpl(resourceManager);
 	}
 
 	/**
 	 * Creates or recreates a game "state". This method should be called before switching to the
 	 * GameScreen.
 	 */
-	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special, 
+	public void createNewGame(WeaponDefinition[] weaponData, SpecialAbilityDefinition special,
 			PassiveAbilityDefinition passive) {
 		// Initiate instead of declaring statically above
 		viewportPosition = new Vector2();
@@ -106,50 +104,49 @@ public class GameController extends SimpleController {
 
 		// Initialize the HUD
 		final HudView hudView = new HudView(resourceManager);
-		
+
 		// Initialize the graphics controller
 		graphics = new Graphics(hudView);
 		graphics.create();
-		
+
 		// Initialize the score listener
-		scoreListener = new SimpleScoreListener(){
+		scoreListener = new SimpleScoreListener() {
 			@Override
 			public void notifyScoreChanged(int score) {
 				hudView.setScore(score);
 			}
 		};
 
-		
 		// Update life when ship changes life
-		Listener<Float> healthListener = new Listener<Float>(){
+		Listener<Float> healthListener = new Listener<Float>() {
 			@Override
 			public void call(Float life) {
 				hudView.setLife(life);
 			}
 		};
-		
+
 		// Initialize the action listener
-		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>(){
+		Listener<GameActionEvent> actionListener = new Listener<GameActionEvent>() {
 			@Override
 			public void call(GameActionEvent e) {
 				audioPlayer.playSoundEffect(e);
 			}
 		};
-		
-		if(models != null) {
+
+		if (models != null) {
 			models.dispose();
 		}
 
 		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
-		
+
 		PlayerShip ship = models.getPlayerShip();
-		
+
 		// TODO: Based on user selection
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
 		final SpecialAbility specialAbility = special.getSpecialAbility(models);
-		
+
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
-		
+
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
 				Graphics.GAME_HEIGHT / 2);
 		graphics.addRenderable(shipView);
@@ -159,7 +156,7 @@ public class GameController extends SimpleController {
 
 		// Set up input handler
 		touchController = new GameTouchController(graphics, ship, this, myGame);
-		
+
 		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
 			public void specialAbilityRequested() {
@@ -247,10 +244,10 @@ public class GameController extends SimpleController {
 
 		// Render the game
 		graphics.render();
-		
-		// Debug render 
-		//graphics.renderWithDebug(models.getPhysicsEnvironment());
-		
+
+		// Debug render
+		// graphics.renderWithDebug(models.getPhysicsEnvironment());
+
 		if (!gameOver && models.getPlayerShip().isDead()) {
 			gameOver();
 		}
@@ -271,7 +268,7 @@ public class GameController extends SimpleController {
 			models.setViewport(viewportPosition, viewportDimensions);
 
 			models.update(delta);
-			
+
 			scoreListener.update(delta);
 		}
 
@@ -302,16 +299,18 @@ public class GameController extends SimpleController {
 	}
 
 	/** Get method for weapon data set in create new game */
-	public WeaponDefinition[] getWeaponData(){
+	public WeaponDefinition[] getWeaponData() {
 		return weaponData;
 	}
+
 	/** Get method for data set in create new game */
 	public SpecialAbilityDefinition getSpecial() {
-		return this.special;
+		return special;
 	}
+
 	/** Get method for data set in create new game */
 	public PassiveAbilityDefinition getPassive() {
-		return this.passive;
+		return passive;
 	}
 
 }

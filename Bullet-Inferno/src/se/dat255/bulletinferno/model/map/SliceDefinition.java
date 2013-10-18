@@ -24,7 +24,7 @@ public interface SliceDefinition {
 	 *        The world-coordinates the Slice will be placed at, in the physics world.
 	 * @return A new Slice located at the provided position.
 	 */
-	public Slice createSlice(PhysicsEnvironment physics, EntityEnvironment entities, 
+	public Slice createSlice(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, Vector2 position, Listener<Integer> scoreListener);
 
 	/**
