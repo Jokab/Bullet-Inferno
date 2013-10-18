@@ -7,12 +7,14 @@ import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -28,13 +30,16 @@ public class WeaponButtonsView {
 	private WeaponButton heavySelectionButton;
 	private final Skin skin;
 	private final Table table;
-	private final Label label;
+	private final Image label;
+	private final TextureRegionDrawable labelSource;
 
-	public WeaponButtonsView(Stage stage, Skin skin, Table table, Label label,
+	public WeaponButtonsView(Stage stage, Skin skin, Table table, Image label,
 			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
+		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+				TextureDefinitionImpl.LOADOUT_HEAVYWEAPON));
 		this.resourceManager = resourceManager;
 	}
 
@@ -107,7 +112,7 @@ public class WeaponButtonsView {
 		for (WeaponButton button : weaponList) {
 			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
-		label.setText(labelText);
+		label.setDrawable(labelSource);
 	}
 
 	private void setSelectionToClicked(WeaponButton wButton, WeaponButton selectionButton) {

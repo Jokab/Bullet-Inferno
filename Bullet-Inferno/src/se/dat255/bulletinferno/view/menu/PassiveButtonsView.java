@@ -7,12 +7,14 @@ import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,12 +28,15 @@ public class PassiveButtonsView {
 	private PassiveButton selectionButton;
 	private final Skin skin;
 	private final Table table;
-	private final Label label;
-
-	public PassiveButtonsView(Stage stage, Skin skin, Table table, Label label,
+	private final Image label;
+	private final TextureRegionDrawable labelSource;
+	
+	public PassiveButtonsView(Stage stage, Skin skin, Table table, Image label,
 			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
+		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+				TextureDefinitionImpl.LOADOUT_PASSIVE_ABILITIES));
 		this.label = label;
 		this.resourceManager = resourceManager;
 	}
@@ -62,7 +67,7 @@ public class PassiveButtonsView {
 		for (PassiveButton button : passiveButtons) {
 			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
-		label.setText("Passive abilities");
+		label.setDrawable(labelSource);
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {

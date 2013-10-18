@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -52,8 +53,7 @@ public class LoadoutController extends SimpleController {
 	private final WeaponButtonsView weaponButtonsView;
 	private final SpecialButtonsView specialButtonsView;
 	private final PassiveButtonsView passiveButtonsView;
-
-	private Label tableLabel;
+	private Image tableLabel;
 
 	private Label standardLabel;
 	private Label heavyLabel;
@@ -73,16 +73,18 @@ public class LoadoutController extends SimpleController {
 
 		this.resourceManager = resourceManager;
 		this.masterController = masterController;
-
+		
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
 
+		setupBackground(resourceManager);
+		
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.GRAY);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-
+		
 		BitmapFont font = new BitmapFont();
 		font.scale(0.8f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
@@ -92,7 +94,7 @@ public class LoadoutController extends SimpleController {
 		weaponButtonsView = new WeaponButtonsView(stage, skin, table, tableLabel, resourceManager);
 		specialButtonsView = new SpecialButtonsView(stage, skin, table, tableLabel, resourceManager);
 		passiveButtonsView = new PassiveButtonsView(stage, skin, table, tableLabel, resourceManager);
-
+		
 		// Set up the start button and add its listener
 		setupStartButton();
 
@@ -109,7 +111,19 @@ public class LoadoutController extends SimpleController {
 		setupErrorMessage();
 
 		setupLabelsForSelectionButtons(labelStyle);
+	}
 
+	private void setupBackground(final ResourceManager resourceManager) {
+		// Add background image
+		Image image = new Image(resourceManager.getTexture(TextureDefinitionImpl.LOADOUT_BACKGROUND));
+		image.setSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		stage.addActor(image);
+		
+		// Add ship
+		image = new Image(resourceManager.getTexture(TextureDefinitionImpl.LOADOUT_SHIP));
+		image.setSize(388, 200);
+		image.setPosition(216, 218);
+		stage.addActor(image);
 	}
 
 	private void setupLabelsForSelectionButtons(LabelStyle labelStyle) {
@@ -128,11 +142,6 @@ public class LoadoutController extends SimpleController {
 		passiveLabel = new Label("Passive Ability", labelStyle);
 		Button passiveButton = passiveButtonsView.getSelectionButton().getButton();
 		setSelectionLabelPositions(passiveLabel, passiveButton);
-
-		stage.addActor(standardLabel);
-		stage.addActor(heavyLabel);
-		stage.addActor(specialLabel);
-		stage.addActor(passiveLabel);
 	}
 
 	private void setSelectionLabelPositions(Label label, Button button) {
@@ -151,7 +160,7 @@ public class LoadoutController extends SimpleController {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Table.drawDebug(stage);
-
+		
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
 	}
@@ -197,14 +206,13 @@ public class LoadoutController extends SimpleController {
 
 	private Button setupWeaponSelectionButton(ButtonStyle weaponSelectionStyle, String type) {
 		Button weaponButton = new Button(weaponSelectionStyle);
-		weaponButton.setSize(200, 120);
 		WeaponButton selectionButton = new WeaponButton(weaponButton, null, resourceManager);
 		weaponButton.addListener(weaponButtonsView.new SelectionClickedListener(type));
 		if (type.equals("standard")) {
-			weaponButton.setPosition(100, 540);
+			weaponButton.setPosition(450, 355);
 			weaponButtonsView.setStandardSelectionButton(selectionButton);
 		} else if (type.equals("heavy")) {
-			weaponButton.setPosition(100, 360);
+			weaponButton.setPosition(450, 187);
 			weaponButtonsView.setHeavySelectionButton(selectionButton);
 		}
 		return weaponButton;
@@ -213,8 +221,8 @@ public class LoadoutController extends SimpleController {
 	private Button setupSpecialSelectionButton(ButtonStyle weaponSelectionStyle) {
 		ButtonStyle specialSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
 		Button specialButton = new Button(specialSelectionStyle);
-		specialButton.setPosition(100, 180);
-		specialButton.setSize(200, 120);
+		specialButton.setPosition(255, 185);
+		specialButton.setSize(90, 72);
 		SpecialButton selectionSpecialButton = new SpecialButton(specialButton, null,
 				resourceManager);
 		specialButtonsView.setSelectionButton(selectionSpecialButton);
@@ -226,8 +234,8 @@ public class LoadoutController extends SimpleController {
 	private Button setupPassiveSelectionButton(ButtonStyle weaponSelectionStyle) {
 		ButtonStyle passiveSelectionStyle = new ImageButtonStyle(weaponSelectionStyle);
 		Button passiveButton = new Button(passiveSelectionStyle);
-		passiveButton.setPosition(100, 0);
-		passiveButton.setSize(200, 120);
+		passiveButton.setPosition(230, 375);
+		passiveButton.setSize(120, 62);
 		PassiveButton selectionPassiveButton = new PassiveButton(passiveButton, null,
 				resourceManager);
 		passiveButtonsView.setSelectionButton(selectionPassiveButton);
@@ -245,9 +253,8 @@ public class LoadoutController extends SimpleController {
 		startButtonStyle.over = skin.newDrawable(startButtonStyle.up, Color.LIGHT_GRAY);
 
 		ImageButton startButton = new ImageButton(startButtonStyle);
-
-		startButton.setPosition(1040, 20);
-		startButton.setSize(230, 65);
+		startButton.setSize(228, 94);
+		startButton.setPosition(1030, 23);
 		stage.addActor(startButton);
 
 		// Start button click listener
@@ -260,11 +267,12 @@ public class LoadoutController extends SimpleController {
 
 		// Add table to stage
 		// table.debug();
-		table.setPosition(1050, 450);
+		table.setPosition(1080, 450);
 		table.setSize(100, 40);
-		tableLabel = new Label("Primary Weapon", labelStyle);
+		tableLabel = new Image();
+		tableLabel.setSize(274, 33);
 
-		tableLabel.setPosition(table.getX() - 40, table.getY() + 210);
+		tableLabel.setPosition(table.getX() - 100, table.getY() + 210);
 
 		stage.addActor(table);
 		stage.addActor(tableLabel);
