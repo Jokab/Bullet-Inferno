@@ -56,7 +56,7 @@ public class EntityEnvironmentImplTest {
 	@Test
 	public void testAddEnemy() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.STANDARD_MACHINE_GUN.createWeapon(physics, weapons, new Vector2()), 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.KATZE, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);
@@ -82,7 +82,7 @@ public class EntityEnvironmentImplTest {
 	@Test
 	public void testRemoveEnemy() {
 		WeaponLoadout loadout = new WeaponLoadoutImpl(
-				WeaponDefinitionImpl.STANDARD.createWeapon(physics, weapons, new Vector2()), 
+				WeaponDefinitionImpl.STANDARD_MACHINE_GUN.createWeapon(physics, weapons, new Vector2()), 
 				WeaponDefinitionImpl.MISSILE_LAUNCHER.createWeapon(physics, weapons, new Vector2()));
 		Enemy enemy = new EnemyMockup(EnemyDefinitionImpl.KATZE, new Vector2(), 
 				new Vector2(), 0, new Weapon[] {}, new Vector2[] {}, 0, 65);

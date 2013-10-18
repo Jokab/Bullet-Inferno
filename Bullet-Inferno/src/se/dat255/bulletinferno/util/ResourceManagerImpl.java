@@ -19,19 +19,24 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Definition of all the assets that should be handled by the resource manager
  */
 public class ResourceManagerImpl implements ResourceManager {
+
 	private static final Resolution[] SUPPORTED_RESOLUTIONS = {
 	        new Resolution(450, 800, "800450"),
 	        new Resolution(720, 1280, "1280720"),
 	        new Resolution(1080, 1920, "19201080")
 	};
-	
+
 	public enum SoundEffectType {
 		KATZE,
-		HARD_BOSS_SHIP;
+		SQUIB,
+		EHMO,
+		DRIPPER;
 		
 		static {
 			KATZE.mapping.put("DIED", "data/explosion.mp3");
-			HARD_BOSS_SHIP.mapping.put("DIED", "data/explosion.mp3");
+			SQUIB.mapping.put("DIED", "data/explosion.mp3");
+			EHMO.mapping.put("DIED", "data/explosion.mp3");
+			DRIPPER.mapping.put("DIED", "data/explosion.mp3");
 		}
 		
 		private final Map<String, String> mapping = new HashMap<String, String>();

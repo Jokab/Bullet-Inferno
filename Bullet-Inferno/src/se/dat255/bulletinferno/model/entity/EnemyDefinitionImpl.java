@@ -22,12 +22,12 @@ public enum EnemyDefinitionImpl implements EnemyDefinition {
 
 	
 	KATZE(new Vector2(-1, 0), 0.5f,
-			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.MACHINE_GUN, 0, 0)}, 10,
+			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.KATZE_GUN, -1f, 0.25f)}, 10,
 			10, new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1.7f, 0.9f))),
 
 	SQUIB(new Vector2(-2, 0), 0.5f,
-			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.LASER_GUN, 0, 0) }, 10, 10,
-			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1, 1)), new DisorderedMovementPattern(1, 1)),
+			new WeaponPlacement[] {new WeaponPlacementImpl(WeaponDefinitionImpl.LASER_GUN, -0.7f, -0.4f) }, 10, 10,
+			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(1.7f, 1.7f)), new DisorderedMovementPattern(1, 1)),
 
 	
 			

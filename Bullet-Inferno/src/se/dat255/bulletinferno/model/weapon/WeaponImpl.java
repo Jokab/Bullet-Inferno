@@ -84,7 +84,7 @@ public class WeaponImpl implements Weapon {
 	public void fire(Vector2 position, Vector2 direction, Teamable source) {
 		if (isLoaded()) {
 			
-			projectileType.releaseProjectile(physics, weapons, position.add(getOffset()),
+			projectileType.releaseProjectile(physics, weapons, position.add(getOffset().cpy().add(new Vector2(getDimensions().x,0))),
 					direction.scl(projectileSpeed), source);
 			// Start count down
 			timer.restart();

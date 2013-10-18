@@ -24,7 +24,7 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_1_GROUND, 0, 0),
 			placeObstacle(ObstacleDefinitionImpl.DEFAULT_TREE, 11.37f, 1.7f)), 
 		Arrays.asList(
-			placeEnemy(EnemyDefinitionImpl.KATZE, 12, 8.5f))
+			placeEnemy(EnemyDefinitionImpl.SQUIB, 12, 8.5f))
 		),
 
 
@@ -34,8 +34,8 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 		),
 	MOUNTAIN_3(1.75f, 3.8f, 16f, Arrays.asList(placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_3_GROUND, 0, 0)),
 			Arrays.asList(
-				placeEnemy(EnemyDefinitionImpl.KATZE, 6.15f, 4.3f),
-				placeEnemy(EnemyDefinitionImpl.KATZE, 6.73f, 4.07f))
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 6.15f, 4.3f),
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 6.73f, 4.07f))
 		),
 	
 	MOUNTAIN_4(3.8f, 1.75f, 16f, Arrays.asList(
@@ -43,25 +43,25 @@ public enum SliceDefinitionImpl implements SliceDefinition {
 				placeObstacle(ObstacleDefinitionImpl.FLOATING_ROCK, 10f, 2.85f),
 				placeObstacle(ObstacleDefinitionImpl.SMALL_TREE, 2.38f, 4.81f)),
 			Arrays.asList(
-				placeEnemy(EnemyDefinitionImpl.KATZE, 8.25f, 8.5f),
-				placeEnemy(EnemyDefinitionImpl.KATZE, 11.35f, 7.73f))
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 8.25f, 8.5f),
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 11.35f, 7.73f))
 		),
 	MOUNTAIN_5(1.75f, 1.75f, 16f, Arrays.asList(
 				placeObstacle(ObstacleDefinitionImpl.FLAT_GROUND, 0, 1.75f)),
 			Arrays.asList(	
-				placeEnemy(EnemyDefinitionImpl.KATZE, 4f, 8f),
-				placeEnemy(EnemyDefinitionImpl.KATZE, 4f, 6f),
-				placeEnemy(EnemyDefinitionImpl.KATZE, 4f, 4f),
-				placeEnemy(EnemyDefinitionImpl.KATZE, 14f, 6f),
-				placeEnemy(EnemyDefinitionImpl.KATZE, 14f, 4f))
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 4f, 8f),
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 4f, 6f),
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 4f, 4f),
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 14f, 6f),
+				placeEnemy(EnemyDefinitionImpl.SQUIB, 14f, 4f))
 		),
 	
 	MOUNTAIN_6(1.75f, 1.75f, 16f, Arrays.asList(
 			placeObstacle(ObstacleDefinitionImpl.MOUNTAIN_6_GROUND, 0, 0)),
 			Arrays.asList(
-					placeEnemy(EnemyDefinitionImpl.KATZE, 8f, 2.37f),
-					placeEnemy(EnemyDefinitionImpl.KATZE, 5.72f, 3.92f),
-					placeEnemy(EnemyDefinitionImpl.KATZE, 10.58f, 7.78f))
+					placeEnemy(EnemyDefinitionImpl.SQUIB, 8f, 2.37f),
+					placeEnemy(EnemyDefinitionImpl.SQUIB, 5.72f, 3.92f),
+					placeEnemy(EnemyDefinitionImpl.SQUIB, 10.58f, 7.78f))
 		),
 	
 	MOUNTAIN_7(3.8f, 1.75f, 16f, Arrays.asList(

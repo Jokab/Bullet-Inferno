@@ -49,40 +49,56 @@ public class WeaponButtonsView {
 
 	private void populateTableWithHeavy() {
 		if (heavyWeapons.size() == 0) {
-			for (int i = 0; i < 5; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				WeaponDefinition weaponData = WeaponDefinitionImpl.MISSILE_LAUNCHER;
-				WeaponButton weaponButton = new WeaponButton(getTableButton(weaponData),
-						weaponData,
-						resourceManager);
-				heavyWeapons.add(weaponButton);
+			WeaponDefinitionImpl[] arr = WeaponDefinitionImpl.values();
+			WeaponDefinition curWeapon = null;
+			String[] prefix = null;
+			for (int i = 0; i < arr.length; i++) {
+				prefix = arr[i].name().split("_");
+				if (prefix[0].equals("HEAVY")) {
+					curWeapon = arr[i];
 
-				weaponButton.getButton().addListener(
-						new TableElementClickedListener(heavySelectionButton, heavyWeapons));
+					WeaponButton weaponButton = new WeaponButton(getTableButton(curWeapon),
+							curWeapon,
+							resourceManager);
+					heavyWeapons.add(weaponButton);
+
+					weaponButton.getButton().addListener(
+							new TableElementClickedListener(heavySelectionButton, heavyWeapons));
+				}
 			}
 		}
 
+		if (heavySelectionButton.getData() == null) {
+			setSelectionToClicked(heavyWeapons.get(0), heavySelectionButton);
+		}
 		// Set up the table to add these buttons to
-		setSelectionToClicked(heavyWeapons.get(0), heavySelectionButton);
 		showTable(heavyWeapons, "Heavy Weapons");
 	}
 
 	private void populateTableWithStandard() {
+		WeaponDefinitionImpl[] arr = WeaponDefinitionImpl.values();
+		WeaponDefinition curWeapon = null;
+		String[] prefix = null;
 		if (standardWeapons.size() == 0) {
-			for (int i = 0; i < 5; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				WeaponDefinition weaponData = WeaponDefinitionImpl.DISORDERER;
-				WeaponButton weaponButton = new WeaponButton(getTableButton(weaponData),
-						weaponData,
-						resourceManager);
-				standardWeapons.add(weaponButton);
+			for (int i = 0; i < arr.length; i++) {
+				prefix = arr[i].name().split("_");
+				if (prefix[0].equals("STANDARD")) {
+					curWeapon = arr[i];
+					WeaponButton weaponButton = new WeaponButton(getTableButton(curWeapon),
+							curWeapon,
+							resourceManager);
+					standardWeapons.add(weaponButton);
 
-				weaponButton.getButton().addListener(
-						new TableElementClickedListener(standardSelectionButton, standardWeapons));
+					weaponButton.getButton().addListener(
+							new TableElementClickedListener(standardSelectionButton,
+									standardWeapons));
+				}
 			}
 		}
 
-		setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
+		if (standardSelectionButton.getData() == null) {
+			setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
+		}
 		// Set up the table to add these buttons to
 		showTable(standardWeapons, "Standard Weapons");
 	}
@@ -90,12 +106,12 @@ public class WeaponButtonsView {
 	private void showTable(List<WeaponButton> weaponList, String labelText) {
 		table.clear();
 		for (WeaponButton button : weaponList) {
-			this.table.add(button.getButton()).padBottom(20).height(50).width(100).row();
+			this.table.add(button.getButton()).padBottom(20).height(95).width(200).row();
 		}
 		label.setText(labelText);
 	}
 
-	public void setSelectionToClicked(WeaponButton wButton, WeaponButton selectionButton) {
+	private void setSelectionToClicked(WeaponButton wButton, WeaponButton selectionButton) {
 		selectionButton.setData(wButton.getData());
 		ButtonStyle style = new ButtonStyle(wButton.getButton().getStyle());
 
@@ -146,7 +162,7 @@ public class WeaponButtonsView {
 		return heavyWeapons;
 	}
 
-	public class TableElementClickedListener extends ChangeListener {
+	private class TableElementClickedListener extends ChangeListener {
 
 		private final WeaponButton selectionButton;
 		private final List<WeaponButton> list;
