@@ -29,4 +29,4 @@ passing tests will not be accepted.
 - **Squash any unnecessary commits**. Make sure each commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please squash (see for example http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html) them before sending the pull request.
 
 [issue]: https://github.com/Jokab/Bullet-Inferno/issues/new
-[development documentation]: https://github.com/Jokab/Bullet-Inferno/blob/development/DEVELOPER_DOCS.md
+[development documentation]: https://github.com/Jokab/Bullet-Inferno/wiki/Developer-Documentation
