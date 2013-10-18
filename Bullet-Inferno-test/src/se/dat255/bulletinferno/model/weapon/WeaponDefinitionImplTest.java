@@ -57,7 +57,7 @@ public class WeaponDefinitionImplTest {
 				new Vector2());
 
 		assertTrue(
-				"When you retrieve a missile lanucher weapon, it should be cooldown weapon.",
+				"When you retrieve a heavy laser cannon weapon, it should be cooldown weapon.",
 				weapon.getClass() == CooldownWeaponImpl.class);
 	}
 }
