@@ -194,7 +194,7 @@ public class PlayerShipImplTest {
 		projectile.setSource(playerShip2);
 		preCollisionHealth = playerShip.getHealth();
 		
-		playerShip.preCollided(playerShip2);
+		playerShip.preCollided(projectile);
 		assertTrue("Should take no damage from projectile, since it's hit by a team member", 
 				playerShip.getHealth() == preCollisionHealth);
 		
