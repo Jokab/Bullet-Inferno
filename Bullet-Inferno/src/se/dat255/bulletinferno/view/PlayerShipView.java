@@ -130,7 +130,7 @@ public class PlayerShipView implements Renderable, Timerable {
 			timer.start();
 		}
 		if (explosionSprite != null) {
-			explosionSprite.setPosition(pos.x - 1, pos.y - 1);
+			explosionSprite.setPosition(pos.x - 2, pos.y - 2);
 			explosionSprite.draw(batch);
 		}
 	}
