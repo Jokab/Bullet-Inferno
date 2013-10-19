@@ -38,7 +38,6 @@ public class SpecialDamageAll implements SpecialEffect {
 		for (Enemy enemy : entities.getEnemies()) {
 			if ((minX <= enemy.getPosition().x && enemy.getPosition().x <= maxX) &&
 					enemy instanceof Destructible) {
-				System.out.println("NUKE: " + enemy);
 				((Destructible) enemy).takeDamage(DAMAGE);
 			}
 		}
