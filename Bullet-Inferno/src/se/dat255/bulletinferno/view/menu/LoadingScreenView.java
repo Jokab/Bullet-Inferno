@@ -69,6 +69,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		loadBar = new Image(loadBarTexture);
 		loadBar.setY(LOAD_BAR_BOTTOM_MARGIN);
 		loadBar.setX(loadBarBg.getX());
+		loadBar.setWidth(LOAD_BAR_MAX_WIDTH);
 		addActor(loadBar);
 
 		// Progress label
@@ -94,7 +95,12 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		progressLabel.setText(String.format(progressLabelText, (int) Math.floor(percent * 100)));
 		centerProgressLabel();
 
-		loadBar.setWidth(percent * LOAD_BAR_MAX_WIDTH);
+		// The width scaling is applied from the middle, resulting in non-transparent parts of the
+		// loading bar overlapping the loading bar background. The below is an attempt to counter that.
+		float xPercent = 1 - Math.min((float) (percent / 0.5), 1);
+		loadBar.setX(loadBarBg.getX() + 4 * xPercent);
+
+		loadBar.setScaleX(percent);
 		loadBar.invalidate();
 
 	}
@@ -107,7 +113,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 			progressLabel.setText(onFinishedLabelText);
 			centerProgressLabel();
 
-			loadBar.setWidth(LOAD_BAR_MAX_WIDTH);
+			loadBar.setScaleX(1);
 			loadBar.invalidate();
 		}
 	}
