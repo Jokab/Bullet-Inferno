@@ -27,7 +27,7 @@ For users of Android touch devices at ages eight and up who are looking for acce
 See the [Developer Documentation] page on our Wiki.
 
 ## User manual
-See the [User Manual](https://github.com/Jokab/Bullet-Inferno/blob/development/USER_MANUAL.md).
+See the [User Manual](https://github.com/Jokab/Bullet-Inferno/wiki/User-Manual).
 
 ## Authors
 * [Sebastian Blomberg](https://github.com/sebbe33)
