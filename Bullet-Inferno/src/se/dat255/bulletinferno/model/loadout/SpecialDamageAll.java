@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.loadout;
 
+import se.dat255.bulletinferno.controller.Graphics;
 import se.dat255.bulletinferno.model.entity.Destructible;
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EntityEnvironment;
@@ -30,8 +31,13 @@ public class SpecialDamageAll implements SpecialEffect {
 	 */
 	@Override
 	public void activate(PlayerShip playerShip) {
+		float minX = playerShip.getPosition().x - playerShip.getDimensions().x;
+		float maxX = playerShip.getPosition().x + playerShip.getDimensions().x
+				+ Graphics.GAME_WIDTH;
+
 		for (Enemy enemy : entities.getEnemies()) {
-			if (enemy instanceof Destructible) {
+			if ((minX <= enemy.getPosition().x && enemy.getPosition().x <= maxX) &&
+					enemy instanceof Destructible) {
 				((Destructible) enemy).takeDamage(DAMAGE);
 			}
 		}

@@ -21,6 +21,7 @@ import se.dat255.bulletinferno.model.mock.ScoreMockListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockScoreListener;
 import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.SimplePhysicsMovementPatternMock;
+import se.dat255.bulletinferno.model.mock.SimplePlayerShipMock;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.Weapon;
@@ -60,7 +61,9 @@ public class SpecialAbilityTest {
 	@Test
 	public void testDamageAll() {
 		SpecialEffect damageAll = new SpecialDamageAll(entities);
-		PlayerShip playerShip = entities.getPlayerShip();
+		SimplePlayerShipMock playerShip = new SimplePlayerShipMock();
+		playerShip.position = new Vector2(0, 0);
+		playerShip.dimensions = new Vector2(0, 0);
 
 		SimpleEnemy enemy1 = (SimpleEnemy) EnemyDefinitionImpl.KATZE.createEnemy(
 				physics, entities, entities.weapons,
