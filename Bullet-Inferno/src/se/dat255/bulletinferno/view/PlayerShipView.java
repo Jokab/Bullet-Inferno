@@ -56,7 +56,7 @@ public class PlayerShipView implements Renderable, Timerable {
 		shipSprite.setOrigin(shipSprite.getWidth() / 2, shipSprite.getHeight() / 2);
 
 		explosionSprite = new Sprite(explosion);
-		explosionSprite.setSize((int) (shipDimensions.y * 2), (int) (shipDimensions.y * 2));
+		explosionSprite.setSize((int) (shipDimensions.y * 5), (int) (shipDimensions.y * 5));
 
 		smokeTexture = resourceManager.getTexture(TextureDefinitionImpl.SMOKE_PARTICLE);
 		smokeTexture.getTexture().setFilter(Texture.TextureFilter.Nearest,
@@ -130,7 +130,7 @@ public class PlayerShipView implements Renderable, Timerable {
 			timer.start();
 		}
 		if (explosionSprite != null) {
-			explosionSprite.setPosition(pos.x - 1 / 2, pos.y - shipDimensions.y / 2);
+			explosionSprite.setPosition(pos.x - 1, pos.y - 1);
 			explosionSprite.draw(batch);
 		}
 	}

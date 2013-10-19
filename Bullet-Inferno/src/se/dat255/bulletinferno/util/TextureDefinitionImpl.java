@@ -15,7 +15,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 
 	// Player ship
 	PLAYER_DEFAULT(texture("data/playerShip.png")),
-	PLAYER_EXPLOSION(texture("data/explosion.gif")),
+	PLAYER_EXPLOSION(texture("data/explosion.png")),
 
 	// Weapons
 	STANDARD_MACHINE_GUN(texture("data/machineGun.png")),
