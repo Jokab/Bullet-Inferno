@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class SpecialProjectileRain implements SpecialEffect, Timerable {
 
+	private final SpecialEffectTimerHelper timerHelper;
+
 	private final PhysicsEnvironment physics;
 	private final WeaponEnvironment weapons;
 	private static final int AMOUNT_BULLETS = 20;
@@ -35,26 +37,33 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	 * @param weapons
 	 *        The game's WeaponEnviornment.
 	 */
-	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons) {
+	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons,
+			float reloadTime) {
 		this.physics = physics;
 		this.weapons = weapons;
+
+		this.timerHelper = new SpecialEffectTimerHelperImpl(physics, reloadTime);
 		timer = physics.getTimer();
 		timer.registerListener(this);
 	}
 
 	@Override
 	public void activate(PlayerShip playerShip) {
-		this.playerShip = playerShip;
-		bulletPositions.clear();
-		counter = 0;
-		timer.stop();
-		timer.setTime(0.1f);
-		timer.setContinuous(true);
-		timer.start();
-		for (int i = 1; i <= AMOUNT_BULLETS; i++) {
-			float xPos = playerShip.getPosition().x;
-			float yPos = (Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS * i + 1;
-			bulletPositions.add(new Vector2(xPos, yPos));
+		if (timerHelper.isReady()) {
+			this.playerShip = playerShip;
+			bulletPositions.clear();
+			counter = 0;
+			timer.stop();
+			timer.setTime(0.1f);
+			timer.setContinuous(true);
+			timer.start();
+			for (int i = 1; i <= AMOUNT_BULLETS; i++) {
+				float xPos = playerShip.getPosition().x;
+				float yPos = (Graphics.GAME_HEIGHT - 2) / AMOUNT_BULLETS * i + 1;
+				bulletPositions.add(new Vector2(xPos, yPos));
+			}
+
+			timerHelper.startReloadTimer();
 		}
 	}
 
@@ -66,5 +75,15 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 					bulletPositions.get(index), new Vector2(3, 0), playerShip);
 			counter++;
 		}
+	}
+
+	@Override
+	public boolean isReady() {
+		return timerHelper.isReady();
+	}
+
+	@Override
+	public int getCharges() {
+		return timerHelper.getCharges();
 	}
 }

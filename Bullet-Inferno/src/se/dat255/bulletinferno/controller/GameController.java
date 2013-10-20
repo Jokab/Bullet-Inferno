@@ -6,6 +6,7 @@ import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
+import se.dat255.bulletinferno.model.loadout.SpecialEffect;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.Listener;
@@ -64,7 +65,7 @@ public class GameController extends SimpleController {
 	/** Reference to the main resource manager of the game */
 	private final ResourceManager resourceManager;
 
-	/** Reference to the shared special ability definition */
+	/** Reference to the shared special ability */
 	private SpecialAbilityDefinition special;
 	/** Reference to the shared passive ability definition */
 	private PassiveAbilityDefinition passive;
@@ -104,9 +105,11 @@ public class GameController extends SimpleController {
 			graphics.dispose();
 			graphics = null;
 		}
+		
+		
 
 		// Initialize the HUD
-		final HudView hudView = new HudView(resourceManager);
+		final HudView hudView = new HudView(resourceManager, this);
 
 		// Initialize the graphics controller
 		graphics = new Graphics(hudView);
@@ -143,8 +146,7 @@ public class GameController extends SimpleController {
 		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
 
 		PlayerShip ship = models.getPlayerShip();
-
-		// TODO: Based on user selection
+		
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
 		final SpecialAbility specialAbility = special.getSpecialAbility(models);
 
@@ -163,7 +165,9 @@ public class GameController extends SimpleController {
 		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
 			public void specialAbilityRequested() {
-				specialAbility.getEffect().activate(models.getPlayerShip());
+				SpecialEffect effect = specialAbility.getEffect();
+				effect.activate(models.getPlayerShip());
+				hudView.onSpecialEffect(effect);
 			}
 		});
 
@@ -312,12 +316,11 @@ public class GameController extends SimpleController {
 
 	/** Get method for data set in create new game */
 	public SpecialAbilityDefinition getSpecial() {
-		return special;
+		return this.special;
 	}
-
+	
 	/** Get method for data set in create new game */
 	public PassiveAbilityDefinition getPassive() {
 		return passive;
 	}
-
 }

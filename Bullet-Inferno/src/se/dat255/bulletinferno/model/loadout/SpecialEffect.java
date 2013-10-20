@@ -15,5 +15,18 @@ public interface SpecialEffect {
 	 *        The current player ship.
 	 */
 	public void activate(PlayerShip playerShip);
-
+	
+	/**
+	 * The Special Effect is ready if it has reloaded and has charges.
+	 * 
+	 * @return
+	 */
+	public boolean isReady();
+	
+	/**
+	 * Returns the amount of charges that are left.
+	 * 
+	 * @return The amount of charges.
+	 */
+	public int getCharges();
 }
