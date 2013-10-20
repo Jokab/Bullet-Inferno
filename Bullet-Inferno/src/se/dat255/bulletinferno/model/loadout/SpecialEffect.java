@@ -15,5 +15,7 @@ public interface SpecialEffect {
 	 *        The current player ship.
 	 */
 	public void activate(PlayerShip playerShip);
+	
+	public boolean isReady();
 
 }
