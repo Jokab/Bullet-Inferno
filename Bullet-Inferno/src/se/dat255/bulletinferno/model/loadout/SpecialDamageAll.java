@@ -46,6 +46,7 @@ public class SpecialDamageAll implements SpecialEffect {
 				}
 			}
 			
+			timerHelper.useCharge();
 			timerHelper.startReloadTimer();
 		}
 	}

@@ -63,6 +63,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 				bulletPositions.add(new Vector2(xPos, yPos));
 			}
 
+			timerHelper.useCharge();
 			timerHelper.startReloadTimer();
 		}
 	}

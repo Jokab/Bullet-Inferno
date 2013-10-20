@@ -33,4 +33,9 @@ public interface SpecialEffectTimerHelper {
 	 * @return percentage loaded, between 0 and 1.
 	 */
 	float getReadyPercentage();
+
+	/**
+	 * Reduces the number of charges by one.
+	 */
+	void useCharge();
 }

@@ -36,6 +36,11 @@ public class SpecialEffectTimerHelperImpl implements SpecialEffectTimerHelper {
 	}
 
 	@Override
+	public void useCharge(){
+		charges -= 1;
+	}
+	
+	@Override
 	public void startReloadTimer() {
 		reloadTimer.restart();
 	}

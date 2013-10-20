@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
@@ -24,6 +25,7 @@ import se.dat255.bulletinferno.test.Common;
 
 public class SpecialAbilityTest {
 	
+	@BeforeClass
 	public static void beforeTests() {
 		Common.loadEssentials();
 	}
@@ -88,6 +90,7 @@ public class SpecialAbilityTest {
 		damageAll.activate(playerShip);
 		assertFalse("Ability should not be ready immediately after activation", damageAll.isReady());
 	
+		timer.stop();
 		timer.callAllListeners(0);
 		
 		assertTrue("Ability should be ready after time runs out.", damageAll.isReady());
@@ -105,6 +108,7 @@ public class SpecialAbilityTest {
 		damageAll.activate(playerShip);
 		assertTrue("Ability should have one less charge after activation.", damageAll.getCharges() == 2);
 		
+		timer.stop();
 		timer.callAllListeners(0);
 		
 		assertTrue("Ability should have the default amount of charges (3) when timer runs out", damageAll.getCharges() == 3);
