@@ -67,9 +67,8 @@ public class HudView implements Renderable {
 	 * 
 	 * @param resourceManager
 	 *        The manager that holds the assets
-	 * @param gameController 
 	 */
-	public HudView(ResourceManager resourceManager, GameController gameController) {
+	public HudView(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 		Texture hudTexture = resourceManager.getTexture(TextureDefinitionImpl.HUD_TEXTURE)
 				.getTexture();

@@ -57,7 +57,7 @@ public class GameController extends SimpleController {
 	private final MasterController myGame;
 
 	/** Reference to the background view */
-	static BackgroundView bgView;
+	private BackgroundView bgView;
 
 	private final AudioPlayer audioPlayer;
 
@@ -100,18 +100,22 @@ public class GameController extends SimpleController {
 		this.special = special;
 		this.passive = passive;
 
+		// Clear previous state
 		if (graphics != null) {
 			graphics.dispose();
 			graphics = null;
 		}
 		
-		
+		if (models != null) {
+			models.dispose();
+			models = null;
+		}
 
 		// Initialize the HUD
-		final HudView hudView = new HudView(resourceManager, this);
+		final HudView hudView = new HudView(resourceManager);
 
 		// Initialize the graphics controller
-		graphics = new Graphics(hudView);
+		graphics = new Graphics(this, hudView);
 		graphics.create();
 
 		// Initialize the score listener
@@ -137,45 +141,38 @@ public class GameController extends SimpleController {
 				audioPlayer.playSoundEffect(e);
 			}
 		};
-
-		if (models != null) {
-			models.dispose();
-		}
-
+		
+		// Set up the model environment with the provided weaponData, includes creating the player ship.
 		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
-
-		PlayerShip ship = models.getPlayerShip();
+		final PlayerShip ship = models.getPlayerShip();
 		
-		passive.getPassiveAbility().getEffect().applyEffect(ship);
+		// Set up the special effect on the model environment and link the hudView to it
 		final SpecialEffect specialEffect = special.getSpecialAbility(models).getEffect();
+		hudView.setSpecialEffect(specialEffect);
 		
-		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
-
-		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
-				Graphics.GAME_HEIGHT / 2);
-		graphics.addRenderable(shipView);
-
-		bgView = new BackgroundView(models, resourceManager, ship);
-		// graphics.addRenderable(bgView);
-
-		// Set up input handler
+		// Apply the passive ability to the ship
+		passive.getPassiveAbility().getEffect().applyEffect(ship);
+		
+		// Set up input handler and add listener for the special ability
 		touchController = new GameTouchController(graphics, ship, this, myGame);
-
 		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
 			public void specialAbilityRequested() {
-				specialEffect.activate(models.getPlayerShip());
+				specialEffect.activate(ship);
 			}
 		});
-
+		
+		// Set up the bg view, rendering the segments
+		bgView = new BackgroundView(models, resourceManager, ship);
+		
+		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
+		graphics.addRenderable(shipView);
+		
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
 
 		ProjectileView projectileView = new ProjectileView(models, resourceManager);
 		graphics.addRenderable(projectileView);
-		
-		// Set the special effect used in the current instance of the game
-		hudView.setSpecialEffect(specialEffect);
 	}
 
 	/** The player has died, the game is over */
@@ -305,7 +302,7 @@ public class GameController extends SimpleController {
 	}
 
 	/** Gets the game background view */
-	public static BackgroundView getBgView() {
+	public BackgroundView getBgView() {
 		return bgView;
 	}
 

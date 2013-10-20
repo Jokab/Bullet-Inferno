@@ -44,10 +44,15 @@ public class Graphics {
 
 	/** List of all objects that are to be rendered as HUD elements */
 	private final HudView hudView;
+	
+	/** The game controller instance */
+	private final GameController gameController;
 
-	/** Sets required references */
-	public Graphics(HudView hudView) {
+	/** Sets required references 
+	 * @param gameController */
+	public Graphics(GameController gameController, HudView hudView) {
 		this.hudView = hudView;
+		this.gameController = gameController;
 	}
 
 	/**
@@ -99,7 +104,7 @@ public class Graphics {
 
 		// TODO: Render world without blending
 		worldBatch.begin();
-		GameController.getBgView().render(worldBatch, worldCamera);
+		gameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();
 
 		// Render units that have alpha
