@@ -4,7 +4,6 @@ import se.dat255.bulletinferno.model.ModelEnvironment;
 import se.dat255.bulletinferno.model.ModelEnvironmentImpl;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
-import se.dat255.bulletinferno.model.loadout.SpecialAbility;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialEffect;
 import se.dat255.bulletinferno.model.weapon.WeaponDefinition;
@@ -148,8 +147,8 @@ public class GameController extends SimpleController {
 		PlayerShip ship = models.getPlayerShip();
 		
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
-		final SpecialAbility specialAbility = special.getSpecialAbility(models);
-
+		final SpecialEffect specialEffect = special.getSpecialAbility(models).getEffect();
+		
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 
 		graphics.setNewCameraPos(ship.getPosition().x + Graphics.GAME_WIDTH / 2,
@@ -165,9 +164,7 @@ public class GameController extends SimpleController {
 		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
 			@Override
 			public void specialAbilityRequested() {
-				SpecialEffect effect = specialAbility.getEffect();
-				effect.activate(models.getPlayerShip());
-				hudView.onSpecialEffect(effect);
+				specialEffect.activate(models.getPlayerShip());
 			}
 		});
 
@@ -176,6 +173,9 @@ public class GameController extends SimpleController {
 
 		ProjectileView projectileView = new ProjectileView(models, resourceManager);
 		graphics.addRenderable(projectileView);
+		
+		// Set the special effect used in the current instance of the game
+		hudView.setSpecialEffect(specialEffect);
 	}
 
 	/** The player has died, the game is over */

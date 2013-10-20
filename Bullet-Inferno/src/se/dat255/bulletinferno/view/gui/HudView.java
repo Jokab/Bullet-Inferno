@@ -198,7 +198,7 @@ public class HudView implements Renderable {
 		pauseScreen.dispose(resourceManager);
 	}
 
-	public void onSpecialEffect(SpecialEffect effect) {
+	public void setSpecialEffect(SpecialEffect effect) {
 		specialButton.setSpecialEffect(effect);
 	}
 }
