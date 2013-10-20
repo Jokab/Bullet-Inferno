@@ -66,7 +66,7 @@ public class SpecialAbilityTest {
 
 		boolean passed = true;
 		for (int i = 0; i < enemyHealth.size(); i++) {
-			float expectedHealth = enemyHealth.get(i) - 5;
+			float expectedHealth = enemyHealth.get(i) - 0.5f;
 			float currentHealth = ((SimpleEnemy)entities.getEnemies().get(i)).getHealth();
 			passed = expectedHealth == currentHealth ? true : false;
 		}
