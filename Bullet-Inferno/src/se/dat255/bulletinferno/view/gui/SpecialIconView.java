@@ -1,20 +1,23 @@
 package se.dat255.bulletinferno.view.gui;
 
+import se.dat255.bulletinferno.model.loadout.SpecialEffect;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.view.RenderableGUI;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Displays the pause icon ingame that allows the player to pause the game.
+ * Displays the pause icon in-game that allows the player to pause the game.
  */
 public class SpecialIconView implements RenderableGUI {
 
 	private final TextureRegion textureRegion;
 	private final Vector2 position = new Vector2(6.4f, -4.4f);
 	private final Vector2 size = new Vector2(1.5f, 1.5f);
+	private SpecialEffect specialEffect;
 
 	public SpecialIconView(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
@@ -22,7 +25,13 @@ public class SpecialIconView implements RenderableGUI {
 
 	@Override
 	public void render(SpriteBatch batch) {
+		Color lastColor = batch.getColor();
+		if (specialEffect != null && !specialEffect.isReady()) {
+			batch.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+		}
+		
 		batch.draw(textureRegion, position.x, position.y, size.x, size.y);
+		batch.setColor(lastColor);
 	}
 
 	/** Disposed by HudView */
@@ -44,5 +53,9 @@ public class SpecialIconView implements RenderableGUI {
 	@Override
 	public Vector2 getSize() {
 		return size;
+	}
+
+	public void setSpecialEffect(SpecialEffect effect) {
+		this.specialEffect = effect;
 	}
 }

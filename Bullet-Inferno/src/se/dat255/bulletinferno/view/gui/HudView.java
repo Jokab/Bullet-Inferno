@@ -3,6 +3,8 @@ package se.dat255.bulletinferno.view.gui;
 import java.util.HashSet;
 import java.util.Set;
 
+import se.dat255.bulletinferno.controller.GameController;
+import se.dat255.bulletinferno.model.loadout.SpecialEffect;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 import se.dat255.bulletinferno.view.Renderable;
@@ -58,15 +60,16 @@ public class HudView implements Renderable {
 	private final RenderableGUI pauseScreen, pauseButton;
 
 	/** Button for activating the special ability */
-	private final RenderableGUI specialButton;
+	private final SpecialIconView specialButton;
 
 	/**
 	 * Loads the initial image and sets the regions
 	 * 
 	 * @param resourceManager
 	 *        The manager that holds the assets
+	 * @param gameController 
 	 */
-	public HudView(ResourceManager resourceManager) {
+	public HudView(ResourceManager resourceManager, GameController gameController) {
 		this.resourceManager = resourceManager;
 		Texture hudTexture = resourceManager.getTexture(TextureDefinitionImpl.HUD_TEXTURE)
 				.getTexture();
@@ -188,10 +191,16 @@ public class HudView implements Renderable {
 		for (RenderableGUI gui : hudRegions) {
 			gui.render(batch);
 		}
+		
+		specialButton.render(batch);
 	}
 
 	@Override
 	public void dispose() {
 		pauseScreen.dispose(resourceManager);
+	}
+
+	public void onSpecialEffect(SpecialEffect effect) {
+		specialButton.setSpecialEffect(effect);
 	}
 }
