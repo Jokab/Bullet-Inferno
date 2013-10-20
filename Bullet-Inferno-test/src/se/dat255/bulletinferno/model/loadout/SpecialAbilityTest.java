@@ -1,5 +1,6 @@
 package se.dat255.bulletinferno.model.loadout;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import se.dat255.bulletinferno.model.physics.PhysicsBodyDefinitionImpl;
 import se.dat255.bulletinferno.model.weapon.Weapon;
 import se.dat255.bulletinferno.test.Common;
 import se.dat255.bulletinferno.util.PhysicsShapeFactory;
+import se.dat255.bulletinferno.util.Timer;
+import se.dat255.bulletinferno.util.Timerable;
 
 public class SpecialAbilityTest {
 	
@@ -50,17 +53,20 @@ public class SpecialAbilityTest {
 	EntityMockEnvironment entities;
 	PhysicsWorldImplSpy physics;
 	WeaponMockEnvironment weapons;
+	private SpecialEffect damageAll;
+	private SimpleMockTimer timer;
 
 	@Before
 	public void initialize() {
-		this.physics = new PhysicsWorldImplSpy(new SimpleMockTimer());
+		this.timer = new SpecialAbilityMockTimer();
+		this.physics = new PhysicsWorldImplSpy(timer);
 		this.weapons = new WeaponMockEnvironment();
 		this.entities = new EntityMockEnvironment(physics, weapons);
 	}
 
 	@Test
 	public void testDamageAll() {
-		SpecialEffect damageAll = new SpecialDamageAll(entities);
+		SpecialEffect damageAll = new SpecialDamageAll(entities, physics, 5);
 		SimplePlayerShipMock playerShip = new SimplePlayerShipMock();
 		playerShip.position = new Vector2(0, 0);
 		playerShip.dimensions = new Vector2(0, 0);
@@ -80,11 +86,50 @@ public class SpecialAbilityTest {
 		}
 		damageAll.activate(playerShip);
 
+		boolean passed = true;
 		for (int i = 0; i < enemyHealth.size(); i++) {
 			float expectedHealth = enemyHealth.get(i) - 5;
 			float currentHealth = ((SimpleEnemy)entities.getEnemies().get(i)).getHealth();
-			assertTrue("The health should be five lower after activation.", expectedHealth == currentHealth);
+			passed = expectedHealth == currentHealth ? true : false;
 		}
+		assertTrue("The health should be five lower after activation.", passed);
+	}
+	
+	@Test
+	public void testReloadTimer() {
+		float testReloadTime = 5;
+		timer.initialValue = testReloadTime;
+		
+		SimplePlayerShipMock playerShip = new SimplePlayerShipMock();
+		playerShip.position = new Vector2(0, 0);
+		playerShip.dimensions = new Vector2(0, 0);
+		
+		damageAll = new SpecialDamageAll(entities, physics, testReloadTime);
+		assertTrue("Ability should be ready on creation.", damageAll.isReady());
+		damageAll.activate(playerShip);
+		assertFalse("Ability should not be ready immediately after activation", damageAll.isReady());
+	
+		timer.callAllListeners(0);
+		
+		assertTrue("Ability should be ready after time runs out.", damageAll.isReady());
+	}
+	
+	@Test
+	public void testCharges() {
+		SimplePlayerShipMock playerShip = new SimplePlayerShipMock();
+		playerShip.position = new Vector2(0, 0);
+		playerShip.dimensions = new Vector2(0, 0);
+		
+		damageAll = new SpecialDamageAll(entities, physics, 5);
+		assertTrue("Ability should have the default amount of charges (3) on creation.", damageAll.getCharges() == 3);
+		damageAll.activate(playerShip);
+		assertTrue("Ability should have one less charge after activation.", damageAll.getCharges() == 2);
+		
+		timer.callAllListeners(0);
+		
+		assertTrue("Ability should have the default amount of charges (3) when timer runs out", damageAll.getCharges() == 3);
 	}
 
+	class SpecialAbilityMockTimer extends SimpleMockTimer {
+	}
 }

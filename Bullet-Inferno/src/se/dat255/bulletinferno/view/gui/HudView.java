@@ -191,8 +191,6 @@ public class HudView implements Renderable {
 		for (RenderableGUI gui : hudRegions) {
 			gui.render(batch);
 		}
-		
-		specialButton.render(batch);
 	}
 
 	@Override

@@ -81,4 +81,9 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public boolean isReady() {
 		return timerHelper.isReady();
 	}
+
+	@Override
+	public int getCharges() {
+		return timerHelper.getCharges();
+	}
 }

@@ -20,4 +20,11 @@ public interface SpecialEffectTimerHelper {
 	 * @return
 	 */
 	public boolean isReady();
+	
+	/**
+	 * Returns the amount of charges that are left.
+	 * 
+	 * @return The amount of charges.
+	 */
+	public int getCharges();
 }
