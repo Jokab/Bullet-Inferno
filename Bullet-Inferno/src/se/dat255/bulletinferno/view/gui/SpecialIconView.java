@@ -19,6 +19,8 @@ public class SpecialIconView implements RenderableGUI {
 	private final Vector2 position = new Vector2(6.4f, -4.4f);
 	private final Vector2 size = new Vector2(1.5f, 1.5f);
 	private SpecialEffect specialEffect;
+	
+	private static final Color inactiveColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
 	
 	public SpecialIconView(TextureRegion textureRegion) {
@@ -34,14 +36,19 @@ public class SpecialIconView implements RenderableGUI {
 			
 			// Draw a faded background
 			Color lastColor = batch.getColor();
-			batch.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+			batch.setColor(inactiveColor);
 			batch.draw(textureRegion, position.x, position.y, size.x, size.y);
-			batch.setColor(lastColor);
 			
-			// Draw a cropped "active" texture above
+			// Draw a cropped "slightly inactive" texture above
+			Color slightlyInactive = lastColor.cpy();
+			slightlyInactive.a = 0.7f;
+			batch.setColor(slightlyInactive);
 			int textureWidth = textureRegion.getRegionWidth();
 			textureRegionLoading.setRegionWidth((int) (textureWidth * readyPercent));
 			batch.draw(textureRegionLoading, position.x, position.y, size.x * readyPercent, size.y);
+			
+			// Reset the color
+			batch.setColor(lastColor);
 		} else {
 			batch.draw(textureRegion, position.x, position.y, size.x, size.y);
 		}
