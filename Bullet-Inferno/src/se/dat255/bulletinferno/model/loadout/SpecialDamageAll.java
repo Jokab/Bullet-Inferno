@@ -8,13 +8,13 @@ import se.dat255.bulletinferno.model.entity.PlayerShip;
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 
 /**
- * A special effect that slightly damage all enemies on the screen
+ * A special effect that slightly damages all enemies on the screen.
  */
 public class SpecialDamageAll implements SpecialEffect {
 
 	private final SpecialEffectTimerHelper timerHelper;
 	private final EntityEnvironment entities;
-	private static final float DAMAGE = 5;
+	private static final float DAMAGE = 0.5f;
 
 	/**
 	 * Constructs a SpecialEffet which will deal damage to all enemies

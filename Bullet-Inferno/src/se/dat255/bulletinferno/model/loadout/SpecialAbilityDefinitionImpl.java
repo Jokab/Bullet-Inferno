@@ -10,14 +10,14 @@ public enum SpecialAbilityDefinitionImpl implements SpecialAbilityDefinition {
 	LOADOUT_SPECIAL_NUKE(new SpecialInitializer() {
 		@Override
 		public SpecialAbility initialize(ModelEnvironment game) {
-			return new SpecialAbilityImpl(new SpecialDamageAll(game.getEntityEnvironment(), game.getPhysicsEnvironment(), 5));
+			return new SpecialAbilityImpl(new SpecialDamageAll(game.getEntityEnvironment(), game.getPhysicsEnvironment(), 10));
 		}
 	}),
 	LOADOUT_SPECIAL_PROJECTILE_RAIN(new SpecialInitializer() {
 		@Override
 		public SpecialAbility initialize(ModelEnvironment game) {
 			return new SpecialAbilityImpl(new SpecialProjectileRain(game.getPhysicsEnvironment(),
-					game.getWeaponEnvironment(), 5));
+					game.getWeaponEnvironment(), 10));
 		}
 	});
 

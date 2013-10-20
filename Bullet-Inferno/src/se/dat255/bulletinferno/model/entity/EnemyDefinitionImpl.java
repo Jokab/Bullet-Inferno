@@ -20,6 +20,10 @@ import com.badlogic.gdx.math.Vector2;
  */
 public enum EnemyDefinitionImpl implements EnemyDefinition {
 
+	/**
+	 * order:
+	 * velocity, initialHealth, weaponsData, score, credits, bodyDefinition, pattern
+	 */
 	KATZE(new Vector2(-1, 0), 0.75f,
 			new WeaponPlacement[] { new WeaponPlacementImpl(WeaponDefinitionImpl.KATZE_GUN, -1f,
 					0.25f) }, 10,
