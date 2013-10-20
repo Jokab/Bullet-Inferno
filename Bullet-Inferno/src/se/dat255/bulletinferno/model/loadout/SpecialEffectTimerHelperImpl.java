@@ -6,7 +6,7 @@ import se.dat255.bulletinferno.util.Timerable;
 
 public class SpecialEffectTimerHelperImpl implements SpecialEffectTimerHelper {
 
-	private static final float DEFAULT_CHARGE_TIME = 15;
+	private static final float DEFAULT_CHARGE_TIME = 28;
 	private static final int DEFAULT_MAX_CHARGE_AMOUNT = 3;
 	private final Timer chargeTimer;
 	private int charges;
