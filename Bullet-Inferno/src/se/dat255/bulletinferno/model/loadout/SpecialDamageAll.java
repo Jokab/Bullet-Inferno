@@ -54,6 +54,11 @@ public class SpecialDamageAll implements SpecialEffect {
 	public boolean isReady() {
 		return timerHelper.isReady();
 	}
+	
+	@Override
+	public float getReadyPercentage() {
+		return timerHelper.getReadyPercentage();
+	}
 
 	@Override
 	public int getCharges() {

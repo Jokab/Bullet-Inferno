@@ -27,4 +27,10 @@ public interface SpecialEffectTimerHelper {
 	 * @return The amount of charges.
 	 */
 	public int getCharges();
+
+	/**
+	 * Returns the percentage of loading done between 0 and 1, where 1 means the ability is ready.
+	 * @return percentage loaded, between 0 and 1.
+	 */
+	float getReadyPercentage();
 }

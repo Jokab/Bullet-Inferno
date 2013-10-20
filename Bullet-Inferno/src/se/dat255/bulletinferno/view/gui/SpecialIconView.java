@@ -15,23 +15,36 @@ import com.badlogic.gdx.math.Vector2;
 public class SpecialIconView implements RenderableGUI {
 
 	private final TextureRegion textureRegion;
+	private final TextureRegion textureRegionLoading;
 	private final Vector2 position = new Vector2(6.4f, -4.4f);
 	private final Vector2 size = new Vector2(1.5f, 1.5f);
 	private SpecialEffect specialEffect;
 
+	
 	public SpecialIconView(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
+		this.textureRegionLoading = new TextureRegion(textureRegion);
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		Color lastColor = batch.getColor();
-		if (specialEffect != null && !specialEffect.isReady()) {
-			batch.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
-		}
 		
-		batch.draw(textureRegion, position.x, position.y, size.x, size.y);
-		batch.setColor(lastColor);
+		if (specialEffect != null && !specialEffect.isReady()) {
+			float readyPercent = Math.round(specialEffect.getReadyPercentage() * 1000)/1000f;
+			
+			// Draw a faded background
+			Color lastColor = batch.getColor();
+			batch.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+			batch.draw(textureRegion, position.x, position.y, size.x, size.y);
+			batch.setColor(lastColor);
+			
+			// Draw a cropped "active" texture above
+			int textureWidth = textureRegion.getRegionWidth();
+			textureRegionLoading.setRegionWidth((int) (textureWidth * readyPercent));
+			batch.draw(textureRegionLoading, position.x, position.y, size.x * readyPercent, size.y);
+		} else {
+			batch.draw(textureRegion, position.x, position.y, size.x, size.y);
+		}
 	}
 
 	/** Disposed by HudView */
