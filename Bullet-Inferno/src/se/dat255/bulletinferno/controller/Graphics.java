@@ -79,6 +79,7 @@ public class Graphics {
 	public void resize(float w, float h) {
 		float width = w / h * GAME_HEIGHT;
 		worldCamera.setToOrtho(false, width, GAME_HEIGHT);
+		worldCamera.update(true);
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class Graphics {
 
 		// Update the camera position
 		worldCamera.position.set(nextCameraPos.x, nextCameraPos.y, 0);
-		worldCamera.update();
+		worldCamera.update(true);
 		worldBatch.setProjectionMatrix(worldCamera.combined);
 
 		// Clear the screen every frame
@@ -159,6 +160,10 @@ public class Graphics {
 
 	/** Sets the next camera position */
 	public void setNewCameraPos(float x, float y) {
+		// Have to adjust the positions from relative to the virtual GAME_WIDTH/GAME_HEIGHT
+		// to relative to the actual viewport width/height
+		x = (x - GAME_WIDTH/2) + worldCamera.viewportWidth/2;
+		y = (y - GAME_HEIGHT/2) + worldCamera.viewportHeight/2;
 		nextCameraPos.set(x, y);
 	}
 

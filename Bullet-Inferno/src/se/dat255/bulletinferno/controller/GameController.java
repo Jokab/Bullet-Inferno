@@ -291,7 +291,7 @@ public class GameController extends SimpleController {
 		graphics.screenToWorld(viewportPosition);
 		viewportDimensions = new Vector2(width, 0);
 		graphics.screenToWorld(viewportDimensions);
-
+		
 		// ...adjust dimensions to bottom left corner...
 		viewportDimensions.sub(viewportPosition);
 
