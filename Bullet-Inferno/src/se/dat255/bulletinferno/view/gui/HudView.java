@@ -61,6 +61,12 @@ public class HudView implements Renderable {
 
 	/** Button for activating the special ability */
 	private final SpecialIconView specialButton;
+	
+	/** The margin between the score and top-of-screen. */
+	private static final float SCORE_MARGIN_TOP = 0.15f;
+	
+	/** The margin between the score and the left edge of the screen. */
+	private static final float SCORE_MARGIN_LEFT = 0.15f;
 
 	/**
 	 * Loads the initial image and sets the regions
@@ -82,7 +88,7 @@ public class HudView implements Renderable {
 		};
 		numberRegions = new TextureRegion[] {
 				new TextureRegion(hudTexture, 13, 90, 30, 65), // 0
-				new TextureRegion(hudTexture, 60, 90, 20, 65), // 1
+				new TextureRegion(hudTexture, 60-4, 90, 20, 65), // 1
 				new TextureRegion(hudTexture, 92, 90, 30, 65), // 2
 				new TextureRegion(hudTexture, 139, 90, 30, 65), // 3
 				new TextureRegion(hudTexture, 184, 90, 30, 65), // 4
@@ -183,9 +189,14 @@ public class HudView implements Renderable {
 			batch.draw(lifeRegion, -1.5f, 4f, lifeWidth, 0.5f);
 		}
 
+		Color defaultColor = batch.getColor();
+		batch.setColor(new Color(0, 0, 0, 0.7f));
 		for (int i = 10 - activeScoreNumbers, j = 0; i < 10; i++, j++) {
-			batch.draw(numberRegions[scoreArray[i]], j * 0.4f - 8, 4f, 0.5f, 0.5f);
+			batch.draw(numberRegions[scoreArray[i]],
+					(SCORE_MARGIN_LEFT + j * 0.55f - 8), (-SCORE_MARGIN_TOP + 4f),
+					0.5f, 0.5f);
 		}
+		batch.setColor(defaultColor);
 
 		for (RenderableGUI gui : hudRegions) {
 			gui.render(batch);
