@@ -2,6 +2,7 @@ package se.dat255.bulletinferno.view.menu;
 
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.util.ResourceManager;
+import se.dat255.bulletinferno.util.TextureDefinitionImpl;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -32,7 +33,8 @@ public class PassiveButton extends CustomizedButton {
 					Color.LIGHT_GRAY);
 		} else {
 			button.getStyle().up = new TextureRegionDrawable(new TextureRegion(
-					resourceManager.getTexture(ability)));
+					resourceManager.getTexture(
+							TextureDefinitionImpl.valueOf(ability + "_BUTTON"))));
 		}
 	}
 

@@ -63,14 +63,20 @@ public class PassiveButtonsView {
 
 	private void showTable() {
 		table.clear();
+		table.padTop(60);
 		for (PassiveButton button : passiveButtons) {
-			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
+			table.add(button.getButton())
+				.padTop(30)
+				.height(150)
+				.width(150)
+				.row();
 		}
 		label.setDrawable(labelSource);
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
-		TextureRegion texture = resourceManager.getTexture(identifier);
+		TextureRegion texture = resourceManager.getTexture(
+				TextureDefinitionImpl.valueOf(identifier + "_BUTTON"));
 		ButtonStyle buttonStyle = new ButtonStyle();
 		buttonStyle.up = new TextureRegionDrawable(texture);
 
@@ -86,7 +92,7 @@ public class PassiveButtonsView {
 	}
 
 	private void setSelectionToSelected(PassiveButton pButton) {
-		ButtonStyle style = pButton.getButton().getStyle();
+		ButtonStyle style = new ButtonStyle(pButton.getButton().getStyle());
 		selectionButton.setData(pButton.getData());
 
 		style.up = new TextureRegionDrawable(resourceManager.getTexture(
