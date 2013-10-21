@@ -82,7 +82,7 @@ public class BackgroundView implements Renderable {
 		refreshSegmentViews();
 
 		batch.disableBlending();
-		batch.draw(texture, ship.getPosition().x - ship.getDimensions().x / 2, 0, 16, 9);
+		batch.draw(texture, viewport.position.x - viewport.viewportWidth/2, 0, viewport.viewportWidth, viewport.viewportHeight);
 		batch.enableBlending();
 
 		float shipLeftX = ship.getPosition().x;
