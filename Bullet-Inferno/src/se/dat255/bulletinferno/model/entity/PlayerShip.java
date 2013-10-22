@@ -12,7 +12,6 @@ public interface PlayerShip extends Ship, ResourceIdentifier {
 	 */
 	public void fireWeapon();
 
-	// TODO: javadoc this in some good way
 
 	/**
 	 * Makes the PlayerShip move the specified distance on the y-axis

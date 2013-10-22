@@ -33,7 +33,6 @@ public class SegmentView implements Renderable {
 		this.slices = new SliceView[length];
 		int i = 0; // TODO : Fix iteration
 		for (Slice slice : slices) {
-			// TODO: Determine where on Texture the slice image is
 			TextureRegion textureRegion = resourceManager.getTexture(slice);
 
 			SliceView sliceView = new SliceView(slice, textureRegion);
