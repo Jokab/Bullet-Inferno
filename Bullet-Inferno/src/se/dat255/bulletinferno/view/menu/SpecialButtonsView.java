@@ -35,7 +35,7 @@ public class SpecialButtonsView {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
-		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+		labelSource = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_SPECIAL_ABILITIES));
 		this.resourceManager = resourceManager;
 	}

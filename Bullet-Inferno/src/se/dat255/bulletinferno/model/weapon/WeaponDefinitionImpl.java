@@ -17,7 +17,8 @@ public enum WeaponDefinitionImpl implements WeaponDefinition {
 	 * reloadTime, projectile, offset, projectileVelocity
 	 */
 
-	STANDARD_MACHINE_GUN(0.17f, ProjectileDefinitionImpl.VELOCITY_BULLET, 16f, new Vector2(0.8f, 0.4f)),
+	STANDARD_MACHINE_GUN(0.17f, ProjectileDefinitionImpl.VELOCITY_BULLET, 16f, new Vector2(0.8f,
+			0.4f)),
 	STANDARD_MINI_GUN(0.07f, ProjectileDefinitionImpl.ROUND_BULLET, 12f, new Vector2(0.8f, 0.6f)),
 	STANDARD_PLASMA_GUN(0.25f, ProjectileDefinitionImpl.PLASMA, 10f, new Vector2(0.8f, 0.5f)),
 

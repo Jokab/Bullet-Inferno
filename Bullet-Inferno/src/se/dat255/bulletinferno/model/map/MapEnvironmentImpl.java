@@ -13,6 +13,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.Listener;
+
 import com.badlogic.gdx.math.Vector2;
 
 /**

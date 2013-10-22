@@ -70,18 +70,18 @@ public class LoadoutController extends SimpleController {
 			final ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 		this.masterController = masterController;
-		
+
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		skin = new Skin();
 
 		setupBackground(resourceManager);
-		
+
 		// Generate a 1x1 white texture and store it in the skin named "white".
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		pixmap.setColor(Color.GRAY);
 		pixmap.fill();
 		skin.add("white", new Texture(pixmap));
-		
+
 		BitmapFont font = new BitmapFont();
 		font.scale(0.8f);
 		LabelStyle labelStyle = new LabelStyle(font, Color.BLACK);
@@ -91,7 +91,7 @@ public class LoadoutController extends SimpleController {
 		weaponButtonsView = new WeaponButtonsView(stage, skin, table, tableLabel, resourceManager);
 		specialButtonsView = new SpecialButtonsView(stage, skin, table, tableLabel, resourceManager);
 		passiveButtonsView = new PassiveButtonsView(stage, skin, table, tableLabel, resourceManager);
-		
+
 		// Set up the start button and add its listener
 		setupStartButton();
 
@@ -112,10 +112,11 @@ public class LoadoutController extends SimpleController {
 
 	private void setupBackground(final ResourceManager resourceManager) {
 		// Add background image
-		Image image = new Image(resourceManager.getTexture(TextureDefinitionImpl.LOADOUT_BACKGROUND));
+		Image image = new Image(
+				resourceManager.getTexture(TextureDefinitionImpl.LOADOUT_BACKGROUND));
 		image.setSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		stage.addActor(image);
-		
+
 		// Add ship
 		image = new Image(resourceManager.getTexture(TextureDefinitionImpl.LOADOUT_SHIP));
 		image.setSize(388, 200);
@@ -157,7 +158,7 @@ public class LoadoutController extends SimpleController {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Table.drawDebug(stage);
-		
+
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
 	}

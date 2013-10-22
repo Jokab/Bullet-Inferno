@@ -20,7 +20,7 @@ public interface SpecialEffectTimerHelper {
 	 * @return
 	 */
 	public boolean isReady();
-	
+
 	/**
 	 * Returns the amount of charges that are left.
 	 * 
@@ -30,6 +30,7 @@ public interface SpecialEffectTimerHelper {
 
 	/**
 	 * Returns the percentage of loading done between 0 and 1, where 1 means the ability is ready.
+	 * 
 	 * @return percentage loaded, between 0 and 1.
 	 */
 	float getReadyPercentage();

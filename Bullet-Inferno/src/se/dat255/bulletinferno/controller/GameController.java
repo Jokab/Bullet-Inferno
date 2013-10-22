@@ -70,7 +70,7 @@ public class GameController extends SimpleController {
 	private PassiveAbilityDefinition passive;
 	/** Reference to the shared score listener which handles the score of the game */
 	private SimpleScoreListener scoreListener;
-	
+
 	/** Holds the players last position, in order to check if the player has moved */
 	private float lastPlayerPositionX;
 
@@ -105,7 +105,7 @@ public class GameController extends SimpleController {
 			graphics.dispose();
 			graphics = null;
 		}
-		
+
 		if (models != null) {
 			models.dispose();
 			models = null;
@@ -141,18 +141,19 @@ public class GameController extends SimpleController {
 				audioPlayer.playSoundEffect(e);
 			}
 		};
-		
-		// Set up the model environment with the provided weaponData, includes creating the player ship.
+
+		// Set up the model environment with the provided weaponData, includes creating the player
+		// ship.
 		models = new ModelEnvironmentImpl(weaponData, scoreListener, healthListener, actionListener);
 		final PlayerShip ship = models.getPlayerShip();
-		
+
 		// Set up the special effect on the model environment and link the hudView to it
 		final SpecialEffect specialEffect = special.getSpecialAbility(models).getEffect();
 		hudView.setSpecialEffect(specialEffect);
-		
+
 		// Apply the passive ability to the ship
 		passive.getPassiveAbility().getEffect().applyEffect(ship);
-		
+
 		// Set up input handler and add listener for the special ability
 		touchController = new GameTouchController(graphics, ship, this, myGame);
 		touchController.addSpecialAbilityListener(new GameTouchController.SpecialAbilityListener() {
@@ -161,13 +162,13 @@ public class GameController extends SimpleController {
 				specialEffect.activate(ship);
 			}
 		});
-		
+
 		// Set up the bg view, rendering the segments
 		bgView = new BackgroundView(models, resourceManager, ship);
-		
+
 		PlayerShipView shipView = new PlayerShipView(ship, resourceManager);
 		graphics.addRenderable(shipView);
-		
+
 		EnemyView enemyView = new EnemyView(models, resourceManager);
 		graphics.addRenderable(enemyView);
 
@@ -274,7 +275,7 @@ public class GameController extends SimpleController {
 			models.update(delta);
 
 			Vector2 playerPosition = models.getPlayerShip().getPosition();
-			if(lastPlayerPositionX != playerPosition.x){
+			if (lastPlayerPositionX != playerPosition.x) {
 				scoreListener.update(delta);
 			}
 			lastPlayerPositionX = playerPosition.x;
@@ -291,7 +292,7 @@ public class GameController extends SimpleController {
 		graphics.screenToWorld(viewportPosition);
 		viewportDimensions = new Vector2(width, 0);
 		graphics.screenToWorld(viewportDimensions);
-		
+
 		// ...adjust dimensions to bottom left corner...
 		viewportDimensions.sub(viewportPosition);
 
@@ -313,9 +314,9 @@ public class GameController extends SimpleController {
 
 	/** Get method for data set in create new game */
 	public SpecialAbilityDefinition getSpecial() {
-		return this.special;
+		return special;
 	}
-	
+
 	/** Get method for data set in create new game */
 	public PassiveAbilityDefinition getPassive() {
 		return passive;

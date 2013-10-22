@@ -23,7 +23,7 @@ public class AutomaticWeaponImpl extends WeaponImpl {
 		if (getReloadingTime() == 0) {
 			throw new RuntimeException("Enemy reloading speed must not be 0.");
 		}
-		
+
 		getTimer().setContinuous(true);
 		getTimer().start();
 	}

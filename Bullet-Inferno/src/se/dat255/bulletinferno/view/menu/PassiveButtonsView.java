@@ -29,12 +29,12 @@ public class PassiveButtonsView {
 	private final Table table;
 	private final Image label;
 	private final TextureRegionDrawable labelSource;
-	
+
 	public PassiveButtonsView(Stage stage, Skin skin, Table table, Image label,
 			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
-		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+		labelSource = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_PASSIVE_ABILITIES));
 		this.label = label;
 		this.resourceManager = resourceManager;
@@ -66,10 +66,10 @@ public class PassiveButtonsView {
 		table.padTop(60);
 		for (PassiveButton button : passiveButtons) {
 			table.add(button.getButton())
-				.padTop(30)
-				.height(150)
-				.width(150)
-				.row();
+					.padTop(30)
+					.height(150)
+					.width(150)
+					.row();
 		}
 		label.setDrawable(labelSource);
 	}

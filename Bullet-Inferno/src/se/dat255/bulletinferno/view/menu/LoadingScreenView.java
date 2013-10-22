@@ -96,7 +96,8 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		centerProgressLabel();
 
 		// The width scaling is applied from the middle, resulting in non-transparent parts of the
-		// loading bar overlapping the loading bar background. The below is an attempt to counter that.
+		// loading bar overlapping the loading bar background. The below is an attempt to counter
+		// that.
 		float xPercent = 1 - Math.min((float) (percent / 0.5), 1);
 		loadBar.setX(loadBarBg.getX() + 4 * xPercent);
 

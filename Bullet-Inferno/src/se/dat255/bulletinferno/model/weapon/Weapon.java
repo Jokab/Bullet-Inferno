@@ -6,7 +6,7 @@ import se.dat255.bulletinferno.util.Timer;
 import com.badlogic.gdx.math.Vector2;
 
 public interface Weapon {
-	
+
 	/**
 	 * Returns the <strong>constant</strong> reloading time in milliseconds
 	 * 
@@ -69,7 +69,8 @@ public interface Weapon {
 	/**
 	 * Sets the reloading time.
 	 * 
-	 * @param reloadingTime The reloading time to be set.
+	 * @param reloadingTime
+	 *        The reloading time to be set.
 	 */
 	public void setReloadingTime(float reloadingTime);
 
@@ -97,7 +98,8 @@ public interface Weapon {
 	/**
 	 * Sets this weapon's offset (for placing it in the world relative to the player ship).
 	 * 
-	 * @param offset Sets the weapon's offset.
+	 * @param offset
+	 *        Sets the weapon's offset.
 	 */
 	public void setOffset(Vector2 offset);
 

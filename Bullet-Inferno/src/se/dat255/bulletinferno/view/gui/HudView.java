@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view.gui;
 import java.util.HashSet;
 import java.util.Set;
 
-import se.dat255.bulletinferno.controller.GameController;
 import se.dat255.bulletinferno.model.loadout.SpecialEffect;
 import se.dat255.bulletinferno.util.ResourceManager;
 import se.dat255.bulletinferno.util.TextureDefinitionImpl;
