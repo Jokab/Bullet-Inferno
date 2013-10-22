@@ -44,14 +44,13 @@ public class PassiveButtonsView {
 		PassiveAbilityDefinitionImpl[] arr = PassiveAbilityDefinitionImpl.values();
 		if (passiveButtons.size() == 0) {
 			table.clear();
-			for (int i = 0; i < arr.length; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				PassiveAbilityDefinition ability = arr[i];
-				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
-						resourceManager);
-				passiveButtons.add(passiveButton);
-				passiveButton.getButton().addListener(new TableElementClickedListener());
-			}
+            for (PassiveAbilityDefinitionImpl ability : arr) {
+                // TODO: the line below needs changing to take into account all weapons
+                PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
+                        resourceManager);
+                passiveButtons.add(passiveButton);
+                passiveButton.getButton().addListener(new TableElementClickedListener());
+            }
 
 		}
 		if (selectionButton.getData() == null) {

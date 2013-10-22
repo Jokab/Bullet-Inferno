@@ -36,10 +36,10 @@ public class EvadingMovementPattern implements PhysicsMovementPattern {
 	/** Strategy currently being followed. */
 	private Strategy strategy = Strategy.EVADE;
 
-	/** The lowest Y position (world coordinates) allowd to move to when evading. */
+	/** The lowest Y position (world coordinates) allowed to move to when evading. */
 	private final float evadeYMin;
 
-	/** The highest Y position (world coordinates) allowd to move to when evading. */
+	/** The highest Y position (world coordinates) allowed to move to when evading. */
 	private final float evadeYMax;
 
 	/**

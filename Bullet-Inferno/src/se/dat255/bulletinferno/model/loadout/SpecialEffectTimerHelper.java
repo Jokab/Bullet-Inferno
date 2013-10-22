@@ -17,7 +17,7 @@ public interface SpecialEffectTimerHelper {
 	/**
 	 * The Special Effect is ready if it has reloaded and has charges.
 	 * 
-	 * @return
+	 * @return true if the effect is ready to be used, else false.
 	 */
 	public boolean isReady();
 

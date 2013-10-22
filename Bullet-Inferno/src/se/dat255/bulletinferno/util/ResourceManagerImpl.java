@@ -139,8 +139,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TextureRegion getTexture(ResourceIdentifier resourceIndentifier) {
-		String identifier = resourceIndentifier.getIdentifier();
+	public TextureRegion getTexture(ResourceIdentifier resourceIdentifier) {
+		String identifier = resourceIdentifier.getIdentifier();
 
 		TextureDefinition definition;
 		try {

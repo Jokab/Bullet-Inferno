@@ -28,7 +28,7 @@ public class HudView implements Renderable {
 	/** The minimum value of alpha the health bar should have */
 	private static final float MIN_LIFE_BAR_ALPHA = 0.4f;
 
-	/** Reference to the resourcemanager */
+	/** Reference to the resource manager */
 	private final ResourceManager resourceManager;
 
 	/** The region for life background */
@@ -55,7 +55,7 @@ public class HudView implements Renderable {
 	/** The amount of heat regions to display; 0.0f -> 1.0f */
 	private final float heatValue = 0.5f;
 
-	/** Reference to the paus view for easily showing/hiding them */
+	/** Reference to the pause view for easily showing/hiding them */
 	private final RenderableGUI pauseScreen, pauseButton;
 
 	/** Button for activating the special ability */

@@ -17,7 +17,7 @@ public class SpecialDamageAll implements SpecialEffect {
 	private static final float DAMAGE = 0.5f;
 
 	/**
-	 * Constructs a SpecialEffet which will deal damage to all enemies
+	 * Constructs a SpecialEffect which will deal damage to all enemies
 	 * on screen at the time of activation. The damage dealt is set in the
 	 * field {@link #DAMAGE}.
 	 * 

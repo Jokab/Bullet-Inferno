@@ -19,8 +19,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDefinition {
 
-	/**
-	 * damage, movementpattern, hitbox
+	/*
+	 * damage, movement pattern, hit-box
 	 * 
 	 * null movement pattern implies straight travel
 	 */

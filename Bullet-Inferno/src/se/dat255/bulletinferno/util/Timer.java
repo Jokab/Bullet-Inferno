@@ -88,7 +88,7 @@ public interface Timer {
 	public void unregisterListener(Timerable listener);
 
 	/**
-	 * Checks if the speciefied listener is currently listening to the timer
+	 * Checks if the specified listener is currently listening to the timer
 	 * 
 	 * @param listener
 	 *        the listener to check

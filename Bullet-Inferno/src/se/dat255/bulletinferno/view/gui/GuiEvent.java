@@ -5,7 +5,7 @@ package se.dat255.bulletinferno.view.gui;
  * The controller can then handle the event accordingly
  */
 public enum GuiEvent {
-	/** Handled pausing and unpausing of the game */
+	/** Handled pausing and un-pausing of the game */
 	PAUSE, UNPAUSE,
 	/** Handles the state of the game */
 	GAMEOVER, RESTARTGAME, STOPGAME,

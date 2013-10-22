@@ -169,7 +169,7 @@ public class SmokeTrail implements Renderable {
 	 * Returns the shader program used to apply effects to smoke particles (e.g. distance decay).
 	 */
 	private static ShaderProgram getShaderProgram() {
-		// Skeletton taken by SpriteBatch#createDefaultShader, but modified for custom functionality
+		// Skeleton taken by SpriteBatch#createDefaultShader, but modified for custom functionality
 		final String vertexShader = (""
 				+ "attribute vec4 %POSITION_ATTRIBUTE%;\n"
 				+ "attribute vec2 %TEXCOORD_ATTRIBUTE:0%;\n"

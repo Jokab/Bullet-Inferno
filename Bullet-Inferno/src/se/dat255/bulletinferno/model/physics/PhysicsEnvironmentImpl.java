@@ -180,7 +180,7 @@ public class PhysicsEnvironmentImpl implements PhysicsEnvironment {
 					viewportIntersectionFixtureDef.shape = PhysicsShapeFactory.getRectangularShape(
 							viewportDimensions.x, viewportDimensions.y);
 
-					// Replace the fixture with a resized one, moving the body in between.
+					// Replace the fixture with a re-sized one, moving the body in between.
 					viewportIntersectionBody.destroyFixture(viewportIntersectionFixture);
 					viewportIntersectionBody.setTransform(viewportPosition, 0);
 					viewportIntersectionFixture = viewportIntersectionBody.createFixture(

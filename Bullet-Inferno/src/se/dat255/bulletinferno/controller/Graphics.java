@@ -51,7 +51,7 @@ public class Graphics {
 	/**
 	 * Sets required references
 	 * 
-	 * @param gameController
+	 * @param gameController the game controller instance.
 	 */
 	public Graphics(GameController gameController, HudView hudView) {
 		this.hudView = hudView;

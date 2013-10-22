@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Handles the rendering of a Segment and the
- * Silces it contains
+ * Slices it contains
  */
 public class SegmentView implements Renderable {
 	/** The segment this view handles */

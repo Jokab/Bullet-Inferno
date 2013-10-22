@@ -44,14 +44,13 @@ public class SpecialButtonsView {
 		SpecialAbilityDefinitionImpl[] arr = SpecialAbilityDefinitionImpl.values();
 		if (specialButtons.size() == 0) {
 			table.clear();
-			for (int i = 0; i < arr.length; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				SpecialAbilityDefinition ability = arr[i];
-				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
-						resourceManager);
-				specialButtons.add(specialButton);
-				specialButton.getButton().addListener(new TableElementClickedListener());
-			}
+            for (SpecialAbilityDefinitionImpl ability : arr) {
+                // TODO: the line below needs changing to take into account all weapons
+                SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
+                        resourceManager);
+                specialButtons.add(specialButton);
+                specialButton.getButton().addListener(new TableElementClickedListener());
+            }
 
 		}
 

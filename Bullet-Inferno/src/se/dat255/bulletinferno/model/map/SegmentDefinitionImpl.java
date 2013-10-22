@@ -76,11 +76,11 @@ public enum SegmentDefinitionImpl implements SegmentDefinition {
 	public Segment createSegment(PhysicsEnvironment physics, EntityEnvironment entities,
 			WeaponEnvironment weapons, Vector2 position, int sliceAmount,
 			Listener<Integer> scoreListener) {
-		List<SliceDefinition> sliceDefinitonsPath = getSlices(sliceAmount);
-		List<Slice> slices = new ArrayList<Slice>(sliceDefinitonsPath.size());
+		List<SliceDefinition> sliceDefinitionsPath = getSlices(sliceAmount);
+		List<Slice> slices = new ArrayList<Slice>(sliceDefinitionsPath.size());
 		Vector2 slicePosition = position.cpy();
 		Slice slice;
-		for (SliceDefinition sliceType : sliceDefinitonsPath) {
+		for (SliceDefinition sliceType : sliceDefinitionsPath) {
 			slice = sliceType.createSlice(physics, entities, weapons, slicePosition.cpy(),
 					scoreListener);
 			slices.add(slice);

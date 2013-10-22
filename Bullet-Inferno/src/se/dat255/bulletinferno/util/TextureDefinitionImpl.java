@@ -101,7 +101,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	}
 
 	@Override
-	public String getSrouce() {
+	public String getSource() {
 		return holder.getSource();
 	}
 

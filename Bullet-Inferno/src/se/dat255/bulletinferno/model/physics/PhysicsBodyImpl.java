@@ -117,7 +117,7 @@ public class PhysicsBodyImpl implements PhysicsBody {
 				// a box around the circle, to see if the points are less or greater
 				// then the upper and lower.
 				currentPoint = ((CircleShape) f.getShape()).getPosition();
-				Float radius = ((CircleShape) f.getShape()).getRadius();
+				Float radius = f.getShape().getRadius();
 
 				if (firstPoint) {
 					upperPoint.set(currentPoint);

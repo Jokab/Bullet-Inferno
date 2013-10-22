@@ -24,7 +24,7 @@ public class ResourceManagerImplTest {
 		// Make sure every TextureType has a path
 		for (TextureDefinitionImpl textureType : TextureDefinitionImpl.values()) {
 			assertNotNull("Each TextureType should have a non-null path",
-					textureType.getSrouce());
+					textureType.getSource());
 		}
 	}
 
@@ -50,7 +50,7 @@ public class ResourceManagerImplTest {
 		TextureDefinitionImpl definition = TextureDefinitionImpl.values()[0];
 
 		thrown.expect(RuntimeException.class);
-		thrown.expectMessage("Texture " + definition.getSrouce() + " is not loaded.");
+		thrown.expectMessage("Texture " + definition.getSource() + " is not loaded.");
 
 		ResourceManagerImpl manager = new ResourceManagerImpl();
 

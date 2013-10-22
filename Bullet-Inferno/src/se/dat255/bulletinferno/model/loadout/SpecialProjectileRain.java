@@ -35,7 +35,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	 * @param physics
 	 *        The game's PhysicsEnvironment.
 	 * @param weapons
-	 *        The game's WeaponEnviornment.
+	 *        The game's WeaponEnvironment.
 	 */
 	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			float reloadTime) {

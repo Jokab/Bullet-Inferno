@@ -79,7 +79,7 @@ public class GameController extends SimpleController {
 	 * 
 	 * @param myGame
 	 *        The master controller that creates this controller
-	 * @param resourceManager
+	 * @param resourceManager the resource manager instance.
 	 */
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;
@@ -215,7 +215,7 @@ public class GameController extends SimpleController {
 		}
 	}
 
-	/** Unpauses the game */
+	/** Un-pauses the game */
 	public void unpauseGame() {
 		super.resume();
 		touchController.setSuppressKeyboard(false);
@@ -257,7 +257,7 @@ public class GameController extends SimpleController {
 			gameOver();
 		}
 
-		// Only pause logics, rendering of GUI could still be needed
+		// Only pause logic, rendering of GUI could still be needed
 		if (!isPaused && !gameOver) {
 			// Update models. This should be done after graphics rendering, so that
 			// graphics commands

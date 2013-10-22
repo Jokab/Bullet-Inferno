@@ -14,7 +14,7 @@ public interface TextureDefinition extends Disposable {
 	/**
 	 * @return the source of the texture image.
 	 */
-	public String getSrouce();
+	public String getSource();
 
 	/**
 	 * Loads the source the texture held by this holder,

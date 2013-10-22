@@ -33,7 +33,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			this.weaponPositionModifier = weaponPositionModifier;
 		}
 
-		public Vector2[] getWeaponPosisitionModifier() {
+		public Vector2[] getWeaponPositionModifier() {
 			return weaponPositionModifier;
 		}
 
@@ -81,7 +81,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			Listener<Float> healthListener) {
 		weaponLoadout = loadout;
 		this.shipType = shipType;
-		weaponPositionModifier = shipType.getWeaponPosisitionModifier();
+		weaponPositionModifier = shipType.getWeaponPositionModifier();
 		this.healthListener = healthListener;
 		healthListener.call(health);
 
