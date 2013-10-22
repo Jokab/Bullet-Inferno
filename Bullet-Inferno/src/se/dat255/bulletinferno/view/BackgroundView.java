@@ -90,25 +90,10 @@ public class BackgroundView implements Renderable {
 		float shipRightX = ship.getPosition().x + 16;
 		for (SegmentView segmentView : segmentViews) {
 			float startX = segmentView.segment.getPosition().x;
-			// float endX = startX + segmentView.segment.getWidth();
 			if (shipLeftX <= startX || startX < shipRightX) {
 				segmentView.render(batch, viewport);
-				// batch.draw(s.getEndTexture(), startX, 9, 0, 0, 2, Graphics.GAME_HEIGHT, 1, 1,
-				// 180);
-				// batch.draw(s.getTexture(), startX, 0, 0, 0, (endX-startX-2),
-				// Graphics.GAME_HEIGHT, 1, 1, 0);
-				// batch.draw(s.getEndTexture(), endX-2, 0, 0, 0, 2, Graphics.GAME_HEIGHT, 1, 1, 0);
 			}
-
-			// TODO: Thread-safe removal of segment that has been passed
-
-			/*
-			 * if(s.getEnd()<ship.getPosition().x){
-			 * game.removeSegment(s);
-			 * }
-			 */
 		}
-
 	}
 
 	@Override

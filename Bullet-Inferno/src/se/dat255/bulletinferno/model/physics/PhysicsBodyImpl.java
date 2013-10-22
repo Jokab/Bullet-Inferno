@@ -139,7 +139,6 @@ public class PhysicsBodyImpl implements PhysicsBody {
 				}
 			}
 
-			// TODO implement support for the other two shapes
 		}
 
 		dimensions = upperPoint.add(lowerPoint.scl(-1f));

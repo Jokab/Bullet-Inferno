@@ -97,10 +97,8 @@ public class LoadoutController extends SimpleController {
 
 		setupSelectionButtons();
 
-		// Initially populate a table with a kind of equipment
+		// Populate all the selection button with the top table element for each type
 		weaponButtonsView.populateTable("standard");
-
-		// BELOW IS FOR TESTING ONLY
 		weaponButtonsView.populateTable("heavy");
 		specialButtonsView.populateTable();
 		passiveButtonsView.populateTable();
@@ -264,7 +262,6 @@ public class LoadoutController extends SimpleController {
 		table = new Table();
 
 		// Add table to stage
-		// table.debug();
 		table.setPosition(1080, 450);
 		table.setSize(100, 40);
 		tableLabel = new Image();

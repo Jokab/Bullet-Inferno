@@ -25,9 +25,7 @@ public interface Weapon {
 	/**
 	 * Returns whether the weapon is loaded/ready to fire
 	 * 
-	 * @return loaded // TODO: Debug test add bullet ProjectileImpl projectile =
-	 *         new ProjectileImpl(null); projectile.setPosition(new Vector2(5,
-	 *         7));
+	 * @return loaded
 	 */
 	public boolean isLoaded();
 

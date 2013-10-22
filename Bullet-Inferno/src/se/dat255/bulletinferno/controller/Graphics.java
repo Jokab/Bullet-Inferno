@@ -107,7 +107,6 @@ public class Graphics {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		// TODO: Render world without blending
 		worldBatch.begin();
 		gameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();

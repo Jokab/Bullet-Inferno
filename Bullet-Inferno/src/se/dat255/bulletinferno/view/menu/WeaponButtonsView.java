@@ -194,8 +194,6 @@ public class WeaponButtonsView {
 						wButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected, list);

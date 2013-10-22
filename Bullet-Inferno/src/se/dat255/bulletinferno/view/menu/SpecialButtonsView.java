@@ -44,7 +44,6 @@ public class SpecialButtonsView {
 		if (specialButtons.size() == 0) {
 			table.clear();
 			for (SpecialAbilityDefinitionImpl ability : arr) {
-				// TODO: the line below needs changing to take into account all weapons
 				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
 						resourceManager);
 				specialButtons.add(specialButton);
@@ -118,8 +117,6 @@ public class SpecialButtonsView {
 						sButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected);

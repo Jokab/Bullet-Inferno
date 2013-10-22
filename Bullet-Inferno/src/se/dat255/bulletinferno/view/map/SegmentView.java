@@ -24,20 +24,15 @@ public class SegmentView implements Renderable {
 	/** Creates a new view for the given segment */
 	public SegmentView(ResourceManager resourceManager, Segment segment) {
 		this.segment = segment;
-		// TODO: Not hardcode
-		// Load segment image into texture
-
 		List<? extends Slice> slices = segment.getSlices();
 
 		int length = slices.size();
 		this.slices = new SliceView[length];
-		int i = 0; // TODO : Fix iteration
-		for (Slice slice : slices) {
-			TextureRegion textureRegion = resourceManager.getTexture(slice);
+		for (int i = 0; i < slices.size(); i++) {
+			TextureRegion textureRegion = resourceManager.getTexture(slices.get(i));
 
-			SliceView sliceView = new SliceView(slice, textureRegion);
+			SliceView sliceView = new SliceView(slices.get(i), textureRegion);
 			this.slices[i] = sliceView;
-			i++;
 		}
 	}
 

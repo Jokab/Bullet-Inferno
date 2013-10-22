@@ -43,12 +43,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		}
 	}
 
-	private float takeDamageModifier = 1; // default
+	private float takeDamageModifier = 1;
 	private float health = 1.0f;
 	private final ShipType shipType;
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
-	private final Vector2 forwardSpeed = new Vector2(5, 0); // TODO: Not hardcode?
+	private final Vector2 forwardSpeed = new Vector2(5, 0);
 	private final Vector2[] weaponPositionModifier;
 	private final Listener<Float> healthListener;
 
@@ -142,7 +142,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			if (!isInMyTeam(((Projectile) other).getSource())) {
 				takeDamage(((Projectile) other).getDamage());
 			}
-		} else if (collidedWithNonTeammember(other)) {
+		} else if (collidedWithNonTeamMember(other)) {
 			if (other instanceof Enemy) {
 				takeDamage(0.6f, true);
 			}
@@ -151,7 +151,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		}
 	}
 
-	private boolean collidedWithNonTeammember(Collidable other) {
+	private boolean collidedWithNonTeamMember(Collidable other) {
 		return other instanceof Teamable && !isInMyTeam((Teamable) other);
 	}
 

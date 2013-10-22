@@ -69,7 +69,6 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
-		// TODO: this is quite a messy program flow. you can ask me if it seems messed up (jakob)
 		if (ship.isDead()) {
 			drawExplosion(batch, lastShipPosition);
 		} else {

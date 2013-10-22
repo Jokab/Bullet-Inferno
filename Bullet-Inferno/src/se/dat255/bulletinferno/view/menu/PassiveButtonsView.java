@@ -44,7 +44,6 @@ public class PassiveButtonsView {
 		if (passiveButtons.size() == 0) {
 			table.clear();
 			for (PassiveAbilityDefinitionImpl ability : arr) {
-				// TODO: the line below needs changing to take into account all weapons
 				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
 						resourceManager);
 				passiveButtons.add(passiveButton);
@@ -123,8 +122,6 @@ public class PassiveButtonsView {
 						pButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected);

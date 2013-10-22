@@ -154,8 +154,6 @@ public class ResourceManagerImpl implements ResourceManager {
 		return getTexture(definition);
 	}
 
-	// TODO: Implement loading methods for sound and music
-
 	@Override
 	public boolean loadAsync() {
 		return manager.update();
