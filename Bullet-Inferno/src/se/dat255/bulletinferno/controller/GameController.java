@@ -79,7 +79,8 @@ public class GameController extends SimpleController {
 	 * 
 	 * @param myGame
 	 *        The master controller that creates this controller
-	 * @param resourceManager the resource manager instance.
+	 * @param resourceManager
+	 *        the resource manager instance.
 	 */
 	public GameController(final MasterController myGame, final ResourceManager resourceManager) {
 		this.myGame = myGame;

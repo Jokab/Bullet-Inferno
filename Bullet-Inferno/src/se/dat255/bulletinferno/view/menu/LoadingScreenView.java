@@ -49,7 +49,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	public LoadingScreenView() {
 		// Background
 		screenBgTexture = new Texture(Gdx.files.internal("data/loadingScreenBg.png"));
-        Image screenBg = new Image(screenBgTexture);
+		Image screenBg = new Image(screenBgTexture);
 		screenBg.setFillParent(true);
 		addActor(screenBg);
 

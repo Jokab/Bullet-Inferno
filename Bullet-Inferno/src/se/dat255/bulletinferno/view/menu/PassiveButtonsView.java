@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
@@ -44,13 +43,13 @@ public class PassiveButtonsView {
 		PassiveAbilityDefinitionImpl[] arr = PassiveAbilityDefinitionImpl.values();
 		if (passiveButtons.size() == 0) {
 			table.clear();
-            for (PassiveAbilityDefinitionImpl ability : arr) {
-                // TODO: the line below needs changing to take into account all weapons
-                PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
-                        resourceManager);
-                passiveButtons.add(passiveButton);
-                passiveButton.getButton().addListener(new TableElementClickedListener());
-            }
+			for (PassiveAbilityDefinitionImpl ability : arr) {
+				// TODO: the line below needs changing to take into account all weapons
+				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
+						resourceManager);
+				passiveButtons.add(passiveButton);
+				passiveButton.getButton().addListener(new TableElementClickedListener());
+			}
 
 		}
 		if (selectionButton.getData() == null) {

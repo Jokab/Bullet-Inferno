@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
@@ -44,13 +43,13 @@ public class SpecialButtonsView {
 		SpecialAbilityDefinitionImpl[] arr = SpecialAbilityDefinitionImpl.values();
 		if (specialButtons.size() == 0) {
 			table.clear();
-            for (SpecialAbilityDefinitionImpl ability : arr) {
-                // TODO: the line below needs changing to take into account all weapons
-                SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
-                        resourceManager);
-                specialButtons.add(specialButton);
-                specialButton.getButton().addListener(new TableElementClickedListener());
-            }
+			for (SpecialAbilityDefinitionImpl ability : arr) {
+				// TODO: the line below needs changing to take into account all weapons
+				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
+						resourceManager);
+				specialButtons.add(specialButton);
+				specialButton.getButton().addListener(new TableElementClickedListener());
+			}
 
 		}
 
