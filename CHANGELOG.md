@@ -42,15 +42,17 @@ Release 4 (2013-10-11)
 * Fixed a bug where the bosses did not "move" onto the screen, but instead stopped right outside.
 * Fixed a bug where the player could fire even when he was dead.
 * The app name displayed on android devices is now "Bullet-Inferno", instead of the previous placeholder name.
+* Added obstacles (i.e. immovable objects) to the game.
+* Added a mock loading screen to the game, that is displayed while pre-loading the game's textures.
 * Optimized the settings when starting from an Android device to match the features used by the game.
-* Added score display to the HUD.
+* Added score to the game, and displayed it in the HUD.
 * Added heavy weapons.
 * Made heavy weapons fire on touch and standard weapons auto-fire.
 * Changed the loadout screen to allow the player to change all equipable "things".
 * The ship now has a smoke trail following it.
 * Updated the slice textures.
 * Added a cooldown to the heavy weapons.
-* Added audio effects to the game (currently only for enemy deaths)
+* Added support for audio effects, and added an enemy death sound.
 * Major code changes and optimizations.
 
 Release 3 (2013-10-04)
@@ -68,13 +70,18 @@ Release 3 (2013-10-04)
 
 Release 2 (2013-09-27)
 ----------------------
-* Added basic physics to the game.
+* Added basic physics to the game. This includes collisions between objects in the game.
 * Implemented keyboard movement and smooth movement by touch, mouse and keyboard.
 * Added a first menu screen to the game, loadout.
 * Made projectiles deal damage and remove themselves on hit.
-* Added pause icon and it's view.
+* Made it possible to pause the game, and added a pause-icon and a pause-screen.
 * Added collision code with regards to teams (i.e. enemies might not want to collide with enemies).
 
 Release 1 (2013-09-20)
 ----------------------
-Initial release.
+*Initial version of the application.*
+
+* The app now launches on both desktop and android.
+* The player can move the ship along the y-axis.
+* The player can shot by tapping the screen.
+* Dummy enemies has been added to the game.
