@@ -1,11 +1,11 @@
 package se.dat255.bulletinferno.model.weapon;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.model.physics.PhysicsEnvironment;
 import se.dat255.bulletinferno.model.team.Teamable;
 import se.dat255.bulletinferno.util.Timer;
 import se.dat255.bulletinferno.util.Timerable;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 
@@ -51,7 +51,6 @@ public class CooldownWeaponImpl extends WeaponImpl implements Timerable {
 						position.add(getOffset().cpy().add(new Vector2(getDimensions().x, 0))),
 						direction.scl(projectileSpeed), source);
 			}
-			// System.out.println("Projectiles left: " + (fullAmmo - usedAmmo));
 			firingRateTimer.restart();
 		}
 	}

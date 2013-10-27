@@ -31,7 +31,7 @@ public class GameTouchController implements InputProcessor {
 	/** The keyboard key to shot the heavy weapon */
 	private final int SHOT_KEY = Input.Keys.SPACE;
 	/** The keyboard key to use the special ability */
-	private final int SPECIAL_ABILLITY_KEY = Input.Keys.G;
+	private final int SPECIAL_ABILITY_KEY = Input.Keys.G;
 
 	/** Describes the sense of the point device */
 	private static final float SENSE_SCALE = 1f;
@@ -40,7 +40,7 @@ public class GameTouchController implements InputProcessor {
 	private final List<SpecialAbilityListener> specialAbilityListeners = new LinkedList<GameTouchController.SpecialAbilityListener>();
 
 	/**
-	 * The game camera. This is needed to unproject x/y values to the virtual
+	 * The game camera. This is needed to un-project x/y values to the virtual
 	 * screen size.
 	 */
 	private final Graphics graphics;
@@ -77,7 +77,7 @@ public class GameTouchController implements InputProcessor {
 		if (keycode == SHOT_KEY) {
 			ship.fireWeapon();
 		}
-		if (keycode == SPECIAL_ABILLITY_KEY) {
+		if (keycode == SPECIAL_ABILITY_KEY) {
 			for (SpecialAbilityListener listener : specialAbilityListeners) {
 				listener.specialAbilityRequested();
 			}
@@ -167,7 +167,7 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if (pointer == steeringFinger) {
-			// Unproject the touch location to the virtual screen.
+			// Un-project the touch location to the virtual screen.
 			Vector2 touchVector = new Vector2(screenX, screenY);
 			graphics.screenToWorld(touchVector);
 			if (touchVector.x <= ship.getPosition().x + 8f) {
@@ -181,7 +181,7 @@ public class GameTouchController implements InputProcessor {
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		// Same as touchDragged but for desktop
-		// Unproject the touch location to the virtual screen.
+		// Un-project the touch location to the virtual screen.
 		Vector2 touchVector = new Vector2(screenX, screenY);
 		graphics.screenToWorld(touchVector);
 

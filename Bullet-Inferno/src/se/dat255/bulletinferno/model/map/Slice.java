@@ -2,10 +2,10 @@ package se.dat255.bulletinferno.model.map;
 
 import java.util.List;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.util.Disposable;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
+
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * An interface to define the properties of a slice (i.e. a part)

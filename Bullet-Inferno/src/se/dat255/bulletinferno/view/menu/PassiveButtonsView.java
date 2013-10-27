@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.PassiveAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
@@ -29,12 +28,12 @@ public class PassiveButtonsView {
 	private final Table table;
 	private final Image label;
 	private final TextureRegionDrawable labelSource;
-	
+
 	public PassiveButtonsView(Stage stage, Skin skin, Table table, Image label,
 			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
-		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+		labelSource = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_PASSIVE_ABILITIES));
 		this.label = label;
 		this.resourceManager = resourceManager;
@@ -44,9 +43,7 @@ public class PassiveButtonsView {
 		PassiveAbilityDefinitionImpl[] arr = PassiveAbilityDefinitionImpl.values();
 		if (passiveButtons.size() == 0) {
 			table.clear();
-			for (int i = 0; i < arr.length; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				PassiveAbilityDefinition ability = arr[i];
+			for (PassiveAbilityDefinitionImpl ability : arr) {
 				PassiveButton passiveButton = new PassiveButton(getTableButton(ability), ability,
 						resourceManager);
 				passiveButtons.add(passiveButton);
@@ -63,14 +60,20 @@ public class PassiveButtonsView {
 
 	private void showTable() {
 		table.clear();
+		table.padTop(60);
 		for (PassiveButton button : passiveButtons) {
-			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
+			table.add(button.getButton())
+					.padTop(30)
+					.height(150)
+					.width(150)
+					.row();
 		}
 		label.setDrawable(labelSource);
 	}
 
 	private Button getTableButton(ResourceIdentifier identifier) {
-		TextureRegion texture = resourceManager.getTexture(identifier);
+		TextureRegion texture = resourceManager.getTexture(
+				TextureDefinitionImpl.valueOf(identifier + "_BUTTON"));
 		ButtonStyle buttonStyle = new ButtonStyle();
 		buttonStyle.up = new TextureRegionDrawable(texture);
 
@@ -86,7 +89,7 @@ public class PassiveButtonsView {
 	}
 
 	private void setSelectionToSelected(PassiveButton pButton) {
-		ButtonStyle style = pButton.getButton().getStyle();
+		ButtonStyle style = new ButtonStyle(pButton.getButton().getStyle());
 		selectionButton.setData(pButton.getData());
 
 		style.up = new TextureRegionDrawable(resourceManager.getTexture(
@@ -119,8 +122,6 @@ public class PassiveButtonsView {
 						pButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected);

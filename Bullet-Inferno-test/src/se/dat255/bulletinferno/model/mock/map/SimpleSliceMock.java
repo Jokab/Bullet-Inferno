@@ -3,10 +3,10 @@ package se.dat255.bulletinferno.model.mock.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.model.map.Obstacle;
 import se.dat255.bulletinferno.model.map.Slice;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class SimpleSliceMock implements Slice {
 	public float entryHeight = 1;

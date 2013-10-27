@@ -15,7 +15,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 
 	// Player ship
 	PLAYER_DEFAULT(texture("data/playerShip.png")),
-	PLAYER_EXPLOSION(texture("data/explosion.gif")),
+	PLAYER_EXPLOSION(texture("data/explosion.png")),
 
 	// Weapons
 	STANDARD_MACHINE_GUN(texture("data/machineGun.png")),
@@ -45,6 +45,10 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	LOADOUT_PASSIVE_RELOADING_TIME(texture("data/reloadSpeed.png")),
 	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER(texture("data/shieldBoost.png")),
 	LOADOUT_PASSIVE_DAMAGE_MODIFIER(texture("data/damageBoost.png")),
+	LOADOUT_PASSIVE_RELOADING_TIME_BUTTON(texture("data/loadout/passive_ability/reloadButton.png")),
+	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER_BUTTON(
+			texture("data/loadout/passive_ability/shieldButton.png")),
+	LOADOUT_PASSIVE_DAMAGE_MODIFIER_BUTTON(texture("data/loadout/passive_ability/damageButton.png")),
 	LOADOUT_SPECIAL_PROJECTILE_RAIN(texture("data/projectileRain.png")),
 	LOADOUT_SPECIAL_NUKE(texture("data/nuke.png")),
 	LOADOUT_BACKGROUND(texture("data/menu.png")),
@@ -97,7 +101,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	}
 
 	@Override
-	public String getSrouce() {
+	public String getSource() {
 		return holder.getSource();
 	}
 

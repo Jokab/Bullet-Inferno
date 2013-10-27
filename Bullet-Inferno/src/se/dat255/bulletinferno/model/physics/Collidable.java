@@ -32,7 +32,7 @@ public interface Collidable {
 	 * Useful for setting properties on this object (e.g. set dead flag).
 	 * 
 	 * @param other
-	 *        the object that a collision (might) have occured with.
+	 *        the object that a collision (might) have occurred with.
 	 */
 	public void postCollided(Collidable other);
 

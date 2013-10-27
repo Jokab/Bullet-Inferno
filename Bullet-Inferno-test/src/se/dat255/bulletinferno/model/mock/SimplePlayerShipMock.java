@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class SimplePlayerShipMock implements PlayerShip {
 
+	public Vector2 position;
+	public Vector2 dimensions;
+	
 	@Override
 	public void preCollided(Collidable other) {
 	}
@@ -44,7 +47,7 @@ public class SimplePlayerShipMock implements PlayerShip {
 
 	@Override
 	public Vector2 getPosition() {
-		return null;
+		return position;
 	}
 
 	@Override
@@ -76,6 +79,7 @@ public class SimplePlayerShipMock implements PlayerShip {
 		return false;
 	}
 	
+	@Override
 	public void moveY(float dy) {
 		
 	}
@@ -87,7 +91,7 @@ public class SimplePlayerShipMock implements PlayerShip {
 
 	@Override
 	public Vector2 getDimensions() {
-		return null;
+		return dimensions;
 	}
 
 	@Override

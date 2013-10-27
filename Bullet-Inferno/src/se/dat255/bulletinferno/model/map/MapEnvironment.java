@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Environment for keeping track of anything map-related.
- *
+ * 
  */
 public interface MapEnvironment {
 

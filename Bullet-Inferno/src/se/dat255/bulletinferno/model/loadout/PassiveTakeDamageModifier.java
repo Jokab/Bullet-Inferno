@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.model.loadout;
 import se.dat255.bulletinferno.model.entity.PlayerShip;
 
 public class PassiveTakeDamageModifier implements PassiveEffect {
-	// TODO: bad name
 
 	private final float percent;
 	private static final float DEFAULT_TAKEDAMAGE_MODIFIER = 1;

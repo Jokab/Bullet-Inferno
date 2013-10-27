@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class WeaponButtonsView {
@@ -30,15 +31,18 @@ public class WeaponButtonsView {
 	private final Skin skin;
 	private final Table table;
 	private final Image label;
-	private final TextureRegionDrawable labelSource;
+	private final TextureRegionDrawable heavyWeaponLabel;
+	private final TextureRegionDrawable standardWeaponLabel;
 
 	public WeaponButtonsView(Stage stage, Skin skin, Table table, Image label,
 			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
-		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+		heavyWeaponLabel = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_HEAVYWEAPON));
+		standardWeaponLabel = new TextureRegionDrawable(resourceManager.getTexture(
+				TextureDefinitionImpl.LOADOUT_STANDARD_WEAPON));
 		this.resourceManager = resourceManager;
 	}
 
@@ -75,7 +79,7 @@ public class WeaponButtonsView {
 			setSelectionToClicked(heavyWeapons.get(0), heavySelectionButton);
 		}
 		// Set up the table to add these buttons to
-		showTable(heavyWeapons, "Heavy Weapons");
+		showTable(heavyWeapons, heavyWeaponLabel);
 	}
 
 	private void populateTableWithStandard() {
@@ -102,11 +106,12 @@ public class WeaponButtonsView {
 		if (standardSelectionButton.getData() == null) {
 			setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
 		}
+
 		// Set up the table to add these buttons to
-		showTable(standardWeapons, "Standard Weapons");
+		showTable(standardWeapons, standardWeaponLabel);
 	}
 
-	private void showTable(List<WeaponButton> weaponList, String labelText) {
+	private void showTable(List<WeaponButton> weaponList, Drawable labelSource) {
 		table.clear();
 		for (WeaponButton button : weaponList) {
 			table.add(button.getButton()).padBottom(20).height(95).width(200).row();
@@ -189,8 +194,6 @@ public class WeaponButtonsView {
 						wButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected, list);

@@ -45,9 +45,18 @@ public class Graphics {
 	/** List of all objects that are to be rendered as HUD elements */
 	private final HudView hudView;
 
-	/** Sets required references */
-	public Graphics(HudView hudView) {
+	/** The game controller instance */
+	private final GameController gameController;
+
+	/**
+	 * Sets required references
+	 * 
+	 * @param gameController
+	 *        the game controller instance.
+	 */
+	public Graphics(GameController gameController, HudView hudView) {
 		this.hudView = hudView;
+		this.gameController = gameController;
 	}
 
 	/**
@@ -74,6 +83,7 @@ public class Graphics {
 	public void resize(float w, float h) {
 		float width = w / h * GAME_HEIGHT;
 		worldCamera.setToOrtho(false, width, GAME_HEIGHT);
+		worldCamera.update(true);
 	}
 
 	/**
@@ -90,16 +100,15 @@ public class Graphics {
 
 		// Update the camera position
 		worldCamera.position.set(nextCameraPos.x, nextCameraPos.y, 0);
-		worldCamera.update();
+		worldCamera.update(true);
 		worldBatch.setProjectionMatrix(worldCamera.combined);
 
 		// Clear the screen every frame
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		// TODO: Render world without blending
 		worldBatch.begin();
-		GameController.getBgView().render(worldBatch, worldCamera);
+		gameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();
 
 		// Render units that have alpha
@@ -154,6 +163,10 @@ public class Graphics {
 
 	/** Sets the next camera position */
 	public void setNewCameraPos(float x, float y) {
+		// Have to adjust the positions from relative to the virtual GAME_WIDTH/GAME_HEIGHT
+		// to relative to the actual viewport width/height
+		x = x - GAME_WIDTH / 2 + worldCamera.viewportWidth / 2;
+		y = y - GAME_HEIGHT / 2 + worldCamera.viewportHeight / 2;
 		nextCameraPos.set(x, y);
 	}
 

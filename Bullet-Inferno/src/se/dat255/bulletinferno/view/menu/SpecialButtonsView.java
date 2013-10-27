@@ -3,7 +3,6 @@ package se.dat255.bulletinferno.view.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinition;
 import se.dat255.bulletinferno.model.loadout.SpecialAbilityDefinitionImpl;
 import se.dat255.bulletinferno.util.ResourceIdentifier;
 import se.dat255.bulletinferno.util.ResourceManager;
@@ -35,7 +34,7 @@ public class SpecialButtonsView {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
-		this.labelSource = new TextureRegionDrawable(resourceManager.getTexture(
+		labelSource = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_SPECIAL_ABILITIES));
 		this.resourceManager = resourceManager;
 	}
@@ -44,9 +43,7 @@ public class SpecialButtonsView {
 		SpecialAbilityDefinitionImpl[] arr = SpecialAbilityDefinitionImpl.values();
 		if (specialButtons.size() == 0) {
 			table.clear();
-			for (int i = 0; i < arr.length; i++) {
-				// TODO: the line below needs changing to take into account all weapons
-				SpecialAbilityDefinition ability = arr[i];
+			for (SpecialAbilityDefinitionImpl ability : arr) {
 				SpecialButton specialButton = new SpecialButton(getTableButton(ability), ability,
 						resourceManager);
 				specialButtons.add(specialButton);
@@ -120,8 +117,6 @@ public class SpecialButtonsView {
 						sButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected);

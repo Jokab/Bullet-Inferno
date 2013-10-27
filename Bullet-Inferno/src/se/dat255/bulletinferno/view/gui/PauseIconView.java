@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Displays the pause icon ingame that allows the player to pause the game.
+ * Displays the pause icon in-game that allows the player to pause the game.
  */
 public class PauseIconView implements RenderableGUI {
 

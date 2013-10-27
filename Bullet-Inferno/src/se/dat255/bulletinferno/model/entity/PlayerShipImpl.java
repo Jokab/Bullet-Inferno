@@ -33,7 +33,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			this.weaponPositionModifier = weaponPositionModifier;
 		}
 
-		public Vector2[] getWeaponPosisitionModifier() {
+		public Vector2[] getWeaponPositionModifier() {
 			return weaponPositionModifier;
 		}
 
@@ -43,12 +43,12 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		}
 	}
 
-	private float takeDamageModifier = 1; // default
+	private float takeDamageModifier = 1;
 	private float health = 1.0f;
 	private final ShipType shipType;
 	private final WeaponLoadout weaponLoadout;
 	private PhysicsBody body = null;
-	private final Vector2 forwardSpeed = new Vector2(5, 0); // TODO: Not hardcode?
+	private final Vector2 forwardSpeed = new Vector2(5, 0);
 	private final Vector2[] weaponPositionModifier;
 	private final Listener<Float> healthListener;
 
@@ -81,7 +81,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 			Listener<Float> healthListener) {
 		weaponLoadout = loadout;
 		this.shipType = shipType;
-		weaponPositionModifier = shipType.getWeaponPosisitionModifier();
+		weaponPositionModifier = shipType.getWeaponPositionModifier();
 		this.healthListener = healthListener;
 		healthListener.call(health);
 
@@ -139,10 +139,10 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 	@Override
 	public void preCollided(Collidable other) {
 		if (other instanceof Projectile) {
-			if(!isInMyTeam(((Projectile) other).getSource())) {
+			if (!isInMyTeam(((Projectile) other).getSource())) {
 				takeDamage(((Projectile) other).getDamage());
 			}
-		} else if (collidedWithNonTeammember(other)) {
+		} else if (collidedWithNonTeamMember(other)) {
 			if (other instanceof Enemy) {
 				takeDamage(0.6f, true);
 			}
@@ -151,7 +151,7 @@ public class PlayerShipImpl implements PlayerShip, Timerable {
 		}
 	}
 
-	private boolean collidedWithNonTeammember(Collidable other) {
+	private boolean collidedWithNonTeamMember(Collidable other) {
 		return other instanceof Teamable && !isInMyTeam((Teamable) other);
 	}
 

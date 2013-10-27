@@ -21,9 +21,9 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	private static final int LOAD_BAR_BOTTOM_MARGIN = 30;
 
 	/** Text format to be displayed while the loading is in progress */
-	private final String progressLabelText = "Loading... %d%%";
+	private final static String PROGRESS_LABEL_TEXT = "Loading... %d%%";
 	/** Text to be displayed when the loading is finished */
-	private final String onFinishedLabelText = "Touch to Start!";
+	private final static String ON_FINISHED_LABEL_TEXT = "Touch to Start!";
 
 	private float percent;
 
@@ -34,7 +34,6 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	private final BitmapFont progressLabelFont;
 
 	// GUI elements
-	private final Image screenBg;
 	private final Label progressLabel;
 	private final Image loadBarBg;
 	private final Image loadBar;
@@ -50,7 +49,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	public LoadingScreenView() {
 		// Background
 		screenBgTexture = new Texture(Gdx.files.internal("data/loadingScreenBg.png"));
-		screenBg = new Image(screenBgTexture);
+		Image screenBg = new Image(screenBgTexture);
 		screenBg.setFillParent(true);
 		addActor(screenBg);
 
@@ -69,6 +68,7 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 		loadBar = new Image(loadBarTexture);
 		loadBar.setY(LOAD_BAR_BOTTOM_MARGIN);
 		loadBar.setX(loadBarBg.getX());
+		loadBar.setWidth(LOAD_BAR_MAX_WIDTH);
 		addActor(loadBar);
 
 		// Progress label
@@ -91,10 +91,16 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	public void setLoadProgress(float loadProgress) {
 		percent = Interpolation.linear.apply(percent, loadProgress, 0.1f);
 
-		progressLabel.setText(String.format(progressLabelText, (int) Math.floor(percent * 100)));
+		progressLabel.setText(String.format(PROGRESS_LABEL_TEXT, (int) Math.floor(percent * 100)));
 		centerProgressLabel();
 
-		loadBar.setWidth(percent * LOAD_BAR_MAX_WIDTH);
+		// The width scaling is applied from the middle, resulting in non-transparent parts of the
+		// loading bar overlapping the loading bar background. The below is an attempt to counter
+		// that.
+		float xPercent = 1 - Math.min((float) (percent / 0.5), 1);
+		loadBar.setX(loadBarBg.getX() + 4 * xPercent);
+
+		loadBar.setScaleX(percent);
 		loadBar.invalidate();
 
 	}
@@ -103,11 +109,11 @@ public class LoadingScreenView extends WidgetGroup implements Disposable {
 	 * Sets the loading to finished and displays the finished loading message.
 	 */
 	public void loadingFinished() {
-		if (!progressLabel.getText().equals(onFinishedLabelText)) {
-			progressLabel.setText(onFinishedLabelText);
+		if (!progressLabel.getText().equals(ON_FINISHED_LABEL_TEXT)) {
+			progressLabel.setText(ON_FINISHED_LABEL_TEXT);
 			centerProgressLabel();
 
-			loadBar.setWidth(LOAD_BAR_MAX_WIDTH);
+			loadBar.setScaleX(1);
 			loadBar.invalidate();
 		}
 	}

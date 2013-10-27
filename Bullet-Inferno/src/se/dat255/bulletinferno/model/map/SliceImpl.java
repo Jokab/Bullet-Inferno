@@ -83,7 +83,8 @@ public class SliceImpl implements Slice, Collidable {
 		for (ObstaclePlacement obstaclePlacement : obstaclePlacements) {
 			Vector2 obstaclePosition = obstaclePlacement.getPosition().cpy().add(position);
 
-			// Calculate the relative position to this slice. createObstacle() wants world-coords.
+			// Calculate the relative position to this slice. createObstacle() wants
+			// world-coordinates.
 			Obstacle obstacle = obstaclePlacement.getObstacleDefinition()
 					.createObstacle(physics, obstaclePosition);
 			obstacles.add(obstacle);

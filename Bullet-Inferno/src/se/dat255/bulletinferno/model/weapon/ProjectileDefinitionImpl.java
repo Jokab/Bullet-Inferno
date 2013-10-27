@@ -19,8 +19,8 @@ import com.badlogic.gdx.math.Vector2;
  */
 public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDefinition {
 
-	/**
-	 * damage, movementpattern, hitbox
+	/*
+	 * damage, movement pattern, hit-box
 	 * 
 	 * null movement pattern implies straight travel
 	 */
@@ -51,7 +51,7 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 	SPECIAL_ABILITY_MISSILE(0.4f, new AccelerationMovementPattern(new Vector2(10, 0)),
 			new PhysicsBodyDefinitionImpl(
 					PhysicsShapeFactory.getRectangularShape(0.4f, 0.3f)),
-					BrutalProjectileImpl.class),
+			BrutalProjectileImpl.class),
 	HIGH_VELOCITY_PROJECTILE(0.2f, new AccelerationMovementPattern(new Vector2(20, 0)),
 			new PhysicsBodyDefinitionImpl(PhysicsShapeFactory.getRectangularShape(0.8f, 0.5f)));
 
@@ -67,7 +67,7 @@ public enum ProjectileDefinitionImpl implements ResourceIdentifier, ProjectileDe
 		this.bodyDefinition = bodyDefinition;
 		this.projectileType = projectileType;
 	}
-	
+
 	ProjectileDefinitionImpl(float damage, PhysicsMovementPattern pattern,
 			PhysicsBodyDefinition bodyDefinition) {
 		this(damage, pattern, bodyDefinition, ProjectileImpl.class);
