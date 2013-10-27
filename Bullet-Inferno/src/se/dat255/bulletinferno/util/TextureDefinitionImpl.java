@@ -46,7 +46,8 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER(texture("data/shieldBoost.png")),
 	LOADOUT_PASSIVE_DAMAGE_MODIFIER(texture("data/damageBoost.png")),
 	LOADOUT_PASSIVE_RELOADING_TIME_BUTTON(texture("data/loadout/passive_ability/reloadButton.png")),
-	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER_BUTTON(texture("data/loadout/passive_ability/shieldButton.png")),
+	LOADOUT_PASSIVE_TAKE_DAMAGE_MODIFIER_BUTTON(
+			texture("data/loadout/passive_ability/shieldButton.png")),
 	LOADOUT_PASSIVE_DAMAGE_MODIFIER_BUTTON(texture("data/loadout/passive_ability/damageButton.png")),
 	LOADOUT_SPECIAL_PROJECTILE_RAIN(texture("data/projectileRain.png")),
 	LOADOUT_SPECIAL_NUKE(texture("data/nuke.png")),
@@ -100,7 +101,7 @@ public enum TextureDefinitionImpl implements TextureDefinition {
 	}
 
 	@Override
-	public String getSrouce() {
+	public String getSource() {
 		return holder.getSource();
 	}
 

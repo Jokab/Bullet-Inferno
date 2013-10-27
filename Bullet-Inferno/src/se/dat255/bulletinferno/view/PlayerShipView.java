@@ -69,7 +69,6 @@ public class PlayerShipView implements Renderable, Timerable {
 
 	@Override
 	public void render(SpriteBatch batch, Camera viewport) {
-		// TODO: this is quite a messy program flow. you can ask me if it seems messed up (jakob)
 		if (ship.isDead()) {
 			drawExplosion(batch, lastShipPosition);
 		} else {
@@ -91,39 +90,6 @@ public class PlayerShipView implements Renderable, Timerable {
 
 		}
 	}
-
-	// TODO: Debug, should be removed
-	/*
-	 * private List<Shape> shapes = new ArrayList<Shape>();
-	 * private ShapeRenderer shapeRenderer = new ShapeRenderer();
-	 * private void drawDebug(SpriteBatch batch) {
-	 * if(shapes.isEmpty()){
-	 * for(Fixture f : ship.getBody().getFixtureList()) {
-	 * shapes.add(f.getShape());
-	 * }
-	 * }
-	 * 
-	 * for(Shape s : shapes) {
-	 * shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-	 * if(s.getType() == Shape.Type.Circle) {
-	 * shapeRenderer.begin(ShapeType.Line);
-	 * Vector2 loc = ((CircleShape)s).getPosition();
-	 * Float radius = ((CircleShape)s).getRadius();
-	 * shapeRenderer.circle(loc.x, loc.y, radius);
-	 * } else if(s.getType() == Shape.Type.Polygon) {
-	 * shapeRenderer.begin(ShapeType.Filled);
-	 * PolygonShape poly = (PolygonShape) s;
-	 * Vector2 hej = new Vector2();
-	 * for(int i = 0; i < poly.getVertexCount(); i++) {
-	 * poly.getVertex(i, hej);
-	 * shapeRenderer.circle(hej.x + lastShipPosition.x, hej.y + lastShipPosition.y, 0.2f);
-	 * }
-	 * }
-	 * shapeRenderer.circle(lastShipPosition.x, lastShipPosition.y, 0.2f);
-	 * shapeRenderer.end();
-	 * }
-	 * }
-	 */
 
 	private void drawExplosion(SpriteBatch batch, Vector2 pos) {
 		if (!timer.isFinished()) {

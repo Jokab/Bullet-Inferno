@@ -38,8 +38,6 @@ public class EntityMockEnvironment implements EntityEnvironment {
 
 	@Override
 	public void removeEnemy(Enemy enemy) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

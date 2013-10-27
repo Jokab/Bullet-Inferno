@@ -10,7 +10,7 @@ import se.dat255.bulletinferno.model.team.Teamable;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Implementation of a Projectile. 
+ * Implementation of a Projectile.
  */
 public class ProjectileImpl implements Projectile,
 		PhysicsViewportIntersectionListener {

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 
 /**
  * Base implementation of a controller.<br>
- * Handles simple show and hide logics.
+ * Handles simple show and hide logic.
  */
 public abstract class SimpleController implements Controller {
 	/** If the screen this controller handles is hidden */

@@ -34,9 +34,8 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 
 	private final Listener<Integer> scoreListener;
 
-	/** A flag to make sure we don't remove ourself twice */
+	/** A flag to make sure we don't remove ourselves twice */
 	private boolean flaggedForRemoval = false;
-	// TODO : Fix this in box2d instead?
 	private boolean isAwake = false;
 
 	/**
@@ -164,9 +163,9 @@ public abstract class SimpleEnemy implements Enemy, Collidable, Destructible,
 	public void dispose() {
 		physics.removeBody(body);
 		if (weapons != null) {
-			for (int i = 0; i < weapons.length; i++) {
-				if (weapons[i] != null) {
-					weapons[i].getTimer().stop();
+			for (Weapon weapon : weapons) {
+				if (weapon != null) {
+					weapon.getTimer().stop();
 				}
 			}
 

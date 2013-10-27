@@ -7,6 +7,7 @@ public interface AudioPlayer {
 	 * Plays a sound effect from the specified event
 	 * 
 	 * @param event
+	 *        the event to play a sound for.
 	 */
 	public void playSoundEffect(GameActionEvent event);
 
@@ -14,6 +15,7 @@ public interface AudioPlayer {
 	 * Sets the volume of the audio player, in the range of 0 to 1
 	 * 
 	 * @param volume
+	 *        the playback volume, between 0 and 1.
 	 */
 	public void setVolume(float volume);
 }

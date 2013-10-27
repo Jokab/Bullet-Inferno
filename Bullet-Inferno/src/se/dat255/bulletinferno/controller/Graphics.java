@@ -44,12 +44,16 @@ public class Graphics {
 
 	/** List of all objects that are to be rendered as HUD elements */
 	private final HudView hudView;
-	
+
 	/** The game controller instance */
 	private final GameController gameController;
 
-	/** Sets required references 
-	 * @param gameController */
+	/**
+	 * Sets required references
+	 * 
+	 * @param gameController
+	 *        the game controller instance.
+	 */
 	public Graphics(GameController gameController, HudView hudView) {
 		this.hudView = hudView;
 		this.gameController = gameController;
@@ -103,7 +107,6 @@ public class Graphics {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		// TODO: Render world without blending
 		worldBatch.begin();
 		gameController.getBgView().render(worldBatch, worldCamera);
 		worldBatch.end();
@@ -162,8 +165,8 @@ public class Graphics {
 	public void setNewCameraPos(float x, float y) {
 		// Have to adjust the positions from relative to the virtual GAME_WIDTH/GAME_HEIGHT
 		// to relative to the actual viewport width/height
-		x = (x - GAME_WIDTH/2) + worldCamera.viewportWidth/2;
-		y = (y - GAME_HEIGHT/2) + worldCamera.viewportHeight/2;
+		x = x - GAME_WIDTH / 2 + worldCamera.viewportWidth / 2;
+		y = y - GAME_HEIGHT / 2 + worldCamera.viewportHeight / 2;
 		nextCameraPos.set(x, y);
 	}
 

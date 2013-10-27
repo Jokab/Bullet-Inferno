@@ -10,19 +10,19 @@ public class SpecialEffectTimerHelperImpl implements SpecialEffectTimerHelper {
 	private static final int DEFAULT_MAX_CHARGE_AMOUNT = 3;
 	private final Timer chargeTimer;
 	private int charges;
-	private Timer reloadTimer;
-	
-	private Timerable chargeTimerable = new Timerable() {
+	private final Timer reloadTimer;
+
+	private final Timerable chargeTimerable = new Timerable() {
 		@Override
 		public void onTimeout(Timer source, float timeSinceLast) {
-			if(charges < DEFAULT_MAX_CHARGE_AMOUNT) {
+			if (charges < DEFAULT_MAX_CHARGE_AMOUNT) {
 				charges++;
 			}
 		}
 	};
 
 	protected SpecialEffectTimerHelperImpl(PhysicsEnvironment physics, float reloadTime) {
-		this.charges = DEFAULT_MAX_CHARGE_AMOUNT;
+		charges = DEFAULT_MAX_CHARGE_AMOUNT;
 
 		reloadTimer = physics.getTimer();
 		reloadTimer.setTime(reloadTime);
@@ -36,10 +36,10 @@ public class SpecialEffectTimerHelperImpl implements SpecialEffectTimerHelper {
 	}
 
 	@Override
-	public void useCharge(){
+	public void useCharge() {
 		charges -= 1;
 	}
-	
+
 	@Override
 	public void startReloadTimer() {
 		reloadTimer.restart();
@@ -49,27 +49,27 @@ public class SpecialEffectTimerHelperImpl implements SpecialEffectTimerHelper {
 	public boolean isReady() {
 		return reloadTimer.isFinished() && charges > 0;
 	}
-	
+
 	@Override
 	public float getReadyPercentage() {
-		if(isReady()) {
+		if (isReady()) {
 			// If loaded
 			return 1;
-		} else if(charges > 0){
+		} else if (charges > 0) {
 			// Have charges, only waiting for the reloading
-			return 1 - (reloadTimer.getTimeLeft() / reloadTimer.getInitialValue());
+			return 1 - reloadTimer.getTimeLeft() / reloadTimer.getInitialValue();
 		} else {
 			// No charges, return the longest of charge and reloading time left
-			if(reloadTimer.getTimeLeft() > chargeTimer.getTimeLeft()) {
-				return 1 - (reloadTimer.getTimeLeft() / reloadTimer.getInitialValue());
+			if (reloadTimer.getTimeLeft() > chargeTimer.getTimeLeft()) {
+				return 1 - reloadTimer.getTimeLeft() / reloadTimer.getInitialValue();
 			} else {
-				return 1 - (chargeTimer.getTimeLeft() / chargeTimer.getInitialValue());
+				return 1 - chargeTimer.getTimeLeft() / chargeTimer.getInitialValue();
 			}
 		}
 	}
-	
+
 	@Override
 	public int getCharges() {
-		return this.charges;
+		return charges;
 	}
 }

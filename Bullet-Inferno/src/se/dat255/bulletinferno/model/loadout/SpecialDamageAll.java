@@ -17,7 +17,7 @@ public class SpecialDamageAll implements SpecialEffect {
 	private static final float DAMAGE = 0.5f;
 
 	/**
-	 * Constructs a SpecialEffet which will deal damage to all enemies
+	 * Constructs a SpecialEffect which will deal damage to all enemies
 	 * on screen at the time of activation. The damage dealt is set in the
 	 * field {@link #DAMAGE}.
 	 * 
@@ -26,7 +26,7 @@ public class SpecialDamageAll implements SpecialEffect {
 	 */
 	public SpecialDamageAll(EntityEnvironment entities, PhysicsEnvironment physics, float reloadTime) {
 		this.entities = entities;
-		this.timerHelper = new SpecialEffectTimerHelperImpl(physics, reloadTime);
+		timerHelper = new SpecialEffectTimerHelperImpl(physics, reloadTime);
 	}
 
 	/**
@@ -40,12 +40,12 @@ public class SpecialDamageAll implements SpecialEffect {
 					+ Graphics.GAME_WIDTH;
 
 			for (Enemy enemy : entities.getEnemies()) {
-				if ((minX <= enemy.getPosition().x && enemy.getPosition().x <= maxX) &&
+				if (minX <= enemy.getPosition().x && enemy.getPosition().x <= maxX &&
 						enemy instanceof Destructible) {
 					((Destructible) enemy).takeDamage(DAMAGE);
 				}
 			}
-			
+
 			timerHelper.useCharge();
 			timerHelper.startReloadTimer();
 		}
@@ -55,7 +55,7 @@ public class SpecialDamageAll implements SpecialEffect {
 	public boolean isReady() {
 		return timerHelper.isReady();
 	}
-	
+
 	@Override
 	public float getReadyPercentage() {
 		return timerHelper.getReadyPercentage();

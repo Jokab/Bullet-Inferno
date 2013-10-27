@@ -32,7 +32,7 @@ public class SpecialIconView implements RenderableGUI {
 
 	public SpecialIconView(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
-		this.textureRegionLoading = new TextureRegion(textureRegion);
+		textureRegionLoading = new TextureRegion(textureRegion);
 	}
 
 	@Override
@@ -88,6 +88,6 @@ public class SpecialIconView implements RenderableGUI {
 	 *        the special effect instance to show.
 	 */
 	public void setSpecialEffect(SpecialEffect effect) {
-		this.specialEffect = effect;
+		specialEffect = effect;
 	}
 }

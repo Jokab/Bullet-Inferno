@@ -35,14 +35,14 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	 * @param physics
 	 *        The game's PhysicsEnvironment.
 	 * @param weapons
-	 *        The game's WeaponEnviornment.
+	 *        The game's WeaponEnvironment.
 	 */
 	public SpecialProjectileRain(PhysicsEnvironment physics, WeaponEnvironment weapons,
 			float reloadTime) {
 		this.physics = physics;
 		this.weapons = weapons;
 
-		this.timerHelper = new SpecialEffectTimerHelperImpl(physics, reloadTime);
+		timerHelper = new SpecialEffectTimerHelperImpl(physics, reloadTime);
 		timer = physics.getTimer();
 		timer.registerListener(this);
 	}
@@ -82,7 +82,7 @@ public class SpecialProjectileRain implements SpecialEffect, Timerable {
 	public boolean isReady() {
 		return timerHelper.isReady();
 	}
-	
+
 	@Override
 	public float getReadyPercentage() {
 		return timerHelper.getReadyPercentage();

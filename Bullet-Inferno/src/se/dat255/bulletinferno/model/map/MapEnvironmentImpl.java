@@ -13,6 +13,7 @@ import se.dat255.bulletinferno.model.weapon.WeaponLoadout;
 import se.dat255.bulletinferno.model.weapon.WeaponLoadoutImpl;
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.Listener;
+
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -36,7 +37,6 @@ public class MapEnvironmentImpl implements MapEnvironment {
 		this.physics = physics;
 		weapons = new WeaponEnvironmentImpl(physics);
 
-		// TODO: Replace null with heavy weapon and move upwards in call hierarchy somehow.
 		WeaponLoadout weaponLoadout = new WeaponLoadoutImpl(
 				weaponData[0].createWeapon(physics, weapons, new Vector2()),
 				weaponData[1].createWeapon(physics, weapons, new Vector2()));

@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class EvadingMovementPattern implements PhysicsMovementPattern {
 
-	private PositionEntity avoidedEntity;
+	private final PositionEntity avoidedEntity;
 
 	/** The maximum distance the movement pattern will act on. */
-	private float evadeLimitY;
+	private final float evadeLimitY;
 
 	/** The velocity the body will be given in either direction (Y, -Y) to fulfill its purpose. */
 	private static final float EVADE_VELOCITY = 2f;
@@ -36,10 +36,10 @@ public class EvadingMovementPattern implements PhysicsMovementPattern {
 	/** Strategy currently being followed. */
 	private Strategy strategy = Strategy.EVADE;
 
-	/** The lowest Y position (world coordinates) allowd to move to when evading. */
+	/** The lowest Y position (world coordinates) allowed to move to when evading. */
 	private final float evadeYMin;
 
-	/** The highest Y position (world coordinates) allowd to move to when evading. */
+	/** The highest Y position (world coordinates) allowed to move to when evading. */
 	private final float evadeYMax;
 
 	/**
@@ -68,7 +68,7 @@ public class EvadingMovementPattern implements PhysicsMovementPattern {
 	public void update(float timeDelta, PhysicsBody body) {
 		float bodyY = body.getPosition().y;
 		float avoidY = avoidedEntity.getPosition().y;
-		boolean withinLimit = (Math.abs(bodyY - avoidY) < evadeLimitY);
+		boolean withinLimit = Math.abs(bodyY - avoidY) < evadeLimitY;
 
 		float velocityY = 0f;
 
@@ -91,7 +91,7 @@ public class EvadingMovementPattern implements PhysicsMovementPattern {
 				} else if (bodyY < evadeYMin) {
 					strategy = Strategy.FLEE_UP;
 				} else {
-					velocityY = (bodyY > avoidY) ? EVADE_VELOCITY : -EVADE_VELOCITY;
+					velocityY = bodyY > avoidY ? EVADE_VELOCITY : -EVADE_VELOCITY;
 				}
 			}
 		}

@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.badlogic.gdx.math.Vector2;
-
 import se.dat255.bulletinferno.model.entity.Enemy;
 import se.dat255.bulletinferno.model.entity.EnemyDefinitionImpl;
 import se.dat255.bulletinferno.model.entity.SimpleEnemy;
@@ -22,6 +20,8 @@ import se.dat255.bulletinferno.model.mock.SimpleMockTimer;
 import se.dat255.bulletinferno.model.mock.SimplePlayerShipMock;
 import se.dat255.bulletinferno.model.mock.WeaponMockEnvironment;
 import se.dat255.bulletinferno.test.Common;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class SpecialAbilityTest {
 	

@@ -12,11 +12,16 @@ public interface ProjectileDefinition extends ResourceIdentifier {
 	/**
 	 * Releases (fires) a projectile at the provided position.
 	 * 
-	 * @param physics The PhysicsEnvironment.
-	 * @param weapons The WeaponsEnvironment.
-	 * @param position The position the projectile will be spawned at
-	 * @param projectileVector The direction that this projectile will travel in.
-	 * @param source The source that this projectile was fired from.
+	 * @param physics
+	 *        The PhysicsEnvironment.
+	 * @param weapons
+	 *        The WeaponsEnvironment.
+	 * @param position
+	 *        The position the projectile will be spawned at
+	 * @param projectileVector
+	 *        The direction that this projectile will travel in.
+	 * @param source
+	 *        The source that this projectile was fired from.
 	 * @return The projectile that was released.
 	 */
 	public Projectile releaseProjectile(PhysicsEnvironment physics,
@@ -27,7 +32,8 @@ public interface ProjectileDefinition extends ResourceIdentifier {
 	/**
 	 * Sets the damage of the projectile.
 	 * 
-	 * @param damage The damage to be set.
+	 * @param damage
+	 *        The damage to be set.
 	 */
 	public void setDamage(float damage);
 

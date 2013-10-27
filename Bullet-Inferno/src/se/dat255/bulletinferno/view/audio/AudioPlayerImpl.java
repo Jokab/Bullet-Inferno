@@ -1,9 +1,9 @@
 package se.dat255.bulletinferno.view.audio;
 
-import com.badlogic.gdx.audio.Sound;
-
 import se.dat255.bulletinferno.util.GameActionEvent;
 import se.dat255.bulletinferno.util.ResourceManager;
+
+import com.badlogic.gdx.audio.Sound;
 
 public class AudioPlayerImpl implements AudioPlayer {
 	private float volume = 1;

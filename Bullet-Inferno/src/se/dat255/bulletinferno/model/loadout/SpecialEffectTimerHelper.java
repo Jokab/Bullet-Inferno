@@ -17,10 +17,10 @@ public interface SpecialEffectTimerHelper {
 	/**
 	 * The Special Effect is ready if it has reloaded and has charges.
 	 * 
-	 * @return
+	 * @return true if the effect is ready to be used, else false.
 	 */
 	public boolean isReady();
-	
+
 	/**
 	 * Returns the amount of charges that are left.
 	 * 
@@ -30,6 +30,7 @@ public interface SpecialEffectTimerHelper {
 
 	/**
 	 * Returns the percentage of loading done between 0 and 1, where 1 means the ability is ready.
+	 * 
 	 * @return percentage loaded, between 0 and 1.
 	 */
 	float getReadyPercentage();

@@ -33,15 +33,15 @@ public class WeaponButtonsView {
 	private final Image label;
 	private final TextureRegionDrawable heavyWeaponLabel;
 	private final TextureRegionDrawable standardWeaponLabel;
-	
+
 	public WeaponButtonsView(Stage stage, Skin skin, Table table, Image label,
 			ResourceManager resourceManager) {
 		this.skin = skin;
 		this.table = table;
 		this.label = label;
-		this.heavyWeaponLabel = new TextureRegionDrawable(resourceManager.getTexture(
+		heavyWeaponLabel = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_HEAVYWEAPON));
-		this.standardWeaponLabel = new TextureRegionDrawable(resourceManager.getTexture(
+		standardWeaponLabel = new TextureRegionDrawable(resourceManager.getTexture(
 				TextureDefinitionImpl.LOADOUT_STANDARD_WEAPON));
 		this.resourceManager = resourceManager;
 	}
@@ -106,7 +106,7 @@ public class WeaponButtonsView {
 		if (standardSelectionButton.getData() == null) {
 			setSelectionToClicked(standardWeapons.get(0), standardSelectionButton);
 		}
-		
+
 		// Set up the table to add these buttons to
 		showTable(standardWeapons, standardWeaponLabel);
 	}
@@ -194,8 +194,6 @@ public class WeaponButtonsView {
 						wButton.toggleSelected(skin);
 					}
 				}
-				// TODO: add break here since we don't want to keep looping after we found the
-				// matching weapon
 			}
 
 			deselectOtherButtons(selected, list);

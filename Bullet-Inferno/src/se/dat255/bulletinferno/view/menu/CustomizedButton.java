@@ -27,6 +27,6 @@ public abstract class CustomizedButton {
 		return isSelected;
 	}
 
-	/** What happends when the button gets toggled */
+	/** What happens when the button gets toggled */
 	public abstract void toggleSelected(Skin skin);
 }
