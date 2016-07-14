@@ -14,6 +14,11 @@ The current build status of our application. The builds are done by [Travis CI](
 | **Master** | [![Build Status](https://travis-ci.org/Jokab/Bullet-Inferno.png?branch=master)](https://travis-ci.org/Jokab/Bullet-Inferno) |
 | **Development** | [![Build Status](https://travis-ci.org/Jokab/Bullet-Inferno.png?branch=development)](https://travis-ci.org/Jokab/Bullet-Inferno) |
 
+<a href="https://scan.coverity.com/projects/jokab-bullet-inferno">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/9433/badge.svg"/>
+</a>
+
 ## Latest Release
 The current release of Bullet-Inferno can be found under [Releases](https://github.com/Jokab/Bullet-Inferno/releases). 
 Keep in mind, however, that the latest release might not allways contain all the newest features found on the 
