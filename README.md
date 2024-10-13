@@ -6,19 +6,6 @@ Bullet-Inferno
 
 <hr>
 
-## Build Status
-The current build status of our application. The builds are done by [Travis CI](http://about.travis-ci.org/), that both compiles and runs our test suite.
-
-| Branch | Build Status |
-| ------ | ------------ |
-| **Master** | [![Build Status](https://travis-ci.org/Jokab/Bullet-Inferno.png?branch=master)](https://travis-ci.org/Jokab/Bullet-Inferno) |
-| **Development** | [![Build Status](https://travis-ci.org/Jokab/Bullet-Inferno.png?branch=development)](https://travis-ci.org/Jokab/Bullet-Inferno) |
-
-<a href="https://scan.coverity.com/projects/jokab-bullet-inferno">
-  <img alt="Coverity Scan Build Status"
-       src="https://scan.coverity.com/projects/9433/badge.svg"/>
-</a>
-
 ## Latest Release
 The current release of Bullet-Inferno can be found under [Releases](https://github.com/Jokab/Bullet-Inferno/releases). 
 Keep in mind, however, that the latest release might not allways contain all the newest features found on the 
@@ -26,7 +13,6 @@ repository. If you want to take part of those, we recommend you clone and build 
 
 ## Product vision
 For users of Android touch devices at ages eight and up who are looking for accessible gaming entertainment at a high-quality level. Our product is a side-scrolling shoot ‘em up game that offers rich environments with fast-paced flying action, challenging obstacles and enemies, combined with an upgradeable gameplay. Unlike other games in this genre, we offer a wide gaming experience at no cost.
-
 
 ## Developer Documentation
 See the [Developer Documentation] page on our Wiki.
