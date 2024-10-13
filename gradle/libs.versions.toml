@@ -1,0 +1,9 @@
+[versions]
+junit = "4.12"
+gdx = "0.9.9"
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+gdx = { group = "com.badlogicgames.gdx", name = "gdx", version.ref = "gdx" }
+gdx-platform = { group = "com.badlogicgames.gdx", name = "gdx-platform", version.ref = "gdx" }
+gdx-backend-lwjgl = { group = "com.badlogicgames.gdx", name = "gdx-backend-lwjgl", version.ref = "gdx" }
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
